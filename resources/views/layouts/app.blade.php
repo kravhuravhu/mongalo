@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/about.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/books.css') }}">
 
     @stack('styles')
 </head>
