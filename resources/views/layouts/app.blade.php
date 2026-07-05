@@ -16,6 +16,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/about.css') }}">
 
     @stack('styles')
 </head>
