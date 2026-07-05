@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/invite.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/baptism.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/community.css') }}">
-
+    <link rel="stylesheet" href="{{ secure_asset('css/resources.css') }}">
     @stack('styles')
 </head>
 <body>
