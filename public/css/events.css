@@ -1083,7 +1083,7 @@
       font-weight: 900;
       font-size: clamp(50px, 12vw, 160px);
       color: transparent;
-      -webkit-text-stroke: 1px rgba(166, 124, 78, 0.06);
+      -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
       white-space: nowrap;
       pointer-events: none;
       user-select: none;
@@ -1229,7 +1229,7 @@
       font-weight: 900;
       font-size: clamp(50px, 12vw, 160px);
       color: transparent;
-      -webkit-text-stroke: 1px rgba(166, 124, 78, 0.06);
+      -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
       white-space: nowrap;
       pointer-events: none;
       user-select: none;
