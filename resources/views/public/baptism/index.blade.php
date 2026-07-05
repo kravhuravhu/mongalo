@@ -31,9 +31,6 @@
                         <a href="#baptism-form" class="btn btn--primary">
                             <i class="fas fa-water"></i> Request Baptism
                         </a>
-                        <a href="#baptism-info" class="btn btn--outline">
-                            <i class="fas fa-info-circle"></i> Learn More
-                        </a>
                     </div>
                 </div>
                 <div class="baptism-hero__image">
@@ -115,48 +112,6 @@
                         <span>Arthur's Baptism</span>
                         <small>A moment of transformation</small>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ─── SCRIPTURE ─── -->
-    <section class="baptism-scripture">
-        <div class="baptism-scripture__tag">WORD</div>
-
-        <div class="wrap">
-            <div class="section__header">
-                <span class="section__eyebrow">Scripture</span>
-                <h2 class="section__title">What the Word <span>Says</span></h2>
-            </div>
-
-            <div class="baptism-scripture__grid">
-                <div class="baptism-scripture__item">
-                    <span class="baptism-scripture__ref">Romans 6:4</span>
-                    <blockquote class="baptism-scripture__text">
-                        "Therefore we were buried with Him through baptism into death, that just as Christ was raised from the dead by the glory of the Father, even so we also should walk in newness of life."
-                    </blockquote>
-                </div>
-
-                <div class="baptism-scripture__item">
-                    <span class="baptism-scripture__ref">Acts 2:38</span>
-                    <blockquote class="baptism-scripture__text">
-                        "Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit."
-                    </blockquote>
-                </div>
-
-                <div class="baptism-scripture__item">
-                    <span class="baptism-scripture__ref">Mark 16:16</span>
-                    <blockquote class="baptism-scripture__text">
-                        "He who believes and is baptized will be saved; but he who does not believe will be condemned."
-                    </blockquote>
-                </div>
-
-                <div class="baptism-scripture__item">
-                    <span class="baptism-scripture__ref">Colossians 2:12</span>
-                    <blockquote class="baptism-scripture__text">
-                        "Buried with Him in baptism, in which you also were raised with Him through faith in the working of God, who raised Him from the dead."
-                    </blockquote>
                 </div>
             </div>
         </div>
@@ -250,9 +205,51 @@
         </div>
     </section>
 
+    <!-- ─── SCRIPTURE ─── -->
+    <section class="baptism-scripture">
+        <div class="baptism-scripture__tag">WORD</div>
+
+        <div class="wrap">
+            <div class="section__header">
+                <span class="section__eyebrow">Scripture</span>
+                <h2 class="section__title">What the Word <span>Says</span></h2>
+            </div>
+
+            <div class="baptism-scripture__grid">
+                <div class="baptism-scripture__item">
+                    <span class="baptism-scripture__ref">Romans 6:4</span>
+                    <blockquote class="baptism-scripture__text">
+                        "Therefore we were buried with Him through baptism into death, that just as Christ was raised from the dead by the glory of the Father, even so we also should walk in newness of life."
+                    </blockquote>
+                </div>
+
+                <div class="baptism-scripture__item">
+                    <span class="baptism-scripture__ref">Acts 2:38</span>
+                    <blockquote class="baptism-scripture__text">
+                        "Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit."
+                    </blockquote>
+                </div>
+
+                <div class="baptism-scripture__item">
+                    <span class="baptism-scripture__ref">Mark 16:16</span>
+                    <blockquote class="baptism-scripture__text">
+                        "He who believes and is baptized will be saved; but he who does not believe will be condemned."
+                    </blockquote>
+                </div>
+
+                <div class="baptism-scripture__item">
+                    <span class="baptism-scripture__ref">Colossians 2:12</span>
+                    <blockquote class="baptism-scripture__text">
+                        "Buried with Him in baptism, in which you also were raised with Him through faith in the working of God, who raised Him from the dead."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ─── FAQ ─── -->
     <section class="baptism-faq">
-        <div class="baptism-faq__tag">FAQ</div>
+        <div class="baptism-faq__tag">QUESTIONS</div>
 
         <div class="wrap">
             <div class="section__header">

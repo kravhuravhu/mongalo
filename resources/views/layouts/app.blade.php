@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/books.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/events.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/invite.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/baptism.css') }}">
 
     @stack('styles')
 </head>
