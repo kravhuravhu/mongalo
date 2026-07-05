@@ -20,7 +20,7 @@
         <div class="wrap">
             <div class="community-hero__grid">
                 <div class="community-hero__content">
-                    <span class="section__eyebrow">Join the Family</span>
+                    <span class="section__eyebrow">Online Community</span>
                     <h1 class="community-hero__title">
                         You Belong <br />
                         <span class="community-hero__title--gradient">Here</span>
