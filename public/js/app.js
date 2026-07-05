@@ -1,19 +1,27 @@
+// NAV TOGGLE
 function toggleNav() {
-    const burger = document.getElementById('burger');
-    const navLinks = document.getElementById('navLinks');
-    burger.classList.toggle('open');
-    navLinks.classList.toggle('open');
-    document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    const burger = document.querySelector('.navbar__burger');
+    const navLinks = document.querySelector('.navbar__links');
+    
+    if (burger && navLinks) {
+        burger.classList.toggle('navbar__burger--open');
+        navLinks.classList.toggle('navbar__links--open');
+        document.body.style.overflow = navLinks.classList.contains('navbar__links--open') ? 'hidden' : '';
+    }
 }
 
+// nav on link click 
 document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.getElementById('navLinks');
+    const navLinks = document.querySelector('.navbar__links');
     if (navLinks) {
-        navLinks.querySelectorAll('a').forEach(link => {
+        navLinks.querySelectorAll('.navbar__link, .navbar__cta').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 820) {
-                    document.getElementById('burger').classList.remove('open');
-                    navLinks.classList.remove('open');
+                    const burger = document.querySelector('.navbar__burger');
+                    if (burger) {
+                        burger.classList.remove('navbar__burger--open');
+                    }
+                    navLinks.classList.remove('navbar__links--open');
                     document.body.style.overflow = '';
                 }
             });
@@ -21,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// WHATSAPP POPUP
 const COOKIE_NAME = 'whatsapp_popup';
 
 function getCookie(name) {
@@ -63,6 +72,7 @@ function joinCommunity() {
     hideWhatsAppPopup();
 }
 
+// Show WhatsApp popup on page load if no cookie
 document.addEventListener('DOMContentLoaded', function() {
     const cookie = getCookie(COOKIE_NAME);
     if (!cookie) {
@@ -70,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// EVENT REGISTRATION
 document.addEventListener('DOMContentLoaded', function() {
     const registrationForm = document.getElementById('eventRegistrationForm');
     if (registrationForm) {
@@ -93,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Show success message
                     const msg = document.getElementById('registrationMessage');
                     if (msg) {
                         msg.innerHTML = `
@@ -104,12 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
                     }
 
-                    // Show WhatsApp popup
                     if (data.show_whatsapp) {
                         setTimeout(showWhatsAppPopup, 1000);
                     }
 
-                    // Reset form
                     registrationForm.reset();
                 }
             })
@@ -124,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// ADD TO CALENDAR
 function addToCalendar(eventId) {
     alert('A calendar invite will be sent to your email after registration.');
 }

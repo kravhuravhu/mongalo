@@ -1,18 +1,50 @@
 <nav class="navbar">
     <div class="wrap">
-        <div class="nav-row">
-            <a href="{{ route('home') }}" class="logo">The <span>Collective</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="{{ route('about') }}">About</a></li>
-                <li><a href="{{ route('books.index') }}">Books</a></li>
-                <li><a href="{{ route('events.index') }}">Events</a></li>
-                <li><a href="{{ route('baptism') }}">Baptism</a></li>
-                <li><a href="{{ route('community') }}">Community</a></li>
-                <li><a href="{{ route('resources') }}">Resources</a></li>
-                <li><a href="{{ route('contact') }}" class="nav-cta">Get in Touch</a></li>
+        <div class="navbar__inner">
+            <a href="{{ route('home') }}" class="navbar__logo">The <span>Collective</span></a>
+            <ul class="navbar__links" id="navLinks">
+                <li class="navbar__item">
+                    <a href="{{ route('home') }}" class="navbar__link {{ request()->routeIs('home') ? 'navbar__link--active' : '' }}">
+                        Home
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('about') }}" class="navbar__link {{ request()->routeIs('about') ? 'navbar__link--active' : '' }}">
+                        About
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('books.index') }}" class="navbar__link {{ request()->routeIs('books.*') ? 'navbar__link--active' : '' }}">
+                        Books
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('events.index') }}" class="navbar__link {{ request()->routeIs('events.*') ? 'navbar__link--active' : '' }}">
+                        Events
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('baptism') }}" class="navbar__link {{ request()->routeIs('baptism') ? 'navbar__link--active' : '' }}">
+                        Baptism
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('community') }}" class="navbar__link {{ request()->routeIs('community') ? 'navbar__link--active' : '' }}">
+                        Community
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('resources') }}" class="navbar__link {{ request()->routeIs('resources') ? 'navbar__link--active' : '' }}">
+                        Resources
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ route('contact') }}" class="navbar__cta {{ request()->routeIs('contact') ? 'navbar__cta--active' : '' }}">
+                        Get in Touch
+                    </a>
+                </li>
             </ul>
-            <button class="burger" id="burger" onclick="toggleNav()">
+            <button class="navbar__burger" id="burger" onclick="toggleNav()">
                 <span></span><span></span><span></span>
             </button>
         </div>
