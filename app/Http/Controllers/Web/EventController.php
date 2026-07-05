@@ -57,17 +57,19 @@ class EventController extends Controller
             'phone' => $request->phone,
             'registration_id' => EventRegistration::generateRegistrationId(),
         ]);
-        
+
+        // Generate ICS file
         $icsContent = $this->calendarService->generateICS($event, $registration);
+        $calendarLink = $this->calendarService->generateEventLink($event, $registration);
 
-        Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event, $icsContent));
-
+        // Store registration ID in session for success message
         session()->flash('registration_id', $registration->registration_id);
 
         return response()->json([
             'success' => true,
             'message' => 'Registration successful! Check your email for calendar invite.',
             'registration_id' => $registration->registration_id,
+            'calendar_link' => $calendarLink,
             'show_whatsapp' => true,
         ]);
     }

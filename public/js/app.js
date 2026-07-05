@@ -110,6 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div style="background:#d4edda;color:#155724;padding:16px 20px;border-radius:10px;margin-bottom:20px;">
                                 <i class="fas fa-check-circle"></i> ${data.message}
                                 <br><small>Registration ID: ${data.registration_id}</small>
+                                <br><a href="${data.calendar_link}" target="_blank" style="color:#155724;font-weight:600;text-decoration:underline;">
+                                    <i class="fas fa-calendar-plus"></i> Add to Google Calendar
+                                </a>
                             </div>
                         `;
                     }
