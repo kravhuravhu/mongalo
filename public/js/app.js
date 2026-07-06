@@ -1,16 +1,43 @@
-// NAV TOGGLE
+// ─── NAVBAR SCROLL ───
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.classList.add('navbar--scrolled');
+        }
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar--scrolled');
+            } else {
+                navbar.classList.remove('navbar--scrolled');
+            }
+        }, { passive: true });
+    }
+});
+
+// ─── NAV TOGGLE ───
 function toggleNav() {
     const burger = document.querySelector('.navbar__burger');
     const navLinks = document.querySelector('.navbar__links');
-    
+    const body = document.body;
+
     if (burger && navLinks) {
         burger.classList.toggle('navbar__burger--open');
         navLinks.classList.toggle('navbar__links--open');
-        document.body.style.overflow = navLinks.classList.contains('navbar__links--open') ? 'hidden' : '';
+
+        if (navLinks.classList.contains('navbar__links--open')) {
+            body.style.overflow = 'hidden';
+            body.style.position = 'fixed';
+            body.style.width = '100%';
+        } else {
+            body.style.overflow = '';
+            body.style.position = '';
+            body.style.width = '';
+        }
     }
 }
 
-// nav on link click 
+// Close nav on link click (mobile)
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelector('.navbar__links');
     if (navLinks) {
@@ -18,18 +45,40 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 820) {
                     const burger = document.querySelector('.navbar__burger');
+                    const body = document.body;
                     if (burger) {
                         burger.classList.remove('navbar__burger--open');
                     }
                     navLinks.classList.remove('navbar__links--open');
-                    document.body.style.overflow = '';
+                    body.style.overflow = '';
+                    body.style.position = '';
+                    body.style.width = '';
                 }
             });
         });
     }
+
+    // Close nav on close button
+    const closeBtn = document.querySelector('.navbar__close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            const burger = document.querySelector('.navbar__burger');
+            const navLinks = document.querySelector('.navbar__links');
+            const body = document.body;
+            if (burger) {
+                burger.classList.remove('navbar__burger--open');
+            }
+            if (navLinks) {
+                navLinks.classList.remove('navbar__links--open');
+            }
+            body.style.overflow = '';
+            body.style.position = '';
+            body.style.width = '';
+        });
+    }
 });
 
-// WHATSAPP POPUP
+// ─── WHATSAPP POPUP ───
 const COOKIE_NAME = 'whatsapp_popup';
 
 function getCookie(name) {
@@ -80,17 +129,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// EVENT REGISTRATION
+// ─── EVENT REGISTRATION ───
 document.addEventListener('DOMContentLoaded', function() {
     const registrationForm = document.getElementById('eventRegistrationForm');
     if (registrationForm) {
         registrationForm.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const formData = new FormData(this);
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-
             submitBtn.textContent = 'Registering...';
             submitBtn.disabled = true;
 
@@ -110,20 +157,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div style="background:#d4edda;color:#155724;padding:16px 20px;border-radius:10px;margin-bottom:20px;">
                                 <i class="fas fa-check-circle"></i> ${data.message}
                                 <br><small>Registration ID: ${data.registration_id}</small>
+                                <br><a href="${data.calendar_link}" target="_blank" style="color:#155724;font-weight:600;text-decoration:underline;">
+                                    <i class="fas fa-calendar-plus"></i> Add to Google Calendar
+                                </a>
                             </div>
                         `;
                     }
-
                     if (data.show_whatsapp) {
                         setTimeout(showWhatsAppPopup, 1000);
                     }
-
                     registrationForm.reset();
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-            })
+            .catch(error => console.error('Error:', error))
             .finally(() => {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -132,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ADD TO CALENDAR
+// ─── ADD TO CALENDAR ───
 function addToCalendar(eventId) {
     alert('A calendar invite will be sent to your email after registration.');
 }
