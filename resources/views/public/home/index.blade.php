@@ -6,7 +6,7 @@
 
 <div class="home">
 
-    <!-- ═══ HERO ═══ -->
+    <!-- HERO -->
     <section class="home__hero">
         <div class="home__hero-bg">
             <div class="home__hero-orb home__hero-orb--1"></div>
@@ -58,7 +58,31 @@
         </div>
     </section>
 
-    <!-- ═══ FOUR PILLARS ═══ -->
+    <!-- STATS BANNER -->
+    <section class="home__stats">
+        <div class="wrap">
+            <div class="home__stats-grid">
+                <div class="home__stats-item">
+                    <span class="home__stats-number">247+</span>
+                    <span class="home__stats-label">Community Members</span>
+                </div>
+                <div class="home__stats-item">
+                    <span class="home__stats-number">4</span>
+                    <span class="home__stats-label">Books Published</span>
+                </div>
+                <div class="home__stats-item">
+                    <span class="home__stats-number">12+</span>
+                    <span class="home__stats-label">Events Hosted</span>
+                </div>
+                <div class="home__stats-item">
+                    <span class="home__stats-number">3</span>
+                    <span class="home__stats-label">Cities Reached</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUR PILLARS -->
     <section class="home__pillars">
         <div class="home__pillars-tag">FAITH</div>
 
@@ -70,7 +94,7 @@
             </div>
 
             <div class="home__pillars-grid">
-                <div class="home__pillars-card">
+                <div class="home__pillars-card home__pillars-card--1">
                     <span class="home__pillars-num">I</span>
                     <div class="home__pillars-icon"><i class="fas fa-cross"></i></div>
                     <h3 class="home__pillars-name">Faith</h3>
@@ -78,7 +102,7 @@
                     <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
 
-                <div class="home__pillars-card">
+                <div class="home__pillars-card home__pillars-card--2">
                     <span class="home__pillars-num">II</span>
                     <div class="home__pillars-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h3 class="home__pillars-name">Salvation</h3>
@@ -86,7 +110,7 @@
                     <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
 
-                <div class="home__pillars-card">
+                <div class="home__pillars-card home__pillars-card--3">
                     <span class="home__pillars-num">III</span>
                     <div class="home__pillars-icon"><i class="fas fa-water"></i></div>
                     <h3 class="home__pillars-name">Baptism</h3>
@@ -94,7 +118,7 @@
                     <a href="{{ route('baptism') }}" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
 
-                <div class="home__pillars-card">
+                <div class="home__pillars-card home__pillars-card--4">
                     <span class="home__pillars-num">IV</span>
                     <div class="home__pillars-icon"><i class="fas fa-seedling"></i></div>
                     <h3 class="home__pillars-name">Growth</h3>
@@ -105,10 +129,14 @@
         </div>
     </section>
 
-    <!-- ═══ FEATURED BOOK ═══ -->
+    <!-- FEATURED BOOK -->
     @if($featuredBook)
     <section class="home__featured">
         <div class="home__featured-tag">BOOKS</div>
+        
+        <!-- Decorative shapes -->
+        <div class="home__featured-shape home__featured-shape--1"></div>
+        <div class="home__featured-shape home__featured-shape--2"></div>
 
         <div class="wrap">
             <div class="home__featured-grid">
@@ -136,7 +164,7 @@
     </section>
     @endif
 
-    <!-- ═══ BOOKS GRID ═══ -->
+    <!-- BOOKS GRID -->
     <section class="home__books">
         <div class="home__books-tag">READ</div>
 
@@ -151,7 +179,7 @@
                 @forelse($books as $book)
                 <div class="home__books-card">
                     <div class="home__books-cover" style="background:{{ $book->cover_color }};">
-                        {{ $book->title }}
+                        <span class="home__books-title">{{ $book->title }}</span>
                         @if($book->is_featured)
                             <span class="home__books-badge">Featured</span>
                         @endif
@@ -176,7 +204,7 @@
         </div>
     </section>
 
-    <!-- ═══ FREE RESOURCES ═══ -->
+    <!-- FREE RESOURCES -->
     <section class="home__resources">
         <div class="home__resources-tag">FREE</div>
 
@@ -202,7 +230,7 @@
         </div>
     </section>
 
-    <!-- ═══ EVENTS ═══ -->
+    <!-- EVENTS -->
     <section class="home__events">
         <div class="home__events-tag">EVENTS</div>
 
@@ -214,13 +242,21 @@
             </div>
 
             <div class="home__events-list">
-                @forelse($upcomingEvents as $event)
-                <div class="home__events-card">
+                @forelse($upcomingEvents as $index => $event)
+                <div class="home__events-card home__events-card--{{ $index % 2 === 0 ? 'left' : 'right' }}">
                     <div class="home__events-date">
                         <span class="home__events-day">{{ $event->date->format('d') }}</span>
                         <span class="home__events-month">{{ $event->date->format('M') }}</span>
+                        <span class="home__events-year">{{ $event->date->format('Y') }}</span>
                     </div>
                     <div class="home__events-info">
+                        <span class="home__events-type">
+                            @if(str_contains($event->title, 'Conference')) Conference
+                            @elseif(str_contains($event->title, 'Revival')) Revival
+                            @elseif(str_contains($event->title, 'Gathering')) Gathering
+                            @else Event
+                            @endif
+                        </span>
                         <h4 class="home__events-name">{{ $event->title }}</h4>
                         <p class="home__events-location"><i class="fas fa-map-marker-alt"></i> {{ $event->location }}</p>
                         <p class="home__events-time"><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</p>
@@ -238,8 +274,20 @@
         </div>
     </section>
 
-    <!-- ═══ BAPTISM CTA ═══ -->
+    <!-- BAPTISM CTA -->
     <section class="home__baptism">
+        <div class="home__baptism-bg">
+            <div class="home__baptism-wave home__baptism-wave--1"></div>
+            <div class="home__baptism-wave home__baptism-wave--2"></div>
+            <div class="home__baptism-wave home__baptism-wave--3"></div>
+        </div>
+        
+        <!-- Water droplets -->
+        <div class="home__baptism-droplet home__baptism-droplet--1"></div>
+        <div class="home__baptism-droplet home__baptism-droplet--2"></div>
+        <div class="home__baptism-droplet home__baptism-droplet--3"></div>
+        <div class="home__baptism-droplet home__baptism-droplet--4"></div>
+        
         <div class="home__baptism-tag">BAPTISM</div>
 
         <div class="wrap">
@@ -247,19 +295,19 @@
                 <div class="home__baptism-icon"><i class="fas fa-water"></i></div>
                 <h2 class="home__baptism-title">Ready to be <span>Baptized?</span></h2>
                 <p class="home__baptism-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <a href="{{ route('baptism') }}" class="btn btn--primary">
+                <a href="{{ route('baptism') }}" class="btn btn--primary btn--lg">
                     <i class="fas fa-water"></i> Let's Talk About Baptism
                 </a>
                 <div class="home__baptism-features">
                     <span><i class="fas fa-check-circle"></i> One-on-one conversation</span>
-                    <span><i class="fas fa-check-circle"></i> No pressure — just truth</span>
+                    <span><i class="fas fa-check-circle"></i> No pressure</span>
                     <span><i class="fas fa-check-circle"></i> Anywhere in Gauteng</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══ QUOTES ═══ -->
+    <!-- QUOTES -->
     <section class="home__quotes">
         <div class="home__quotes-tag">COMMUNITY</div>
 
@@ -274,56 +322,56 @@
                     <span class="home__quotes-num">I</span>
                     <div>
                         <blockquote>"For we walk by faith, not by sight."</blockquote>
-                        <span class="home__quotes-ref">— 2 Corinthians 5:7</span>
+                        <span class="home__quotes-ref">2 Corinthians 5:7</span>
                     </div>
                 </div>
                 <div class="home__quotes-item">
                     <span class="home__quotes-num">II</span>
                     <div>
                         <blockquote>"If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved."</blockquote>
-                        <span class="home__quotes-ref">— Romans 10:9</span>
+                        <span class="home__quotes-ref">Romans 10:9</span>
                     </div>
                 </div>
                 <div class="home__quotes-item">
                     <span class="home__quotes-num">III</span>
                     <div>
                         <blockquote>"Therefore we were buried with Him through baptism into death, that just as Christ was raised from the dead by the glory of the Father, even so we also should walk in newness of life."</blockquote>
-                        <span class="home__quotes-ref">— Romans 6:4</span>
+                        <span class="home__quotes-ref">Romans 6:4</span>
                     </div>
                 </div>
                 <div class="home__quotes-item">
                     <span class="home__quotes-num">IV</span>
                     <div>
                         <blockquote>"But grow in the grace and knowledge of our Lord and Savior Jesus Christ."</blockquote>
-                        <span class="home__quotes-ref">— 2 Peter 3:18</span>
+                        <span class="home__quotes-ref">2 Peter 3:18</span>
                     </div>
                 </div>
                 <div class="home__quotes-item">
                     <span class="home__quotes-num">V</span>
                     <div>
                         <blockquote>"I can do all things through Christ who strengthens me."</blockquote>
-                        <span class="home__quotes-ref">— Philippians 4:13</span>
+                        <span class="home__quotes-ref">Philippians 4:13</span>
                     </div>
                 </div>
                 <div class="home__quotes-item">
                     <span class="home__quotes-num">VI</span>
                     <div>
                         <blockquote>"For God so loved the world that He gave His only begotten Son, that whoever believes in Him should not perish but have everlasting life."</blockquote>
-                        <span class="home__quotes-ref">— John 3:16</span>
+                        <span class="home__quotes-ref">John 3:16</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══ COMMUNITY CTA ═══ -->
+    <!-- COMMUNITY CTA -->
     <section class="home__community">
         <div class="wrap">
             <div class="home__community-content">
                 <div class="home__community-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="home__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="home__community-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary">
+                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary btn--lg">
                     <i class="fab fa-whatsapp"></i> Join on WhatsApp
                 </a>
                 <div class="home__community-benefits">
