@@ -19,67 +19,118 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleNav() {
     const burger = document.querySelector('.navbar__burger');
     const navLinks = document.querySelector('.navbar__links');
+    const navbar = document.querySelector('.navbar');
     const body = document.body;
+    const overlay = document.querySelector('.navbar__overlay');
 
     if (burger && navLinks) {
-        burger.classList.toggle('navbar__burger--open');
-        navLinks.classList.toggle('navbar__links--open');
-
-        if (navLinks.classList.contains('navbar__links--open')) {
+        const isOpen = navLinks.classList.contains('navbar__links--open');
+        
+        if (isOpen) {
+            closeNav();
+        } else {
+            burger.classList.add('navbar__burger--open');
+            navLinks.classList.add('navbar__links--open');
+            navbar.classList.add('navbar--overlay-open');
             body.style.overflow = 'hidden';
             body.style.position = 'fixed';
             body.style.width = '100%';
-        } else {
-            body.style.overflow = '';
-            body.style.position = '';
-            body.style.width = '';
+            body.style.top = `-${window.scrollY}px`;
         }
     }
 }
 
-// Close nav on link click (mobile)
+// ─── CLOSE NAV FUNCTION ───
+function closeNav() {
+    const burger = document.querySelector('.navbar__burger');
+    const navLinks = document.querySelector('.navbar__links');
+    const navbar = document.querySelector('.navbar');
+    const body = document.body;
+    const overlay = document.querySelector('.navbar__overlay');
+
+    if (burger) {
+        burger.classList.remove('navbar__burger--open');
+    }
+    if (navLinks) {
+        navLinks.classList.remove('navbar__links--open');
+    }
+    if (navbar) {
+        navbar.classList.remove('navbar--overlay-open');
+    }
+    
+    // Restore scroll position
+    const scrollY = parseInt(body.style.top || '0') * -1;
+    body.style.overflow = '';
+    body.style.position = '';
+    body.style.width = '';
+    body.style.top = '';
+    window.scrollTo(0, scrollY);
+}
+
+// ─── CLOSE NAV ON OVERLAY CLICK ───
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.querySelector('.navbar__overlay');
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeNav();
+        });
+    }
+});
+
+// ─── CLOSE NAV ON LINK CLICK (Mobile) ───
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelector('.navbar__links');
     if (navLinks) {
         navLinks.querySelectorAll('.navbar__link, .navbar__cta').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', function(e) {
+                // Only close if the link doesn't have a dropdown or if it's a regular link
                 if (window.innerWidth <= 820) {
-                    const burger = document.querySelector('.navbar__burger');
-                    const body = document.body;
-                    if (burger) {
-                        burger.classList.remove('navbar__burger--open');
-                    }
-                    navLinks.classList.remove('navbar__links--open');
-                    body.style.overflow = '';
-                    body.style.position = '';
-                    body.style.width = '';
+                    // Small delay to allow any other click handlers to run
+                    setTimeout(closeNav, 100);
                 }
             });
         });
     }
 
-    // Close nav on close button
+    // ─── CLOSE NAV ON CLOSE BUTTON ───
     const closeBtn = document.querySelector('.navbar__close');
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            const burger = document.querySelector('.navbar__burger');
-            const navLinks = document.querySelector('.navbar__links');
-            const body = document.body;
-            if (burger) {
-                burger.classList.remove('navbar__burger--open');
-            }
-            if (navLinks) {
-                navLinks.classList.remove('navbar__links--open');
-            }
-            body.style.overflow = '';
-            body.style.position = '';
-            body.style.width = '';
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeNav();
         });
     }
+
+    // ─── CLOSE NAV ON ESC KEY ───
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const navLinks = document.querySelector('.navbar__links');
+            if (navLinks && navLinks.classList.contains('navbar__links--open')) {
+                closeNav();
+            }
+        }
+    });
+
+    // ─── CLOSE NAV ON RESIZE TO DESKTOP ───
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 820) {
+                const navLinks = document.querySelector('.navbar__links');
+                if (navLinks && navLinks.classList.contains('navbar__links--open')) {
+                    closeNav();
+                }
+            }
+        }, 200);
+    });
 });
 
 // ─── WHATSAPP POPUP ───
 const COOKIE_NAME = 'whatsapp_popup';
+let isPopupMinimized = false;
 
 function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -94,8 +145,14 @@ function setCookie(name, value, minutes) {
 
 function showWhatsAppPopup() {
     const popup = document.getElementById('whatsappPopup');
+    const minimized = document.getElementById('whatsappPopupMinimized');
     if (popup) {
         popup.classList.add('show');
+        popup.classList.remove('whatsapp-popup--minimized');
+        isPopupMinimized = false;
+    }
+    if (minimized) {
+        minimized.style.display = 'none';
     }
 }
 
@@ -103,22 +160,57 @@ function hideWhatsAppPopup() {
     const popup = document.getElementById('whatsappPopup');
     if (popup) {
         popup.classList.remove('show');
+        popup.classList.remove('whatsapp-popup--minimized');
+    }
+}
+
+function minimizeWhatsAppPopup() {
+    const popup = document.getElementById('whatsappPopup');
+    const minimized = document.getElementById('whatsappPopupMinimized');
+    if (popup) {
+        popup.classList.add('whatsapp-popup--minimized');
+        popup.classList.remove('show');
+        isPopupMinimized = true;
+    }
+    if (minimized) {
+        minimized.style.display = 'flex';
+    }
+}
+
+function restoreWhatsAppPopup() {
+    const popup = document.getElementById('whatsappPopup');
+    const minimized = document.getElementById('whatsappPopupMinimized');
+    if (popup) {
+        popup.classList.remove('whatsapp-popup--minimized');
+        popup.classList.add('show');
+        isPopupMinimized = false;
+    }
+    if (minimized) {
+        minimized.style.display = 'none';
     }
 }
 
 function dismissPopup() {
     setCookie(COOKIE_NAME, 'dismissed', 999999);
     hideWhatsAppPopup();
+    const minimized = document.getElementById('whatsappPopupMinimized');
+    if (minimized) {
+        minimized.style.display = 'none';
+    }
 }
 
 function remindLater() {
-    setCookie(COOKIE_NAME, 'remind', 30);
-    hideWhatsAppPopup();
+    setCookie(COOKIE_NAME, 'remind', 15);
+    minimizeWhatsAppPopup();
 }
 
 function joinCommunity() {
     setCookie(COOKIE_NAME, 'dismissed', 999999);
     hideWhatsAppPopup();
+    const minimized = document.getElementById('whatsappPopupMinimized');
+    if (minimized) {
+        minimized.style.display = 'none';
+    }
 }
 
 // Show WhatsApp popup on page load if no cookie
