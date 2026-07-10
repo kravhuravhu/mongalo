@@ -1,4 +1,3 @@
-// ─── HOME ───
 document.addEventListener('DOMContentLoaded', function() {
 
     // ─── SCROLL REVEAL ───

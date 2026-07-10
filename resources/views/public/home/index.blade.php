@@ -148,7 +148,7 @@
                     <div class="home__pillars-card-icon">
                         <i class="fas fa-cross"></i>
                     </div>
-                    <h3 class="home__pillars-card-title">Faith</h3>
+                    <h3 class="home__pillars-card-title">Prayer</h3>
                     <p class="home__pillars-card-desc">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </p>

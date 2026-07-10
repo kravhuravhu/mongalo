@@ -1,4 +1,3 @@
-// ─── COMMUNITY ───
 document.addEventListener('DOMContentLoaded', function() {
 
     // ─── SCROLL REVEAL ───
