@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $event->title . ' · The Collective')
+@section('title', $event->title . ' · ' . env('PROJECT_NAME', 'The Collective'))
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <div class="wrap">
             <div class="event-detail__grid">
                 <div class="event-detail__info">
-                    <span class="section__eyebrow">Event</span>
+                    <span class="event-detail__eyebrow">Event</span>
                     <h1 class="event-detail__title">{{ $event->title }}</h1>
                     <div class="event-detail__meta">
                         <div class="event-detail__meta-item">
@@ -61,7 +61,7 @@
         <div class="wrap">
             <div class="event-detail__registration-grid">
                 <div class="event-detail__registration-info">
-                    <span class="section__eyebrow">Secure Your Spot</span>
+                    <span class="event-detail__registration-eyebrow">Secure Your Spot</span>
                     <h2 class="event-detail__registration-title">Register for <span>{{ $event->title }}</span></h2>
                     <p class="event-detail__registration-desc">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -110,10 +110,10 @@
         <div class="event-detail__expect-tag">EXPECT</div>
 
         <div class="wrap">
-            <div class="section__header">
-                <span class="section__eyebrow">What to Expect</span>
-                <h2 class="section__title">A Day of <span>Transformation</span></h2>
-                <p class="section__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+            <div class="event-detail__expect-header">
+                <span class="event-detail__expect-eyebrow">What to Expect</span>
+                <h2 class="event-detail__expect-title">A Day of <span>Transformation</span></h2>
+                <p class="event-detail__expect-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
             </div>
 
             <div class="event-detail__expect-grid">
@@ -159,4 +159,9 @@
     </section>
 
 </div>
+
+@push('scripts')
+    <script src="{{ secure_asset('js/events.js') }}"></script>
+@endpush
+
 @endsection

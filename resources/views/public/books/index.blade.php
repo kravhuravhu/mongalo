@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'The Collective · Books')
+@section('title', env('PROJECT_NAME', 'The Collective') . ' · Books & Resources')
 
 @section('content')
 
@@ -38,22 +38,22 @@
                     <div class="books__hero-search">
                         <div class="books__hero-search-wrapper">
                             <i class="fas fa-search" aria-hidden="true"></i>
-                            <input type="text" placeholder="Search for a book..." class="books__hero-search-input">
+                            <input type="text" placeholder="Search for a book or resource..." class="books__hero-search-input">
                             <button class="books__hero-search-btn">Search</button>
                         </div>
                     </div>
                     <div class="books__hero-stats">
                         <div class="books__hero-stat">
                             <span class="books__hero-stat-number">{{ $paidBooks->count() + $freeBooks->count() }}</span>
-                            <span class="books__hero-stat-label">Total Books</span>
+                            <span class="books__hero-stat-label">Total Items</span>
                         </div>
                         <div class="books__hero-stat">
                             <span class="books__hero-stat-number">{{ $paidBooks->count() }}</span>
-                            <span class="books__hero-stat-label">Paid</span>
+                            <span class="books__hero-stat-label">Books</span>
                         </div>
                         <div class="books__hero-stat">
                             <span class="books__hero-stat-number">{{ $freeBooks->count() }}</span>
-                            <span class="books__hero-stat-label">Free</span>
+                            <span class="books__hero-stat-label">Free Resources</span>
                         </div>
                     </div>
                 </div>
@@ -91,42 +91,42 @@
     <section class="books__categories">
         <div class="wrap">
             <div class="books__categories-list">
-                <button class="books__categories-pill books__categories-pill--active">
+                <button class="books__categories-pill books__categories-pill--active" data-filter="all">
                     <i class="fas fa-th-large"></i>
                     All
                 </button>
-                <button class="books__categories-pill">
+                <button class="books__categories-pill" data-filter="paid">
+                    <i class="fas fa-book"></i>
+                    Books
+                </button>
+                <button class="books__categories-pill" data-filter="free">
+                    <i class="fas fa-gift"></i>
+                    Free Resources
+                </button>
+                <button class="books__categories-pill" data-filter="featured">
                     <i class="fas fa-star"></i>
                     Featured
-                </button>
-                <button class="books__categories-pill">
-                    <i class="fas fa-book"></i>
-                    Paperback
-                </button>
-                <button class="books__categories-pill">
-                    <i class="fas fa-file-pdf"></i>
-                    Digital
-                </button>
-                <button class="books__categories-pill">
-                    <i class="fas fa-gift"></i>
-                    Free
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- ─── BOOKS GRID MASONRY ─── -->
+    <!-- ─── BOOKS + RESOURCES GRID ─── -->
     <section class="books__grid" id="books-grid">
         <div class="wrap">
             <div class="books__grid-header">
                 <span class="books__grid-eyebrow">Collection</span>
-                <h2 class="books__grid-title">All <span>Books</span></h2>
+                <h2 class="books__grid-title">All <span>Books &amp; Resources</span></h2>
+                <p class="books__grid-subtitle">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
             </div>
 
             <div class="books__grid-masonry">
+                <!-- PAID BOOKS -->
                 @forelse($paidBooks as $index => $book)
-                <div class="books__grid-item books__grid-item--{{ ($index % 3) + 1 }}" style="animation-delay: {{ $index * 0.06 }}s;">
-                    <div class="books__grid-card">
+                <div class="books__grid-item books__grid-item--paid" data-category="paid" style="animation-delay: {{ $index * 0.06 }}s;">
+                    <div class="books__grid-card books__grid-card--paid">
                         <div class="books__grid-cover" style="background:{{ $book->cover_color ?? '#a67c4e' }};">
                             <span class="books__grid-cover-title">{{ $book->title }}</span>
                             @if($book->is_featured)
@@ -153,22 +153,23 @@
                 <p class="books__grid-empty">No books available yet. Check back soon!</p>
                 @endforelse
 
-                @forelse($freeBooks as $index => $book)
-                <div class="books__grid-item books__grid-item--free" style="animation-delay: {{ ($paidBooks->count() + $index) * 0.06 }}s;">
+                <!-- FREE RESOURCES -->
+                @forelse($freeBooks as $index => $resource)
+                <div class="books__grid-item books__grid-item--free" data-category="free" style="animation-delay: {{ ($paidBooks->count() + $index) * 0.06 }}s;">
                     <div class="books__grid-card books__grid-card--free">
-                        <div class="books__grid-cover" style="background:{{ $book->cover_color ?? '#6a6a7a' }};">
-                            <span class="books__grid-cover-title">{{ $book->title }}</span>
+                        <div class="books__grid-cover" style="background:{{ $resource->cover_color ?? '#4A9E9E' }};">
+                            <span class="books__grid-cover-title">{{ $resource->title }}</span>
                             <span class="books__grid-cover-badge books__grid-cover-badge--free">Free</span>
                             <div class="books__grid-cover-shine"></div>
                         </div>
                         <div class="books__grid-info">
-                            <h4 class="books__grid-name">{{ $book->title }}</h4>
+                            <h4 class="books__grid-name">{{ $resource->title }}</h4>
                             <p class="books__grid-desc">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                {{ $resource->subtitle ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }}
                             </p>
                             <div class="books__grid-footer">
                                 <span class="books__grid-price books__grid-price--free">Free</span>
-                                <a href="{{ route('books.show', $book->slug) }}" class="books__grid-btn books__grid-btn--free">
+                                <a href="#" class="books__grid-btn books__grid-btn--free">
                                     <span>Download</span>
                                     <i class="fas fa-download"></i>
                                 </a>
@@ -309,7 +310,7 @@
                 <div class="books__community-icon">
                     <i class="fab fa-whatsapp"></i>
                 </div>
-                <h2 class="books__community-title">Join <span>The Collective</span></h2>
+                <h2 class="books__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="books__community-desc">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
                 </p>
