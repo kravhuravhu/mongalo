@@ -1,15 +1,26 @@
 // ─── NAVBAR SCROLL ───
 document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
+    const body = document.body;
+    
     if (navbar) {
-        if (window.scrollY > 50) {
+        // Initial check
+        if (window.scrollY > 30) {
             navbar.classList.add('navbar--scrolled');
         }
+
+        let ticking = false;
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar--scrolled');
-            } else {
-                navbar.classList.remove('navbar--scrolled');
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    if (window.scrollY > 30) {
+                        navbar.classList.add('navbar--scrolled');
+                    } else {
+                        navbar.classList.remove('navbar--scrolled');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         }, { passive: true });
     }
@@ -31,7 +42,7 @@ function toggleNav() {
         } else {
             burger.classList.add('navbar__burger--open');
             navLinks.classList.add('navbar__links--open');
-            navbar.classList.add('navbar--overlay-open');
+            if (navbar) navbar.classList.add('navbar--overlay-open');
             body.style.overflow = 'hidden';
             body.style.position = 'fixed';
             body.style.width = '100%';
@@ -46,7 +57,6 @@ function closeNav() {
     const navLinks = document.querySelector('.navbar__links');
     const navbar = document.querySelector('.navbar');
     const body = document.body;
-    const overlay = document.querySelector('.navbar__overlay');
 
     if (burger) {
         burger.classList.remove('navbar__burger--open');
@@ -58,7 +68,6 @@ function closeNav() {
         navbar.classList.remove('navbar--overlay-open');
     }
     
-    // Restore scroll position
     const scrollY = parseInt(body.style.top || '0') * -1;
     body.style.overflow = '';
     body.style.position = '';
@@ -84,10 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelector('.navbar__links');
     if (navLinks) {
         navLinks.querySelectorAll('.navbar__link, .navbar__cta').forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Only close if the link doesn't have a dropdown or if it's a regular link
+            link.addEventListener('click', function() {
                 if (window.innerWidth <= 820) {
-                    // Small delay to allow any other click handlers to run
                     setTimeout(closeNav, 100);
                 }
             });

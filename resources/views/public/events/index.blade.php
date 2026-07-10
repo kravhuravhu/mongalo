@@ -207,7 +207,7 @@
     <!-- ─── INVITE ARTHUR ─── -->
     <section class="events__invite" id="events-invite">
         <div class="events__invite-bg">
-            <span class="events__invite-tag">INVITE</span>
+            <span class="events__invite-tag">INVITE US</span>
             <div class="events__invite-shape events__invite-shape--1"></div>
             <div class="events__invite-shape events__invite-shape--2"></div>
         </div>

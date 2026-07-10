@@ -280,14 +280,21 @@ img {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    height: var(--navbar-height);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: var(--navbar-height, 88px);
     padding: 0 48px;
+    display: flex;
+    align-items: center;
+    transform: translateY(0);
+    will-change: transform, height, background;
+    /* Ensure it stays above everything */
+    box-shadow: none;
 
     &.navbar--scrolled {
-        height: var(--navbar-scrolled-height);
+        height: var(--navbar-scrolled-height, 68px);
         background: rgba(247, 245, 242, 0.98);
         box-shadow: 0 2px 30px rgba(0, 0, 0, 0.06);
+        border-bottom: 1px solid rgba(166, 124, 78, 0.08);
 
         & .navbar__brand-text {
             font-size: 1.05rem;
@@ -308,14 +315,10 @@ img {
         }
     }
 
-    &.navbar--hidden {
-        transform: translateY(-100%);
-    }
-
     & .navbar__inner {
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         max-width: 1200px;
         margin: 0 auto;
         width: 100%;
@@ -708,7 +711,7 @@ img {
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
-        z-index: 1000;
+        z-index: 999;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.4s ease;
@@ -723,20 +726,10 @@ img {
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1200px) {
         padding: 0 32px;
-        height: 68px;
+        height: 76px;
 
         &.navbar--scrolled {
-            height: 58px;
-
-            & .navbar__link {
-                font-size: 0.65rem;
-                padding: 6px 12px;
-            }
-
-            & .navbar__cta {
-                padding: 6px 14px;
-                font-size: 0.65rem;
-            }
+            height: 62px;
         }
 
         & .navbar__link {
@@ -760,14 +753,10 @@ img {
         }
 
         padding: 0 24px;
-        height: 64px;
+        height: 68px;
 
         &.navbar--scrolled {
-            height: 56px;
-
-            & .navbar__brand-text {
-                font-size: 1rem;
-            }
+            height: 58px;
         }
 
         & .navbar__brand-text {
@@ -777,14 +766,10 @@ img {
 
     @media (max-width: 720px) {
         padding: 0 20px;
-        height: 60px;
+        height: 64px;
 
         &.navbar--scrolled {
-            height: 52px;
-
-            & .navbar__brand-text {
-                font-size: 0.95rem;
-            }
+            height: 54px;
         }
 
         & .navbar__brand-text {
@@ -804,23 +789,14 @@ img {
 
     @media (max-width: 540px) {
         padding: 0 16px;
-        height: 56px;
+        height: 60px;
 
         &.navbar--scrolled {
-            height: 48px;
-
-            & .navbar__brand-text {
-                font-size: 0.9rem;
-            }
+            height: 52px;
         }
 
         & .navbar__brand-text {
             font-size: 0.95rem;
-        }
-
-        & .navbar__brand-dot {
-            width: 4px;
-            height: 4px;
         }
 
         & .navbar__mobile {
@@ -839,11 +815,6 @@ img {
             }
         }
 
-        & .navbar__mobile-cta {
-            font-size: 0.85rem;
-            padding: 12px 20px;
-        }
-
         & .navbar__toggle .navbar__toggle-bar {
             width: 20px;
             height: 2px;
@@ -852,14 +823,10 @@ img {
 
     @media (max-width: 420px) {
         padding: 0 12px;
-        height: 52px;
+        height: 56px;
 
         &.navbar--scrolled {
-            height: 44px;
-
-            & .navbar__brand-text {
-                font-size: 0.8rem;
-            }
+            height: 48px;
         }
 
         & .navbar__brand-text {
@@ -880,34 +847,20 @@ img {
                 font-size: 0.85rem;
                 width: 20px;
             }
-
-            & .navbar__mobile-arrow {
-                font-size: 0.6rem;
-            }
-        }
-
-        & .navbar__mobile-cta {
-            font-size: 0.8rem;
-            padding: 10px 16px;
         }
 
         & .navbar__toggle .navbar__toggle-bar {
             width: 18px;
             height: 2px;
-            gap: 4px;
         }
     }
 
     @media (max-width: 350px) {
         padding: 0 10px;
-        height: 48px;
+        height: 52px;
 
         &.navbar--scrolled {
-            height: 40px;
-
-            & .navbar__brand-text {
-                font-size: 0.7rem;
-            }
+            height: 44px;
         }
 
         & .navbar__brand-text {
@@ -928,11 +881,6 @@ img {
                 font-size: 0.75rem;
                 width: 18px;
             }
-        }
-
-        & .navbar__mobile-cta {
-            font-size: 0.75rem;
-            padding: 8px 14px;
         }
 
         & .navbar__toggle .navbar__toggle-bar {
@@ -1021,7 +969,7 @@ img {
     font-weight: 900;
     font-size: clamp(50px, 12vw, 160px);
     color: transparent;
-    -webkit-text-stroke: 1px rgba(166, 124, 78, 0.06);
+    -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
