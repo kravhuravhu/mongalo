@@ -1,4 +1,3 @@
-// ─── BOOKS ───
 document.addEventListener('DOMContentLoaded', function() {
 
     // ─── SCROLL REVEAL ───
