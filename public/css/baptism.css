@@ -24,7 +24,7 @@
             border-radius: 50%;
             animation: baptismWaveFloat 8s ease-in-out infinite;
 
-            &--1 {
+            &.baptism__hero-wave--1 {
                 background: rgba(74, 158, 158, 0.04);
                 opacity: 0.6;
                 animation-delay: 0s;
@@ -32,7 +32,7 @@
                 bottom: -10px;
             }
 
-            &--2 {
+            &.baptism__hero-wave--2 {
                 background: rgba(74, 158, 158, 0.03);
                 opacity: 0.4;
                 animation-delay: 3s;
@@ -40,7 +40,7 @@
                 bottom: -30px;
             }
 
-            &--3 {
+            &.baptism__hero-wave--3 {
                 background: rgba(74, 158, 158, 0.02);
                 opacity: 0.2;
                 animation-delay: 1.5s;
@@ -55,7 +55,7 @@
             background: rgba(74, 158, 158, 0.03);
             animation: baptismDropletFloat 6s ease-in-out infinite;
 
-            &--1 {
+            &.baptism__hero-droplet--1 {
                 width: 80px;
                 height: 80px;
                 top: 10%;
@@ -63,7 +63,7 @@
                 animation-delay: 0.5s;
             }
 
-            &--2 {
+            &.baptism__hero-droplet--2 {
                 width: 120px;
                 height: 120px;
                 bottom: 25%;
@@ -71,7 +71,7 @@
                 animation-delay: 2s;
             }
 
-            &--3 {
+            &.baptism__hero-droplet--3 {
                 width: 50px;
                 height: 50px;
                 top: 30%;
@@ -79,7 +79,7 @@
                 animation-delay: 3.5s;
             }
 
-            &--4 {
+            &.baptism__hero-droplet--4 {
                 width: 90px;
                 height: 90px;
                 bottom: 45%;
@@ -87,7 +87,7 @@
                 animation-delay: 1s;
             }
 
-            &--5 {
+            &.baptism__hero-droplet--5 {
                 width: 40px;
                 height: 40px;
                 top: 15%;
@@ -172,7 +172,7 @@
                 text-decoration: none;
                 transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
-                &--primary {
+                &.baptism__hero-btn--primary {
                     background: #4A9E9E;
                     color: #fff;
                     box-shadow: 0 4px 15px rgba(74, 158, 158, 0.2);
@@ -184,7 +184,7 @@
                     }
                 }
 
-                &--secondary {
+                &.baptism__hero-btn--secondary {
                     background: transparent;
                     color: var(--text);
                     border: 1.5px solid var(--border-hover);
@@ -237,19 +237,19 @@
             transform: translate(-50%, -50%) scale(0);
             animation: baptismRipple 4s ease-out infinite;
 
-            &--1 {
+            &.baptism__hero-ripple--1 {
                 width: 100%;
                 height: 100%;
                 animation-delay: 0s;
             }
 
-            &--2 {
+            &.baptism__hero-ripple--2 {
                 width: 100%;
                 height: 100%;
                 animation-delay: 1.5s;
             }
 
-            &--3 {
+            &.baptism__hero-ripple--3 {
                 width: 100%;
                 height: 100%;
                 animation-delay: 3s;
@@ -278,7 +278,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -414,7 +414,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -512,7 +512,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -525,7 +525,7 @@
             pointer-events: none;
             opacity: 0.02;
 
-            &--1 {
+            &.baptism__story-shape--1 {
                 width: 300px;
                 height: 300px;
                 top: -100px;
@@ -534,7 +534,7 @@
                 animation: baptismStoryShape1 20s ease-in-out infinite alternate;
             }
 
-            &--2 {
+            &.baptism__story-shape--2 {
                 width: 200px;
                 height: 200px;
                 bottom: -80px;
@@ -715,7 +715,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -877,7 +877,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -893,7 +893,7 @@
             border-radius: 50%;
             animation: baptismFormWaveFloat 10s ease-in-out infinite;
 
-            &--1 {
+            &.baptism__form-wave--1 {
                 background: rgba(74, 158, 158, 0.03);
                 opacity: 0.5;
                 animation-delay: 0s;
@@ -901,7 +901,7 @@
                 bottom: -10px;
             }
 
-            &--2 {
+            &.baptism__form-wave--2 {
                 background: rgba(74, 158, 158, 0.02);
                 opacity: 0.3;
                 animation-delay: 4s;
@@ -1109,7 +1109,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -1285,7 +1285,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;

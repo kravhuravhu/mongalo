@@ -19,7 +19,7 @@
                 border-radius: 50%;
                 filter: blur(80px);
 
-                &--1 {
+                &.community__hero-shape--1 {
                     width: 500px;
                     height: 500px;
                     top: -200px;
@@ -28,7 +28,7 @@
                     animation: communityOrb1 22s ease-in-out infinite alternate;
                 }
 
-                &--2 {
+                &.community__hero-shape--2 {
                     width: 350px;
                     height: 350px;
                     bottom: -150px;
@@ -37,7 +37,7 @@
                     animation: communityOrb2 18s ease-in-out infinite alternate-reverse;
                 }
 
-                &--3 {
+                &.community__hero-shape--3 {
                     width: 200px;
                     height: 200px;
                     top: 40%;
@@ -255,7 +255,7 @@
                     margin-top: 4px;
                 }
 
-                &--out {
+                &.community__hero-mockup-message--out {
                     border-radius: 14px 14px 0 14px;
                     background: rgba(255,255,255,0.06);
                     margin-left: auto;
@@ -312,7 +312,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -454,7 +454,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;

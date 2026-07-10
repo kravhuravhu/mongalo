@@ -26,7 +26,7 @@
                 border-radius: 50%;
                 filter: blur(100px);
 
-                &--1 {
+                &.books__hero-shape--1 {
                     width: 400px;
                     height: 400px;
                     top: -150px;
@@ -35,7 +35,7 @@
                     animation: booksHeroOrb1 25s ease-in-out infinite alternate;
                 }
 
-                &--2 {
+                &.books__hero-shape--2 {
                     width: 300px;
                     height: 300px;
                     bottom: -100px;
@@ -285,7 +285,7 @@
                 background: var(--gold-dim);
             }
 
-            &--active {
+            &.books__categories-pill--active {
                 background: var(--gold);
                 color: #fff;
                 border-color: var(--gold);
@@ -345,10 +345,10 @@
             transform: translateY(30px);
             animation: booksGridFade 0.6s ease forwards;
 
-            &--1 { grid-row: span 1; }
-            &--2 { grid-row: span 1; }
-            &--3 { grid-row: span 1; }
-            &--free { grid-row: span 1; }
+            &.books__grid-item--1 { grid-row: span 1; }
+            &.books__grid-item--2 { grid-row: span 1; }
+            &.books__grid-item--3 { grid-row: span 1; }
+            &.books__grid-item--free { grid-row: span 1; }
         }
 
         & .books__grid-card {
@@ -374,7 +374,7 @@
                 }
             }
 
-            &--free {
+            &.books__grid-card--free {
                 border-color: rgba(74, 158, 158, 0.2);
 
                 &:hover {
@@ -417,7 +417,7 @@
                     backdrop-filter: blur(4px);
                     color: #fff;
 
-                    &--free {
+                    &.books__grid-cover-badge--free {
                         background: rgba(74, 158, 158, 0.8);
                     }
                 }
@@ -468,7 +468,7 @@
                 color: var(--gold);
                 font-size: 0.95rem;
 
-                &--free {
+                &.books__grid-price--free {
                     color: #4A9E9E;
                 }
             }
@@ -497,7 +497,7 @@
                     box-shadow: 0 8px 25px rgba(166, 124, 78, 0.2);
                 }
 
-                &--free {
+                &.books__grid-btn--free {
                     background: #4A9E9E;
 
                     &:hover {
@@ -537,7 +537,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -550,7 +550,7 @@
             pointer-events: none;
             opacity: 0.02;
 
-            &--1 {
+            &.books__author-shape--1 {
                 width: 300px;
                 height: 300px;
                 top: -100px;
@@ -559,7 +559,7 @@
                 animation: booksAuthorShape1 20s ease-in-out infinite alternate;
             }
 
-            &--2 {
+            &.books__author-shape--2 {
                 width: 200px;
                 height: 200px;
                 bottom: -80px;
@@ -737,7 +737,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -750,7 +750,7 @@
             pointer-events: none;
             opacity: 0.03;
 
-            &--1 {
+            &.books__divine-shape--1 {
                 width: 300px;
                 height: 300px;
                 top: -100px;
@@ -759,7 +759,7 @@
                 animation: booksDivineShape1 22s ease-in-out infinite alternate;
             }
 
-            &--2 {
+            &.books__divine-shape--2 {
                 width: 200px;
                 height: 200px;
                 bottom: -60px;
@@ -1067,7 +1067,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+            -webkit-text-stroke: 1px rgba(255,255,255,0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;

@@ -340,7 +340,7 @@
                 }
 
                 & > .btn {
-                    &--primary {
+                    &.btn--primary {
                     background: var(--gold);
                     color: #fff;
                     width: 100%;
@@ -353,7 +353,7 @@
                     }
                     }
 
-                    &--block {
+                    &.btn--block {
                     width: 100%;
                     justify-content: center;
                     padding: 14px;
@@ -399,7 +399,7 @@
         }
 
         & > .btn {
-          &--primary {
+          &.btn--primary {
             background: var(--gold);
             color: #fff;
 

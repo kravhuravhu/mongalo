@@ -21,7 +21,7 @@
                 border-radius: 50%;
                 filter: blur(80px);
 
-                &--1 {
+                &.about__hero-shape--1 {
                     width: 500px;
                     height: 500px;
                     top: -200px;
@@ -30,7 +30,7 @@
                     animation: aboutOrb1 22s ease-in-out infinite alternate;
                 }
 
-                &--2 {
+                &.about__hero-shape--2 {
                     width: 350px;
                     height: 350px;
                     bottom: -150px;
@@ -39,7 +39,7 @@
                     animation: aboutOrb2 18s ease-in-out infinite alternate-reverse;
                 }
 
-                &--3 {
+                &.about__hero-shape--3 {
                     width: 200px;
                     height: 200px;
                     top: 40%;
@@ -162,7 +162,7 @@
                 text-decoration: none;
                 transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
-                &--primary {
+                &.about__hero-btn--primary {
                     background: var(--gold);
                     color: #fff;
                     box-shadow: 0 4px 15px rgba(166, 124, 78, 0.2);
@@ -178,7 +178,7 @@
                     }
                 }
 
-                &--secondary {
+                &.about__hero-btn--secondary {
                     background: transparent;
                     color: var(--text);
                     border: 1.5px solid var(--border-hover);
@@ -293,19 +293,19 @@
                 border: 1px solid var(--border);
                 box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
 
-                &--1 {
+                &.about__hero-float--1 {
                     top: 10%;
                     right: 5%;
                     animation: aboutFloat1 14s ease-in-out infinite;
                 }
 
-                &--2 {
+                &.about__hero-float--2 {
                     bottom: 20%;
                     left: 5%;
                     animation: aboutFloat2 16s ease-in-out infinite reverse;
                 }
 
-                &--3 {
+                &.about__hero-float--3 {
                     top: 30%;
                     right: 20%;
                     animation: aboutFloat3 12s ease-in-out infinite;
@@ -335,7 +335,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -425,7 +425,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -438,7 +438,7 @@
             pointer-events: none;
             opacity: 0.03;
 
-            &--1 {
+            &.about__story-shape--1 {
                 width: 300px;
                 height: 300px;
                 top: -100px;
@@ -447,7 +447,7 @@
                 animation: aboutShape1 20s ease-in-out infinite alternate;
             }
 
-            &--2 {
+            &.about__story-shape--2 {
                 width: 200px;
                 height: 200px;
                 bottom: -50px;
@@ -646,7 +646,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -820,7 +820,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -833,7 +833,7 @@
             pointer-events: none;
             opacity: 0.03;
 
-            &--1 {
+            &.about__arthur-shape--1 {
                 width: 250px;
                 height: 250px;
                 top: -80px;
@@ -842,7 +842,7 @@
                 animation: aboutShape1 18s ease-in-out infinite alternate;
             }
 
-            &--2 {
+            &.about__arthur-shape--2 {
                 width: 180px;
                 height: 180px;
                 bottom: -60px;
@@ -1030,7 +1030,7 @@
                 text-decoration: none;
                 transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
-                &--primary {
+                &.about__arthur-btn--primary {
                     background: var(--gold);
                     color: #fff;
                     box-shadow: 0 4px 15px rgba(166, 124, 78, 0.2);
@@ -1046,7 +1046,7 @@
                     }
                 }
 
-                &--secondary {
+                &.about__arthur-btn--secondary {
                     background: transparent;
                     color: var(--text);
                     border: 1.5px solid var(--border-hover);
@@ -1087,7 +1087,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -1194,7 +1194,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
