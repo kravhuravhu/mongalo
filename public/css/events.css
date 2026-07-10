@@ -27,7 +27,7 @@
                 border-radius: 50%;
                 filter: blur(80px);
 
-                &--1 {
+                &.events__hero-shape--1 {
                     width: 500px;
                     height: 500px;
                     top: -200px;
@@ -36,7 +36,7 @@
                     animation: eventsOrb1 22s ease-in-out infinite alternate;
                 }
 
-                &--2 {
+                &.events__hero-shape--2 {
                     width: 350px;
                     height: 350px;
                     bottom: -150px;
@@ -45,7 +45,7 @@
                     animation: eventsOrb2 18s ease-in-out infinite alternate-reverse;
                 }
 
-                &--3 {
+                &.events__hero-shape--3 {
                     width: 200px;
                     height: 200px;
                     top: 40%;
@@ -132,7 +132,7 @@
                 text-decoration: none;
                 transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
-                &--primary {
+                &.events__hero-btn--primary {
                     background: var(--gold);
                     color: #fff;
                     box-shadow: 0 4px 15px rgba(166, 124, 78, 0.2);
@@ -144,7 +144,7 @@
                     }
                 }
 
-                &--secondary {
+                &.events__hero-btn--secondary {
                     background: transparent;
                     color: var(--text);
                     border: 1.5px solid var(--border-hover);
@@ -242,7 +242,7 @@
             position: relative;
             transition: all 0.3s ease;
 
-            &--event {
+            &.events__hero-calendar-day--event {
                 color: var(--gold);
                 font-weight: 600;
                 background: var(--gold-dim);
@@ -313,7 +313,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -519,7 +519,7 @@
                 text-decoration: none;
                 transition: all 0.3s ease;
 
-                &--primary {
+                &.events__upcoming-btn--primary {
                     background: var(--gold);
                     color: #fff;
                     box-shadow: 0 4px 15px rgba(166, 124, 78, 0.15);
@@ -535,7 +535,7 @@
                     }
                 }
 
-                &--secondary {
+                &.events__upcoming-btn--secondary {
                     background: transparent;
                     color: var(--text);
                     border: 1.5px solid var(--border-hover);
@@ -578,7 +578,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -725,7 +725,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -738,7 +738,7 @@
             pointer-events: none;
             opacity: 0.02;
 
-            &--1 {
+            &.events__invite-shape--1 {
                 width: 300px;
                 height: 300px;
                 top: -100px;
@@ -747,7 +747,7 @@
                 animation: eventsInviteShape1 20s ease-in-out infinite alternate;
             }
 
-            &--2 {
+            &.events__invite-shape--2 {
                 width: 200px;
                 height: 200px;
                 bottom: -80px;
@@ -954,7 +954,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -1091,7 +1091,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.04);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.15);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
