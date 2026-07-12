@@ -22,7 +22,7 @@
                 <li class="navbar__item" role="none">
                     <a href="{{ route('books.index') }}" class="navbar__link {{ request()->routeIs('books.*') ? 'navbar__link--active' : '' }}" role="menuitem">
                         <span class="navbar__link-icon"><i class="fas fa-book" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Books</span>
+                        <span class="navbar__link-label">Books &amp; Resources</span>
                     </a>
                 </li>
                 <li class="navbar__item" role="none">
@@ -41,12 +41,6 @@
                     <a href="{{ route('community') }}" class="navbar__link {{ request()->routeIs('community') ? 'navbar__link--active' : '' }}" role="menuitem">
                         <span class="navbar__link-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span>
                         <span class="navbar__link-label">Community</span>
-                    </a>
-                </li>
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('resources') }}" class="navbar__link {{ request()->routeIs('resources') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fas fa-download" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Resources</span>
                     </a>
                 </li>
             </ul>
@@ -89,7 +83,7 @@
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('books.index') }}" class="navbar__mobile-link {{ request()->routeIs('books.*') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fas fa-book" aria-hidden="true"></i></span>
-                    <span class="navbar__mobile-label">Books</span>
+                    <span class="navbar__mobile-label">Books &amp; Resources</span>
                     <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
                 </a>
             </li>
@@ -111,13 +105,6 @@
                 <a href="{{ route('community') }}" class="navbar__mobile-link {{ request()->routeIs('community') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span>
                     <span class="navbar__mobile-label">Community</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
-                </a>
-            </li>
-            <li class="navbar__mobile-item" role="none">
-                <a href="{{ route('resources') }}" class="navbar__mobile-link {{ request()->routeIs('resources') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
-                    <span class="navbar__mobile-icon"><i class="fas fa-download" aria-hidden="true"></i></span>
-                    <span class="navbar__mobile-label">Resources</span>
                     <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
                 </a>
             </li>
