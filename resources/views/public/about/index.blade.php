@@ -27,7 +27,7 @@
                         <span class="about__hero-title-highlight">Faith &amp; Purpose</span>
                     </h1>
                     <p class="about__hero-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        The Collective is a faith community built around one purpose: to serve God and help humanity. We exist to equip believers through Scripture, community and practical resources. This is not about one person. It is about a growing body of people walking in faith together.
                     </p>
                     <div class="about__hero-actions">
                         <a href="{{ route('books.index') }}" class="about__hero-btn about__hero-btn--primary">
@@ -99,7 +99,7 @@
                     </div>
                     <h3 class="about__mission-title">Our Mission</h3>
                     <p class="about__mission-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        To share the Gospel through Christian literature, free resources, community gatherings and one-on-one discipleship. We distribute books, Bibles and pamphlets, host events and create spaces where believers can grow in faith, receive prayer and be baptised.
                     </p>
                     <div class="about__mission-line"></div>
                 </div>
@@ -112,7 +112,7 @@
                     </div>
                     <h3 class="about__mission-title">Our Vision</h3>
                     <p class="about__mission-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        To baptise at least a million people in water, pray for at least a million people and equip every believer for spiritual growth through water baptism, Spirit baptism and the renewal of the mind. "Where there is no vision, the people perish" (Proverbs 29:18).
                     </p>
                     <div class="about__mission-line"></div>
                 </div>
@@ -134,45 +134,45 @@
                     <span class="about__story-eyebrow">Our Journey</span>
                     <h2 class="about__story-title">How <span>The Collective</span> Began</h2>
                     <p class="about__story-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        The Collective started from a simple conviction: that faith is meant to be shared, not kept to yourself. What began as personal conversations about salvation, baptism and spiritual identity grew into something bigger. Books were written, resources were gathered and a community started forming around a shared purpose.
                     </p>
                     <p class="about__story-text">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Today The Collective is a growing network of believers connected through WhatsApp, events and shared resources. We distribute Christian literature freely, host gatherings across multiple cities and walk alongside people at every stage of their faith journey. The work continues to grow because the need never stops.
                     </p>
                     <div class="about__story-timeline">
                         <div class="about__story-timeline-item">
                             <span class="about__story-timeline-dot"></span>
                             <div class="about__story-timeline-content">
                                 <span class="about__story-timeline-year">2020</span>
-                                <span class="about__story-timeline-text">Lorem ipsum dolor sit amet</span>
+                                <span class="about__story-timeline-text">The vision was born. First conversations about faith, baptism and spiritual identity began.</span>
                             </div>
                         </div>
                         <div class="about__story-timeline-item">
                             <span class="about__story-timeline-dot"></span>
                             <div class="about__story-timeline-content">
                                 <span class="about__story-timeline-year">2021</span>
-                                <span class="about__story-timeline-text">Lorem ipsum dolor sit amet</span>
+                                <span class="about__story-timeline-text">Writing began on Divine Identity and the first free resources were shared.</span>
                             </div>
                         </div>
                         <div class="about__story-timeline-item">
                             <span class="about__story-timeline-dot"></span>
                             <div class="about__story-timeline-content">
                                 <span class="about__story-timeline-year">2022</span>
-                                <span class="about__story-timeline-text">Lorem ipsum dolor sit amet</span>
+                                <span class="about__story-timeline-text">The WhatsApp community launched and the first events were hosted.</span>
                             </div>
                         </div>
                         <div class="about__story-timeline-item">
                             <span class="about__story-timeline-dot"></span>
                             <div class="about__story-timeline-content">
                                 <span class="about__story-timeline-year">2023</span>
-                                <span class="about__story-timeline-text">Lorem ipsum dolor sit amet</span>
+                                <span class="about__story-timeline-text">Expanded to multiple cities. Partnerships with Gideon SA and Chick Publications formed.</span>
                             </div>
                         </div>
                         <div class="about__story-timeline-item">
                             <span class="about__story-timeline-dot"></span>
                             <div class="about__story-timeline-content">
                                 <span class="about__story-timeline-year">2024</span>
-                                <span class="about__story-timeline-text">Lorem ipsum dolor sit amet</span>
+                                <span class="about__story-timeline-text">Community passed 200 members. Free Bible distribution programme started.</span>
                             </div>
                         </div>
                     </div>

@@ -35,7 +35,7 @@
                         <span class="home__hero-title-highlight">{{ env('PROJECT_NAME', 'The Collective') }}</span>
                     </h1>
                     <p class="home__hero-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        A faith community built on one vision: to baptise at least a million people in water, pray for at least a million people and equip every believer through water baptism, Spirit baptism and the renewal of the mind. Explore our books, download free faith resources and join a growing community of believers walking in purpose.
                     </p>
                     <div class="home__hero-actions">
                         <a href="{{ route('books.index') }}" class="home__hero-btn home__hero-btn--primary">
@@ -138,7 +138,7 @@
                 <span class="home__pillars-eyebrow">Our Foundation</span>
                 <h2 class="home__pillars-title">Four Pillars of <span>Faith</span></h2>
                 <p class="home__pillars-subtitle">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Everything we do is built on these four foundations. They shape our mission, our resources and our community.
                 </p>
             </div>
 
@@ -150,7 +150,7 @@
                     </div>
                     <h3 class="home__pillars-card-title">Prayer</h3>
                     <p class="home__pillars-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Prayer is the foundation of everything we do. Through prayer we connect with God, intercede for others and invite His power into every situation. "Pray without ceasing" (1 Thessalonians 5:17). Our goal is to pray for at least a million people.
                     </p>
                     <a href="#" class="home__pillars-card-link">
                         <span>Learn More</span>
@@ -166,7 +166,7 @@
                     </div>
                     <h3 class="home__pillars-card-title">Salvation</h3>
                     <p class="home__pillars-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Salvation is the starting point of every faith journey. "If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved" (Romans 10:9). Free resources like My Salvation Companion are here to guide you through that first step.
                     </p>
                     <a href="#" class="home__pillars-card-link">
                         <span>Learn More</span>
@@ -182,7 +182,7 @@
                     </div>
                     <h3 class="home__pillars-card-title">Baptism</h3>
                     <p class="home__pillars-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Water baptism is an act of obedience and a public declaration of faith. "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit" (Matthew 28:19). We believe in water baptism, Spirit baptism and the renewal of the mind.
                     </p>
                     <a href="{{ route('baptism') }}" class="home__pillars-card-link">
                         <span>Learn More</span>
@@ -198,7 +198,7 @@
                     </div>
                     <h3 class="home__pillars-card-title">Growth</h3>
                     <p class="home__pillars-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Growth does not stop at salvation. "But grow in the grace and knowledge of our Lord and Savior Jesus Christ" (2 Peter 3:18). Through Scripture, community and discipleship we continue to mature in faith. Our books and free resources support that journey every step of the way.
                     </p>
                     <a href="#" class="home__pillars-card-link">
                         <span>Learn More</span>
@@ -229,7 +229,7 @@
                     <h2 class="home__featured-title">{{ $featuredBook->title }}</h2>
                     <p class="home__featured-subtitle">{{ $featuredBook->subtitle }}</p>
                     <p class="home__featured-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Divine Identity takes you deeper into understanding your spiritual identity. It dismantles the lies holding you back and equips you to walk boldly in the purpose God has given you. Written by Arthur Mongalo from years of real ministry conversations with believers across South Africa.
                     </p>
                     <div class="home__featured-meta">
                         <span class="home__featured-price">{{ $featuredBook->price }}</span>
@@ -280,7 +280,7 @@
                 <span class="home__books-eyebrow">My Books</span>
                 <h2 class="home__books-title">Words That <span>Change Everything</span></h2>
                 <p class="home__books-subtitle">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Each book is written to help you understand your identity in Christ, grow in faith and walk in freedom. Whether you buy or download for free, every resource exists to serve your journey.
                 </p>
             </div>
 
@@ -300,7 +300,7 @@
                     <div class="home__books-info">
                         <h4 class="home__books-name">{{ $book->title }}</h4>
                         <p class="home__books-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                            <p class="home__books-desc">{{ Str::limit($book->description, 120) }}</p>
                         </p>
                         <div class="home__books-meta">
                             <span class="home__books-price">{{ $book->price }}</span>
@@ -340,7 +340,7 @@
                 <span class="home__resources-eyebrow">Free Resources</span>
                 <h2 class="home__resources-title">Tools to Help You <span>Grow</span></h2>
                 <p class="home__resources-subtitle">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Free Christian literature, Bibles, pamphlets and ministry materials to support your faith journey. Resources from partners like Gideon South Africa and Chick Publications are also available. Download digital copies or contact us for physical materials. Groups and organisations can arrange bulk delivery of Bibles and other free resources directly.
                 </p>
             </div>
 
@@ -376,7 +376,7 @@
                 <span class="home__events-eyebrow">Upcoming Events</span>
                 <h2 class="home__events-title">Come &amp; <span>Experience It</span></h2>
                 <p class="home__events-subtitle">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Join us for conferences, revival nights and community gatherings. Every event is an opportunity to worship, learn and connect with other believers.
                 </p>
             </div>
 
@@ -456,7 +456,7 @@
                 </div>
                 <h2 class="home__baptism-title">Ready to be <span>Baptized?</span></h2>
                 <p class="home__baptism-desc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    "Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit" (Acts 2:38). Whether you are considering baptism for the first time or want to understand what water baptism and Spirit baptism mean, we would love to have that conversation with you. No pressure, just an honest talk about faith and obedience.
                 </p>
                 <div class="home__baptism-steps">
                     <div class="home__baptism-step">
@@ -583,7 +583,7 @@
                 </div>
                 <h2 class="home__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="home__community-desc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Be part of a growing community of believers. Get daily encouragement, book updates, event announcements and free resources. Walk this journey together.
                 </p>
                 <div class="home__community-benefits">
                     <span>
