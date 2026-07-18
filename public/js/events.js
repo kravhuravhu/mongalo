@@ -3,10 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ─── SCROLL REVEAL ───
     const revealElements = document.querySelectorAll(
-        '.events__upcoming-card, ' +
-        '.events__past-card, ' +
-        '.events__testimonials-card, ' +
-        '.events__invite-container'
+        '.events__upcoming-card, .events__past-card, .events__invite-grid'
     );
 
     if (revealElements.length > 0) {
@@ -15,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                } else {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px)';
                 }
             });
         }, {
@@ -30,43 +30,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ─── CALENDAR NAVIGATION ───
-    const navBtns = document.querySelectorAll('.events__hero-calendar-nav-btn');
-    const monthDisplay = document.querySelector('.events__hero-calendar-month');
+    // ─── COUNTDOWN TIMER — MM : DD : HH : MM : SS ───
+    const countdownEl = document.querySelector('.events__countdown');
+    if (countdownEl) {
+        const eventDate = countdownEl.dataset.eventDate;
+        const eventTime = countdownEl.dataset.eventTime;
 
-    if (navBtns.length > 0 && monthDisplay) {
-        // current month & year
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
+        function updateCountdown() {
+            if (!eventDate || !eventTime) {
+                document.getElementById('cd-months').textContent = '00';
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-minutes').textContent = '00';
+                document.getElementById('cd-seconds').textContent = '00';
+                return;
+            }
 
-        // Update the month 
-        function updateMonthDisplay() {
-            const date = new Date(currentYear, currentMonth, 1);
-            monthDisplay.textContent = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            const targetDate = new Date(`${eventDate}T${eventTime}`).getTime();
+            if (isNaN(targetDate)) return;
+
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('cd-months').textContent = '00';
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-minutes').textContent = '00';
+                document.getElementById('cd-seconds').textContent = '00';
+                return;
+            }
+
+            // Calculate total months, days, hours, minutes, seconds
+            let totalSeconds = Math.floor(distance / 1000);
+            let totalMinutes = Math.floor(totalSeconds / 60);
+            let totalHours = Math.floor(totalMinutes / 60);
+            let totalDays = Math.floor(totalHours / 24);
+
+            // Calculate months (approx 30.44 days per month)
+            const months = Math.floor(totalDays / 30.44);
+            const remainingDays = Math.floor(totalDays % 30.44);
+            const hours = totalHours % 24;
+            const minutes = totalMinutes % 60;
+            const seconds = totalSeconds % 60;
+
+            document.getElementById('cd-months').textContent = String(months).padStart(2, '0');
+            document.getElementById('cd-days').textContent = String(remainingDays).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
         }
 
-        navBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const direction = this.querySelector('.fa-chevron-left') ? -1 : 1;
-                currentMonth += direction;
-
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                } else if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-
-                updateMonthDisplay();
-            });
-        });
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     }
-
-    // ─── ADD TO CALENDAR ───
-    window.addToCalendar = function() {
-        alert('A calendar invite will be sent to your email after registration.');
-    };
 
 });
