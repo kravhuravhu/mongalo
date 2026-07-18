@@ -1,5 +1,9 @@
 <div id="whatsappPopup" class="whatsapp-popup">
     <div class="whatsapp-popup__content">
+        <button class="whatsapp-popup__minimize" onclick="minimizeWhatsAppPopup()" aria-label="Minimize popup">
+            <span class="whatsapp-popup__minimize-icon">—</span>
+        </button>
+
         <div class="whatsapp-popup__icon">
             <i class="fab fa-whatsapp"></i>
         </div>
@@ -17,4 +21,9 @@
             <button class="btn btn--text" onclick="dismissPopup()">Nope, Not Now</button>
         </div>
     </div>
+</div>
+
+<div id="whatsappPopupMinimized" class="whatsapp-popup-minimized" onclick="restoreWhatsAppPopup()" style="display:none;">
+    <i class="fab fa-whatsapp"></i>
+    <span>Join Community</span>
 </div>

@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ─── WHATSAPP POPUP ───
 const COOKIE_NAME = 'whatsapp_popup';
 let isPopupMinimized = false;
+let autoMinimizeTimer = null;
 
 function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -157,6 +158,14 @@ function showWhatsAppPopup() {
         popup.classList.add('show');
         popup.classList.remove('whatsapp-popup--minimized');
         isPopupMinimized = false;
+
+        if (autoMinimizeTimer) {
+            clearTimeout(autoMinimizeTimer);
+        }
+        
+        autoMinimizeTimer = setTimeout(function() {
+            minimizeWhatsAppPopup();
+        }, 30000);
     }
     if (minimized) {
         minimized.style.display = 'none';
@@ -168,6 +177,9 @@ function hideWhatsAppPopup() {
     if (popup) {
         popup.classList.remove('show');
         popup.classList.remove('whatsapp-popup--minimized');
+    }
+    if (autoMinimizeTimer) {
+        clearTimeout(autoMinimizeTimer);
     }
 }
 
@@ -182,6 +194,9 @@ function minimizeWhatsAppPopup() {
     if (minimized) {
         minimized.style.display = 'flex';
     }
+    if (autoMinimizeTimer) {
+        clearTimeout(autoMinimizeTimer);
+    }
 }
 
 function restoreWhatsAppPopup() {
@@ -191,6 +206,14 @@ function restoreWhatsAppPopup() {
         popup.classList.remove('whatsapp-popup--minimized');
         popup.classList.add('show');
         isPopupMinimized = false;
+        
+        // Reset auto-minimize timer
+        if (autoMinimizeTimer) {
+            clearTimeout(autoMinimizeTimer);
+        }
+        autoMinimizeTimer = setTimeout(function() {
+            minimizeWhatsAppPopup();
+        }, 30000);
     }
     if (minimized) {
         minimized.style.display = 'none';
@@ -203,6 +226,9 @@ function dismissPopup() {
     const minimized = document.getElementById('whatsappPopupMinimized');
     if (minimized) {
         minimized.style.display = 'none';
+    }
+    if (autoMinimizeTimer) {
+        clearTimeout(autoMinimizeTimer);
     }
 }
 
@@ -217,6 +243,9 @@ function joinCommunity() {
     const minimized = document.getElementById('whatsappPopupMinimized');
     if (minimized) {
         minimized.style.display = 'none';
+    }
+    if (autoMinimizeTimer) {
+        clearTimeout(autoMinimizeTimer);
     }
 }
 
