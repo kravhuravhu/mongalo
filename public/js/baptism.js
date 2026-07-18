@@ -4,18 +4,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // ─── SCROLL REVEAL ───
     const revealElements = document.querySelectorAll(
         '.baptism__info-card, ' +
-        '.baptism__scripture-card, ' +
+        '.baptism__story-grid, ' +
         '.baptism__steps-card, ' +
-        '.baptism__story-container, ' +
+        '.baptism__scripture-item, ' +
         '.baptism__faq-item'
     );
 
     if (revealElements.length > 0) {
+        revealElements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = `opacity 0.6s ease ${index * 0.08}s, transform 0.6s ease ${index * 0.08}s`;
+        });
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                } else {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(40px)';
                 }
             });
         }, {
@@ -23,26 +32,21 @@ document.addEventListener('DOMContentLoaded', function() {
             rootMargin: '0px 0px -30px 0px'
         });
 
-        revealElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
+        revealElements.forEach(el => observer.observe(el));
     }
 
     // ─── FAQ ACCORDION ───
     const faqItems = document.querySelectorAll('.baptism__faq-item');
 
     if (faqItems.length > 0) {
-        faqItems.forEach(item => {
+        faqItems.forEach((item, index) => {
             const header = item.querySelector('.baptism__faq-item-header');
             const answer = item.querySelector('.baptism__faq-answer');
             const toggle = item.querySelector('.baptism__faq-toggle');
 
             if (header && answer && toggle) {
                 // Open first item by default
-                if (item === faqItems[0]) {
+                if (index === 0) {
                     answer.classList.add('baptism__faq-answer--open');
                     toggle.classList.add('baptism__faq-toggle--open');
                     toggle.innerHTML = '<i class="fas fa-minus"></i>';
