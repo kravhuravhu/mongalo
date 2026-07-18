@@ -13,35 +13,35 @@
 
 <div class="books">
 
-    <!-- ─── HERO BANNER ─── -->
+    {{-- HERO --}}
     <section class="books__hero">
         <div class="books__hero-bg">
             <div class="books__hero-pattern"></div>
             <div class="books__hero-shape books__hero-shape--1"></div>
             <div class="books__hero-shape books__hero-shape--2"></div>
         </div>
+        <div class="books__hero-tag">BOOKS</div>
 
         <div class="wrap">
-            <div class="books__hero-banner">
+            <div class="books__hero-grid">
                 <div class="books__hero-content">
                     <span class="books__hero-badge">
-                        <i class="fas fa-book-open" aria-hidden="true"></i>
-                        Library
+                        <i class="fas fa-book-open"></i> Library
                     </span>
                     <h1 class="books__hero-title">
-                        Explore the
-                        <span class="books__hero-title-highlight">Collection</span>
+                        Explore the <br />
+                        <span class="books__hero-gradient">Collection</span>
                     </h1>
-                    <p class="books__hero-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
+                    <p class="books__hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
                     <div class="books__hero-search">
                         <div class="books__hero-search-wrapper">
-                            <i class="fas fa-search" aria-hidden="true"></i>
+                            <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search for a book or resource..." class="books__hero-search-input">
                             <button class="books__hero-search-btn">Search</button>
                         </div>
                     </div>
+
                     <div class="books__hero-stats">
                         <div class="books__hero-stat">
                             <span class="books__hero-stat-number">{{ $paidBooks->count() + $freeBooks->count() }}</span>
@@ -87,126 +87,96 @@
         </div>
     </section>
 
-    <!-- ─── CATEGORY PILLS ─── -->
-    <section class="books__categories">
+    {{-- CATEGORY FILTERS --}}
+    <section class="books__filters">
         <div class="wrap">
-            <div class="books__categories-list">
-                <button class="books__categories-pill books__categories-pill--active" data-filter="all">
-                    <i class="fas fa-th-large"></i>
-                    All
-                </button>
-                <button class="books__categories-pill" data-filter="paid">
-                    <i class="fas fa-book"></i>
-                    Books
-                </button>
-                <button class="books__categories-pill" data-filter="free">
-                    <i class="fas fa-gift"></i>
-                    Free Resources
-                </button>
-                <button class="books__categories-pill" data-filter="featured">
-                    <i class="fas fa-star"></i>
-                    Featured
-                </button>
+            <div class="books__filters-list">
+                <button class="books__filters-pill books__filters-pill--active" data-filter="all">All</button>
+                <button class="books__filters-pill" data-filter="paid">Books</button>
+                <button class="books__filters-pill" data-filter="free">Free Resources</button>
+                <button class="books__filters-pill" data-filter="featured">Featured</button>
             </div>
         </div>
     </section>
 
-    <!-- ─── BOOKS + RESOURCES GRID ─── -->
+    {{-- BOOKS GRID --}}
     <section class="books__grid" id="books-grid">
+        <div class="books__grid-tag">READ</div>
         <div class="wrap">
-            <div class="books__grid-header">
-                <span class="books__grid-eyebrow">Collection</span>
-                <h2 class="books__grid-title">All <span>Books &amp; Resources</span></h2>
-                <p class="books__grid-subtitle">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+            <div class="section-header">
+                <span class="section-header__eyebrow">Collection</span>
+                <h2 class="section-header__title">All <span>Books &amp; Resources</span></h2>
+                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
             </div>
 
             <div class="books__grid-masonry">
-                <!-- PAID BOOKS -->
                 @forelse($paidBooks as $index => $book)
-                <div class="books__grid-item books__grid-item--paid" data-category="paid" style="animation-delay: {{ $index * 0.06 }}s;">
-                    <div class="books__grid-card books__grid-card--paid">
-                        <div class="books__grid-cover" style="background:{{ $book->cover_color ?? '#a67c4e' }};">
-                            <span class="books__grid-cover-title">{{ $book->title }}</span>
-                            @if($book->is_featured)
-                                <span class="books__grid-cover-badge">★ Featured</span>
-                            @endif
-                            <div class="books__grid-cover-shine"></div>
-                        </div>
-                        <div class="books__grid-info">
-                            <h4 class="books__grid-name">{{ $book->title }}</h4>
-                            <p class="books__grid-desc">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </p>
-                            <div class="books__grid-footer">
-                                <span class="books__grid-price">{{ $book->price }}</span>
-                                <a href="{{ route('books.show', $book->slug) }}" class="books__grid-btn">
-                                    <span>Details</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
+                    <div class="books__grid-item books__grid-item--paid" data-category="paid" style="animation-delay: {{ $index * 0.06 }}s;">
+                        <div class="books__grid-card books__grid-card--paid">
+                            <div class="books__grid-cover" style="background:{{ $book->cover_color ?? '#a67c4e' }};">
+                                <span class="books__grid-cover-title">{{ $book->title }}</span>
+                                @if($book->is_featured)
+                                    <span class="books__grid-cover-badge">★ Featured</span>
+                                @endif
+                                <div class="books__grid-cover-shine"></div>
+                            </div>
+                            <div class="books__grid-info">
+                                <h4 class="books__grid-name">{{ $book->title }}</h4>
+                                <p class="books__grid-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <div class="books__grid-footer">
+                                    <span class="books__grid-price">{{ $book->price }}</span>
+                                    <a href="{{ route('books.show', $book->slug) }}" class="books__grid-btn">
+                                        <span>Details</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @empty
-                <p class="books__grid-empty">No books available yet. Check back soon!</p>
+                    <p class="books__grid-empty">No books available yet.</p>
                 @endforelse
 
-                <!-- FREE RESOURCES -->
                 @forelse($freeBooks as $index => $resource)
-                <div class="books__grid-item books__grid-item--free" data-category="free" style="animation-delay: {{ ($paidBooks->count() + $index) * 0.06 }}s;">
-                    <div class="books__grid-card books__grid-card--free">
-                        <div class="books__grid-cover" style="background:{{ $resource->cover_color ?? '#4A9E9E' }};">
-                            <span class="books__grid-cover-title">{{ $resource->title }}</span>
-                            <span class="books__grid-cover-badge books__grid-cover-badge--free">Free</span>
-                            <div class="books__grid-cover-shine"></div>
-                        </div>
-                        <div class="books__grid-info">
-                            <h4 class="books__grid-name">{{ $resource->title }}</h4>
-                            <p class="books__grid-desc">
-                                {{ $resource->subtitle ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }}
-                            </p>
-                            <div class="books__grid-footer">
-                                <span class="books__grid-price books__grid-price--free">Free</span>
-                                <a href="#" class="books__grid-btn books__grid-btn--free">
-                                    <span>Download</span>
-                                    <i class="fas fa-download"></i>
-                                </a>
+                    <div class="books__grid-item books__grid-item--free" data-category="free" style="animation-delay: {{ ($paidBooks->count() + $index) * 0.06 }}s;">
+                        <div class="books__grid-card books__grid-card--free">
+                            <div class="books__grid-cover" style="background:{{ $resource->cover_color ?? '#4A9E9E' }};">
+                                <span class="books__grid-cover-title">{{ $resource->title }}</span>
+                                <span class="books__grid-cover-badge books__grid-cover-badge--free">Free</span>
+                                <div class="books__grid-cover-shine"></div>
+                            </div>
+                            <div class="books__grid-info">
+                                <h4 class="books__grid-name">{{ $resource->title }}</h4>
+                                <p class="books__grid-desc">{{ $resource->subtitle ?? 'Lorem ipsum dolor sit amet.' }}</p>
+                                <div class="books__grid-footer">
+                                    <span class="books__grid-price books__grid-price--free">Free</span>
+                                    <a href="#" class="books__grid-btn books__grid-btn--free">
+                                        <span>Download</span>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @empty
                 @endforelse
             </div>
         </div>
     </section>
 
-    <!-- ─── FEATURED AUTHOR ─── -->
+    {{-- FEATURED AUTHOR --}}
     <section class="books__author">
-        <div class="books__author-bg">
-            <span class="books__author-tag">AUTHOR</span>
-            <div class="books__author-shape books__author-shape--1"></div>
-            <div class="books__author-shape books__author-shape--2"></div>
-        </div>
-
+        <div class="books__author-tag">AUTHOR</div>
         <div class="wrap">
-            <div class="books__author-container">
+            <div class="books__author-grid">
                 <div class="books__author-content">
-                    <span class="books__author-eyebrow">Meet the Author</span>
+                    <span class="section-header__eyebrow">Meet the Author</span>
                     <h2 class="books__author-title">Arthur <span>Mongalo</span></h2>
-                    <p class="books__author-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <p class="books__author-text">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    </p>
+                    <p class="books__author-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p class="books__author-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                     <div class="books__author-quote">
-                        <i class="fas fa-quote-left" aria-hidden="true"></i>
-                        <blockquote>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                        </blockquote>
+                        <i class="fas fa-quote-left"></i>
+                        <blockquote>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."</blockquote>
                     </div>
                 </div>
 
@@ -235,95 +205,68 @@
         </div>
     </section>
 
-    <!-- ─── DIVINE IDENTITY SPOTLIGHT ─── -->
+    {{-- DIVINE IDENTITY SPOTLIGHT --}}
     @if($divineBook)
-    <section class="books__divine">
-        <div class="books__divine-bg">
-            <span class="books__divine-tag">DIVINE IDENTITY</span>
-            <div class="books__divine-shape books__divine-shape--1"></div>
-            <div class="books__divine-shape books__divine-shape--2"></div>
-        </div>
+        <section class="books__spotlight">
+            <div class="books__spotlight-bg">
+                <div class="books__spotlight-shape books__spotlight-shape--1"></div>
+                <div class="books__spotlight-shape books__spotlight-shape--2"></div>
+            </div>
+            <div class="books__spotlight-tag">SPOTLIGHT</div>
 
-        <div class="wrap">
-            <div class="books__divine-container">
-                <div class="books__divine-card">
-                    <div class="books__divine-card-inner" style="background:{{ $divineBook->cover_color ?? '#8B5E3C' }};">
-                        <div class="books__divine-card-title">{{ $divineBook->title }}</div>
-                        <div class="books__divine-card-divider"></div>
-                        <div class="books__divine-card-author">Arthur Mongalo</div>
-                        <div class="books__divine-card-shine"></div>
-                    </div>
-                    <div class="books__divine-card-floating">
-                        <div class="books__divine-card-floating-content">
-                            <span class="books__divine-card-floating-icon">
-                                <i class="fas fa-shopping-bag"></i>
-                            </span>
-                            <span class="books__divine-card-floating-title">Get Your Copy</span>
-                            <span class="books__divine-card-floating-price">{{ $divineBook->price }}</span>
-                            <a href="{{ route('books.show', $divineBook->slug) }}" class="books__divine-card-floating-btn">
-                                <span>Order Now</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+            <div class="wrap">
+                <div class="books__spotlight-grid">
+                    <div class="books__spotlight-cover">
+                        <div class="books__spotlight-book" style="background:{{ $divineBook->cover_color ?? '#8B5E3C' }};">
+                            <span class="books__spotlight-book-title">{{ $divineBook->title }}</span>
+                            <div class="books__spotlight-book-divider"></div>
+                            <span class="books__spotlight-book-author">Arthur Mongalo</span>
                         </div>
                     </div>
-                </div>
 
-                <div class="books__divine-content">
-                    <span class="books__divine-eyebrow">Bestseller</span>
-                    <h2 class="books__divine-title">Discover Your <span>Divine Identity</span></h2>
-                    <p class="books__divine-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <div class="books__divine-testimonials">
-                        <div class="books__divine-testimonial">
-                            <div class="books__divine-testimonial-stars">
+                    <div class="books__spotlight-content">
+                        <span class="section-header__eyebrow">Bestseller</span>
+                        <h2 class="books__spotlight-title">Discover Your <span>Divine Identity</span></h2>
+                        <p class="books__spotlight-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                        <div class="books__spotlight-testimonial">
+                            <div class="books__spotlight-stars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <blockquote class="books__divine-testimonial-text">
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-                            </blockquote>
-                            <span class="books__divine-testimonial-author">— Thabo M.</span>
+                            <blockquote class="books__spotlight-testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."</blockquote>
+                            <span class="books__spotlight-testimonial-author">— Thabo M.</span>
+                        </div>
+
+                        <div class="books__spotlight-actions">
+                            <a href="{{ route('books.show', $divineBook->slug) }}" class="btn btn--primary">
+                                <span>Read More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <span class="books__spotlight-price">{{ $divineBook->price }}</span>
                         </div>
                     </div>
-                    <a href="{{ route('books.show', $divineBook->slug) }}" class="books__divine-btn">
-                        <span>Read More About This Book</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
-    <!-- ─── COMMUNITY CTA ─── -->
+    {{-- COMMUNITY CTA --}}
     <section class="books__community">
         <div class="books__community-bg">
-            <span class="books__community-tag">COMMUNITY</span>
+            <div class="books__community-shape books__community-shape--1"></div>
+            <div class="books__community-shape books__community-shape--2"></div>
         </div>
-
         <div class="wrap">
             <div class="books__community-content">
-                <div class="books__community-icon">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
+                <div class="books__community-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="books__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
-                <p class="books__community-desc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                </p>
-                <div class="books__community-benefits">
-                    <span><i class="fas fa-check-circle"></i> Daily encouragement</span>
-                    <span><i class="fas fa-check-circle"></i> Book updates</span>
-                    <span><i class="fas fa-check-circle"></i> Baptism conversations</span>
-                    <span><i class="fas fa-check-circle"></i> Free resources</span>
-                </div>
-                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="books__community-btn">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>Join on WhatsApp</span>
-                    <i class="fas fa-arrow-right"></i>
+                <p class="books__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
+                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary btn--lg">
+                    <i class="fab fa-whatsapp"></i> Join on WhatsApp
                 </a>
             </div>
         </div>
