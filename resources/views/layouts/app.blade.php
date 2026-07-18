@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'The Collective · Faith · Salvation · Baptism · Growth')</title>
+    <title>@yield('title', env('PROJECT_NAME', 'The Collective') . ' · Faith · Salvation · Baptism · Growth')</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +41,9 @@
 
     <!-- WhatsApp Popup -->
     @include('components.whatsapp-popup')
+
+    <!-- Scroll to Top -->
+    @include('components.scroll-top')
 
     <!-- Main JS -->
     <script src="{{ secure_asset('js/app.js') }}"></script>

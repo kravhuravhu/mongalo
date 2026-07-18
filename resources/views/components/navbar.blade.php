@@ -1,54 +1,81 @@
-<nav class="navbar" id="navbar" role="navigation" aria-label="Main Navigation">
+@php
+    $activeTheme = 'gold';
+    if (request()->routeIs('baptism*')) {
+        $activeTheme = 'teal';
+    } elseif (request()->routeIs('books*')) {
+        $activeTheme = 'dark';
+    } elseif (request()->routeIs('events*')) {
+        $activeTheme = 'dark';
+    } elseif (request()->routeIs('community*')) {
+        $activeTheme = 'green';
+    } elseif (request()->routeIs('contact*') || request()->routeIs('invite*')) {
+        $activeTheme = 'gold';
+    } elseif (request()->routeIs('home*')) {
+        $activeTheme = 'gold';
+    } elseif (request()->routeIs('about*')) {
+        $activeTheme = 'gold';
+    }
+@endphp
+
+<nav class="navbar navbar--theme-{{ $activeTheme }}" id="navbar" role="navigation" aria-label="Main Navigation">
     <div class="navbar__inner">
+        {{-- LEFT: Logo --}}
         <a href="{{ route('home') }}" class="navbar__brand" aria-label="Home">
             <span class="navbar__brand-text">{{ env('PROJECT_NAME', 'The Collective') }}</span>
             <span class="navbar__brand-dot"></span>
         </a>
 
-        <div class="navbar__desktop">
-            <ul class="navbar__links" role="menubar">
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('home') }}" class="navbar__link {{ request()->routeIs('home') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fas fa-home" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Home</span>
-                    </a>
-                </li>
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('about') }}" class="navbar__link {{ request()->routeIs('about') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fas fa-users" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">About</span>
-                    </a>
-                </li>
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('books.index') }}" class="navbar__link {{ request()->routeIs('books.*') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fas fa-book" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Books &amp; Resources</span>
-                    </a>
-                </li>
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('events.index') }}" class="navbar__link {{ request()->routeIs('events.*') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Events</span>
-                    </a>
-                </li>
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('baptism') }}" class="navbar__link {{ request()->routeIs('baptism') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fas fa-water" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Baptism</span>
-                    </a>
-                </li>
-                <li class="navbar__item" role="none">
-                    <a href="{{ route('community') }}" class="navbar__link {{ request()->routeIs('community') ? 'navbar__link--active' : '' }}" role="menuitem">
-                        <span class="navbar__link-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span>
-                        <span class="navbar__link-label">Community</span>
-                    </a>
-                </li>
-            </ul>
-            <a href="{{ route('contact') }}" class="navbar__cta {{ request()->routeIs('contact') ? 'navbar__cta--active' : '' }}">
-                <span>Get in Touch</span>
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
+        {{-- CENTER: Nav Items --}}
+        <ul class="navbar__links" role="menubar">
+            <li class="navbar__item" role="none">
+                <a href="{{ route('home') }}" class="navbar__link {{ request()->routeIs('home') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-home" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Home</span>
+                </a>
+            </li>
+            <li class="navbar__item" role="none">
+                <a href="{{ route('about') }}" class="navbar__link {{ request()->routeIs('about') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-users" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Our Story</span>
+                </a>
+            </li>
+            <li class="navbar__item" role="none">
+                <a href="{{ route('books.index') }}" class="navbar__link {{ request()->routeIs('books.*') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-book" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Books &amp; Resources</span>
+                </a>
+            </li>
+            <li class="navbar__item" role="none">
+                <a href="{{ route('events.index') }}" class="navbar__link {{ request()->routeIs('events.*') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Events</span>
+                </a>
+            </li>
+            <li class="navbar__item" role="none">
+                <a href="{{ route('baptism') }}" class="navbar__link {{ request()->routeIs('baptism') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-water" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Baptism</span>
+                </a>
+            </li>
+            <li class="navbar__item" role="none">
+                <a href="{{ route('community') }}" class="navbar__link {{ request()->routeIs('community') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Community</span>
+                </a>
+            </li>
+            <li class="navbar__item" role="none">
+                <a href="{{ route('contact') }}" class="navbar__link {{ request()->routeIs('contact') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Contact</span>
+                </a>
+            </li>
+        </ul>
+
+        {{-- RIGHT: Invite Arthur CTA --}}
+        <a href="{{ route('invite') }}" class="navbar__cta {{ request()->routeIs('invite') ? 'navbar__cta--active' : '' }}">
+            <i class="fas fa-handshake" aria-hidden="true"></i>
+            <span>Invite Arthur</span>
+        </a>
 
         <button class="navbar__toggle" id="navbarToggle" aria-label="Toggle navigation menu" aria-expanded="false">
             <span class="navbar__toggle-bar"></span>
@@ -57,7 +84,7 @@
         </button>
     </div>
 
-    <!-- Mobile Menu -->
+    {{-- Mobile Menu --}}
     <div class="navbar__mobile" id="navbarMobile" role="dialog" aria-modal="true" aria-label="Mobile navigation">
         <div class="navbar__mobile-header">
             <span class="navbar__mobile-brand">{{ env('PROJECT_NAME', 'The Collective') }}</span>
@@ -70,48 +97,48 @@
                 <a href="{{ route('home') }}" class="navbar__mobile-link {{ request()->routeIs('home') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fas fa-home" aria-hidden="true"></i></span>
                     <span class="navbar__mobile-label">Home</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('about') }}" class="navbar__mobile-link {{ request()->routeIs('about') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fas fa-users" aria-hidden="true"></i></span>
-                    <span class="navbar__mobile-label">About</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
+                    <span class="navbar__mobile-label">Our Story</span>
                 </a>
             </li>
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('books.index') }}" class="navbar__mobile-link {{ request()->routeIs('books.*') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fas fa-book" aria-hidden="true"></i></span>
                     <span class="navbar__mobile-label">Books &amp; Resources</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('events.index') }}" class="navbar__mobile-link {{ request()->routeIs('events.*') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
                     <span class="navbar__mobile-label">Events</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('baptism') }}" class="navbar__mobile-link {{ request()->routeIs('baptism') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fas fa-water" aria-hidden="true"></i></span>
                     <span class="navbar__mobile-label">Baptism</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('community') }}" class="navbar__mobile-link {{ request()->routeIs('community') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
                     <span class="navbar__mobile-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span>
                     <span class="navbar__mobile-label">Community</span>
-                    <i class="fas fa-chevron-right navbar__mobile-arrow" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="navbar__mobile-item" role="none">
+                <a href="{{ route('contact') }}" class="navbar__mobile-link {{ request()->routeIs('contact') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
+                    <span class="navbar__mobile-icon"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                    <span class="navbar__mobile-label">Get in Touch</span>
                 </a>
             </li>
             <li class="navbar__mobile-item navbar__mobile-item--cta" role="none">
-                <a href="{{ route('contact') }}" class="navbar__mobile-cta">
-                    <span>Get in Touch</span>
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                <a href="{{ route('invite') }}" class="navbar__mobile-cta">
+                    <i class="fas fa-handshake" aria-hidden="true"></i>
+                    <span>Invite Arthur</span>
                 </a>
             </li>
         </ul>
@@ -120,7 +147,6 @@
         </div>
     </div>
 
-    <!-- Overlay -->
     <div class="navbar__overlay" id="navbarOverlay"></div>
 </nav>
 
