@@ -6,114 +6,98 @@
 
 <div class="event-detail">
 
-    <!-- ─── HERO ─── -->
-    <section class="event-detail__hero" style="background: linear-gradient(165deg, rgba(166,124,78,0.08) 0%, #f7f5f2 100%);">
+    {{-- HERO --}}
+    <section class="event-detail__hero">
+        <div class="event-detail__hero-bg">
+            <div class="event-detail__orb event-detail__orb--1"></div>
+            <div class="event-detail__orb event-detail__orb--2"></div>
+            <div class="event-detail__orb event-detail__orb--3"></div>
+        </div>
+        <div class="event-detail__hero-tag">REGISTER</div>
+
         <div class="wrap">
-            <div class="event-detail__grid">
-                <div class="event-detail__info">
-                    <span class="event-detail__eyebrow">Event</span>
-                    <h1 class="event-detail__title">{{ $event->title }}</h1>
-                    <div class="event-detail__meta">
-                        <div class="event-detail__meta-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>{{ $event->date->format('l, F d, Y') }}</span>
-                        </div>
-                        <div class="event-detail__meta-item">
-                            <i class="fas fa-clock"></i>
-                            <span>{{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
-                        </div>
-                        <div class="event-detail__meta-item">
+            <div class="event-detail__hero-grid">
+                {{-- Event Details --}}
+                <div class="event-detail__hero-content">
+                    <span class="event-detail__hero-badge">
+                        <i class="fas fa-calendar-alt"></i> {{ $event->date->format('l, F d, Y') }}
+                    </span>
+                    <h1 class="event-detail__hero-title">{{ $event->title }}</h1>
+                    <p class="event-detail__hero-text">{{ $event->description }}</p>
+
+                    <div class="event-detail__hero-meta">
+                        <div class="event-detail__hero-meta-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>{{ $event->location }}</span>
                         </div>
-                        @if($event->capacity)
-                        <div class="event-detail__meta-item">
-                            <i class="fas fa-users"></i>
-                            <span>{{ $event->registrations()->count() }}/{{ $event->capacity }} registered</span>
+                        <div class="event-detail__hero-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>{{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
                         </div>
+                        @if($event->capacity)
+                            <div class="event-detail__hero-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>{{ $event->registrations()->count() }}/{{ $event->capacity }} registered</span>
+                            </div>
                         @endif
                     </div>
-                    <p class="event-detail__desc">{{ $event->description }}</p>
-                    <div class="event-detail__actions">
-                        <button class="btn btn--primary" onclick="document.getElementById('registrationForm').scrollIntoView({behavior:'smooth'})">
-                            <i class="fas fa-ticket-alt"></i> Register Now
-                        </button>
-                        <button class="btn btn--outline" onclick="addToCalendar()">
-                            <i class="fas fa-calendar-plus"></i> Add to Calendar
-                        </button>
-                    </div>
-                </div>
-                <div class="event-detail__image">
-                    <div class="event-detail__placeholder">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>{{ $event->title }}</span>
-                        <small>{{ $event->date->format('M d, Y') }}</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ─── REGISTRATION FORM ─── -->
-    <section class="event-detail__registration" id="registrationForm">
-        <div class="event-detail__registration-tag">REGISTER</div>
-
-        <div class="wrap">
-            <div class="event-detail__registration-grid">
-                <div class="event-detail__registration-info">
-                    <span class="event-detail__registration-eyebrow">Secure Your Spot</span>
-                    <h2 class="event-detail__registration-title">Register for <span>{{ $event->title }}</span></h2>
-                    <p class="event-detail__registration-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <div class="event-detail__registration-features">
+                    <div class="event-detail__hero-features">
                         <span><i class="fas fa-check-circle"></i> Free registration</span>
                         <span><i class="fas fa-check-circle"></i> Bring a friend</span>
                         <span><i class="fas fa-check-circle"></i> Certificate of attendance</span>
-                        <span><i class="fas fa-check-circle"></i> WhatsApp community access</span>
                     </div>
                 </div>
 
-                <div class="event-detail__registration-form">
-                    <div id="registrationMessage"></div>
+                {{-- Registration Form --}}
+                <div class="event-detail__hero-form">
+                    <div class="event-detail__form-card">
+                        <h3 class="event-detail__form-title">Register for This Event</h3>
+                        <p class="event-detail__form-subtitle">Secure your spot — it's free!</p>
 
-                    <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
-                        @csrf
-                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+                        <div id="registrationMessage"></div>
 
-                        <div class="event-detail__form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
-                        </div>
+                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
+                            @csrf
+                            <input type="hidden" name="event_id" value="{{ $event->id }}">
 
-                        <div class="event-detail__form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
-                        </div>
+                            <div class="event-detail__form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
+                            </div>
 
-                        <div class="event-detail__form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
-                        </div>
+                            <div class="event-detail__form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
+                            </div>
 
-                        <button type="submit" class="btn btn--primary btn--block">
-                            <i class="fas fa-ticket-alt"></i> Register for Event
-                        </button>
-                    </form>
+                            <div class="event-detail__form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
+                            </div>
+
+                            <button type="submit" class="btn btn--primary btn--block">
+                                <i class="fas fa-ticket-alt"></i> Register Now
+                            </button>
+                        </form>
+
+                        <p class="event-detail__form-note">
+                            <i class="fas fa-lock"></i> Your information is safe with us.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ─── WHAT TO EXPECT ─── -->
+    {{-- WHAT TO EXPECT --}}
     <section class="event-detail__expect">
         <div class="event-detail__expect-tag">EXPECT</div>
-
         <div class="wrap">
-            <div class="event-detail__expect-header">
-                <span class="event-detail__expect-eyebrow">What to Expect</span>
-                <h2 class="event-detail__expect-title">A Day of <span>Transformation</span></h2>
-                <p class="event-detail__expect-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+            <div class="section-header">
+                <span class="section-header__eyebrow">What to Expect</span>
+                <h2 class="section-header__title">A Day of <span>Transformation</span></h2>
+                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
             </div>
 
             <div class="event-detail__expect-grid">
@@ -144,8 +128,8 @@
         </div>
     </section>
 
-    <!-- ─── INVITE ARTHUR ─── -->
-    <section class="event-detail__invite">
+    {{-- INVITE ARTHUR --}}
+    <!-- <section class="event-detail__invite">
         <div class="wrap">
             <div class="event-detail__invite-content">
                 <div class="event-detail__invite-icon"><i class="fas fa-handshake"></i></div>
@@ -156,7 +140,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 
 </div>
 

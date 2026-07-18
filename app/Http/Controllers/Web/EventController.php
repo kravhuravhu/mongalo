@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationConfirmation;
 use App\Services\GoogleCalendarService;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -21,11 +22,13 @@ class EventController extends Controller
 
     public function index()
     {
-        $upcomingEvents = Event::where('is_past', false)
+        $today = Carbon::today();
+
+        $upcomingEvents = Event::where('date', '>=', $today)
             ->orderBy('date')
             ->get();
-
-        $pastEvents = Event::where('is_past', true)
+            
+        $pastEvents = Event::where('date', '<', $today)
             ->orderBy('date', 'desc')
             ->limit(5)
             ->get();
