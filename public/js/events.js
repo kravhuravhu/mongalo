@@ -1,33 +1,98 @@
-// ─── EVENTS ───
 document.addEventListener('DOMContentLoaded', function() {
+    // ─── EVENTS ORBS PARALLAX ───
+    const eventsOrbs = document.querySelectorAll('.events__orb');
+    if (eventsOrbs.length > 0 && window.innerWidth > 768) {
+        let rafId = null;
 
-    // ─── SCROLL REVEAL ───
-    const revealElements = document.querySelectorAll(
-        '.events__upcoming-card, .events__past-card, .events__invite-grid'
-    );
+        document.addEventListener('mousemove', function(e) {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
 
-    if (revealElements.length > 0) {
+            rafId = requestAnimationFrame(() => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                
+                eventsOrbs.forEach((orb, index) => {
+                    const speed = 12 + index * 4;
+                    const moveX = x * speed;
+                    const moveY = y * speed;
+                    orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+
+                rafId = null;
+            });
+        }, { passive: true });
+    }
+
+    // ─── SCROLL REVEAL FOR UPCOMING EVENTS ───
+    const upcomingCards = document.querySelectorAll('.events__upcoming-card');
+    if (upcomingCards.length > 0) {
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                } else {
-                    entry.target.style.opacity = '0';
-                    entry.target.style.transform = 'translateY(30px)';
+                    const delay = index * 100;
+                    setTimeout(() => {
+                        entry.target.classList.add('events__upcoming-card--visible');
+                    }, delay);
                 }
             });
         }, {
             threshold: 0.1,
             rootMargin: '0px 0px -30px 0px'
         });
+        upcomingCards.forEach(card => observer.observe(card));
+    }
 
-        revealElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+    // ─── SCROLL REVEAL FOR PAST EVENTS ───
+    const pastCards = document.querySelectorAll('.events__past-card');
+    if (pastCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    const delay = index * 80;
+                    setTimeout(() => {
+                        entry.target.classList.add('events__past-card--visible');
+                    }, delay);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
         });
+        pastCards.forEach(card => observer.observe(card));
+    }
+
+    // ─── SCROLL REVEAL FOR INVITE VISUAL ───
+    const inviteVisual = document.querySelector('.events__invite-visual');
+    if (inviteVisual) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('events__invite-visual--visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        });
+        observer.observe(inviteVisual);
+    }
+
+    // ─── SCROLL REVEAL FOR COMMUNITY CTA ───
+    const communitySection = document.querySelector('.events__community-content');
+    if (communitySection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('events__community-content--visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        observer.observe(communitySection);
     }
 
     // ─── COUNTDOWN TIMER — MM : DD : HH : MM : SS ───
@@ -61,13 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Calculate total months, days, hours, minutes, seconds
             let totalSeconds = Math.floor(distance / 1000);
             let totalMinutes = Math.floor(totalSeconds / 60);
             let totalHours = Math.floor(totalMinutes / 60);
             let totalDays = Math.floor(totalHours / 24);
 
-            // Calculate months (approx 30.44 days per month)
             const months = Math.floor(totalDays / 30.44);
             const remainingDays = Math.floor(totalDays % 30.44);
             const hours = totalHours % 24;
@@ -85,4 +148,46 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(updateCountdown, 1000);
     }
 
+    // ─── HERO BADGE INTERACTION ───
+    const heroBadge = document.querySelector('.events__hero-badge');
+    if (heroBadge) {
+        heroBadge.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'rotate(15deg) scale(1.2)';
+            }
+        });
+        heroBadge.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'rotate(0deg) scale(1)';
+            }
+        });
+    }
+
+    // ─── HERO ORBS PARALLAX ───
+    const heroOrbs = document.querySelectorAll('.events__hero-orb');
+    if (heroOrbs.length > 0 && window.innerWidth > 768) {
+        let rafId2 = null;
+
+        document.addEventListener('mousemove', function(e) {
+            if (rafId2) {
+                cancelAnimationFrame(rafId2);
+            }
+
+            rafId2 = requestAnimationFrame(() => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                
+                heroOrbs.forEach((orb, index) => {
+                    const speed = 15 + index * 6;
+                    const moveX = x * speed;
+                    const moveY = y * speed;
+                    orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+
+                rafId2 = null;
+            });
+        }, { passive: true });
+    }
 });

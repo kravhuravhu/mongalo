@@ -10,12 +10,27 @@
 
 <div class="events">
 
+    {{-- EVENTS FLOATING ORBS --}}
+    <div class="events__orbs">
+        <div class="events__orb events__orb--1"></div>
+        <div class="events__orb events__orb--2"></div>
+        <div class="events__orb events__orb--3"></div>
+        <div class="events__orb events__orb--4"></div>
+        <div class="events__orb events__orb--5"></div>
+    </div>
+
     {{-- HERO SECTION --}}
     <section class="events__hero">
         <div class="events__hero-bg">
             <div class="events__hero-orb events__hero-orb--1"></div>
             <div class="events__hero-orb events__hero-orb--2"></div>
             <div class="events__hero-orb events__hero-orb--3"></div>
+            <div class="events__hero-particle events__hero-particle--1"></div>
+            <div class="events__hero-particle events__hero-particle--2"></div>
+            <div class="events__hero-particle events__hero-particle--3"></div>
+            <div class="events__hero-particle events__hero-particle--4"></div>
+            <div class="events__hero-particle events__hero-particle--5"></div>
+            <div class="events__hero-pattern"></div>
         </div>
         <div class="events__hero-tag">EVENTS</div>
 
@@ -85,6 +100,10 @@
 
     {{-- UPCOMING EVENTS --}}
     <section class="events__upcoming" id="upcoming-events">
+        <div class="events__upcoming-bg">
+            <div class="events__upcoming-shape events__upcoming-shape--1"></div>
+            <div class="events__upcoming-shape events__upcoming-shape--2"></div>
+        </div>
         <div class="events__upcoming-tag">UPCOMING</div>
         <div class="wrap">
             <div class="section-header">
@@ -129,6 +148,10 @@
     {{-- PAST EVENTS --}}
     @if($pastEvents->count() > 0)
         <section class="events__past">
+            <div class="events__past-bg">
+                <div class="events__past-shape events__past-shape--1"></div>
+                <div class="events__past-shape events__past-shape--2"></div>
+            </div>
             <div class="events__past-tag">PAST</div>
             <div class="wrap">
                 <div class="section-header">
@@ -155,11 +178,15 @@
 
     {{-- INVITE ARTHUR --}}
     <section class="events__invite">
+        <div class="events__invite-bg">
+            <div class="events__invite-shape events__invite-shape--1"></div>
+            <div class="events__invite-shape events__invite-shape--2"></div>
+        </div>
         <div class="events__invite-tag">INVITE</div>
         <div class="wrap">
             <div class="events__invite-grid">
                 <div class="events__invite-content">
-                    <span class="section-header__eyebrow">Invite Arthur</span>
+                    <span class="events__invite-eyebrow">Invite Arthur</span>
                     <h2 class="events__invite-title">Bring <span>Arthur</span> to Your Event</h2>
                     <p class="events__invite-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="events__invite-features">
@@ -168,17 +195,36 @@
                         <span><i class="fas fa-check-circle"></i> Baptism services</span>
                         <span><i class="fas fa-check-circle"></i> Community gatherings</span>
                     </div>
-                    <a href="{{ route('invite') }}" class="btn btn--primary">
+                    <a href="{{ route('invite') }}" class="events__invite-btn">
                         <i class="fas fa-handshake"></i> Invite Arthur Now
                     </a>
                 </div>
-                <div class="events__invite-image">
+                <div class="events__invite-visual">
                     <div class="events__invite-placeholder">
                         <i class="fas fa-handshake"></i>
                         <span>Let's Connect</span>
                         <small>Lorem ipsum dolor sit amet</small>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- COMMUNITY CTA --}}
+    <section class="events__community">
+        <div class="events__community-bg">
+            <div class="events__community-shape events__community-shape--1"></div>
+            <div class="events__community-shape events__community-shape--2"></div>
+            <div class="events__community-shape events__community-shape--3"></div>
+        </div>
+        <div class="wrap">
+            <div class="events__community-content">
+                <div class="events__community-icon"><i class="fab fa-whatsapp"></i></div>
+                <h2 class="events__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
+                <p class="events__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
+                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="events__community-btn">
+                    <i class="fab fa-whatsapp"></i> Join on WhatsApp
+                </a>
             </div>
         </div>
     </section>
