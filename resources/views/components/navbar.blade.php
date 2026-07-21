@@ -3,7 +3,7 @@
     if (request()->routeIs('baptism*')) {
         $activeTheme = 'teal';
     } elseif (request()->routeIs('books*')) {
-        $activeTheme = 'dark';
+        $activeTheme = 'books';
     } elseif (request()->routeIs('events*')) {
         $activeTheme = 'events';
     } elseif (request()->routeIs('community*')) {
