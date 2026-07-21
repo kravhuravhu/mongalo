@@ -15,7 +15,7 @@
         <div class="book-detail__orb book-detail__orb--5"></div>
     </div>
 
-    {{-- HERO — Book Detail (Books Theme) --}}
+    {{-- HERO — Book Detail (Books Theme ONLY in Hero) --}}
     <section class="book-detail__hero">
         <div class="book-detail__hero-bg">
             <div class="book-detail__hero-shape book-detail__hero-shape--1"></div>
@@ -77,7 +77,7 @@
         </div>
     </section>
 
-    {{-- RELATED BOOKS --}}
+    {{-- RELATED BOOKS (Default Gold Theme) --}}
     @if($relatedBooks->count() > 0)
         <section class="book-detail__related">
             <div class="book-detail__related-bg">
@@ -94,7 +94,7 @@
                 <div class="book-detail__related-grid">
                     @foreach($relatedBooks as $related)
                         <div class="book-detail__related-card reveal reveal--scale" data-delay="{{ $loop->index * 100 }}">
-                            <div class="book-detail__related-cover" style="background:{{ $related->cover_color ?? '#2d2d44' }};">
+                            <div class="book-detail__related-cover" style="background:{{ $related->cover_color ?? '#a67c4e' }};">
                                 <span class="book-detail__related-cover-title">{{ $related->title }}</span>
                                 <div class="book-detail__related-cover-shine"></div>
                             </div>
@@ -112,7 +112,7 @@
         </section>
     @endif
 
-    {{-- COMMUNITY CTA --}}
+    {{-- COMMUNITY CTA (Default Gold Theme) --}}
     <section class="book-detail__community">
         <div class="book-detail__community-bg">
             <div class="book-detail__community-shape book-detail__community-shape--1"></div>
