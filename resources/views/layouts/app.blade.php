@@ -22,11 +22,19 @@
     <link rel="stylesheet" href="{{ secure_asset('css/invite.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/baptism.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/community.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('css/resources.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/contact.css') }}">
     @stack('styles')
 </head>
-<body>
+<body class="@yield('page-class', 'page-default')">
+
+    {{-- Floating Orbs --}}
+    <div class="floating-orbs">
+        <div class="orb orb--1"></div>
+        <div class="orb orb--2"></div>
+        <div class="orb orb--3"></div>
+        <div class="orb orb--4"></div>
+        <div class="orb orb--5"></div>
+    </div>
 
     <!-- Navbar -->
     @include('components.navbar')

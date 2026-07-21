@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navLinks) {
         navLinks.querySelectorAll('.navbar__link, .navbar__cta').forEach(link => {
             link.addEventListener('click', function() {
-                if (window.innerWidth <= 820) {
+                if (window.innerWidth <= 1024) {
                     setTimeout(closeNav, 100);
                 }
             });
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-            if (window.innerWidth > 820) {
+            if (window.innerWidth > 1024) {
                 const navLinks = document.querySelector('.navbar__links');
                 if (navLinks && navLinks.classList.contains('navbar__links--open')) {
                     closeNav();
@@ -310,3 +310,69 @@ document.addEventListener('DOMContentLoaded', function() {
 function addToCalendar(eventId) {
     alert('A calendar invite will be sent to your email after registration.');
 }
+
+// ─── BUTTON RIPPLE EFFECT ───
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'btn__ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+});
+
+// ─── SCROLL REVEAL OBSERVER ───
+document.addEventListener('DOMContentLoaded', function() {
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    if (revealElements.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = parseInt(entry.target.dataset.delay) || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('reveal--visible');
+                    }, delay);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        });
+        
+        revealElements.forEach(el => observer.observe(el));
+    }
+});
+
+// ─── PARALLAX ORBS ───
+document.addEventListener('DOMContentLoaded', function() {
+    const orbs = document.querySelectorAll('.floating-orbs .orb');
+    
+    if (orbs.length > 0 && window.innerWidth > 768) {
+        document.addEventListener('mousemove', function(e) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            
+            orbs.forEach((orb, index) => {
+                const speed = 10 + index * 5;
+                const moveX = x * speed;
+                const moveY = y * speed;
+                orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+    }
+});
