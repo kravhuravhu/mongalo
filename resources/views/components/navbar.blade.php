@@ -5,7 +5,7 @@
     } elseif (request()->routeIs('books*')) {
         $activeTheme = 'dark';
     } elseif (request()->routeIs('events*')) {
-        $activeTheme = 'dark';
+        $activeTheme = 'events';
     } elseif (request()->routeIs('community*')) {
         $activeTheme = 'green';
     } elseif (request()->routeIs('contact*') || request()->routeIs('invite*')) {

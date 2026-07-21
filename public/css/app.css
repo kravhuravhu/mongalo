@@ -903,7 +903,6 @@ img {
 }
 
 /* ─── NAVBAR THEMES ─── */
-
 /* Default: Gold Theme (Home, About, Contact, Invite) */
 .navbar--theme-gold {
     & .navbar__link--active {
@@ -934,7 +933,7 @@ img {
     & .navbar__brand-dot { background: #4A9E9E; }
 }
 
-/* Dark Theme (Books, Events) */
+/* Dark Theme (Books) */
 .navbar--theme-dark {
     background: rgba(26, 26, 46, 0.92) !important;
     border-bottom-color: rgba(255, 255, 255, 0.06) !important;
@@ -963,6 +962,35 @@ img {
     }
 }
 
+/* Events Theme (Amber/Burgundy) */
+.navbar--theme-events {
+    background: rgba(44, 24, 16, 0.92) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+
+    & .navbar__brand-text { color: #fff !important; }
+    & .navbar__link {
+        color: rgba(255, 255, 255, 0.5) !important;
+        &:hover { color: #fff !important; background: rgba(243, 156, 18, 0.08) !important; }
+    }
+    & .navbar__link--active {
+        color: #f39c12 !important;
+        & .navbar__link-icon { color: #f39c12 !important; }
+        &::after { background: #f39c12 !important; }
+        background: rgba(243, 156, 18, 0.08) !important;
+    }
+    & .navbar__cta {
+        background: #e67e22;
+        &:hover { background: #f39c12; }
+        &.navbar__cta--active { background: #f39c12; }
+    }
+    & .navbar__brand-dot { background: #f39c12; }
+    & .navbar__toggle-bar { background: #fff !important; }
+
+    &.navbar--scrolled {
+        background: rgba(44, 24, 16, 0.98) !important;
+    }
+}
+
 /* Green Theme (Community) */
 .navbar--theme-green {
     & .navbar__link--active {
@@ -978,9 +1006,10 @@ img {
     & .navbar__brand-dot { background: #25D366; }
 }
 
-/* Mobile Override - keep consistent on mobile */
+/* Mobile Override */
 @media (max-width: 1024px) {
-    .navbar--theme-dark {
+    .navbar--theme-dark,
+    .navbar--theme-events {
         background: rgba(247, 245, 242, 0.98) !important;
         & .navbar__brand-text { color: var(--text) !important; }
         & .navbar__link {
@@ -988,6 +1017,12 @@ img {
             &:hover { color: var(--text) !important; background: var(--gold-dim) !important; }
         }
         & .navbar__toggle-bar { background: var(--text) !important; }
+        & .navbar__link--active {
+            color: var(--gold) !important;
+            & .navbar__link-icon { color: var(--gold) !important; }
+            &::after { background: var(--gold) !important; }
+            background: var(--gold-dim) !important;
+        }
     }
 }
 
