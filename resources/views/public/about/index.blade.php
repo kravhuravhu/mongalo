@@ -6,13 +6,26 @@
 
 <div class="about">
 
-    <!-- ─── HERO SPLIT ─── -->
+    {{-- ABOUT FLOATING ORBS --}}
+    <div class="about__orbs">
+        <div class="about__orb about__orb--1"></div>
+        <div class="about__orb about__orb--2"></div>
+        <div class="about__orb about__orb--3"></div>
+        <div class="about__orb about__orb--4"></div>
+        <div class="about__orb about__orb--5"></div>
+    </div>
+
+    {{-- HERO SPLIT --}}
     <section class="about__hero">
         <div class="about__hero-bg">
             <div class="about__hero-shape about__hero-shape--1"></div>
             <div class="about__hero-shape about__hero-shape--2"></div>
             <div class="about__hero-shape about__hero-shape--3"></div>
             <div class="about__hero-grid"></div>
+            <div class="about__hero-particle about__hero-particle--1"></div>
+            <div class="about__hero-particle about__hero-particle--2"></div>
+            <div class="about__hero-particle about__hero-particle--3"></div>
+            <div class="about__hero-particle about__hero-particle--4"></div>
         </div>
 
         <div class="wrap">
@@ -85,9 +98,11 @@
         </div>
     </section>
 
-    <!-- ─── MISSION & VISION ─── -->
+    {{-- MISSION & VISION --}}
     <section class="about__mission">
         <div class="about__mission-bg">
+            <div class="about__mission-shape about__mission-shape--1"></div>
+            <div class="about__mission-shape about__mission-shape--2"></div>
             <span class="about__mission-tag">MISSION</span>
         </div>
 
@@ -120,7 +135,7 @@
         </div>
     </section>
 
-    <!-- ─── OUR STORY ─── -->
+    {{-- OUR STORY --}}
     <section class="about__story">
         <div class="about__story-bg">
             <span class="about__story-tag">STORY</span>
@@ -184,7 +199,7 @@
                             <i class="fas fa-quote-left" aria-hidden="true"></i>
                         </div>
                         <blockquote class="about__story-card-text">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."
                         </blockquote>
                         <div class="about__story-card-author">
                             <span class="about__story-card-name">Arthur Mongalo</span>
@@ -197,9 +212,11 @@
         </div>
     </section>
 
-    <!-- ─── VALUES ─── -->
+    {{-- VALUES --}}
     <section class="about__values">
         <div class="about__values-bg">
+            <div class="about__values-shape about__values-shape--1"></div>
+            <div class="about__values-shape about__values-shape--2"></div>
             <span class="about__values-tag">VALUES</span>
         </div>
 
@@ -208,7 +225,7 @@
                 <span class="about__values-eyebrow">What We Believe</span>
                 <h2 class="about__values-title">Our Core <span>Values</span></h2>
                 <p class="about__values-subtitle">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    These six values shape everything we do. They guide our mission, our resources and how we serve our community.
                 </p>
             </div>
 
@@ -220,7 +237,7 @@
                     </div>
                     <h4 class="about__values-card-title">Love</h4>
                     <p class="about__values-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                        We love God and love people. Every action, every resource and every conversation is rooted in genuine love for others.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -232,7 +249,7 @@
                     </div>
                     <h4 class="about__values-card-title">Community</h4>
                     <p class="about__values-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                        We believe we are better together. Community is not just a gathering; it's a family walking through life and faith side by side.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -244,7 +261,7 @@
                     </div>
                     <h4 class="about__values-card-title">Truth</h4>
                     <p class="about__values-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                        We stand on the Word of God. Scripture is our foundation, our guide and our authority in every matter of faith and practice.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -256,7 +273,7 @@
                     </div>
                     <h4 class="about__values-card-title">Growth</h4>
                     <p class="about__values-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                        We are committed to spiritual growth. From salvation to water baptism, Spirit baptism and the renewal of the mind, we walk the journey together.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -268,7 +285,7 @@
                     </div>
                     <h4 class="about__values-card-title">Service</h4>
                     <p class="about__values-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                        We serve with humility. Everything we give—books, resources, time and prayer—is offered freely, just as we have freely received.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -280,7 +297,7 @@
                     </div>
                     <h4 class="about__values-card-title">Faith</h4>
                     <p class="about__values-card-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+                        We walk by faith, not by sight. Faith is our response to God's grace, and it is the foundation of everything we believe and do.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -288,7 +305,7 @@
         </div>
     </section>
 
-    <!-- ─── ARTHUR MONGALO ─── -->
+    {{-- ARTHUR MONGALO --}}
     <section class="about__arthur">
         <div class="about__arthur-bg">
             <span class="about__arthur-tag">ARTHUR</span>
@@ -307,13 +324,13 @@
                         <div class="about__arthur-card-role">Author · Speaker · Storyteller</div>
                         <div class="about__arthur-card-line"></div>
                         <div class="about__arthur-card-socials">
-                            <a href="#" class="about__arthur-card-social">
+                            <a href="#" class="about__arthur-card-social" aria-label="Twitter">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="#" class="about__arthur-card-social">
+                            <a href="#" class="about__arthur-card-social" aria-label="Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="#" class="about__arthur-card-social">
+                            <a href="#" class="about__arthur-card-social" aria-label="YouTube">
                                 <i class="fab fa-youtube"></i>
                             </a>
                         </div>
@@ -324,15 +341,15 @@
                     <span class="about__arthur-eyebrow">Meet Arthur</span>
                     <h2 class="about__arthur-title">A Man Shaped by <span>Real Life</span></h2>
                     <p class="about__arthur-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Arthur Mongalo is a storyteller, author and speaker who has dedicated his life to sharing the Gospel and equipping believers. His journey with God has taken him through the streets of Gauteng and into the hearts of hundreds through books, events and personal conversations.
                     </p>
                     <p class="about__arthur-text">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        His writing focuses on identity in Christ, water baptism and spiritual growth. Arthur believes that every believer has a unique story and that these stories, when shared, have the power to transform lives. His books—including Divine Identity and The Journey of Faith—have reached readers across South Africa and beyond.
                     </p>
                     <div class="about__arthur-quote">
                         <i class="fas fa-quote-left" aria-hidden="true"></i>
                         <blockquote>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            "Every story matters. Every believer has a role to play. We are not just saved to sit—we are saved to serve, to share and to build the Kingdom together."
                         </blockquote>
                     </div>
                     <div class="about__arthur-actions">
@@ -350,9 +367,11 @@
         </div>
     </section>
 
-    <!-- ─── STATS COUNTER ─── -->
+    {{-- STATS COUNTER --}}
     <section class="about__stats">
         <div class="about__stats-bg">
+            <div class="about__stats-shape about__stats-shape--1"></div>
+            <div class="about__stats-shape about__stats-shape--2"></div>
             <span class="about__stats-tag">IMPACT</span>
         </div>
 
@@ -382,9 +401,11 @@
         </div>
     </section>
 
-    <!-- ─── COMMUNITY CTA ─── -->
+    {{-- COMMUNITY CTA --}}
     <section class="about__community">
         <div class="about__community-bg">
+            <div class="about__community-shape about__community-shape--1"></div>
+            <div class="about__community-shape about__community-shape--2"></div>
             <span class="about__community-tag">COMMUNITY</span>
         </div>
 
@@ -395,7 +416,7 @@
                 </div>
                 <h2 class="about__community-title">Join <span>The Collective</span></h2>
                 <p class="about__community-desc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                    Join over 247 believers on WhatsApp for daily encouragement, book updates, baptism conversations and free resources. Be part of a community that walks in faith together.
                 </p>
                 <div class="about__community-benefits">
                     <span>
