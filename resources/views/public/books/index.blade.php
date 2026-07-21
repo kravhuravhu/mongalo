@@ -13,12 +13,27 @@
 
 <div class="books">
 
+    {{-- BOOKS FLOATING ORBS --}}
+    <div class="books__orbs">
+        <div class="books__orb books__orb--1"></div>
+        <div class="books__orb books__orb--2"></div>
+        <div class="books__orb books__orb--3"></div>
+        <div class="books__orb books__orb--4"></div>
+        <div class="books__orb books__orb--5"></div>
+    </div>
+
     {{-- HERO --}}
     <section class="books__hero">
         <div class="books__hero-bg">
             <div class="books__hero-pattern"></div>
             <div class="books__hero-shape books__hero-shape--1"></div>
             <div class="books__hero-shape books__hero-shape--2"></div>
+            <div class="books__hero-shape books__hero-shape--3"></div>
+            <div class="books__hero-particle books__hero-particle--1"></div>
+            <div class="books__hero-particle books__hero-particle--2"></div>
+            <div class="books__hero-particle books__hero-particle--3"></div>
+            <div class="books__hero-particle books__hero-particle--4"></div>
+            <div class="books__hero-particle books__hero-particle--5"></div>
         </div>
         <div class="books__hero-tag">BOOKS</div>
 
@@ -101,6 +116,10 @@
 
     {{-- BOOKS GRID --}}
     <section class="books__grid" id="books-grid">
+        <div class="books__grid-bg">
+            <div class="books__grid-shape books__grid-shape--1"></div>
+            <div class="books__grid-shape books__grid-shape--2"></div>
+        </div>
         <div class="books__grid-tag">READ</div>
         <div class="wrap">
             <div class="section-header">
@@ -166,11 +185,15 @@
 
     {{-- FEATURED AUTHOR --}}
     <section class="books__author">
+        <div class="books__author-bg">
+            <div class="books__author-shape books__author-shape--1"></div>
+            <div class="books__author-shape books__author-shape--2"></div>
+        </div>
         <div class="books__author-tag">AUTHOR</div>
         <div class="wrap">
             <div class="books__author-grid">
                 <div class="books__author-content">
-                    <span class="section-header__eyebrow">Meet the Author</span>
+                    <span class="books__author-eyebrow">Meet the Author</span>
                     <h2 class="books__author-title">Arthur <span>Mongalo</span></h2>
                     <p class="books__author-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                     <p class="books__author-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
@@ -211,6 +234,7 @@
             <div class="books__spotlight-bg">
                 <div class="books__spotlight-shape books__spotlight-shape--1"></div>
                 <div class="books__spotlight-shape books__spotlight-shape--2"></div>
+                <div class="books__spotlight-shape books__spotlight-shape--3"></div>
             </div>
             <div class="books__spotlight-tag">SPOTLIGHT</div>
 
@@ -225,7 +249,7 @@
                     </div>
 
                     <div class="books__spotlight-content">
-                        <span class="section-header__eyebrow">Bestseller</span>
+                        <span class="books__spotlight-eyebrow">Bestseller</span>
                         <h2 class="books__spotlight-title">Discover Your <span>Divine Identity</span></h2>
                         <p class="books__spotlight-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
@@ -242,7 +266,7 @@
                         </div>
 
                         <div class="books__spotlight-actions">
-                            <a href="{{ route('books.show', $divineBook->slug) }}" class="btn btn--primary">
+                            <a href="{{ route('books.show', $divineBook->slug) }}" class="books__spotlight-btn">
                                 <span>Read More</span>
                                 <i class="fas fa-arrow-right"></i>
                             </a>
@@ -259,13 +283,14 @@
         <div class="books__community-bg">
             <div class="books__community-shape books__community-shape--1"></div>
             <div class="books__community-shape books__community-shape--2"></div>
+            <div class="books__community-shape books__community-shape--3"></div>
         </div>
         <div class="wrap">
             <div class="books__community-content">
                 <div class="books__community-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="books__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="books__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
-                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary btn--lg">
+                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="books__community-btn">
                     <i class="fab fa-whatsapp"></i> Join on WhatsApp
                 </a>
             </div>
