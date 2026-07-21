@@ -6,12 +6,26 @@
 
 <div class="invite">
 
+    {{-- INVITE FLOATING ORBS (Phase 1) --}}
+    <div class="invite__orbs">
+        <div class="invite__orb invite__orb--1"></div>
+        <div class="invite__orb invite__orb--2"></div>
+        <div class="invite__orb invite__orb--3"></div>
+        <div class="invite__orb invite__orb--4"></div>
+        <div class="invite__orb invite__orb--5"></div>
+    </div>
+
     {{-- HERO --}}
     <section class="invite__hero">
         <div class="invite__hero-bg">
             <div class="invite__hero-shape invite__hero-shape--1"></div>
             <div class="invite__hero-shape invite__hero-shape--2"></div>
             <div class="invite__hero-shape invite__hero-shape--3"></div>
+            <div class="invite__hero-particle invite__hero-particle--1"></div>
+            <div class="invite__hero-particle invite__hero-particle--2"></div>
+            <div class="invite__hero-particle invite__hero-particle--3"></div>
+            <div class="invite__hero-particle invite__hero-particle--4"></div>
+            <div class="invite__hero-particle invite__hero-particle--5"></div>
         </div>
         <div class="invite__hero-tag">INVITE</div>
 
@@ -49,11 +63,15 @@
 
     {{-- FORM --}}
     <section class="invite__form">
+        <div class="invite__form-bg">
+            <div class="invite__form-shape invite__form-shape--1"></div>
+            <div class="invite__form-shape invite__form-shape--2"></div>
+        </div>
         <div class="invite__form-tag">FORM</div>
         <div class="wrap">
             <div class="invite__form-grid">
                 <div class="invite__form-info">
-                    <span class="section-header__eyebrow">Tell Us About Your Event</span>
+                    <span class="invite__form-eyebrow">Tell Us About Your Event</span>
                     <h2 class="invite__form-title">Let's Make It <span>Happen</span></h2>
                     <p class="invite__form-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="invite__form-features">
@@ -142,7 +160,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn--primary btn--block">
+                        <button type="submit" class="btn btn--block">
                             <i class="fas fa-paper-plane"></i> Send Invitation
                         </button>
                     </form>
@@ -156,9 +174,10 @@
         <div class="invite__community-bg">
             <div class="invite__community-shape invite__community-shape--1"></div>
             <div class="invite__community-shape invite__community-shape--2"></div>
+            <div class="invite__community-shape invite__community-shape--3"></div>
         </div>
         <div class="wrap">
-            <div class="invite__community-content">
+            <div class="invite__community-content reveal" data-delay="100">
                 <div class="invite__community-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="invite__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="invite__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
