@@ -1,13 +1,13 @@
 @php
     $activeTheme = 'gold';
     if (request()->routeIs('baptism*')) {
-        $activeTheme = 'teal';
+        $activeTheme = 'gold';
     } elseif (request()->routeIs('books*')) {
         $activeTheme = 'gold';
     } elseif (request()->routeIs('events*')) {
         $activeTheme = 'gold';
     } elseif (request()->routeIs('community*')) {
-        $activeTheme = 'green';
+        $activeTheme = 'gold';
     } elseif (request()->routeIs('contact*') || request()->routeIs('invite*')) {
         $activeTheme = 'gold';
     } elseif (request()->routeIs('home*')) {

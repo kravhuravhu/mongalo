@@ -6,7 +6,7 @@
 
 <div class="event-detail">
 
-    {{-- EVENT DETAIL FLOATING ORBS--}}
+    {{-- EVENT DETAIL FLOATING ORBS --}}
     <div class="event-detail__orbs">
         <div class="event-detail__orb event-detail__orb--1"></div>
         <div class="event-detail__orb event-detail__orb--2"></div>
@@ -68,7 +68,7 @@
                 <div class="event-detail__hero-form">
                     <div class="event-detail__form-card">
                         <h3 class="event-detail__form-title">Register for This Event</h3>
-                        <p class="event-detail__form-subtitle">Secure your spot — it's free!</p>
+                        <p class="event-detail__form-subtitle">Secure your spot</p>
 
                         <div id="registrationMessage"></div>
 
@@ -105,7 +105,7 @@
         </div>
     </section>
 
-    {{-- WHAT TO EXPECT --}}
+    {{-- WHAT TO EXPECT (Default Gold Theme) --}}
     <section class="event-detail__expect">
         <div class="event-detail__expect-bg">
             <div class="event-detail__expect-shape event-detail__expect-shape--1"></div>
@@ -147,7 +147,7 @@
         </div>
     </section>
 
-    {{-- COMMUNITY CTA --}}
+    {{-- COMMUNITY CTA (Default Gold Theme) --}}
     <section class="event-detail__community">
         <div class="event-detail__community-bg">
             <div class="event-detail__community-shape event-detail__community-shape--1"></div>

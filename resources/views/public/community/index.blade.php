@@ -6,6 +6,15 @@
 
 <div class="community">
 
+    {{-- COMMUNITY FLOATING ORBS --}}
+    <div class="community__orbs">
+        <div class="community__orb community__orb--1"></div>
+        <div class="community__orb community__orb--2"></div>
+        <div class="community__orb community__orb--3"></div>
+        <div class="community__orb community__orb--4"></div>
+        <div class="community__orb community__orb--5"></div>
+    </div>
+
     {{-- HERO — WhatsApp Community --}}
     <section class="community__hero">
         <div class="community__hero-bg">
@@ -13,6 +22,11 @@
             <div class="community__hero-shape community__hero-shape--2"></div>
             <div class="community__hero-shape community__hero-shape--3"></div>
             <div class="community__hero-shape community__hero-shape--4"></div>
+            <div class="community__hero-particle community__hero-particle--1"></div>
+            <div class="community__hero-particle community__hero-particle--2"></div>
+            <div class="community__hero-particle community__hero-particle--3"></div>
+            <div class="community__hero-particle community__hero-particle--4"></div>
+            <div class="community__hero-particle community__hero-particle--5"></div>
         </div>
         <div class="community__hero-tag">COMMUNITY</div>
 
@@ -90,6 +104,10 @@
 
     {{-- BENEFITS --}}
     <section class="community__benefits">
+        <div class="community__benefits-bg">
+            <div class="community__benefits-shape community__benefits-shape--1"></div>
+            <div class="community__benefits-shape community__benefits-shape--2"></div>
+        </div>
         <div class="community__benefits-tag">BENEFITS</div>
         <div class="wrap">
             <div class="section-header">
@@ -99,37 +117,37 @@
             </div>
 
             <div class="community__benefits-grid">
-                <div class="community__benefits-card">
+                <div class="community__benefits-card reveal" data-delay="0">
                     <div class="community__benefits-card-icon"><i class="fas fa-praying-hands"></i></div>
                     <h4 class="community__benefits-card-title">Daily Encouragement</h4>
                     <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="community__benefits-card">
+                <div class="community__benefits-card reveal" data-delay="100">
                     <div class="community__benefits-card-icon"><i class="fas fa-book"></i></div>
                     <h4 class="community__benefits-card-title">Book Updates</h4>
                     <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="community__benefits-card">
+                <div class="community__benefits-card reveal" data-delay="200">
                     <div class="community__benefits-card-icon"><i class="fas fa-water"></i></div>
                     <h4 class="community__benefits-card-title">Baptism Conversations</h4>
                     <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="community__benefits-card">
+                <div class="community__benefits-card reveal" data-delay="300">
                     <div class="community__benefits-card-icon"><i class="fas fa-download"></i></div>
                     <h4 class="community__benefits-card-title">Free Resources</h4>
                     <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="community__benefits-card">
+                <div class="community__benefits-card reveal" data-delay="400">
                     <div class="community__benefits-card-icon"><i class="fas fa-calendar-alt"></i></div>
                     <h4 class="community__benefits-card-title">Event Alerts</h4>
                     <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="community__benefits-card">
+                <div class="community__benefits-card reveal" data-delay="500">
                     <div class="community__benefits-card-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h4 class="community__benefits-card-title">Prayer Support</h4>
                     <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
@@ -140,6 +158,10 @@
 
     {{-- TESTIMONIALS --}}
     <section class="community__testimonials">
+        <div class="community__testimonials-bg">
+            <div class="community__testimonials-shape community__testimonials-shape--1"></div>
+            <div class="community__testimonials-shape community__testimonials-shape--2"></div>
+        </div>
         <div class="community__testimonials-tag">STORIES</div>
         <div class="wrap">
             <div class="section-header">
@@ -149,7 +171,7 @@
             </div>
 
             <div class="community__testimonials-grid">
-                <div class="community__testimonials-card">
+                <div class="community__testimonials-card reveal" data-delay="0">
                     <div class="community__testimonials-stars">★★★★★</div>
                     <blockquote class="community__testimonials-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</blockquote>
                     <div class="community__testimonials-author">
@@ -158,7 +180,7 @@
                     </div>
                 </div>
 
-                <div class="community__testimonials-card">
+                <div class="community__testimonials-card reveal" data-delay="100">
                     <div class="community__testimonials-stars">★★★★★</div>
                     <blockquote class="community__testimonials-text">"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</blockquote>
                     <div class="community__testimonials-author">
@@ -167,7 +189,7 @@
                     </div>
                 </div>
 
-                <div class="community__testimonials-card">
+                <div class="community__testimonials-card reveal" data-delay="200">
                     <div class="community__testimonials-stars">★★★★★</div>
                     <blockquote class="community__testimonials-text">"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</blockquote>
                     <div class="community__testimonials-author">
@@ -180,13 +202,13 @@
     </section>
 
     {{-- COMMUNITY CTA --}}
-    <!-- <section class="community__cta">
+    <section class="community__cta">
         <div class="community__cta-bg">
             <div class="community__cta-shape community__cta-shape--1"></div>
             <div class="community__cta-shape community__cta-shape--2"></div>
         </div>
         <div class="wrap">
-            <div class="community__cta-content">
+            <div class="community__cta-content reveal" data-delay="100">
                 <div class="community__cta-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="community__cta-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="community__cta-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
@@ -195,7 +217,7 @@
                 </a>
             </div>
         </div>
-    </section> -->
+    </section>
 
 </div>
 
