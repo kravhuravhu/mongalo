@@ -208,7 +208,7 @@
     </section>
 
     {{-- LOCATION --}}
-    <section class="contact__location">
+    <!-- <section class="contact__location">
         <div class="contact__location-bg">
             <div class="contact__location-shape contact__location-shape--1"></div>
             <div class="contact__location-shape contact__location-shape--2"></div>
@@ -262,10 +262,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     {{-- COMMUNITY CTA --}}
-    <section class="contact__community">
+    <!-- <section class="contact__community">
         <div class="contact__community-bg">
             <div class="contact__community-shape contact__community-shape--1"></div>
             <div class="contact__community-shape contact__community-shape--2"></div>
@@ -281,7 +281,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 
 </div>
 

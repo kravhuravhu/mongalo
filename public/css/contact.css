@@ -276,6 +276,7 @@
                 max-width: 44ch;
                 line-height: 1.8;
                 margin-bottom: 32px;
+                margin-top: 12px;
                 animation: contactTextFade 1.2s ease-out;
             }
 
