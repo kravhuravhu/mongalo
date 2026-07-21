@@ -6,12 +6,27 @@
 
 <div class="event-detail">
 
+    {{-- EVENT DETAIL FLOATING ORBS--}}
+    <div class="event-detail__orbs">
+        <div class="event-detail__orb event-detail__orb--1"></div>
+        <div class="event-detail__orb event-detail__orb--2"></div>
+        <div class="event-detail__orb event-detail__orb--3"></div>
+        <div class="event-detail__orb event-detail__orb--4"></div>
+        <div class="event-detail__orb event-detail__orb--5"></div>
+    </div>
+
     {{-- HERO --}}
     <section class="event-detail__hero">
         <div class="event-detail__hero-bg">
-            <div class="event-detail__orb event-detail__orb--1"></div>
-            <div class="event-detail__orb event-detail__orb--2"></div>
-            <div class="event-detail__orb event-detail__orb--3"></div>
+            <div class="event-detail__hero-orb event-detail__hero-orb--1"></div>
+            <div class="event-detail__hero-orb event-detail__hero-orb--2"></div>
+            <div class="event-detail__hero-orb event-detail__hero-orb--3"></div>
+            <div class="event-detail__hero-particle event-detail__hero-particle--1"></div>
+            <div class="event-detail__hero-particle event-detail__hero-particle--2"></div>
+            <div class="event-detail__hero-particle event-detail__hero-particle--3"></div>
+            <div class="event-detail__hero-particle event-detail__hero-particle--4"></div>
+            <div class="event-detail__hero-particle event-detail__hero-particle--5"></div>
+            <div class="event-detail__hero-pattern"></div>
         </div>
         <div class="event-detail__hero-tag">REGISTER</div>
 
@@ -92,6 +107,10 @@
 
     {{-- WHAT TO EXPECT --}}
     <section class="event-detail__expect">
+        <div class="event-detail__expect-bg">
+            <div class="event-detail__expect-shape event-detail__expect-shape--1"></div>
+            <div class="event-detail__expect-shape event-detail__expect-shape--2"></div>
+        </div>
         <div class="event-detail__expect-tag">EXPECT</div>
         <div class="wrap">
             <div class="section-header">
@@ -101,25 +120,25 @@
             </div>
 
             <div class="event-detail__expect-grid">
-                <div class="event-detail__expect-item">
+                <div class="event-detail__expect-item reveal" data-delay="0">
                     <div class="event-detail__expect-icon"><i class="fas fa-praying-hands"></i></div>
                     <h4>Worship</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="event-detail__expect-item">
+                <div class="event-detail__expect-item reveal" data-delay="100">
                     <div class="event-detail__expect-icon"><i class="fas fa-book-open"></i></div>
                     <h4>Teaching</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="event-detail__expect-item">
+                <div class="event-detail__expect-item reveal" data-delay="200">
                     <div class="event-detail__expect-icon"><i class="fas fa-users"></i></div>
                     <h4>Community</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
                 </div>
 
-                <div class="event-detail__expect-item">
+                <div class="event-detail__expect-item reveal" data-delay="300">
                     <div class="event-detail__expect-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h4>Prayer</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
@@ -128,19 +147,23 @@
         </div>
     </section>
 
-    {{-- INVITE ARTHUR --}}
-    <!-- <section class="event-detail__invite">
+    {{-- COMMUNITY CTA --}}
+    <section class="event-detail__community">
+        <div class="event-detail__community-bg">
+            <div class="event-detail__community-shape event-detail__community-shape--1"></div>
+            <div class="event-detail__community-shape event-detail__community-shape--2"></div>
+        </div>
         <div class="wrap">
-            <div class="event-detail__invite-content">
-                <div class="event-detail__invite-icon"><i class="fas fa-handshake"></i></div>
-                <h2 class="event-detail__invite-title">Invite <span>Arthur</span> to Your Event</h2>
-                <p class="event-detail__invite-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-                <a href="{{ route('invite') }}" class="btn btn--primary">
-                    <i class="fas fa-handshake"></i> Invite Arthur Now
+            <div class="event-detail__community-content reveal" data-delay="100">
+                <div class="event-detail__community-icon"><i class="fab fa-whatsapp"></i></div>
+                <h2 class="event-detail__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
+                <p class="event-detail__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
+                <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary btn--lg">
+                    <i class="fab fa-whatsapp"></i> Join on WhatsApp
                 </a>
             </div>
         </div>
-    </section> -->
+    </section>
 
 </div>
 

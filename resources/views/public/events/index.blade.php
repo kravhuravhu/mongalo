@@ -41,7 +41,7 @@
                         <i class="fas fa-calendar-alt"></i> Next Event
                     </span>
                     <h1 class="events__hero-title">{{ $nextEvent->title }}</h1>
-                    <p class="events__hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="events__hero-text">{{ $nextEvent->description }}</p>
                     <div class="events__hero-meta">
                         <span><i class="fas fa-map-marker-alt"></i> {{ $nextEvent->location }}</span>
                         <span><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($nextEvent->time)->format('g:i A') }}</span>
@@ -113,8 +113,8 @@
             </div>
 
             <div class="events__upcoming-list">
-                @forelse($upcomingEvents as $event)
-                    <div class="events__upcoming-card">
+                @forelse($upcomingEvents as $index => $event)
+                    <div class="events__upcoming-card reveal" data-delay="{{ $index * 100 }}">
                         <div class="events__upcoming-date">
                             <span class="events__upcoming-day">{{ $event->date->format('d') }}</span>
                             <span class="events__upcoming-month">{{ $event->date->format('M') }}</span>
@@ -159,8 +159,8 @@
                     <h2 class="section-header__title">Past <span>Events</span></h2>
                 </div>
                 <div class="events__past-grid">
-                    @foreach($pastEvents as $event)
-                        <div class="events__past-card">
+                    @foreach($pastEvents as $index => $event)
+                        <div class="events__past-card reveal" data-delay="{{ $index * 80 }}">
                             <div class="events__past-date">
                                 <span class="events__past-day">{{ $event->date->format('d') }}</span>
                                 <span class="events__past-month">{{ $event->date->format('M') }}</span>
@@ -199,7 +199,7 @@
                         <i class="fas fa-handshake"></i> Invite Arthur Now
                     </a>
                 </div>
-                <div class="events__invite-visual">
+                <div class="events__invite-visual reveal reveal--right" data-delay="100">
                     <div class="events__invite-placeholder">
                         <i class="fas fa-handshake"></i>
                         <span>Let's Connect</span>
@@ -218,7 +218,7 @@
             <div class="events__community-shape events__community-shape--3"></div>
         </div>
         <div class="wrap">
-            <div class="events__community-content">
+            <div class="events__community-content reveal" data-delay="100">
                 <div class="events__community-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="events__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="events__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>

@@ -11,7 +11,7 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(100px);
-            opacity: 0.06;
+            opacity: 0.04;
             animation: eventsOrbFloat 25s ease-in-out infinite alternate;
 
             &.events__orb--1 {
@@ -40,10 +40,10 @@
                 height: 200px;
                 top: 30%;
                 left: 10%;
-                background: #f39c12;
+                background: #e67e22;
                 animation-duration: 20s;
                 animation-delay: 6s;
-                opacity: 0.04;
+                opacity: 0.025;
             }
 
             &.events__orb--4 {
@@ -51,10 +51,10 @@
                 height: 250px;
                 bottom: 30%;
                 right: 10%;
-                background: #e67e22;
+                background: #d35400;
                 animation-duration: 22s;
                 animation-delay: 2s;
-                opacity: 0.04;
+                opacity: 0.025;
             }
 
             &.events__orb--5 {
@@ -62,20 +62,20 @@
                 height: 150px;
                 top: 55%;
                 right: 20%;
-                background: #f39c12;
+                background: #e67e22;
                 animation-duration: 18s;
                 animation-delay: 8s;
-                opacity: 0.035;
+                opacity: 0.02;
             }
         }
     }
 
-    /* ─── HERO ─── */
+    /* ─── HERO ─── (Events Theme) */
     & .events__hero {
         padding: 60px 0 80px;
         position: relative;
         overflow: hidden;
-        background: linear-gradient(180deg, #f7f5f2 0%, #e67e22 85%, #1a0e0a 100%);
+        background: linear-gradient(165deg, #f7f5f2 0%, #f0ebe4 60%, #e8e0d6 100%);
         text-align: center;
 
         & .events__hero-bg {
@@ -95,7 +95,7 @@
                     height: 500px;
                     top: -200px;
                     right: -150px;
-                    background: rgba(230, 126, 34, 0.08);
+                    background: rgba(230, 126, 34, 0.04);
                     animation-duration: 20s;
                     animation-delay: 0s;
                 }
@@ -105,7 +105,7 @@
                     height: 350px;
                     bottom: -150px;
                     left: -100px;
-                    background: rgba(211, 84, 0, 0.06);
+                    background: rgba(211, 84, 0, 0.03);
                     animation-duration: 25s;
                     animation-delay: 3s;
                     animation-direction: alternate-reverse;
@@ -116,7 +116,7 @@
                     height: 200px;
                     top: 30%;
                     left: 30%;
-                    background: rgba(243, 156, 18, 0.05);
+                    background: rgba(230, 126, 34, 0.025);
                     animation-duration: 15s;
                     animation-delay: 6s;
                 }
@@ -127,8 +127,8 @@
                 width: 3px;
                 height: 3px;
                 border-radius: 50%;
-                background: #f39c12;
-                opacity: 0.08;
+                background: #e67e22;
+                opacity: 0.04;
                 animation: eventsParticleFloat 14s ease-in-out infinite;
 
                 &.events__hero-particle--1 {
@@ -176,10 +176,10 @@
                 position: absolute;
                 inset: 0;
                 background-image: 
-                    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+                    linear-gradient(rgba(166, 124, 78, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(166, 124, 78, 0.02) 1px, transparent 1px);
                 background-size: 60px 60px;
-                opacity: 0.3;
+                opacity: 0.5;
             }
         }
 
@@ -191,7 +191,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.087);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -213,25 +213,25 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #fff;
+            color: var(--gold);
             margin-bottom: 16px;
-            background: rgba(230, 126, 34, 0.2);
+            background: rgba(230, 126, 34, 0.08);
             padding: 6px 18px 6px 14px;
             border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(230, 126, 34, 0.12);
             transition: all 0.3s ease;
             cursor: default;
 
             &:hover {
-                background: #e67e22;
+                background: var(--gold-dark);
                 color: #fff;
-                border-color: #e67e22;
+                border-color: var(--gold-dark);
                 transform: translateY(-2px);
-                box-shadow: 0 4px 15px rgba(230, 126, 34, 0.2);
+                box-shadow: 0 4px 15px var(--gold-light);
 
                 & i {
                     color: #fff;
@@ -253,12 +253,12 @@
             font-size: clamp(36px, 4.5vw, 60px);
             line-height: 1.05;
             letter-spacing: -0.02em;
-            color: #fff;
+            color: var(--text);
             margin-bottom: 12px;
             animation: eventsTitleFade 1s ease-out;
 
             & .events__hero-gradient {
-                background: linear-gradient(130deg, #f39c12, #e67e22);
+                background: linear-gradient(130deg, #e67e22, #d35400);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -271,7 +271,7 @@
                     left: 0;
                     width: 0;
                     height: 2px;
-                    background: #f39c12;
+                    background: #e67e22;
                     transition: width 0.6s ease;
                 }
             }
@@ -283,7 +283,7 @@
 
         & .events__hero-text {
             font-size: 1.05rem;
-            color: rgba(255,255,255,0.6);
+            color: var(--text-muted);
             max-width: 48ch;
             margin: 0 auto 16px;
             line-height: 1.7;
@@ -296,7 +296,7 @@
             gap: 24px;
             flex-wrap: wrap;
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
+            color: var(--text-muted);
             animation: eventsMetaFade 1.4s ease-out;
 
             & span {
@@ -306,12 +306,12 @@
                 transition: all 0.3s ease;
 
                 & i {
-                    color: #f39c12;
+                    color: var(--gold);
                     transition: all 0.3s ease;
                 }
 
                 &:hover {
-                    color: rgba(255,255,255,0.8);
+                    color: var(--text);
 
                     & i {
                         transform: scale(1.1);
@@ -320,23 +320,22 @@
             }
         }
 
-        /* ─── COUNTDOWN - MM : DD : HH : MM : SS ─── */
+        /* ─── COUNTDOWN ─── */
         & .events__countdown {
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(166, 124, 78, 0.1);
             border-radius: 20px;
             padding: 36px 28px;
             margin: 24px auto 32px;
-            backdrop-filter: blur(8px);
             max-width: 760px;
             transition: all 0.3s ease;
 
             &:hover {
-                background: rgba(255,255,255,0.08);
-                border-color: rgba(255,255,255,0.1);
-                box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+                background: rgba(255, 255, 255, 0.6);
+                border-color: rgba(230, 126, 34, 0.15);
+                box-shadow: 0 8px 30px rgba(230, 126, 34, 0.04);
             }
         }
 
@@ -353,7 +352,7 @@
             transition: all 0.3s ease;
 
             &:hover .events__countdown-number {
-                color: #f39c12;
+                color: var(--gold);
                 transform: scale(1.02);
             }
         }
@@ -363,7 +362,7 @@
             font-family: var(--font-serif);
             font-weight: 900;
             font-size: 4.8rem;
-            color: #e67e22;
+            color: var(--gold);
             line-height: 1;
             letter-spacing: 0.04em;
             transition: all 0.3s ease;
@@ -373,21 +372,21 @@
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: rgba(255,255,255,0.3);
+            color: var(--text-muted);
             margin-top: 6px;
             display: block;
             transition: color 0.3s ease;
         }
 
         & .events__countdown-item:hover .events__countdown-label {
-            color: rgba(255,255,255,0.6);
+            color: var(--text);
         }
 
         & .events__countdown-divider {
             font-family: var(--font-serif);
             font-size: 3.6rem;
             font-weight: 300;
-            color: rgba(255,255,255,0.1);
+            color: var(--border);
             padding-bottom: 12px;
             animation: eventsDividerPulse 2s ease-in-out infinite;
         }
@@ -413,7 +412,7 @@
                 left: -100%;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
                 transition: left 0.6s ease;
             }
 
@@ -423,31 +422,29 @@
         }
 
         & .btn--primary {
-            background: #e67e22;
+            background: var(--gold);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.15);
             &:hover {
-                background: #f39c12;
+                background: var(--gold-dark);
                 transform: translateY(-3px);
-                box-shadow: 0 12px 36px rgba(230, 126, 34, 0.4);
+                box-shadow: 0 12px 36px rgba(230, 126, 34, 0.2);
             }
         }
 
         & .btn--outline {
             background: transparent;
-            color: #fff;
-            border: 1.5px solid rgba(255,255,255,0.15);
+            color: var(--text);
+            border: 1.5px solid var(--border-hover);
 
             &:hover {
-                border-color: #e67e22;
-                background: rgba(230, 126, 34, 0.1);
+                border-color: var(--gold-dark);
+                background: rgba(230, 126, 34, 0.06);
                 transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(230, 126, 34, 0.1);
+                box-shadow: 0 8px 25px rgba(230, 126, 34, 0.06);
             }
         }
     }
-
-
 
     /* ─── UPCOMING EVENTS ─── */
     & .events__upcoming {
@@ -472,7 +469,7 @@
                     height: 300px;
                     top: -120px;
                     right: -80px;
-                    background: #e67e22;
+                    background: var(--gold);
                     animation-duration: 22s;
                     animation-delay: 0s;
                 }
@@ -482,7 +479,7 @@
                     height: 200px;
                     bottom: -60px;
                     left: -60px;
-                    background: #c0392b;
+                    background: var(--gold-light);
                     animation-duration: 18s;
                     animation-delay: 3s;
                     animation-direction: alternate-reverse;
@@ -498,7 +495,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(230, 126, 34, 0.087);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.087);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -531,14 +528,14 @@
 
             &:hover {
                 transform: translateY(-6px);
-                border-color: #e67e22;
-                box-shadow: 0 16px 48px rgba(230, 126, 34, 0.08);
+                border-color: var(--gold);
+                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.08);
             }
 
             & .events__upcoming-date {
                 text-align: center;
                 padding: 6px 10px;
-                background: rgba(230, 126, 34, 0.08);
+                background: var(--gold-dim);
                 border-radius: 10px;
                 min-width: 48px;
                 align-self: flex-start;
@@ -547,7 +544,7 @@
             }
 
             &:hover .events__upcoming-date {
-                background: #e67e22;
+                background: var(--gold);
             }
 
             &:hover .events__upcoming-date .events__upcoming-day {
@@ -567,7 +564,7 @@
                 font-family: var(--font-serif);
                 font-weight: 700;
                 font-size: 1.4rem;
-                color: #e67e22;
+                color: var(--gold);
                 line-height: 1;
                 transition: color 0.3s ease;
             }
@@ -597,14 +594,14 @@
                 text-transform: uppercase;
                 padding: 2px 10px;
                 border-radius: 50px;
-                background: rgba(230, 126, 34, 0.08);
-                color: #e67e22;
+                background: var(--gold-dim);
+                color: var(--gold);
                 margin-bottom: 4px;
                 transition: all 0.3s ease;
             }
 
             &:hover .events__upcoming-type {
-                background: #e67e22;
+                background: var(--gold);
                 color: #fff;
             }
 
@@ -617,7 +614,7 @@
             }
 
             &:hover .events__upcoming-name {
-                color: #e67e22;
+                color: var(--gold);
             }
 
             & .events__upcoming-desc {
@@ -643,7 +640,7 @@
                     transition: all 0.3s ease;
 
                     & i {
-                        color: #e67e22;
+                        color: var(--gold);
                         font-size: 0.65rem;
                         transition: all 0.3s ease;
                     }
@@ -660,7 +657,7 @@
                     font-size: 0.7rem;
                     position: relative;
                     overflow: hidden;
-                    background: #e67e22;
+                    background: var(--gold);
                     color: #fff;
                     border: none;
                     border-radius: 50px;
@@ -679,14 +676,14 @@
                         left: -100%;
                         width: 100%;
                         height: 100%;
-                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
                         transition: left 0.6s ease;
                     }
 
                     &:hover {
-                        background: #f39c12;
+                        background: var(--gold-light);
                         transform: translateY(-2px);
-                        box-shadow: 0 8px 25px rgba(230, 126, 34, 0.2);
+                        box-shadow: 0 8px 25px rgba(166, 124, 78, 0.15);
 
                         &::before {
                             left: 100%;
@@ -704,7 +701,7 @@
         }
     }
 
-    /* ─── PAST EVENTS ─── */
+    /* ─── PAST EVENTS ─── (Default Gold Theme) */
     & .events__past {
         padding: 60px 0;
         position: relative;
@@ -727,7 +724,7 @@
                     height: 250px;
                     top: -100px;
                     right: -60px;
-                    background: #c0392b;
+                    background: var(--gold);
                     animation-duration: 20s;
                     animation-delay: 0s;
                 }
@@ -737,7 +734,7 @@
                     height: 180px;
                     bottom: -50px;
                     left: -50px;
-                    background: #e67e22;
+                    background: var(--gold-light);
                     animation-duration: 16s;
                     animation-delay: 3s;
                     animation-direction: alternate-reverse;
@@ -753,7 +750,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(230, 126, 34, 0.087);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.087);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -786,9 +783,9 @@
             }
 
             &:hover {
-                border-color: #e67e22;
+                border-color: var(--gold);
                 transform: translateY(-4px);
-                box-shadow: 0 8px 30px rgba(230, 126, 34, 0.06);
+                box-shadow: 0 8px 30px rgba(166, 124, 78, 0.06);
             }
 
             & .events__past-date {
@@ -801,7 +798,7 @@
             }
 
             &:hover .events__past-date {
-                background: rgba(230, 126, 34, 0.08);
+                background: var(--gold-dim);
             }
 
             & .events__past-day {
@@ -809,13 +806,13 @@
                 font-family: var(--font-serif);
                 font-weight: 700;
                 font-size: 1rem;
-                color: #e67e22;
+                color: var(--gold);
                 line-height: 1;
                 transition: color 0.3s ease;
             }
 
             &:hover .events__past-day {
-                color: #f39c12;
+                color: var(--gold-light);
             }
 
             & .events__past-month {
@@ -837,7 +834,7 @@
             }
 
             &:hover .events__past-name {
-                color: #e67e22;
+                color: var(--gold);
             }
 
             & .events__past-status {
@@ -857,7 +854,7 @@
         }
     }
 
-    /* ─── INVITE ARTHUR ─── */
+    /* ─── INVITE ARTHUR ─── (Default Gold Theme) */
     & .events__invite {
         padding: 80px 0;
         position: relative;
@@ -880,7 +877,7 @@
                     height: 300px;
                     top: -120px;
                     right: -80px;
-                    background: #c0392b;
+                    background: var(--gold);
                     animation-duration: 22s;
                     animation-delay: 0s;
                 }
@@ -890,7 +887,7 @@
                     height: 200px;
                     bottom: -60px;
                     left: -60px;
-                    background: #f39c12;
+                    background: var(--gold-light);
                     animation-duration: 18s;
                     animation-delay: 3s;
                     animation-direction: alternate-reverse;
@@ -906,7 +903,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(230, 126, 34, 0.087);
+            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.087);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -929,7 +926,7 @@
                 font-weight: 700;
                 letter-spacing: 0.18em;
                 text-transform: uppercase;
-                color: #e67e22;
+                color: var(--gold);
                 margin-bottom: 12px;
                 position: relative;
 
@@ -941,7 +938,7 @@
                     transform: translateY(-50%);
                     width: 24px;
                     height: 1px;
-                    background: #e67e22;
+                    background: var(--gold);
                     opacity: 0.3;
                 }
             }
@@ -954,7 +951,7 @@
                 margin-bottom: 12px;
 
                 & span {
-                    color: #e67e22;
+                    color: var(--gold);
                     position: relative;
 
                     &::after {
@@ -964,7 +961,7 @@
                         left: 0;
                         width: 100%;
                         height: 2px;
-                        background: #e67e22;
+                        background: var(--gold);
                         transform: scaleX(0);
                         transform-origin: center;
                         transition: transform 0.4s ease;
@@ -998,7 +995,7 @@
                     transition: all 0.3s ease;
 
                     & i {
-                        color: #e67e22;
+                        color: var(--gold);
                         font-size: 0.7rem;
                         transition: all 0.3s ease;
                     }
@@ -1022,12 +1019,12 @@
                 font-weight: 600;
                 font-size: 0.85rem;
                 text-decoration: none;
-                background: #e67e22;
+                background: var(--gold);
                 color: #fff;
                 transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
                 position: relative;
                 overflow: hidden;
-                box-shadow: 0 4px 15px rgba(230, 126, 34, 0.2);
+                box-shadow: 0 4px 15px rgba(166, 124, 78, 0.15);
 
                 &::before {
                     content: '';
@@ -1036,7 +1033,7 @@
                     left: -100%;
                     width: 100%;
                     height: 100%;
-                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
                     transition: left 0.6s ease;
                 }
 
@@ -1045,9 +1042,9 @@
                 }
 
                 &:hover {
-                    background: #f39c12;
+                    background: var(--gold-light);
                     transform: translateY(-3px);
-                    box-shadow: 0 12px 35px rgba(230, 126, 34, 0.3);
+                    box-shadow: 0 12px 35px rgba(166, 124, 78, 0.2);
 
                     &::before {
                         left: 100%;
@@ -1089,14 +1086,14 @@
             transition: all 0.4s ease;
 
             &:hover {
-                border-color: #e67e22;
-                box-shadow: 0 16px 48px rgba(230, 126, 34, 0.06);
+                border-color: var(--gold);
+                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.06);
                 transform: translateY(-4px);
             }
 
             & i {
                 font-size: 3.6rem;
-                color: #e67e22;
+                color: var(--gold);
                 opacity: 0.2;
                 display: block;
                 margin-bottom: 14px;
@@ -1118,7 +1115,7 @@
             }
 
             &:hover span {
-                color: #e67e22;
+                color: var(--gold);
             }
 
             & small {
@@ -1130,12 +1127,12 @@
         }
     }
 
-    /* ─── COMMUNITY ─── */
+    /* ─── COMMUNITY ─── (Default Gold Theme) */
     & .events__community {
         padding: 80px 0;
         position: relative;
         overflow: hidden;
-        background: linear-gradient(160deg, #2c1810 0%, #4a1a1a 50%, #1a0e0a 100%);
+        background: linear-gradient(160deg, #f7f5f2 0%, #f0ebe4 100%);
         text-align: center;
 
         & .events__community-bg {
@@ -1164,7 +1161,7 @@
                     height: 250px;
                     bottom: -80px;
                     left: -80px;
-                    background: #f39c12;
+                    background: var(--gold);
                     animation-duration: 22s;
                     animation-delay: 2s;
                     animation-direction: alternate-reverse;
@@ -1217,11 +1214,10 @@
             font-family: var(--font-serif);
             font-weight: 900;
             font-size: clamp(30px, 3.4vw, 46px);
-            color: #fff;
             margin-bottom: 12px;
 
             & span {
-                color: #f39c12;
+                color: var(--gold);
                 position: relative;
 
                 &::after {
@@ -1231,7 +1227,7 @@
                     left: 0;
                     width: 100%;
                     height: 2px;
-                    background: #f39c12;
+                    background: var(--gold);
                     transform: scaleX(0);
                     transform-origin: center;
                     transition: transform 0.4s ease;
@@ -1244,7 +1240,7 @@
         }
 
         & .events__community-desc {
-            color: rgba(255,255,255,0.5);
+            color: var(--text-muted);
             max-width: 44ch;
             margin: 0 auto 28px;
             font-size: 1.05rem;
@@ -1257,13 +1253,13 @@
             gap: 12px;
             padding: 16px 36px;
             border-radius: 50px;
-            background: #f39c12;
+            background: var(--gold);
             color: #fff;
             font-weight: 600;
             font-size: 0.95rem;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+            box-shadow: 0 4px 15px rgba(166, 124, 78, 0.15);
             position: relative;
             overflow: hidden;
 
@@ -1283,9 +1279,9 @@
             }
 
             &:hover {
-                background: #e67e22;
+                background: var(--gold-light);
                 transform: translateY(-3px);
-                box-shadow: 0 12px 35px rgba(243, 156, 18, 0.4);
+                box-shadow: 0 12px 35px rgba(166, 124, 78, 0.2);
 
                 &::before {
                     left: 100%;

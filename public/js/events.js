@@ -191,3 +191,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
 });
+
+// ─── EVENT DETAIL SCROLL REVEAL ───
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ─── EVENT DETAIL ORBS PARALLAX ───
+    const detailOrbs = document.querySelectorAll('.event-detail__orb');
+    if (detailOrbs.length > 0 && window.innerWidth > 768) {
+        let rafId = null;
+
+        document.addEventListener('mousemove', function(e) {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+
+            rafId = requestAnimationFrame(() => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                
+                detailOrbs.forEach((orb, index) => {
+                    const speed = 12 + index * 4;
+                    const moveX = x * speed;
+                    const moveY = y * speed;
+                    orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+
+                rafId = null;
+            });
+        }, { passive: true });
+    }
+
+    // ─── HERO BADGE INTERACTION ───
+    const heroBadge = document.querySelector('.event-detail__hero-badge');
+    if (heroBadge) {
+        heroBadge.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'rotate(15deg) scale(1.2)';
+            }
+        });
+        heroBadge.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'rotate(0deg) scale(1)';
+            }
+        });
+    }
+
+    // ─── HERO ORBS PARALLAX ───
+    const heroOrbs = document.querySelectorAll('.event-detail__hero-orb');
+    if (heroOrbs.length > 0 && window.innerWidth > 768) {
+        let rafId2 = null;
+
+        document.addEventListener('mousemove', function(e) {
+            if (rafId2) {
+                cancelAnimationFrame(rafId2);
+            }
+
+            rafId2 = requestAnimationFrame(() => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                
+                heroOrbs.forEach((orb, index) => {
+                    const speed = 15 + index * 6;
+                    const moveX = x * speed;
+                    const moveY = y * speed;
+                    orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+
+                rafId2 = null;
+            });
+        }, { passive: true });
+    }
+});
