@@ -6,12 +6,26 @@
 
 <div class="contact">
 
+    {{-- CONTACT FLOATING ORBS --}}
+    <div class="contact__orbs">
+        <div class="contact__orb contact__orb--1"></div>
+        <div class="contact__orb contact__orb--2"></div>
+        <div class="contact__orb contact__orb--3"></div>
+        <div class="contact__orb contact__orb--4"></div>
+        <div class="contact__orb contact__orb--5"></div>
+    </div>
+
     {{-- HERO --}}
     <section class="contact__hero">
         <div class="contact__hero-bg">
             <div class="contact__hero-shape contact__hero-shape--1"></div>
             <div class="contact__hero-shape contact__hero-shape--2"></div>
             <div class="contact__hero-shape contact__hero-shape--3"></div>
+            <div class="contact__hero-particle contact__hero-particle--1"></div>
+            <div class="contact__hero-particle contact__hero-particle--2"></div>
+            <div class="contact__hero-particle contact__hero-particle--3"></div>
+            <div class="contact__hero-particle contact__hero-particle--4"></div>
+            <div class="contact__hero-particle contact__hero-particle--5"></div>
         </div>
         <div class="contact__hero-tag">CONTACT</div>
 
@@ -123,7 +137,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn--primary btn--block">
+                            <button type="submit" class="btn btn--block">
                                 <i class="fas fa-paper-plane"></i> Send Message
                             </button>
                         </form>
@@ -139,11 +153,15 @@
 
     {{-- WHATSAPP CTA --}}
     <section class="contact__whatsapp">
+        <div class="contact__whatsapp-bg">
+            <div class="contact__whatsapp-shape contact__whatsapp-shape--1"></div>
+            <div class="contact__whatsapp-shape contact__whatsapp-shape--2"></div>
+        </div>
         <div class="contact__whatsapp-tag">WHATSAPP</div>
         <div class="wrap">
             <div class="contact__whatsapp-grid">
                 <div class="contact__whatsapp-content">
-                    <span class="section-header__eyebrow">Quick Connect</span>
+                    <span class="contact__whatsapp-eyebrow">Quick Connect</span>
                     <h2 class="contact__whatsapp-title">Chat with Us on <span>WhatsApp</span></h2>
                     <p class="contact__whatsapp-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="contact__whatsapp-features">
@@ -191,6 +209,10 @@
 
     {{-- LOCATION --}}
     <section class="contact__location">
+        <div class="contact__location-bg">
+            <div class="contact__location-shape contact__location-shape--1"></div>
+            <div class="contact__location-shape contact__location-shape--2"></div>
+        </div>
         <div class="contact__location-tag">LOCATION</div>
         <div class="wrap">
             <div class="section-header">
@@ -247,9 +269,10 @@
         <div class="contact__community-bg">
             <div class="contact__community-shape contact__community-shape--1"></div>
             <div class="contact__community-shape contact__community-shape--2"></div>
+            <div class="contact__community-shape contact__community-shape--3"></div>
         </div>
         <div class="wrap">
-            <div class="contact__community-content">
+            <div class="contact__community-content reveal" data-delay="100">
                 <div class="contact__community-icon"><i class="fab fa-whatsapp"></i></div>
                 <h2 class="contact__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="contact__community-desc">Join 247+ believers on WhatsApp for daily encouragement and community.</p>
