@@ -256,7 +256,7 @@
                     &::after {
                         content: '';
                         position: absolute;
-                        bottom: -2px;
+                        bottom: -4px;
                         left: 0;
                         width: 0;
                         height: 2px;
@@ -276,6 +276,7 @@
                 max-width: 44ch;
                 line-height: 1.8;
                 margin-bottom: 28px;
+                margin-top: 12px;
                 animation: inviteTextFade 1.2s ease-out;
             }
 
