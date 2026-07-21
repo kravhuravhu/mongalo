@@ -933,62 +933,54 @@ img {
     & .navbar__brand-dot { background: #4A9E9E; }
 }
 
-/* Dark Theme (Books) */
-.navbar--theme-dark {
-    background: rgba(26, 26, 46, 0.92) !important;
-    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
-
-    & .navbar__brand-text { color: #fff !important; }
-    & .navbar__link {
-        color: rgba(255, 255, 255, 0.5) !important;
-        &:hover { color: #fff !important; background: rgba(255, 255, 255, 0.04) !important; }
-    }
+/* Books Theme (Dark Blue/Purple) */
+.navbar--theme-books {
     & .navbar__link--active {
-        color: var(--gold) !important;
-        & .navbar__link-icon { color: var(--gold) !important; }
-        &::after { background: var(--gold) !important; }
-        background: rgba(166, 124, 78, 0.1) !important;
+        color: #2d2d44 !important;
+        & .navbar__link-icon { color: #2d2d44 !important; }
+        &::after { background: #2d2d44 !important; }
+        background: rgba(45, 45, 68, 0.08) !important;
     }
     & .navbar__cta {
-        background: var(--gold);
-        &:hover { background: var(--gold-light); }
-        &.navbar__cta--active { background: var(--gold-light); }
+        background: #2d2d44;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(45, 45, 68, 0.3);
+        &:hover { 
+            background: #2d2d44; 
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(45, 45, 68, 0.4);
+            transform: translateY(-2px);
+        }
+        &.navbar__cta--active { 
+            background: #2d2d44; 
+            color: #fff;
+        }
     }
-    & .navbar__brand-dot { background: var(--gold); }
-    & .navbar__toggle-bar { background: #fff !important; }
-
-    &.navbar--scrolled {
-        background: rgba(26, 26, 46, 0.98) !important;
-    }
+    & .navbar__brand-dot { background: #2d2d44; }
 }
 
-/* Events Theme (Amber/Burgundy) */
+/* Events Theme (Warm Orange/Amber) */
 .navbar--theme-events {
-    background: rgba(44, 24, 16, 0.92) !important;
-    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
-
-    & .navbar__brand-text { color: #fff !important; }
-    & .navbar__link {
-        color: rgba(255, 255, 255, 0.5) !important;
-        &:hover { color: #fff !important; background: rgba(243, 156, 18, 0.08) !important; }
-    }
     & .navbar__link--active {
         color: #f39c12 !important;
         & .navbar__link-icon { color: #f39c12 !important; }
         &::after { background: #f39c12 !important; }
-        background: rgba(243, 156, 18, 0.08) !important;
     }
     & .navbar__cta {
         background: #e67e22;
-        &:hover { background: #f39c12; }
-        &.navbar__cta--active { background: #f39c12; }
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+        &:hover { 
+            background: #f39c12; 
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+        }
+        &.navbar__cta--active { 
+            background: #f39c12; 
+            color: #fff;
+        }
     }
-    & .navbar__brand-dot { background: #f39c12; }
-    & .navbar__toggle-bar { background: #fff !important; }
-
-    &.navbar--scrolled {
-        background: rgba(44, 24, 16, 0.98) !important;
-    }
+    & .navbar__brand-dot { background: #e67e22; }
 }
 
 /* Green Theme (Community) */
