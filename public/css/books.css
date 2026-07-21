@@ -19,7 +19,7 @@
                 height: 500px;
                 top: -180px;
                 right: -130px;
-                background: #2d2d44;
+                background: #2d442e;
                 animation-duration: 28s;
                 animation-delay: 0s;
             }
@@ -220,7 +220,7 @@
                 text-transform: uppercase;
                 color: #fff;
                 margin-bottom: 16px;
-                background: rgba(45, 45, 68, 0.2);
+                background: var(--gold);
                 padding: 6px 18px 6px 14px;
                 border-radius: 50px;
                 border: 1px solid rgba(255,255,255,0.1);
@@ -228,9 +228,9 @@
                 cursor: default;
 
                 &:hover {
-                    background: #2d2d44;
+                    background: var(--gold-dark);
                     color: #fff;
-                    border-color: #2d2d44;
+                    border-color: var(--gold-dark);
                     transform: translateY(-2px);
                     box-shadow: 0 4px 15px rgba(45, 45, 68, 0.2);
 
@@ -305,8 +305,8 @@
                     transition: all 0.3s ease;
 
                     &:focus-within {
-                        border-color: #2d2d44;
-                        box-shadow: 0 0 0 3px rgba(45, 45, 68, 0.15);
+                        border-color: var(--gold);
+                        box-shadow: 0 0 0 3px var(--gold-light);
                     }
 
                     & i {
@@ -317,7 +317,7 @@
                     }
 
                     &:focus-within i {
-                        color: #2d2d44;
+                        color: var(--gold);
                     }
 
                     & .books__hero-search-input {
@@ -338,7 +338,7 @@
                     & .books__hero-search-btn {
                         padding: 10px 24px;
                         border-radius: 50px;
-                        background: #2d2d44;
+                        background: var(--gold);
                         color: #fff;
                         border: none;
                         font-weight: 600;
@@ -360,9 +360,9 @@
                         }
 
                         &:hover {
-                            background: #2d2d44;
+                            background: var(--gold-dark);
                             transform: translateY(-2px);
-                            box-shadow: 0 8px 25px rgba(45, 45, 68, 0.3);
+                            box-shadow: 0 8px 25px var(--gold-light);
                             opacity: 0.9;
 
                             &::before {
@@ -391,7 +391,7 @@
                 }
 
                 &:hover .books__hero-stat-number {
-                    color: #4a4a6a;
+                    color: var(--gold);
                     transform: scale(1.02);
                 }
 
