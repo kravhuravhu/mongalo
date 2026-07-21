@@ -6,6 +6,15 @@
 
 <div class="baptism">
 
+    {{-- BAPTISM FLOATING ORBS --}}
+    <div class="baptism__orbs">
+        <div class="baptism__orb baptism__orb--1"></div>
+        <div class="baptism__orb baptism__orb--2"></div>
+        <div class="baptism__orb baptism__orb--3"></div>
+        <div class="baptism__orb baptism__orb--4"></div>
+        <div class="baptism__orb baptism__orb--5"></div>
+    </div>
+
     {{-- HERO — Water Theme --}}
     <section class="baptism__hero">
         <div class="baptism__hero-bg">
@@ -17,6 +26,11 @@
             <div class="baptism__hero-droplet baptism__hero-droplet--3"></div>
             <div class="baptism__hero-droplet baptism__hero-droplet--4"></div>
             <div class="baptism__hero-droplet baptism__hero-droplet--5"></div>
+            <div class="baptism__hero-particle baptism__hero-particle--1"></div>
+            <div class="baptism__hero-particle baptism__hero-particle--2"></div>
+            <div class="baptism__hero-particle baptism__hero-particle--3"></div>
+            <div class="baptism__hero-particle baptism__hero-particle--4"></div>
+            <div class="baptism__hero-particle baptism__hero-particle--5"></div>
         </div>
         <div class="baptism__hero-tag">BAPTISM</div>
 
@@ -57,6 +71,10 @@
 
     {{-- WHAT IS BAPTISM --}}
     <section class="baptism__info" id="baptism-info">
+        <div class="baptism__info-bg">
+            <div class="baptism__info-shape baptism__info-shape--1"></div>
+            <div class="baptism__info-shape baptism__info-shape--2"></div>
+        </div>
         <div class="baptism__info-tag">TRUTH</div>
         <div class="wrap">
             <div class="section-header">
@@ -95,11 +113,15 @@
 
     {{-- ARTHUR'S STORY --}}
     <section class="baptism__story">
+        <div class="baptism__story-bg">
+            <div class="baptism__story-shape baptism__story-shape--1"></div>
+            <div class="baptism__story-shape baptism__story-shape--2"></div>
+        </div>
         <div class="baptism__story-tag">STORY</div>
         <div class="wrap">
             <div class="baptism__story-grid">
                 <div class="baptism__story-content">
-                    <span class="section-header__eyebrow">My Story</span>
+                    <span class="baptism__story-eyebrow">My Story</span>
                     <h2 class="baptism__story-title">My <span>Baptism</span> Journey</h2>
                     <p class="baptism__story-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                     <p class="baptism__story-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -131,6 +153,10 @@
 
     {{-- STEPS --}}
     <section class="baptism__steps">
+        <div class="baptism__steps-bg">
+            <div class="baptism__steps-shape baptism__steps-shape--1"></div>
+            <div class="baptism__steps-shape baptism__steps-shape--2"></div>
+        </div>
         <div class="baptism__steps-tag">STEPS</div>
         <div class="wrap">
             <div class="section-header">
@@ -169,6 +195,10 @@
 
     {{-- SCRIPTURE --}}
     <section class="baptism__scripture">
+        <div class="baptism__scripture-bg">
+            <div class="baptism__scripture-shape baptism__scripture-shape--1"></div>
+            <div class="baptism__scripture-shape baptism__scripture-shape--2"></div>
+        </div>
         <div class="baptism__scripture-tag">WORD</div>
         <div class="wrap">
             <div class="section-header">
@@ -202,11 +232,15 @@
 
     {{-- BAPTISM REQUEST FORM --}}
     <section class="baptism__form" id="baptism-form">
+        <div class="baptism__form-bg">
+            <div class="baptism__form-shape baptism__form-shape--1"></div>
+            <div class="baptism__form-shape baptism__form-shape--2"></div>
+        </div>
         <div class="baptism__form-tag">REQUEST</div>
         <div class="wrap">
             <div class="baptism__form-grid">
                 <div class="baptism__form-info">
-                    <span class="section-header__eyebrow">Take the Step</span>
+                    <span class="baptism__form-eyebrow">Take the Step</span>
                     <h2 class="baptism__form-title">Request <span>Baptism</span></h2>
                     <p class="baptism__form-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
                     <div class="baptism__form-features">
@@ -275,7 +309,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn--primary btn--block">
+                        <button type="submit" class="btn btn--block">
                             <i class="fas fa-water"></i> Request Baptism
                         </button>
                     </form>
@@ -286,6 +320,10 @@
 
     {{-- FAQ --}}
     <section class="baptism__faq">
+        <div class="baptism__faq-bg">
+            <div class="baptism__faq-shape baptism__faq-shape--1"></div>
+            <div class="baptism__faq-shape baptism__faq-shape--2"></div>
+        </div>
         <div class="baptism__faq-tag">FAQ</div>
         <div class="wrap">
             <div class="section-header">
@@ -339,10 +377,11 @@
     </section>
 
     {{-- COMMUNITY CTA --}}
-    <!-- <section class="baptism__community">
+    <section class="baptism__community">
         <div class="baptism__community-bg">
             <div class="baptism__community-shape baptism__community-shape--1"></div>
             <div class="baptism__community-shape baptism__community-shape--2"></div>
+            <div class="baptism__community-shape baptism__community-shape--3"></div>
         </div>
         <div class="wrap">
             <div class="baptism__community-content">
@@ -354,7 +393,7 @@
                 </a>
             </div>
         </div>
-    </section> -->
+    </section>
 
 </div>
 
