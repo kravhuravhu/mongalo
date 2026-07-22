@@ -123,6 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'admin_domain' => env('ADMIN_DOMAIN', 'localhost'),
+    'admin_domain' => env('ADMIN_DOMAIN', 'admin.localhost'),
 
 ];
