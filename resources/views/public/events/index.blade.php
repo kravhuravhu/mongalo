@@ -52,7 +52,7 @@
                         <i class="fas fa-calendar-alt"></i> No Upcoming Events
                     </span>
                     <h1 class="events__hero-title">Stay <span class="events__hero-gradient">Tuned</span></h1>
-                    <p class="events__hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p class="events__hero-text">No events are scheduled right now. Join our WhatsApp community to be the first to know when the next one is announced.</p>
                 @endif
 
                 {{-- COUNTDOWN --}}
@@ -109,7 +109,7 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Don't Miss Out</span>
                 <h2 class="section-header__title">Upcoming <span>Events</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="section-header__subtitle">Conferences, revival nights and community gatherings. Come worship, learn and connect with other believers.</p>
             </div>
 
             <div class="events__upcoming-list">
@@ -128,7 +128,7 @@
                                 @else Event @endif
                             </span>
                             <h3 class="events__upcoming-name">{{ $event->title }}</h3>
-                            <p class="events__upcoming-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p class="events__upcoming-desc">{{ Str::limit($event->description, 100) }}</p>
                             <div class="events__upcoming-meta">
                                 <span><i class="fas fa-map-marker-alt"></i> {{ $event->location }}</span>
                                 <span><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
@@ -188,7 +188,7 @@
                 <div class="events__invite-content">
                     <span class="events__invite-eyebrow">Invite Arthur</span>
                     <h2 class="events__invite-title">Bring <span>Arthur</span> to Your Event</h2>
-                    <p class="events__invite-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="events__invite-text">Invite Arthur Mongalo to speak, preach or minister at your church or event. Whether it's a Sunday service, conference or baptism gathering, reach out and we will coordinate the details.</p>
                     <div class="events__invite-features">
                         <span><i class="fas fa-check-circle"></i> Speaking engagements</span>
                         <span><i class="fas fa-check-circle"></i> Book signings</span>
@@ -203,7 +203,7 @@
                     <div class="events__invite-placeholder">
                         <i class="fas fa-handshake"></i>
                         <span>Let's Connect</span>
-                        <small>Lorem ipsum dolor sit amet</small>
+                        <small>Speaking, baptism services and community gatherings</small>
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@
                         Ready to Be <br />
                         <span class="baptism__hero-gradient">Baptized?</span>
                     </h1>
-                    <p class="baptism__hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p class="baptism__hero-text">Water baptism is a public declaration of faith and an act of obedience to God. If you are ready to take this step, or simply want to understand what it means, we would love to walk through it with you.</p>
                     <div class="baptism__hero-actions">
                         <a href="#baptism-form" class="btn btn--primary btn--lg">
                             <i class="fas fa-water"></i> Request Baptism
@@ -80,32 +80,32 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Understanding Baptism</span>
                 <h2 class="section-header__title">What Is <span>Baptism?</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">Baptism is more than a ritual. It marks a turning point in your walk with God.</p>
             </div>
 
             <div class="baptism__info-grid">
                 <div class="baptism__info-card">
                     <div class="baptism__info-card-icon"><i class="fas fa-cross"></i></div>
                     <h4 class="baptism__info-card-title">A Declaration of Faith</h4>
-                    <p class="baptism__info-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__info-card-desc">Baptism is your public confession that Jesus Christ is Lord and that you have chosen to follow Him.</p>
                 </div>
 
                 <div class="baptism__info-card">
                     <div class="baptism__info-card-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h4 class="baptism__info-card-title">An Act of Obedience</h4>
-                    <p class="baptism__info-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__info-card-desc">Jesus Himself was baptised and commanded His followers to do the same. It is a direct act of obedience to His Word.</p>
                 </div>
 
                 <div class="baptism__info-card">
                     <div class="baptism__info-card-icon"><i class="fas fa-users"></i></div>
                     <h4 class="baptism__info-card-title">A Public Testimony</h4>
-                    <p class="baptism__info-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__info-card-desc">Baptism is done in front of others as a testimony. It tells your community that your old life is behind you and a new one has begun.</p>
                 </div>
 
                 <div class="baptism__info-card">
                     <div class="baptism__info-card-icon"><i class="fas fa-seedling"></i></div>
                     <h4 class="baptism__info-card-title">A New Beginning</h4>
-                    <p class="baptism__info-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__info-card-desc">Just as Christ rose from the dead, baptism represents rising into a new life, free from the old and walking in the renewal of the mind.</p>
                 </div>
             </div>
         </div>
@@ -162,7 +162,7 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Your Journey</span>
                 <h2 class="section-header__title">Three Simple <span>Steps</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">Getting baptised does not need to be complicated. Here is how the process works.</p>
             </div>
 
             <div class="baptism__steps-grid">
@@ -170,7 +170,7 @@
                     <div class="baptism__steps-number">01</div>
                     <div class="baptism__steps-icon"><i class="fas fa-comments"></i></div>
                     <h4 class="baptism__steps-title">Let's Talk</h4>
-                    <p class="baptism__steps-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__steps-desc">Reach out through the form below or on WhatsApp. We will have an honest, no-pressure conversation about your faith and readiness.</p>
                     <div class="baptism__steps-line"></div>
                 </div>
 
@@ -178,7 +178,7 @@
                     <div class="baptism__steps-number">02</div>
                     <div class="baptism__steps-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h4 class="baptism__steps-title">Prepare</h4>
-                    <p class="baptism__steps-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__steps-desc">We will confirm a date, time and location that works for you, and walk you through what to expect on the day.</p>
                     <div class="baptism__steps-line"></div>
                 </div>
 
@@ -186,7 +186,7 @@
                     <div class="baptism__steps-number">03</div>
                     <div class="baptism__steps-icon"><i class="fas fa-water"></i></div>
                     <h4 class="baptism__steps-title">Celebrate</h4>
-                    <p class="baptism__steps-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="baptism__steps-desc">Your baptism day is a celebration. Invite friends and family to witness this step and celebrate with you.</p>
                     <div class="baptism__steps-line"></div>
                 </div>
             </div>
@@ -242,10 +242,10 @@
                 <div class="baptism__form-info">
                     <span class="baptism__form-eyebrow">Take the Step</span>
                     <h2 class="baptism__form-title">Request <span>Baptism</span></h2>
-                    <p class="baptism__form-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                    <p class="baptism__form-desc">Fill in the form below and someone from our team will reach out to schedule a time to talk.</p>
                     <div class="baptism__form-features">
                         <span><i class="fas fa-check-circle"></i> One-on-one conversation</span>
-                        <span><i class="fas fa-check-circle"></i> No pressure — just truth</span>
+                        <span><i class="fas fa-check-circle"></i> No pressure, just an honest conversation</span>
                         <span><i class="fas fa-check-circle"></i> Anywhere in Gauteng</span>
                         <span><i class="fas fa-check-circle"></i> Flexible scheduling</span>
                     </div>
@@ -329,7 +329,7 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Common Questions</span>
                 <h2 class="section-header__title">Frequently Asked <span>Questions</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">Answers to the questions we hear most often.</p>
             </div>
 
             <div class="baptism__faq-grid">
@@ -340,7 +340,7 @@
                             <i class="fas fa-plus"></i>
                         </span>
                     </div>
-                    <p class="baptism__faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="baptism__faq-answer">No. Baptism is available to anyone who believes in Jesus Christ, regardless of which church you attend or if you attend one at all.</p>
                 </div>
 
                 <div class="baptism__faq-item">
@@ -350,7 +350,7 @@
                             <i class="fas fa-plus"></i>
                         </span>
                     </div>
-                    <p class="baptism__faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="baptism__faq-answer">That is completely fine. Reaching out does not commit you to anything. We are happy to talk, answer questions and let you decide in your own time.</p>
                 </div>
 
                 <div class="baptism__faq-item">
@@ -360,7 +360,7 @@
                             <i class="fas fa-plus"></i>
                         </span>
                     </div>
-                    <p class="baptism__faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="baptism__faq-answer">Baptisms are arranged at a location that works best for you, anywhere in Gauteng. This could be a river, a pool or another suitable venue.</p>
                 </div>
 
                 <div class="baptism__faq-item">
@@ -370,7 +370,7 @@
                             <i class="fas fa-plus"></i>
                         </span>
                     </div>
-                    <p class="baptism__faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="baptism__faq-answer">Absolutely. Baptism is a celebration and you are welcome to invite as many people as you like to witness the moment with you.</p>
                 </div>
             </div>
         </div>
