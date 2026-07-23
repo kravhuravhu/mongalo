@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'The Collective · About')
+@section('title', env('PROJECT_NAME', 'The Collective') . ' · About')
 
 @section('content')
 
@@ -40,7 +40,7 @@
                         <span class="about__hero-title-highlight">Faith &amp; Purpose</span>
                     </h1>
                     <p class="about__hero-text">
-                        The Collective is a faith community built around one purpose: to serve God and help humanity. We exist to equip believers through Scripture, community and practical resources. This is not about one person. It is about a growing body of people walking in faith together.
+                        {{ env('PROJECT_NAME', 'The Collective') }} is a faith community built around one purpose: to serve God and help humanity. We exist to equip believers through Scripture, community and practical resources. This is not about one person. It is about a growing body of people walking in faith together.
                     </p>
                     <div class="about__hero-actions">
                         <a href="{{ route('books.index') }}" class="about__hero-btn about__hero-btn--primary">
@@ -147,12 +147,12 @@
             <div class="about__story-container">
                 <div class="about__story-content">
                     <span class="about__story-eyebrow">Our Journey</span>
-                    <h2 class="about__story-title">How <span>The Collective</span> Began</h2>
+                    <h2 class="about__story-title">How <span>{{ env('PROJECT_NAME', 'The Collective') }}</span> Began</h2>
                     <p class="about__story-text">
-                        The Collective started from a simple conviction: that faith is meant to be shared, not kept to yourself. What began as personal conversations about salvation, baptism and spiritual identity grew into something bigger. Books were written, resources were gathered and a community started forming around a shared purpose.
+                        {{ env('PROJECT_NAME', 'The Collective') }} started from a simple conviction: that faith is meant to be shared, not kept to yourself. What began as personal conversations about salvation, baptism and spiritual identity grew into something bigger. Books were written, resources were gathered and a community started forming around a shared purpose.
                     </p>
                     <p class="about__story-text">
-                        Today The Collective is a growing network of believers connected through WhatsApp, events and shared resources. We distribute Christian literature freely, host gatherings across multiple cities and walk alongside people at every stage of their faith journey. The work continues to grow because the need never stops.
+                        Today {{ env('PROJECT_NAME', 'The Collective') }} is a growing network of believers connected through WhatsApp, events and shared resources. We distribute Christian literature freely, host gatherings across multiple cities and walk alongside people at every stage of their faith journey. The work continues to grow because the need never stops.
                     </p>
                     <div class="about__story-timeline">
                         <div class="about__story-timeline-item">
@@ -285,7 +285,7 @@
                     </div>
                     <h4 class="about__values-card-title">Service</h4>
                     <p class="about__values-card-desc">
-                        We serve with humility. Everything we give—books, resources, time and prayer—is offered freely, just as we have freely received.
+                        Everything we give (books, resources, time and prayer) is offered freely, just as we have freely received.
                     </p>
                     <div class="about__values-card-shape"></div>
                 </div>
@@ -321,7 +321,7 @@
                             <i class="fas fa-user" aria-hidden="true"></i>
                         </div>
                         <div class="about__arthur-card-name">Arthur Mongalo</div>
-                        <div class="about__arthur-card-role">Author · Speaker · Storyteller</div>
+                        <div class="about__arthur-card-role">Founder · Author · Speaker</div>
                         <div class="about__arthur-card-line"></div>
                         <div class="about__arthur-card-socials">
                             <a href="#" class="about__arthur-card-social" aria-label="Twitter">
@@ -339,7 +339,7 @@
 
                 <div class="about__arthur-content">
                     <span class="about__arthur-eyebrow">Meet Arthur</span>
-                    <h2 class="about__arthur-title">A Man Shaped by <span>Real Life</span></h2>
+                    <h2 class="about__arthur-title">The Founder Behind <span>The Vision</span></h2>
                     <p class="about__arthur-text">
                         Arthur Mongalo is a storyteller, author and speaker who has dedicated his life to sharing the Gospel and equipping believers. His journey with God has taken him through the streets of Gauteng and into the hearts of hundreds through books, events and personal conversations.
                     </p>
@@ -414,7 +414,7 @@
                 <div class="about__community-icon">
                     <i class="fab fa-whatsapp"></i>
                 </div>
-                <h2 class="about__community-title">Join <span>The Collective</span></h2>
+                <h2 class="about__community-title">Join <span>{{ env('PROJECT_NAME', 'The Collective') }}</span></h2>
                 <p class="about__community-desc">
                     Join over 247 believers on WhatsApp for daily encouragement, book updates, baptism conversations and free resources. Be part of a community that walks in faith together.
                 </p>

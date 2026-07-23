@@ -47,7 +47,7 @@
                         Explore the <br />
                         <span class="books__hero-gradient">Collection</span>
                     </h1>
-                    <p class="books__hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p class="books__hero-text">Christian literature to help you understand your identity, grow in faith and walk in freedom. Buy a book or download a free resource, every item exists to serve your journey.</p>
 
                     <div class="books__hero-search">
                         <div class="books__hero-search-wrapper">
@@ -125,7 +125,7 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Collection</span>
                 <h2 class="section-header__title">All <span>Books &amp; Resources</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">From paid publications to free downloads, find the resource that fits where you are right now.</p>
             </div>
 
             <div class="books__grid-masonry">
@@ -141,7 +141,7 @@
                             </div>
                             <div class="books__grid-info">
                                 <h4 class="books__grid-name">{{ $book->title }}</h4>
-                                <p class="books__grid-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <p class="books__grid-desc">{{ Str::limit($book->description, 90) }}</p>
                                 <div class="books__grid-footer">
                                     <span class="books__grid-price">{{ $book->price }}</span>
                                     <a href="{{ route('books.show', $book->slug) }}" class="books__grid-btn">
@@ -166,7 +166,7 @@
                             </div>
                             <div class="books__grid-info">
                                 <h4 class="books__grid-name">{{ $resource->title }}</h4>
-                                <p class="books__grid-desc">{{ $resource->subtitle ?? 'Lorem ipsum dolor sit amet.' }}</p>
+                                <p class="books__grid-desc">{{ $resource->subtitle ?? 'Free Download' }}</p>
                                 <div class="books__grid-footer">
                                     <span class="books__grid-price books__grid-price--free">Free</span>
                                     <a href="#" class="books__grid-btn books__grid-btn--free">
@@ -195,8 +195,8 @@
                 <div class="books__author-content">
                     <span class="books__author-eyebrow">Meet the Author</span>
                     <h2 class="books__author-title">Arthur <span>Mongalo</span></h2>
-                    <p class="books__author-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <p class="books__author-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    <p class="books__author-text">Arthur Mongalo is an ICT specialist, project manager and pioneering leader with a deep passion for teaching and empowering others. His writing is inspired by a heartfelt desire to see every child of God maximise their potential and experience the fullness of the Holy Spirit.</p>
+                    <p class="books__author-text">He is the founder and former pastor of Christ Tabernacle, where he now focuses on establishing a training institute and spiritual retreat committed to sound doctrine and the fullness of the Holy Spirit. He resides in Gauteng with his family.</p>
                     <div class="books__author-quote">
                         <i class="fas fa-quote-left"></i>
                         <blockquote>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."</blockquote>
@@ -251,7 +251,7 @@
                     <div class="books__spotlight-content">
                         <span class="books__spotlight-eyebrow">Bestseller</span>
                         <h2 class="books__spotlight-title">Discover Your <span>Divine Identity</span></h2>
-                        <p class="books__spotlight-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="books__spotlight-text">An invitation to encounter the living God in profound and life-changing ways. Divine Identity explores the supernatural dimensions of faith, the transformative power of divine encounters and the boundless love of God, drawing you closer to walking in the extraordinary life He has designed for you.</p>
 
                         <div class="books__spotlight-testimonial">
                             <div class="books__spotlight-stars">
