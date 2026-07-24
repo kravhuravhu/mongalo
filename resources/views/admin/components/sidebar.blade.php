@@ -1,9 +1,3 @@
-@php
-    $pendingBaptisms = App\Models\BaptismRequest::where('status', 'pending')->count();
-    $unreadMessages = App\Models\ContactMessage::where('status', 'unread')->count();
-    $pendingInvites = App\Models\InviteRequest::where('status', 'pending')->count();
-@endphp
-
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
         {{ env('PROJECT_NAME', 'The Collective') }}
