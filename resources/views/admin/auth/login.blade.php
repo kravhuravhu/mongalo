@@ -19,7 +19,17 @@
 </head>
 <body class="auth-login">
 
-<div class="login-container">
+{{-- Loading Spinner --}}
+<div class="admin-loader" id="adminLoader">
+    <div class="admin-loader__spinner">
+        <div class="admin-loader__ring"></div>
+        <div class="admin-loader__ring admin-loader__ring--2"></div>
+        <div class="admin-loader__ring admin-loader__ring--3"></div>
+        <span class="admin-loader__text">Loading...</span>
+    </div>
+</div>
+
+<div class="login-container" id="loginContainer" style="display: none;">
     <div class="login-logo">
         {{ env('PROJECT_NAME', 'The Collective') }}
         <span>Admin</span>
@@ -33,7 +43,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.login') }}" class="login-form">
+    <form method="POST" action="{{ route('admin.login') }}" class="login-form form-loading">
         @csrf
 
         <div class="form-group">
@@ -61,6 +71,39 @@
         {{ env('PROJECT_NAME', 'The Collective') }} · <span>Admin</span>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ─── HIDE LOADER ON PAGE LOAD ───
+        const loader = document.getElementById('adminLoader');
+        const container = document.getElementById('loginContainer');
+
+        if (loader && container) {
+            // Show container
+            container.style.display = 'block';
+
+            // Hide loader with animation
+            setTimeout(function() {
+                loader.classList.add('admin-loader--hidden');
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 400);
+            }, 300);
+        }
+
+        // ─── FORM LOADING STATE ───
+        document.querySelectorAll('.form-loading').forEach(function(form) {
+            form.addEventListener('submit', function() {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

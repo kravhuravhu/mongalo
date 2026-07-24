@@ -37,13 +37,18 @@ class Book extends Model
         });
     }
 
-    public function getPriceAttribute($value)
+    public function getFormattedPriceAttribute()
     {
-        return $value > 0 ? 'R' . number_format($value, 2) : 'Free';
+        return $this->price > 0 ? 'R ' . number_format($this->price, 2) : 'Free';
     }
 
     public function getRawPriceAttribute()
     {
-        return $this->attributes['price'];
+        return (float) $this->attributes['price'];
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return $value > 0 ? 'R ' . number_format($value, 2) : 'Free';
     }
 }

@@ -1,0 +1,356 @@
+/* ─── BOOKS INDEX ─── */
+.books-index {
+    & .books-index__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    & .books-index__search {
+        flex: 1;
+        max-width: 500px;
+
+        & .books-index__search-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 4px 4px 4px 14px;
+            transition: border-color var(--transition), box-shadow var(--transition);
+
+            &:focus-within {
+                border-color: var(--gold);
+                box-shadow: 0 0 0 3px var(--gold-dim);
+            }
+
+            & i {
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                flex-shrink: 0;
+            }
+
+            & input {
+                flex: 1;
+                border: none;
+                padding: 8px 0;
+                font-family: var(--font);
+                font-size: 0.85rem;
+                background: transparent;
+                color: var(--text);
+                min-width: 100px;
+
+                &:focus {
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: var(--text-light);
+                }
+            }
+
+            & .btn {
+                flex-shrink: 0;
+            }
+        }
+
+        & .books-index__search-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            display: block;
+
+            & kbd {
+                background: var(--bg);
+                padding: 1px 6px;
+                border-radius: 4px;
+                font-size: 0.65rem;
+                font-family: monospace;
+                border: 1px solid var(--border);
+            }
+
+            & i {
+                margin-right: 4px;
+            }
+        }
+    }
+
+    & .books-index__filters {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+
+        & .books-index__filter {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all var(--transition);
+            border: 1px solid transparent;
+
+            &:hover {
+                background: var(--gold-dim);
+                color: var(--text);
+            }
+
+            &.books-index__filter--active {
+                background: var(--gold);
+                color: #fff;
+            }
+
+            &.books-index__filter--clear {
+                background: #f8d7da;
+                color: #721c24 !important;
+                border-color: #f5c6cb;
+
+                &:hover {
+                    background: #f5c6cb !important;
+                    color: #721c24 !important;
+                }
+
+                & i {
+                    font-size: 0.7rem;
+                }
+            }
+        }
+
+        & .books-index__filter-count {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 4px 12px;
+            background: var(--bg);
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+    }
+
+    & .books-index__title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        & .books-index__title-color {
+            width: 24px;
+            height: 32px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+        }
+    }
+
+    & .books-index__price {
+        font-weight: 600;
+        color: var(--gold);
+    }
+
+    & .books-index__actions {
+        display: flex;
+        gap: 4px;
+
+        & .btn {
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+
+        & .books-index__delete-form {
+            display: inline;
+        }
+    }
+}
+
+/* ─── BOOKS FORM ─── */
+.books-form {
+    & .books-form__header {
+        margin-bottom: 20px;
+    }
+
+    & .books-form__card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 32px;
+        max-width: 720px;
+
+        & .admin-form {
+            max-width: 100%;
+        }
+    }
+
+    & .books-form__actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+    }
+
+    /* ─── BUTTON LOADER ─── */
+    & .btn-loader {
+        display: none;
+    }
+}
+
+/* ─── DELETE CONFIRMATION OVERLAY ─── */
+.delete-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: overlayFadeIn 0.3s ease;
+
+    & .delete-confirm-box {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 32px;
+        max-width: 420px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        animation: boxSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        & .delete-confirm-icon {
+            font-size: 2.8rem;
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        & .delete-confirm-title {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        & .delete-confirm-text {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+
+            & strong {
+                color: var(--text);
+            }
+        }
+
+        & .delete-confirm-actions {
+            display: flex;
+            gap: 12px;
+
+            & .btn {
+                flex: 1;
+                justify-content: center;
+                padding: 12px;
+            }
+        }
+    }
+}
+
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes boxSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+    .books-index__header {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .books-index__search {
+        max-width: 100% !important;
+    }
+
+    .books-form__card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 540px) {
+    .books-index__filters {
+        gap: 2px;
+
+        & .books-index__filter {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+        }
+
+        & .books-index__filter-count {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+        }
+    }
+
+    .books-index__actions {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .books-form__actions {
+        flex-direction: column;
+    }
+
+    .books-form__actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .delete-confirm-overlay {
+        padding: 16px;
+    }
+
+    .delete-confirm-box {
+        padding: 24px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .books-form__card {
+        padding: 14px;
+    }
+
+    .books-index__search .books-index__search-form {
+        flex-wrap: wrap;
+        padding: 8px;
+    }
+
+    .books-index__search .books-index__search-form input {
+        flex-basis: 100%;
+        padding: 6px 0;
+    }
+
+    .books-index__search .books-index__search-form .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .delete-confirm-box .delete-confirm-actions {
+        flex-direction: column;
+    }
+}

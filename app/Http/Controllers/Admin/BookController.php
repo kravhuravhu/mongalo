@@ -9,9 +9,43 @@ use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::orderBy('sort_order')->get();
+        $query = Book::query();
+
+        // ─── SEARCH ───
+        if ($request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('subtitle', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+
+        // ─── FILTER ───
+        if ($request->filter === 'paid') {
+            $query->where('is_free', false);
+        } elseif ($request->filter === 'free') {
+            $query->where('is_free', true);
+        } elseif ($request->filter === 'featured') {
+            $query->where('is_featured', true);
+        }
+
+        // ─── SORT BY LATEST ───
+        $query->orderBy('created_at', 'desc');
+
+        $books = $query->paginate(20);
+
+        // ─── AJAX REQUEST ───
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('admin.books._table', compact('books'))->render(),
+                'total' => $books->total(),
+            ]);
+        }
+
+        // ─── NORMAL REQUEST ───
         return view('admin.books.index', compact('books'));
     }
 
@@ -62,6 +96,7 @@ class BookController extends Controller
             'is_free' => 'boolean',
             'is_featured' => 'boolean',
             'cover_color' => 'nullable|max:50',
+            'sort_order' => 'nullable|integer|min:1',
         ]);
 
         $book->update([
@@ -73,6 +108,7 @@ class BookController extends Controller
             'is_free' => $request->is_free ?? false,
             'is_featured' => $request->is_featured ?? false,
             'cover_color' => $request->cover_color ?? '#a67c4e',
+            'sort_order' => $request->sort_order ?? $book->sort_order,
         ]);
 
         return redirect()->route('admin.books.index')->with('success', 'Book updated successfully!');
