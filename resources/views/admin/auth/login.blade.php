@@ -1,75 +1,66 @@
-@extends('admin.layouts.admin')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Admin Login · {{ env('PROJECT_NAME', 'The Collective') }}</title>
 
-@section('content')
-<div class="login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <span>The <span>Collective</span></span>
-            <small>Admin</small>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/auth.css') }}">
+</head>
+<body class="auth-login">
+
+<div class="login-container">
+    <div class="login-logo">
+        {{ env('PROJECT_NAME', 'The Collective') }}
+        <span>Admin</span>
+    </div>
+    <p class="login-subtitle">Sign in to manage your content</p>
+
+    @if($errors->any())
+        <div class="login-error">
+            <i class="fas fa-exclamation-circle"></i>
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('admin.login') }}" class="login-form">
+        @csrf
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="admin@example.com" value="{{ old('email') }}" required autofocus>
+            @error('email')
+                <span class="form-error">{{ $message }}</span>
+            @enderror
         </div>
 
-        @if($errors->any())
-            <div class="alert alert-error">
-                {{ $errors->first() }}
-            </div>
-        @endif
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" required>
+            @error('password')
+                <span class="form-error">{{ $message }}</span>
+            @enderror
+        </div>
 
-        <form method="POST" action="{{ route('admin.login') }}">
-            @csrf
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;">Sign In</button>
-        </form>
+        <button type="submit" class="login-btn">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+    </form>
+
+    <div class="login-footer">
+        {{ env('PROJECT_NAME', 'The Collective') }} · <span>Admin</span>
     </div>
 </div>
 
-<style>
-.login-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: var(--bg);
-}
-.login-box {
-    background: #fff;
-    padding: 40px 36px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    width: 100%;
-    max-width: 400px;
-    box-shadow: var(--shadow);
-}
-.login-logo {
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: 1.6rem;
-    margin-bottom: 28px;
-}
-.login-logo span {
-    color: var(--gold);
-}
-.login-logo small {
-    display: block;
-    font-family: var(--font);
-    font-weight: 400;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-.alert-error {
-    background: #f8d7da;
-    color: #721c24;
-    padding: 12px 16px;
-    border-radius: var(--radius-sm);
-    margin-bottom: 16px;
-    font-size: 0.9rem;
-}
-</style>
-@endsection
+</body>
+</html>
