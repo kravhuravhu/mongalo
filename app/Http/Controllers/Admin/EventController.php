@@ -7,12 +7,44 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::orderBy('date', 'desc')->get();
+        $query = Event::query();
+
+        // ─── SEARCH ───
+        if ($request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%')
+                  ->orWhere('location', 'like', '%' . $search . '%');
+            });
+        }
+
+        // ─── FILTER ───
+        if ($request->filter === 'upcoming') {
+            $query->where('is_past', false)->where('date', '>=', Carbon::today());
+        } elseif ($request->filter === 'past') {
+            $query->where('is_past', true)->orWhere('date', '<', Carbon::today());
+        }
+
+        // ─── SORT BY LATEST ───
+        $query->orderBy('date', 'desc');
+
+        $events = $query->paginate(20);
+
+        // ─── AJAX REQUEST ───
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('admin.events._table', compact('events'))->render(),
+                'total' => $events->total(),
+            ]);
+        }
+
         return view('admin.events.index', compact('events'));
     }
 
