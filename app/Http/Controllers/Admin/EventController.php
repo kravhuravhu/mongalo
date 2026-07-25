@@ -113,7 +113,13 @@ class EventController extends Controller
 
     public function registrations(Event $event)
     {
+        // redirect back
+        if (!$event) {
+            return redirect()->route('admin.events.index')->with('error', 'Event not found.');
+        }
+        
         $registrations = $event->registrations()->orderBy('created_at', 'desc')->get();
+        
         return view('admin.events.registrations', compact('event', 'registrations'));
     }
 

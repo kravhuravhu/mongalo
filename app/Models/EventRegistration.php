@@ -16,9 +16,10 @@ class EventRegistration extends Model
 
     protected $table = 'event_registrations';
 
+    // ─── RELATIONSHIP ───
     public function event()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public static function generateRegistrationId()
