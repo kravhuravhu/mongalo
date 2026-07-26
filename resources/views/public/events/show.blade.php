@@ -116,20 +116,20 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">What to Expect</span>
                 <h2 class="section-header__title">A Day of <span>Transformation</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">Every gathering is designed around these four elements. Here is what you can look forward to.</p>
             </div>
 
             <div class="event-detail__expect-grid">
                 <div class="event-detail__expect-item reveal" data-delay="0">
                     <div class="event-detail__expect-icon"><i class="fas fa-praying-hands"></i></div>
                     <h4>Worship</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p>Time set aside to worship freely and encounter God's presence together as one body.</p>
                 </div>
 
                 <div class="event-detail__expect-item reveal" data-delay="100">
                     <div class="event-detail__expect-icon"><i class="fas fa-book-open"></i></div>
                     <h4>Teaching</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p>Practical, Scripture-based teaching to strengthen your faith and equip you for daily living.</p>
                 </div>
 
                 <div class="event-detail__expect-item reveal" data-delay="200">
@@ -141,7 +141,7 @@
                 <div class="event-detail__expect-item reveal" data-delay="300">
                     <div class="event-detail__expect-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h4>Prayer</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p>Dedicated time for prayer, whether it's for personal breakthrough, healing or intercession for others.</p>
                 </div>
             </div>
         </div>
