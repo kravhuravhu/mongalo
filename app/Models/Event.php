@@ -41,7 +41,7 @@ class Event extends Model
     // ─── RELATIONSHIP ───
     public function registrations()
     {
-        return $this->hasMany(EventRegistration::class, 'event_id');
+        return $this->hasMany(EventRegistration::class, 'event_id', 'id');
     }
 
     // ─── ATTRIBUTES ───

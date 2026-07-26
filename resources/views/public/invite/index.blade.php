@@ -6,7 +6,7 @@
 
 <div class="invite">
 
-    {{-- INVITE FLOATING ORBS (Phase 1) --}}
+    {{-- INVITE FLOATING ORBS --}}
     <div class="invite__orbs">
         <div class="invite__orb invite__orb--1"></div>
         <div class="invite__orb invite__orb--2"></div>
@@ -51,10 +51,20 @@
                 </div>
 
                 <div class="invite__hero-visual">
-                    <div class="invite__hero-placeholder">
-                        <i class="fas fa-handshake"></i>
-                        <span>Let's Connect</span>
-                        <small>Lorem ipsum dolor sit amet</small>
+                    {{-- ARTHUR SPEAKING IMAGE --}}
+                    <div class="invite__hero-image">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-events-day-landscape-room.jpg') }}" 
+                            alt="Arthur Mongalo speaking at an event"
+                            class="invite__hero-img"
+                            loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                        >
+                        <div class="invite__hero-img-fallback">
+                            <i class="fas fa-handshake"></i>
+                            <span>Arthur Mongalo</span>
+                            <small>Available for your event</small>
+                        </div>
                     </div>
                 </div>
             </div>

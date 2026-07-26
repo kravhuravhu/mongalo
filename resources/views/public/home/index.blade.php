@@ -107,41 +107,90 @@
             <div class="home__pillars-grid">
                 {{-- Pillar 1: Prayer --}}
                 <div class="home__pillars-card home__pillars-card--1">
-                    <span class="home__pillars-num">I</span>
-                    <div class="home__pillars-icon"><i class="fas fa-cross"></i></div>
-                    <h3 class="home__pillars-name">Prayer</h3>
-                    <p class="home__pillars-desc">Prayer is the foundation of everything we do. Through prayer we connect with God, intercede for others and invite His power into every situation. "Pray without ceasing" (1 Thessalonians 5:17). Our goal is to pray for at least a million people.</p>
-                    <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    {{-- Background Image with Overlay --}}
+                    <div class="home__pillars-bg">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-mid.jpg') }}" 
+                            alt="Person praying"
+                            class="home__pillars-bg-img"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        >
+                        <div class="home__pillars-overlay"></div>
+                    </div>
+                    <div class="home__pillars-content">
+                        <span class="home__pillars-num">I</span>
+                        <div class="home__pillars-icon"><i class="fas fa-cross"></i></div>
+                        <h3 class="home__pillars-name">Prayer</h3>
+                        <p class="home__pillars-desc">Prayer is the foundation of everything we do. Through prayer we connect with God, intercede for others and invite His power into every situation. "Pray without ceasing" (1 Thessalonians 5:17). Our goal is to pray for at least a million people.</p>
+                        <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
                     <div class="home__pillars-shape"></div>
                 </div>
 
                 {{-- Pillar 2: Salvation --}}
                 <div class="home__pillars-card home__pillars-card--2">
-                    <span class="home__pillars-num">II</span>
-                    <div class="home__pillars-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                    <h3 class="home__pillars-name">Salvation</h3>
-                    <p class="home__pillars-desc">Salvation is the starting point of every faith journey. "If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved" (Romans 10:9). Free resources like My Salvation Companion are here to guide you through that first step.</p>
-                    <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    <div class="home__pillars-bg">
+                        <img 
+                            src="{{ secure_asset('images/events-day.jpg') }}" 
+                            alt="Hands reaching up"
+                            class="home__pillars-bg-img"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        >
+                        <div class="home__pillars-overlay"></div>
+                    </div>
+                    <div class="home__pillars-content">
+                        <span class="home__pillars-num">II</span>
+                        <div class="home__pillars-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                        <h3 class="home__pillars-name">Salvation</h3>
+                        <p class="home__pillars-desc">Salvation is the starting point of every faith journey. "If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved" (Romans 10:9). Free resources like My Salvation Companion are here to guide you through that first step.</p>
+                        <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
                     <div class="home__pillars-shape"></div>
                 </div>
 
                 {{-- Pillar 3: Baptism --}}
                 <div class="home__pillars-card home__pillars-card--3">
-                    <span class="home__pillars-num">III</span>
-                    <div class="home__pillars-icon"><i class="fas fa-water"></i></div>
-                    <h3 class="home__pillars-name">Baptism</h3>
-                    <p class="home__pillars-desc">Water baptism is an act of obedience and a public declaration of faith. "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit" (Matthew 28:19). We believe in water baptism, Spirit baptism and the renewal of the mind.</p>
-                    <a href="{{ route('baptism') }}" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    <div class="home__pillars-bg">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-baptism-portait.jpg') }}" 
+                            alt="Water baptism ceremony"
+                            class="home__pillars-bg-img"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        >
+                        <div class="home__pillars-overlay"></div>
+                    </div>
+                    <div class="home__pillars-content">
+                        <span class="home__pillars-num">III</span>
+                        <div class="home__pillars-icon"><i class="fas fa-water"></i></div>
+                        <h3 class="home__pillars-name">Baptism</h3>
+                        <p class="home__pillars-desc">Water baptism is an act of obedience and a public declaration of faith. "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit" (Matthew 28:19). We believe in water baptism, Spirit baptism and the renewal of the mind.</p>
+                        <a href="{{ route('baptism') }}" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
                     <div class="home__pillars-shape"></div>
                 </div>
 
                 {{-- Pillar 4: Growth --}}
                 <div class="home__pillars-card home__pillars-card--4">
-                    <span class="home__pillars-num">IV</span>
-                    <div class="home__pillars-icon"><i class="fas fa-seedling"></i></div>
-                    <h3 class="home__pillars-name">Growth</h3>
-                    <p class="home__pillars-desc">Growth does not stop at salvation. "But grow in the grace and knowledge of our Lord and Savior Jesus Christ" (2 Peter 3:18). Through Scripture, community and discipleship we continue to mature in faith. Our books and free resources support that journey every step of the way.</p>
-                    <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    <div class="home__pillars-bg">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-outdoor.jpg') }}" 
+                            alt="Bible study group"
+                            class="home__pillars-bg-img"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        >
+                        <div class="home__pillars-overlay"></div>
+                    </div>
+                    <div class="home__pillars-content">
+                        <span class="home__pillars-num">IV</span>
+                        <div class="home__pillars-icon"><i class="fas fa-seedling"></i></div>
+                        <h3 class="home__pillars-name">Growth</h3>
+                        <p class="home__pillars-desc">Growth does not stop at salvation. "But grow in the grace and knowledge of our Lord and Savior Jesus Christ" (2 Peter 3:18). Through Scripture, community and discipleship we continue to mature in faith. Our books and free resources support that journey every step of the way.</p>
+                        <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
                     <div class="home__pillars-shape"></div>
                 </div>
             </div>
@@ -149,7 +198,7 @@
     </section>
 
     {{-- COMMUNITY CTA --}}
-    <section class="home__community">
+    <!-- <section class="home__community">
         <div class="home__community-bg">
             <div class="home__community-shape home__community-shape--1"></div>
             <div class="home__community-shape home__community-shape--2"></div>
@@ -165,7 +214,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 
 </div>
 

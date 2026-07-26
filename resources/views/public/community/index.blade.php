@@ -94,7 +94,7 @@
 
                         <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="community__hero-mockup-join">
                             <i class="fab fa-whatsapp"></i>
-                            <span>Join the Community — It's Free</span>
+                            <span>Join Us</span>
                         </a>
                     </div>
                 </div>
@@ -202,7 +202,7 @@
     </section>
 
     {{-- COMMUNITY CTA --}}
-    <section class="community__cta">
+    <!-- <section class="community__cta">
         <div class="community__cta-bg">
             <div class="community__cta-shape community__cta-shape--1"></div>
             <div class="community__cta-shape community__cta-shape--2"></div>
@@ -217,7 +217,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 
 </div>
 
