@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title', 'Registrations · ' . $event->title . ' · ' . env('PROJECT_NAME', 'The Collective'))
-@section('page-title', 'Registrations: ' . $event->title)
+@section('page-title', 'Registrations ' . $event->title)
 @section('breadcrumb', 'Events / Registrations')
 
 @section('content')
@@ -22,12 +22,24 @@
                 registrations
             </span>
             <span class="events-registrations__stat">
-                <i class="fas fa-calendar-alt"></i> 
-                {{ $event->date->format('M d, Y') }}
+                <i class="fas fa-calendar-alt"></i>
+                @if($event->date)
+                    {{ $event->date->format('M d, Y') }}
+                @else
+                    <span style="color: var(--text-muted);">Date TBD</span>
+                @endif
+            </span>
+            <span class="events-registrations__stat">
+                <i class="fas fa-clock"></i>
+                @if($event->time)
+                    {{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}
+                @else
+                    <span style="color: var(--text-muted);">Time TBD</span>
+                @endif
             </span>
             <span class="events-registrations__stat">
                 <i class="fas fa-map-marker-alt"></i> 
-                {{ $event->location }}
+                {{ $event->location ?? 'Location TBD' }}
             </span>
         </div>
     </div>

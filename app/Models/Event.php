@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -22,6 +23,7 @@ class Event extends Model
     protected $casts = [
         'is_past' => 'boolean',
         'date' => 'date',
+        'capacity' => 'integer',
     ];
 
     protected $table = 'events';
@@ -36,11 +38,13 @@ class Event extends Model
         });
     }
 
+    // ─── RELATIONSHIP ───
     public function registrations()
     {
-        return $this->hasMany(EventRegistration::class);
+        return $this->hasMany(EventRegistration::class, 'event_id');
     }
 
+    // ─── ATTRIBUTES ───
     public function getRegisteredCountAttribute()
     {
         return $this->registrations()->count();
@@ -48,6 +52,25 @@ class Event extends Model
 
     public function getDateTimeAttribute()
     {
-        return $this->date->format('M d, Y') . ' at ' . \Carbon\Carbon::parse($this->time)->format('g:i A');
+        if ($this->date && $this->time) {
+            return $this->date->format('M d, Y') . ' at ' . Carbon::parse($this->time)->format('g:i A');
+        }
+        return 'Date TBD';
+    }
+
+    public function getFormattedDateAttribute()
+    {
+        if ($this->date) {
+            return $this->date->format('M d, Y');
+        }
+        return 'Date TBD';
+    }
+
+    public function getFormattedTimeAttribute()
+    {
+        if ($this->time) {
+            return Carbon::parse($this->time)->format('g:i A');
+        }
+        return 'Time TBD';
     }
 }
