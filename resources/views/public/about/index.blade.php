@@ -316,23 +316,18 @@
         <div class="wrap">
             <div class="about__arthur-container">
                 <div class="about__arthur-visual">
-                    <div class="about__arthur-card">
-                        <div class="about__arthur-card-icon">
-                            <i class="fas fa-user" aria-hidden="true"></i>
-                        </div>
-                        <div class="about__arthur-card-name">Arthur Mongalo</div>
-                        <div class="about__arthur-card-role">Founder · Author · Speaker</div>
-                        <div class="about__arthur-card-line"></div>
-                        <div class="about__arthur-card-socials">
-                            <a href="#" class="about__arthur-card-social" aria-label="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="about__arthur-card-social" aria-label="Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="about__arthur-card-social" aria-label="YouTube">
-                                <i class="fab fa-youtube"></i>
-                            </a>
+                    {{-- ARTHUR MONGALO IMAGE --}}
+                    <div class="about__arthur-image">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-portrait.jpg') }}" 
+                            alt="Arthur Mongalo, founder and author"
+                            class="about__arthur-img"
+                            loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                        >
+                        <div class="about__arthur-img-fallback">
+                            <i class="fas fa-user"></i>
+                            <span>Arthur Mongalo</span>
                         </div>
                     </div>
                 </div>

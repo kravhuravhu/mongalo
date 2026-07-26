@@ -76,13 +76,51 @@
         position: relative;
         overflow: hidden;
         background: linear-gradient(165deg, #f7f5f2 0%, #f0ebe4 60%, #e8e0d6 100%);
+        background-image: url('../images/service_church.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
         text-align: center;
+
+        /* ─── Overlay ─── */
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(
+                160deg,
+                rgba(40, 35, 30, 0.10) 0%,
+                rgba(60, 50, 40, 0.25) 25%,
+                rgba(80, 65, 50, 0.45) 50%,
+                rgba(30, 25, 20, 0.70) 75%,
+                rgba(20, 18, 15, 0.85) 100%
+            );
+            pointer-events: none;
+        }
+
+        /* ─── Warm glow overlay ─── */
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(
+                ellipse at 40% 30%,
+                rgba(230, 126, 34, 0.08) 0%,
+                rgba(230, 126, 34, 0.03) 40%,
+                transparent 70%
+            );
+            pointer-events: none;
+        }
 
         & .events__hero-bg {
             position: absolute;
             inset: 0;
             pointer-events: none;
             overflow: hidden;
+            z-index: 0;
 
             & .events__hero-orb {
                 position: absolute;
@@ -95,7 +133,7 @@
                     height: 500px;
                     top: -200px;
                     right: -150px;
-                    background: rgba(230, 126, 34, 0.04);
+                    background: rgba(230, 126, 34, 0.06);
                     animation-duration: 20s;
                     animation-delay: 0s;
                 }
@@ -105,7 +143,7 @@
                     height: 350px;
                     bottom: -150px;
                     left: -100px;
-                    background: rgba(211, 84, 0, 0.03);
+                    background: rgba(211, 84, 0, 0.04);
                     animation-duration: 25s;
                     animation-delay: 3s;
                     animation-direction: alternate-reverse;
@@ -116,7 +154,7 @@
                     height: 200px;
                     top: 30%;
                     left: 30%;
-                    background: rgba(230, 126, 34, 0.025);
+                    background: rgba(230, 126, 34, 0.04);
                     animation-duration: 15s;
                     animation-delay: 6s;
                 }
@@ -127,8 +165,7 @@
                 width: 3px;
                 height: 3px;
                 border-radius: 50%;
-                background: #e67e22;
-                opacity: 0.04;
+                background: rgba(230, 126, 34, 0.06);
                 animation: eventsParticleFloat 14s ease-in-out infinite;
 
                 &.events__hero-particle--1 {
@@ -176,10 +213,11 @@
                 position: absolute;
                 inset: 0;
                 background-image: 
-                    linear-gradient(rgba(166, 124, 78, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(166, 124, 78, 0.02) 1px, transparent 1px);
+                    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
                 background-size: 60px 60px;
-                opacity: 0.5;
+                opacity: 0.3;
+                pointer-events: none;
             }
         }
 
@@ -191,7 +229,7 @@
             font-weight: 900;
             font-size: clamp(50px, 12vw, 160px);
             color: transparent;
-            -webkit-text-stroke: 1px rgba(166, 124, 78, 0.087);
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
@@ -217,21 +255,23 @@
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #e67e22;
+            color: var(--gold-light);
             margin-bottom: 16px;
-            background: rgba(230, 126, 34, 0.08);
-            padding: 6px 18px 6px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 20px;
             border-radius: 50px;
-            border: 1px solid rgba(230, 126, 34, 0.12);
+            border: 1px solid rgba(230, 126, 34, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: all 0.3s ease;
             cursor: default;
 
             &:hover {
-                background: #e67e22;
+                background: rgba(230, 126, 34, 0.2);
                 color: #fff;
-                border-color: #e67e22;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 15px rgba(230, 126, 34, 0.15);
+                border-color: rgba(230, 126, 34, 0.3);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 20px rgba(230, 126, 34, 0.1);
 
                 & i {
                     color: #fff;
@@ -253,12 +293,13 @@
             font-size: clamp(36px, 4.5vw, 60px);
             line-height: 1.05;
             letter-spacing: -0.02em;
-            color: var(--text);
+            color: #fff;
             margin-bottom: 12px;
             animation: eventsTitleFade 1s ease-out;
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
 
             & .events__hero-gradient {
-                background: linear-gradient(130deg, #e67e22, #d35400);
+                background: linear-gradient(130deg, var(--gold-light), var(--gold));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -271,7 +312,7 @@
                     left: 0;
                     width: 0;
                     height: 2px;
-                    background: #e67e22;
+                    background: var(--gold);
                     transition: width 0.6s ease;
                 }
             }
@@ -283,11 +324,12 @@
 
         & .events__hero-text {
             font-size: 1.05rem;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.85);
             max-width: 48ch;
             margin: 0 auto 16px;
             line-height: 1.7;
             animation: eventsTextFade 1.2s ease-out;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
         }
 
         & .events__hero-meta {
@@ -296,7 +338,7 @@
             gap: 24px;
             flex-wrap: wrap;
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.75);
             animation: eventsMetaFade 1.4s ease-out;
 
             & span {
@@ -306,12 +348,12 @@
                 transition: all 0.3s ease;
 
                 & i {
-                    color: #e67e22;
+                    color: var(--gold-light);
                     transition: all 0.3s ease;
                 }
 
                 &:hover {
-                    color: var(--text);
+                    color: #fff;
 
                     & i {
                         transform: scale(1.1);
@@ -322,10 +364,10 @@
 
         /* ─── COUNTDOWN ─── */
         & .events__countdown {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(166, 124, 78, 0.1);
+            background: rgba(0, 0, 0, 0.233);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 36px 28px;
             margin: 24px auto 32px;
@@ -333,9 +375,9 @@
             transition: all 0.3s ease;
 
             &:hover {
-                background: rgba(255, 255, 255, 0.6);
+                background: rgba(0, 0, 0, 0.4);
                 border-color: rgba(230, 126, 34, 0.15);
-                box-shadow: 0 8px 30px rgba(230, 126, 34, 0.04);
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
             }
         }
 
@@ -352,7 +394,7 @@
             transition: all 0.3s ease;
 
             &:hover .events__countdown-number {
-                color: #e67e22;
+                color: var(--gold-light);
                 transform: scale(1.02);
             }
         }
@@ -362,31 +404,32 @@
             font-family: var(--font-serif);
             font-weight: 900;
             font-size: 4.8rem;
-            color: var(--gold);
+            color: #fff;
             line-height: 1;
             letter-spacing: 0.04em;
             transition: all 0.3s ease;
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
         }
 
         & .events__countdown-label {
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.5);
             margin-top: 6px;
             display: block;
             transition: color 0.3s ease;
         }
 
         & .events__countdown-item:hover .events__countdown-label {
-            color: var(--text);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         & .events__countdown-divider {
             font-family: var(--font-serif);
             font-size: 3.6rem;
             font-weight: 300;
-            color: var(--border);
+            color: rgba(255, 255, 255, 0.1);
             padding-bottom: 12px;
             animation: eventsDividerPulse 2s ease-in-out infinite;
         }
@@ -422,26 +465,26 @@
         }
 
         & .btn--primary {
-            background: #e67e22;
+            background: var(--gold);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.15);
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.2);
             &:hover {
-                background: #d35400;
+                background: var(--gold-light);
                 transform: translateY(-3px);
-                box-shadow: 0 12px 36px rgba(230, 126, 34, 0.2);
+                box-shadow: 0 12px 40px rgba(230, 126, 34, 0.25);
             }
         }
 
         & .btn--outline {
             background: transparent;
-            color: var(--text);
-            border: 1.5px solid var(--border-hover);
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
 
             &:hover {
-                border-color: #e67e22;
-                background: rgba(230, 126, 34, 0.06);
+                border-color: var(--gold);
+                background: rgba(230, 126, 34, 0.1);
                 transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(230, 126, 34, 0.06);
+                box-shadow: 0 8px 30px rgba(230, 126, 34, 0.06);
             }
         }
     }

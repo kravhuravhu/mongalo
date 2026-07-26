@@ -54,14 +54,18 @@
                 </div>
 
                 <div class="baptism__hero-visual">
-                    <div class="baptism__hero-icon-wrapper">
-                        <div class="baptism__hero-icon">
+                    {{-- BAPTISM IMAGE --}}
+                    <div class="baptism__hero-image">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-baptism.jpg') }}" 
+                            alt="Water baptism ceremony"
+                            class="baptism__hero-img"
+                            loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                        >
+                        <div class="baptism__hero-img-fallback">
                             <i class="fas fa-water"></i>
-                        </div>
-                        <div class="baptism__hero-ripples">
-                            <span class="baptism__hero-ripple baptism__hero-ripple--1"></span>
-                            <span class="baptism__hero-ripple baptism__hero-ripple--2"></span>
-                            <span class="baptism__hero-ripple baptism__hero-ripple--3"></span>
+                            <span>Baptism</span>
                         </div>
                     </div>
                 </div>
@@ -136,14 +140,18 @@
                 </div>
 
                 <div class="baptism__story-visual">
-                    <div class="baptism__story-card">
-                        <div class="baptism__story-card-icon"><i class="fas fa-water"></i></div>
-                        <div class="baptism__story-card-title">Arthur's Baptism</div>
-                        <div class="baptism__story-card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                        <div class="baptism__story-card-line"></div>
-                        <div class="baptism__story-card-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <blockquote>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</blockquote>
+                    {{-- ARTHUR BAPTISM IMAGE --}}
+                    <div class="baptism__story-image">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-baptism-portait.jpg') }}" 
+                            alt="Arthur Mongalo baptism ceremony"
+                            class="baptism__story-img"
+                            loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                        >
+                        <div class="baptism__story-img-fallback">
+                            <i class="fas fa-water"></i>
+                            <span>Arthur's Baptism</span>
                         </div>
                     </div>
                 </div>

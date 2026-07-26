@@ -44,6 +44,13 @@
         </div>
     </div>
 
+    {{-- ─── show if registrations exist ─── --}}
+    @if($registrations->count() > 0)
+        <div style="background: #d4edda; color: #155724; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.85rem;">
+            <i class="fas fa-check-circle"></i> Found {{ $registrations->count() }} registration(s) for this event.
+        </div>
+    @endif
+
     {{-- ─── REGISTRATIONS TABLE ─── --}}
     <div class="table-wrap">
         <table>

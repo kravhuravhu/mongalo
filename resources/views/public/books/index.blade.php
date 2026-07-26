@@ -204,23 +204,18 @@
                 </div>
 
                 <div class="books__author-visual">
-                    <div class="books__author-card">
-                        <div class="books__author-card-icon">
+                    {{-- ARTHUR MONGALO IMAGE --}}
+                    <div class="books__author-image">
+                        <img 
+                            src="{{ secure_asset('images/arthur-mongalo-landscape.jpg') }}" 
+                            alt="Arthur Mongalo, author and speaker"
+                            class="books__author-img"
+                            loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                        >
+                        <div class="books__author-img-fallback">
                             <i class="fas fa-user-pen"></i>
-                        </div>
-                        <div class="books__author-card-name">Arthur Mongalo</div>
-                        <div class="books__author-card-role">Author · Speaker</div>
-                        <div class="books__author-card-line"></div>
-                        <div class="books__author-card-socials">
-                            <a href="#" class="books__author-card-social">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="books__author-card-social">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="books__author-card-social">
-                                <i class="fab fa-youtube"></i>
-                            </a>
+                            <span>Arthur Mongalo</span>
                         </div>
                     </div>
                 </div>

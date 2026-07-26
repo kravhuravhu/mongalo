@@ -80,6 +80,7 @@
             }
         }
     }
+
     /* ─── HERO ─── */
     & .home__hero {
         padding: 80px 0 100px;
@@ -647,20 +648,24 @@
         & .home__pillars-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            gap: 28px;
         }
 
         & .home__pillars-card {
-            background: var(--bg);
+            position: relative;
             border-radius: 24px;
-            padding: 36px 24px 28px;
+            padding: 0;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             border: 1px solid var(--border);
             text-align: center;
-            position: relative;
             overflow: hidden;
             opacity: 0;
             transform: translateY(40px);
+            min-height: 480px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            background: var(--bg);
 
             &.home__pillars-card--visible {
                 opacity: 1;
@@ -673,74 +678,134 @@
                 top: 0;
                 left: 0;
                 right: 0;
-                height: 3px;
+                height: 4px;
                 background: var(--gold);
                 transform: scaleX(0);
                 transform-origin: left;
                 transition: transform 0.5s ease;
+                z-index: 3;
             }
 
             &:hover::before {
                 transform: scaleX(1);
             }
 
+            /* ─── Background Image ─── */
+            & .home__pillars-bg {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                overflow: hidden;
+
+                & .home__pillars-bg-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    transition: transform 0.6s ease;
+                }
+            }
+
+            /* ─── Overlay ─── */
+            & .home__pillars-overlay {
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.1) 0%,
+                    rgba(0, 0, 0, 0.7) 60%,
+                    rgba(0, 0, 0, 0.85) 100%
+                );
+                transition: background 0.4s ease;
+            }
+
+            &:hover .home__pillars-overlay {
+                background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    rgba(0, 0, 0, 0.6) 50%,
+                    rgba(0, 0, 0, 0.8) 100%
+                );
+            }
+
+            &:hover .home__pillars-bg-img {
+                transform: scale(1.05);
+            }
+
+            /* ─── Content ─── */
+            & .home__pillars-content {
+                position: relative;
+                z-index: 2;
+                padding: 36px 28px 32px;
+                width: 100%;
+                color: #fff;
+                text-align: center;
+            }
+
             & .home__pillars-num {
                 font-family: var(--font-serif);
                 font-size: 2.8rem;
                 font-weight: 700;
-                color: var(--gold);
-                opacity: 0.12;
+                color: rgba(255, 255, 255, 0.15);
                 line-height: 1;
                 margin-bottom: 4px;
+                display: block;
                 transition: all 0.4s ease;
             }
 
             &:hover .home__pillars-num {
-                opacity: 0.25;
+                opacity: 0.6;
                 transform: scale(1.05);
             }
 
             & .home__pillars-icon {
                 font-size: 2.2rem;
                 color: var(--gold);
-                opacity: 0.4;
+                opacity: 0.7;
                 margin-bottom: 10px;
                 display: block;
                 transition: all 0.4s ease;
+                text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
             }
 
             &:hover .home__pillars-icon {
                 transform: translateY(-4px) scale(1.1);
-                opacity: 0.6;
+                opacity: 1;
             }
 
             & .home__pillars-name {
                 font-family: var(--font-serif);
                 font-weight: 700;
-                font-size: 1.4rem;
-                margin-bottom: 6px;
+                font-size: 1.6rem;
+                margin-bottom: 8px;
+                color: #fff;
+                text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
                 transition: color 0.3s ease;
             }
 
             &:hover .home__pillars-name {
-                color: var(--gold);
+                color: var(--gold-light);
             }
 
             & .home__pillars-desc {
-                color: var(--text-muted);
-                font-size: 0.85rem;
-                line-height: 1.7;
-                margin-bottom: 16px;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 0.9rem;
+                line-height: 1.8;
+                margin-bottom: 18px;
+                text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
             }
 
             & .home__pillars-link {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
                 font-weight: 600;
-                color: var(--gold);
+                color: var(--gold-light);
                 display: inline-flex;
                 align-items: center;
                 gap: 6px;
                 transition: all 0.3s ease;
+                text-decoration: none;
+                text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
 
                 & i {
                     transition: transform 0.3s ease;
@@ -748,7 +813,7 @@
 
                 &:hover {
                     gap: 12px;
-                    color: var(--gold-light);
+                    color: #fff;
 
                     & i {
                         transform: translateX(4px);
@@ -763,39 +828,40 @@
                 width: 100px;
                 height: 100px;
                 border-radius: 50%;
-                background: var(--gold);
-                opacity: 0.02;
+                background: rgba(255, 255, 255, 0.03);
                 transition: all 0.6s ease;
                 pointer-events: none;
+                z-index: 1;
             }
 
             &:hover .home__pillars-shape {
-                transform: scale(1.5);
-                opacity: 0.06;
+                transform: scale(1.8);
+                opacity: 0.1;
             }
 
+            /* ─── Card Variants ─── */
             &.home__pillars-card--1:hover {
                 transform: translateY(-8px);
                 border-color: var(--gold);
-                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.08);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
             }
 
             &.home__pillars-card--2:hover {
                 transform: translateY(-8px);
                 border-color: var(--gold);
-                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.08);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
             }
 
             &.home__pillars-card--3:hover {
                 transform: translateY(-8px);
                 border-color: var(--gold);
-                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.08);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
             }
 
             &.home__pillars-card--4:hover {
                 transform: translateY(-8px);
                 border-color: var(--gold);
-                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.08);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
             }
         }
     }
@@ -970,6 +1036,16 @@
                 }
             }
         }
+
+        & .home__pillars {
+            & .home__pillars-grid {
+                gap: 24px;
+            }
+
+            & .home__pillars-card {
+                min-height: 440px;
+            }
+        }
     }
 
     /* Desktops (1500px) */
@@ -1001,6 +1077,16 @@
                     width: 250px;
                     height: 340px;
                 }
+            }
+        }
+
+        & .home__pillars {
+            & .home__pillars-grid {
+                gap: 22px;
+            }
+
+            & .home__pillars-card {
+                min-height: 420px;
             }
         }
     }
@@ -1045,7 +1131,23 @@
         & .home__pillars {
             & .home__pillars-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
+                gap: 24px;
+            }
+
+            & .home__pillars-card {
+                min-height: 420px;
+
+                & .home__pillars-content {
+                    padding: 28px 22px 24px;
+                }
+
+                & .home__pillars-name {
+                    font-size: 1.4rem;
+                }
+
+                & .home__pillars-desc {
+                    font-size: 0.85rem;
+                }
             }
         }
     }
@@ -1112,14 +1214,26 @@
             padding: 70px 0;
 
             & .home__pillars-grid {
-                gap: 16px;
+                gap: 20px;
             }
 
             & .home__pillars-card {
-                padding: 30px 20px 24px;
+                min-height: 400px;
+
+                & .home__pillars-content {
+                    padding: 24px 18px 20px;
+                }
+
+                & .home__pillars-num {
+                    font-size: 2.4rem;
+                }
+
+                & .home__pillars-icon {
+                    font-size: 1.8rem;
+                }
 
                 & .home__pillars-name {
-                    font-size: 1.2rem;
+                    font-size: 1.3rem;
                 }
 
                 & .home__pillars-desc {
@@ -1209,22 +1323,35 @@
             padding: 60px 0;
 
             & .home__pillars-grid {
-                gap: 14px;
+                gap: 18px;
             }
 
             & .home__pillars-card {
-                padding: 24px 16px 20px;
+                min-height: 380px;
+
+                & .home__pillars-content {
+                    padding: 20px 16px 18px;
+                }
 
                 & .home__pillars-num {
-                    font-size: 2.2rem;
+                    font-size: 2rem;
                 }
 
                 & .home__pillars-icon {
-                    font-size: 1.8rem;
+                    font-size: 1.6rem;
                 }
 
                 & .home__pillars-name {
-                    font-size: 1.1rem;
+                    font-size: 1.2rem;
+                }
+
+                & .home__pillars-desc {
+                    font-size: 0.75rem;
+                    margin-bottom: 14px;
+                }
+
+                & .home__pillars-link {
+                    font-size: 0.7rem;
                 }
             }
         }
@@ -1344,39 +1471,32 @@
 
             & .home__pillars-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 12px;
+                gap: 16px;
             }
 
             & .home__pillars-card {
-                padding: 20px 14px 18px;
+                min-height: 340px;
+
+                & .home__pillars-content {
+                    padding: 18px 14px 16px;
+                }
 
                 & .home__pillars-num {
-                    font-size: 2rem;
+                    font-size: 1.8rem;
                 }
 
                 & .home__pillars-icon {
-                    font-size: 1.6rem;
-                    margin-bottom: 6px;
+                    font-size: 1.4rem;
                 }
 
                 & .home__pillars-name {
-                    font-size: 1rem;
+                    font-size: 1.1rem;
                 }
 
                 & .home__pillars-desc {
-                    font-size: 0.75rem;
-                    margin-bottom: 12px;
-                }
-
-                & .home__pillars-link {
                     font-size: 0.7rem;
-                }
-
-                & .home__pillars-shape {
-                    width: 60px;
-                    height: 60px;
-                    bottom: -20px;
-                    right: -20px;
+                    margin-bottom: 12px;
+                    line-height: 1.6;
                 }
             }
         }
@@ -1495,13 +1615,33 @@
 
             & .home__pillars-grid {
                 grid-template-columns: 1fr;
-                max-width: 360px;
+                max-width: 400px;
                 margin: 0 auto;
-                gap: 16px;
+                gap: 20px;
             }
 
             & .home__pillars-card {
-                padding: 24px 18px 20px;
+                min-height: 320px;
+
+                & .home__pillars-content {
+                    padding: 20px 16px 18px;
+                }
+
+                & .home__pillars-num {
+                    font-size: 2rem;
+                }
+
+                & .home__pillars-icon {
+                    font-size: 1.8rem;
+                }
+
+                & .home__pillars-name {
+                    font-size: 1.3rem;
+                }
+
+                & .home__pillars-desc {
+                    font-size: 0.8rem;
+                }
             }
         }
 
@@ -1587,7 +1727,11 @@
             padding: 30px 0;
 
             & .home__pillars-card {
-                padding: 20px 16px 16px;
+                min-height: 280px;
+
+                & .home__pillars-content {
+                    padding: 16px 14px 14px;
+                }
 
                 & .home__pillars-num {
                     font-size: 1.6rem;
@@ -1598,7 +1742,11 @@
                 }
 
                 & .home__pillars-name {
-                    font-size: 0.9rem;
+                    font-size: 1.1rem;
+                }
+
+                & .home__pillars-desc {
+                    font-size: 0.75rem;
                 }
             }
         }
@@ -1669,6 +1817,33 @@
                 }
             }
         }
+
+        & .home__pillars {
+            & .home__pillars-card {
+                min-height: 250px;
+
+                & .home__pillars-content {
+                    padding: 14px 12px 12px;
+                }
+
+                & .home__pillars-num {
+                    font-size: 1.4rem;
+                }
+
+                & .home__pillars-icon {
+                    font-size: 1.2rem;
+                }
+
+                & .home__pillars-name {
+                    font-size: 1rem;
+                }
+
+                & .home__pillars-desc {
+                    font-size: 0.7rem;
+                    margin-bottom: 10px;
+                }
+            }
+        }
     }
 
     /* Super Small Mobile (350px) */
@@ -1722,6 +1897,55 @@
                 }
             }
         }
+
+        & .home__pillars {
+            & .home__pillars-card {
+                min-height: 220px;
+
+                & .home__pillars-content {
+                    padding: 12px 10px 10px;
+                }
+
+                & .home__pillars-num {
+                    font-size: 1.2rem;
+                }
+
+                & .home__pillars-icon {
+                    font-size: 1rem;
+                }
+
+                & .home__pillars-name {
+                    font-size: 0.9rem;
+                }
+
+                & .home__pillars-desc {
+                    font-size: 0.65rem;
+                }
+
+                & .home__pillars-link {
+                    font-size: 0.65rem;
+                }
+            }
+        }
+
+        & .home__community {
+            & .home__community-title {
+                font-size: clamp(16px, 2vw, 20px);
+            }
+
+            & .home__community-desc {
+                font-size: 0.75rem;
+            }
+
+            & .home__community-icon {
+                font-size: 1.6rem;
+            }
+
+            & .btn--lg {
+                font-size: 0.7rem;
+                padding: 8px 16px;
+            }
+        }
     }
 
     /* Extreme Small Mobile (300px) */
@@ -1753,14 +1977,18 @@
 
         & .home__pillars {
             & .home__pillars-card {
-                padding: 16px 12px 14px;
+                min-height: 180px;
+
+                & .home__pillars-content {
+                    padding: 10px 8px 8px;
+                }
 
                 & .home__pillars-num {
-                    font-size: 1.2rem;
+                    font-size: 1rem;
                 }
 
                 & .home__pillars-icon {
-                    font-size: 1.2rem;
+                    font-size: 0.9rem;
                 }
 
                 & .home__pillars-name {
@@ -1768,11 +1996,11 @@
                 }
 
                 & .home__pillars-desc {
-                    font-size: 0.7rem;
+                    font-size: 0.6rem;
                 }
 
                 & .home__pillars-link {
-                    font-size: 0.65rem;
+                    font-size: 0.6rem;
                 }
             }
         }
