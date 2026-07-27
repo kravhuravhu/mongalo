@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EventRegistrationRequest;
 use App\Models\Event;
 use App\Models\EventRegistration;
-use Illuminate\Http\Request;
+use App\Services\PhoneService;
 use Carbon\Carbon;
 
 class EventController extends Controller
 {
+    protected PhoneService $phoneService;
+
+    public function __construct(PhoneService $phoneService)
+    {
+        $this->phoneService = $phoneService;
+    }
+
     public function index()
     {
         $today = Carbon::today();
@@ -32,25 +40,24 @@ class EventController extends Controller
         return view('public.events.show', compact('event'));
     }
 
-    public function register(Request $request)
+    public function register(EventRegistrationRequest $request)
     {
-        $request->validate([
-            'event_id' => 'required|exists:events,id',
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|max:50',
-        ]);
+        $validated = $request->validated();
 
-        $event = Event::findOrFail($request->event_id);
+        $event = Event::findOrFail($validated['event_id']);
 
+        // Format phone number
+        $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
+
+        // ─── CHECK IF EVENT IS FREE ───
         $isFree = $event->is_free ?? true;
         $amount = $event->price ?? 0;
 
         $registration = EventRegistration::create([
             'event_id' => $event->id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
             'registration_id' => EventRegistration::generateRegistrationId(),
             'payment_status' => $isFree ? 'free' : 'pending',
         ]);
@@ -66,7 +73,6 @@ class EventController extends Controller
             $response['message'] = 'Registration successful! You are registered for this event.';
             $response['is_free'] = true;
         } else {
-            // show banking details
             $response['message'] = 'Registration successful! Please use the banking details below to complete your payment.';
             $response['is_free'] = false;
             $response['amount'] = $amount;

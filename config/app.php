@@ -125,4 +125,9 @@ return [
 
     'admin_domain' => env('ADMIN_DOMAIN', 'admin.localhost'),
 
+    'bank_name' => env('BANK_NAME', 'Nedbank'),
+    'bank_account_name' => env('BANK_ACCOUNT_NAME', 'The Collective'),
+    'bank_account_number' => env('BANK_ACCOUNT_NUMBER', '1234567890'),
+    'bank_branch_code' => env('BANK_BRANCH_CODE', '198765'),
+
 ];

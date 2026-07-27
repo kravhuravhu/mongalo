@@ -2181,6 +2181,54 @@
     }
 }
 
+/* ─── FORM ERRORS ─── */
+.baptism__form-errors {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 4px solid #dc3545;
+
+    & ul {
+        margin: 8px 0 0 20px;
+        padding: 0;
+        font-size: 0.9rem;
+
+        & li {
+            margin-bottom: 4px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    & i {
+        font-size: 1.1rem;
+        margin-right: 8px;
+    }
+}
+
+.baptism__form-help {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.baptism__form-error {
+    display: block;
+    font-size: 0.75rem;
+    color: #dc3545;
+    margin-top: 4px;
+}
+
+.required {
+    color: #dc3545;
+    margin-left: 2px;
+}
+
 @media (max-width: 1200px) {
     & .baptism__hero-image {
         max-width: 340px;

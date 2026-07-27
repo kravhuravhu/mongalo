@@ -3,41 +3,43 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\InviteRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\InviteRequest;
+use App\Models\InviteRequest as InviteRequestModel;
+use App\Services\PhoneService;
 
 class InviteController extends Controller
 {
+    protected PhoneService $phoneService;
+
+    public function __construct(PhoneService $phoneService)
+    {
+        $this->phoneService = $phoneService;
+    }
+
     public function index()
     {
         return view('public.invite.index');
     }
 
-    public function send(Request $request)
+    public function send(InviteRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|max:50',
-            'event_name' => 'required|max:255',
-            'event_date' => 'required|date|after:today',
-            'location' => 'required|max:255',
-            'expected_attendance' => 'nullable|integer|min:1',
-            'message' => 'nullable',
-        ]);
+        $validated = $request->validated();
 
-        InviteRequest::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'event_name' => $request->event_name,
-            'event_date' => $request->event_date,
-            'location' => $request->location,
-            'expected_attendance' => $request->expected_attendance,
-            'message' => $request->message,
+        // Format phone number
+        $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
+
+        InviteRequestModel::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'event_name' => $validated['event_name'],
+            'event_date' => $validated['event_date'],
+            'location' => $validated['location'],
+            'expected_attendance' => $validated['expected_attendance'] ?? null,
+            'message' => $validated['message'] ?? null,
             'status' => 'pending',
         ]);
 
-        return redirect()->route('invite')->with('success', 'Your invitation request has been sent. Arthur will respond within 48 hours!');
+        return redirect()->route('invite', ['#invite-form'])->with('success', 'Your invitation request has been sent. Arthur will respond within 48 hours!');
     }
 }

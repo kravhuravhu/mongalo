@@ -3,37 +3,44 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\BaptismRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\BaptismRequest;
+use App\Models\BaptismRequest as BaptismRequestModel;
+use App\Services\PhoneService;
 
 class BaptismController extends Controller
 {
+    protected PhoneService $phoneService;
+
+    public function __construct(PhoneService $phoneService)
+    {
+        $this->phoneService = $phoneService;
+    }
+
     public function index()
     {
         return view('public.baptism.index');
     }
 
-    public function request(Request $request)
+    public function request(BaptismRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|max:50',
-            'location' => 'required|max:255',
-            'preferred_date' => 'nullable|date|after:today',
-            'message' => 'nullable',
-        ]);
+        $validated = $request->validated();
 
-        BaptismRequest::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'location' => $request->location,
-            'preferred_date' => $request->preferred_date,
-            'message' => $request->message,
+        // Format phone number
+        $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
+
+        BaptismRequestModel::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'location' => $validated['location'],
+            'preferred_date' => $validated['preferred_date'] ?? null,
+            'message' => $validated['message'] ?? null,
             'status' => 'pending',
         ]);
 
-        return redirect()->route('baptism')->with('success', 'Your baptism request has been submitted. We will contact you soon!');
+        // Flash success message
+        session()->flash('success', 'Your baptism request has been submitted. We will contact you soon!');
+
+        return redirect()->route('baptism', ['#baptism-form']);
     }
 }
