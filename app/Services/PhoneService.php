@@ -12,12 +12,12 @@ class PhoneService
         // Remove all non-numeric characters
         $cleaned = preg_replace('/[^0-9]/', '', $phone);
         
-        // South African numbers
+        // SA numbers
         if (strlen($cleaned) === 10 && substr($cleaned, 0, 2) === '07') {
             return '+27' . substr($cleaned, 1);
         }
         
-        // Already has country code (27)
+        // Already has code (27)
         if (strlen($cleaned) === 11 && substr($cleaned, 0, 2) === '27') {
             return '+' . $cleaned;
         }
@@ -37,7 +37,7 @@ class PhoneService
     {
         $formatted = $this->formatE164($phone);
         
-        // If it's a South African number, format as +27 71 461 1401
+        // if SA number, format as +27 71 461 1401
         if (strpos($formatted, '+27') === 0) {
             $digits = preg_replace('/[^0-9]/', '', $formatted);
             if (strlen($digits) === 11) {
@@ -55,12 +55,12 @@ class PhoneService
     {
         $cleaned = preg_replace('/[^0-9]/', '', $phone);
         
-        // Check if it's a valid SA number (starting with 07, 06, 08, 04, or 03)
-        if (strlen($cleaned) === 10 && preg_match('/^(0[6-8]|04|03)/', $cleaned)) {
+        // Check if it's a valid SA number
+        if (strlen($cleaned) === 10 && preg_match('/^(0[6-8]|04|03|01)/', $cleaned)) {
             return true;
         }
         
-        // Check if it has country code
+        // Check if it has code
         if (strlen($cleaned) === 11 && substr($cleaned, 0, 2) === '27') {
             $local = substr($cleaned, 2);
             if (preg_match('/^[6-8][0-9]{8}$/', $local) || preg_match('/^[34][0-9]{8}$/', $local)) {
