@@ -72,7 +72,7 @@
     </section>
 
     {{-- FORM --}}
-    <section class="invite__form">
+    <section class="invite__form" id="invite-form">
         <div class="invite__form-bg">
             <div class="invite__form-shape invite__form-shape--1"></div>
             <div class="invite__form-shape invite__form-shape--2"></div>

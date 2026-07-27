@@ -259,42 +259,56 @@
                     </div>
                 </div>
 
+                {{-- ─── FORM ─── --}}
                 <div class="baptism__form-wrapper">
                     @if(session('success'))
                         <div class="baptism__form-success">
                             <i class="fas fa-check-circle"></i> {{ session('success') }}
                         </div>
                     @endif
+
+                    @if($errors->any())
+                        <div class="baptism__form-errors">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('baptism.request') }}" class="baptism__form-form form-loading">
                         @csrf
 
                         <div class="baptism__form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" name="name" id="name" placeholder="Thabo Mokoena" value="{{ old('name') }}" required>
                             @error('name')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="baptism__form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" name="email" id="email" placeholder="thabo@example.co.za" value="{{ old('email') }}" required>
                             @error('email')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="baptism__form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
+                            <label for="phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" value="{{ old('phone') }}" required>
+                            <span class="baptism__form-help">Include your country code (e.g., +27 for South Africa)</span>
                             @error('phone')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="baptism__form-group">
-                            <label for="location">Location</label>
-                            <input type="text" name="location" id="location" placeholder="Johannesburg, Pretoria, etc." required>
+                            <label for="location">Location <span class="required">*</span></label>
+                            <input type="text" name="location" id="location" placeholder="Johannesburg, Pretoria, etc." value="{{ old('location') }}" required>
                             @error('location')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
@@ -302,7 +316,7 @@
 
                         <div class="baptism__form-group">
                             <label for="preferred_date">Preferred Date (Optional)</label>
-                            <input type="date" name="preferred_date" id="preferred_date">
+                            <input type="date" name="preferred_date" id="preferred_date" value="{{ old('preferred_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}">
                             @error('preferred_date')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
@@ -310,7 +324,7 @@
 
                         <div class="baptism__form-group">
                             <label for="message">Message (Optional)</label>
-                            <textarea name="message" id="message" rows="3" placeholder="Tell us a bit about your journey..."></textarea>
+                            <textarea name="message" id="message" rows="3" placeholder="Tell us a bit about your journey...">{{ old('message') }}</textarea>
                             @error('message')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror

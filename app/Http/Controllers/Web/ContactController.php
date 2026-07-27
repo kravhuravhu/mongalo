@@ -3,32 +3,39 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
-use Illuminate\Http\Request;
+use App\Services\PhoneService;
 
 class ContactController extends Controller
 {
+    protected PhoneService $phoneService;
+
+    public function __construct(PhoneService $phoneService)
+    {
+        $this->phoneService = $phoneService;
+    }
+
     public function index()
     {
         return view('public.contact.index');
     }
 
-    public function send(Request $request)
+    public function send(ContactRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|max:50',
-            'subject' => 'required|max:255',
-            'message' => 'required',
-        ]);
+        $validated = $request->validated();
+
+        // Format phone if provided
+        if (!empty($validated['phone'])) {
+            $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
+        }
 
         ContactMessage::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'subject' => $request->subject,
-            'message' => $request->message,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
             'status' => 'unread',
         ]);
 
