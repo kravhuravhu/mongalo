@@ -60,6 +60,159 @@ img {
     z-index: 2;
 }
 
+/* ─── APP LOADER ─── */
+.app-loader {
+    position: fixed;
+    inset: 0;
+    background: rgba(247, 245, 242, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+
+    &.app-loader--hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    & .app-loader__spinner {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .app-loader__ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            animation: appSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+            &.app-loader__ring--1 {
+                width: 80px;
+                height: 80px;
+                border-top-color: var(--gold);
+                animation-duration: 0.9s;
+            }
+
+            &.app-loader__ring--2 {
+                width: 60px;
+                height: 60px;
+                border-top-color: var(--gold-light);
+                animation-duration: 0.7s;
+                animation-direction: reverse;
+            }
+
+            &.app-loader__ring--3 {
+                width: 40px;
+                height: 40px;
+                border-top-color: var(--gold-dim);
+                animation-duration: 0.5s;
+            }
+        }
+
+        & .app-loader__text {
+            position: absolute;
+            bottom: -40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            animation: appPulse 1.5s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes appSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes appPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ─── APP FLASH MESSAGES ─── */
+.flash-message-app {
+    position: fixed;
+    top: 100px;
+    right: 24px;
+    z-index: 9999;
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.85rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    max-width: 400px;
+    animation: flashAppSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &.flash-message-app--success {
+        background: #28a745;
+    }
+
+    &.flash-message-app--error {
+        background: #dc3545;
+    }
+
+    &.flash-message-app--warning {
+        background: #ffc107;
+        color: #856404;
+    }
+
+    &.flash-message-app--fade-out {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    & .flash-message-app__close {
+        background: none;
+        border: none;
+        color: inherit;
+        opacity: 0.6;
+        cursor: pointer;
+        padding: 0 0 0 12px;
+        font-size: 1rem;
+        margin-left: auto;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes flashAppSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 540px) {
+    .flash-message-app {
+        top: 80px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        padding: 14px 18px;
+        font-size: 0.8rem;
+    }
+}
+
 /* ─── FLOATING ORBS ─── */
 .floating-orbs {
     position: fixed;

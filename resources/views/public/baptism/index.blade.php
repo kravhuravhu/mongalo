@@ -265,8 +265,7 @@
                             <i class="fas fa-check-circle"></i> {{ session('success') }}
                         </div>
                     @endif
-
-                    <form method="POST" action="{{ route('baptism.request') }}" class="baptism__form-form">
+                    <form method="POST" action="{{ route('baptism.request') }}" class="baptism__form-form form-loading">
                         @csrf
 
                         <div class="baptism__form-group">
