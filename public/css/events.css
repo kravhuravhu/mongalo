@@ -2704,3 +2704,247 @@
     0% { transform: translate(0, 0) scale(1); }
     100% { transform: translate(-20px, 15px) scale(1.05); }
 }
+
+/* ─── EVENT REGISTRATION SUCCESS ─── */
+.registration-success {
+    background: #d4edda;
+    color: #155724;
+    padding: 24px 20px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    animation: registrationSuccessIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    & .registration-success__icon {
+        font-size: 2.4rem;
+        color: #28a745;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    & .registration-success__title {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 4px;
+        color: #155724;
+    }
+
+    & .registration-success__message {
+        text-align: center;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        color: #155724;
+    }
+
+    & .registration-success__id {
+        background: rgba(255, 255, 255, 0.5);
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        text-align: center;
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+
+        & strong {
+            color: #155724;
+        }
+    }
+
+    & .registration-success__banking {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: var(--radius-sm);
+        padding: 16px 18px;
+        margin-top: 4px;
+
+        & h5 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 1rem;
+            color: #155724;
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(21, 87, 36, 0.1);
+            padding-bottom: 8px;
+        }
+
+        & .registration-success__banking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+
+            & div {
+                display: flex;
+                flex-direction: column;
+
+                & .label {
+                    font-size: 0.65rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                    color: rgba(21, 87, 36, 0.6);
+                }
+
+                & .value {
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    color: #155724;
+                }
+            }
+        }
+
+        & p {
+            font-size: 0.8rem;
+            color: rgba(21, 87, 36, 0.7);
+            margin-top: 12px;
+            text-align: center;
+            border-top: 1px solid rgba(21, 87, 36, 0.1);
+            padding-top: 12px;
+
+            & i {
+                margin-right: 4px;
+            }
+        }
+    }
+}
+
+/* ─── REGISTRATION ERROR ─── */
+.registration-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: registrationSuccessIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    & i {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes registrationSuccessIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 540px) {
+    .registration-success {
+        padding: 18px 14px;
+
+        & .registration-success__banking-grid {
+            grid-template-columns: 1fr;
+            gap: 6px;
+
+            & div {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 4px 0;
+                border-bottom: 1px solid rgba(21, 87, 36, 0.05);
+
+                & .label {
+                    font-size: 0.6rem;
+                }
+
+                & .value {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+    }
+
+    .registration-success__banking-grid div:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .registration-success {
+        padding: 14px 10px;
+
+        & .registration-success__icon {
+            font-size: 1.8rem;
+        }
+
+        & .registration-success__title {
+            font-size: 1rem;
+        }
+
+        & .registration-success__message {
+            font-size: 0.8rem;
+        }
+
+        & .registration-success__id {
+            font-size: 0.75rem;
+        }
+    }
+}
+
+/* ─── REGISTER BUTTON LOADER ─── */
+#registerBtn {
+    position: relative;
+    min-height: 48px;
+}
+
+#registerBtn .btn-loader {
+    display: none;
+}
+
+#registerBtn .btn-loader i {
+    margin-right: 8px;
+}
+
+#registerBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 540px) {
+    #registerBtn {
+        min-height: 44px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ─── REGISTRATION SUCCESS ACTIONS ─── */
+.registration-success__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 12px 0 16px;
+}
+
+.registration-success__actions .btn {
+    font-size: 0.8rem;
+    padding: 8px 18px;
+}
+
+.registration-success__actions .btn i {
+    margin-right: 6px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 540px) {
+    .registration-success__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .registration-success__actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

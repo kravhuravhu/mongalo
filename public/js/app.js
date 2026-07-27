@@ -257,55 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ─── EVENT REGISTRATION ───
-document.addEventListener('DOMContentLoaded', function() {
-    const registrationForm = document.getElementById('eventRegistrationForm');
-    if (registrationForm) {
-        registrationForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Registering...';
-            submitBtn.disabled = true;
-
-            fetch('{{ route("events.register") }}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const msg = document.getElementById('registrationMessage');
-                    if (msg) {
-                        msg.innerHTML = `
-                            <div style="background:#d4edda;color:#155724;padding:16px 20px;border-radius:10px;margin-bottom:20px;">
-                                <i class="fas fa-check-circle"></i> ${data.message}
-                                <br><small>Registration ID: ${data.registration_id}</small>
-                                <br><a href="${data.calendar_link}" target="_blank" style="color:#155724;font-weight:600;text-decoration:underline;">
-                                    <i class="fas fa-calendar-plus"></i> Add to Google Calendar
-                                </a>
-                            </div>
-                        `;
-                    }
-                    if (data.show_whatsapp) {
-                        setTimeout(showWhatsAppPopup, 1000);
-                    }
-                    registrationForm.reset();
-                }
-            })
-            .catch(error => console.error('Error:', error))
-            .finally(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            });
-        });
-    }
-});
-
 // ─── ADD TO CALENDAR ───
 function addToCalendar(eventId) {
     alert('A calendar invite will be sent to your email after registration.');
