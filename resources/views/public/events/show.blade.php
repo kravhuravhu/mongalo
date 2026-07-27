@@ -55,6 +55,17 @@
                                 <span>{{ $event->registrations()->count() }}/{{ $event->capacity }} registered</span>
                             </div>
                         @endif
+                        @if(!$event->is_free && $event->price > 0)
+                            <div class="event-detail__hero-meta-item">
+                                <i class="fas fa-tag"></i>
+                                <span>R{{ number_format($event->price, 2) }} per person</span>
+                            </div>
+                        @else
+                            <div class="event-detail__hero-meta-item">
+                                <i class="fas fa-gift"></i>
+                                <span>Free Event</span>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="event-detail__hero-features">
@@ -68,11 +79,17 @@
                 <div class="event-detail__hero-form">
                     <div class="event-detail__form-card">
                         <h3 class="event-detail__form-title">Register for This Event</h3>
-                        <p class="event-detail__form-subtitle">Secure your spot</p>
+                        <p class="event-detail__form-subtitle">
+                            @if(!$event->is_free && $event->price > 0)
+                                R{{ number_format($event->price, 2) }} per person
+                            @else
+                                Free registration
+                            @endif
+                        </p>
 
                         <div id="registrationMessage"></div>
 
-                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
+                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}" class="form-loading">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
 
@@ -91,8 +108,12 @@
                                 <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
                             </div>
 
-                            <button type="submit" class="btn btn--primary btn--block">
-                                <i class="fas fa-ticket-alt"></i> Register Now
+                            <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
+                                <i class="fas fa-ticket-alt"></i> 
+                                <span class="btn-text">Register Now</span>
+                                <span class="btn-loader" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Registering...
+                                </span>
                             </button>
                         </form>
 
@@ -169,6 +190,126 @@
 
 @push('scripts')
     <script src="{{ secure_asset('js/events.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('eventRegistrationForm');
+            const messageDiv = document.getElementById('registrationMessage');
+            const submitBtn = document.getElementById('registerBtn');
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    const btnText = submitBtn.querySelector('.btn-text');
+                    const btnLoader = submitBtn.querySelector('.btn-loader');
+                    const icon = submitBtn.querySelector('i');
+
+                    // ─── SHOW LOADING ───
+                    submitBtn.disabled = true;
+                    if (btnText) btnText.style.display = 'none';
+                    if (btnLoader) btnLoader.style.display = 'inline';
+                    if (icon) icon.style.display = 'none';
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            let html = `
+                                <div class="registration-success">
+                                    <div class="registration-success__icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h4 class="registration-success__title">Registration Successful!</h4>
+                                    <p class="registration-success__message">${data.message}</p>
+                                    <div class="registration-success__id">
+                                        <strong>Registration ID:</strong> ${data.registration_id}
+                                    </div>
+                            `;
+
+                            // ─── SHOW BANKING DETAILS ───
+                            if (!data.is_free && data.banking_details) {
+                                html += `
+                                    <div class="registration-success__banking">
+                                        <h5>Banking Details</h5>
+                                        <div class="registration-success__banking-grid">
+                                            <div>
+                                                <span class="label">Bank</span>
+                                                <span class="value">${data.banking_details.bank}</span>
+                                            </div>
+                                            <div>
+                                                <span class="label">Account Name</span>
+                                                <span class="value">${data.banking_details.account_name}</span>
+                                            </div>
+                                            <div>
+                                                <span class="label">Account Number</span>
+                                                <span class="value">${data.banking_details.account_number}</span>
+                                            </div>
+                                            <div>
+                                                <span class="label">Branch Code</span>
+                                                <span class="value">${data.banking_details.branch_code}</span>
+                                            </div>
+                                            <div style="grid-column: 1 / -1;">
+                                                <span class="label">Reference</span>
+                                                <span class="value" style="font-weight: 700; color: var(--gold);">${data.banking_details.reference}</span>
+                                            </div>
+                                            <div style="grid-column: 1 / -1; text-align: center; font-weight: 600; font-size: 1.1rem; padding-top: 8px; border-top: 1px solid var(--border);">
+                                                Amount: R${data.amount}
+                                            </div>
+                                        </div>
+                                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px;">
+                                            <i class="fas fa-info-circle"></i> 
+                                            Please use your Registration ID as reference when making payment.
+                                        </p>
+                                    </div>
+                                `;
+                            }
+
+                            html += `
+                                </div>
+                            `;
+
+                            messageDiv.innerHTML = html;
+                            form.reset();
+
+                            // ─── SHOW WHATSAPP POPUP ───
+                            if (data.show_whatsapp) {
+                                setTimeout(function() {
+                                    const popup = document.getElementById('whatsappPopup');
+                                    if (popup) {
+                                        popup.classList.add('show');
+                                    }
+                                }, 1000);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        messageDiv.innerHTML = `
+                            <div class="registration-error">
+                                <i class="fas fa-exclamation-circle"></i>
+                                Something went wrong. Please try again.
+                            </div>
+                        `;
+                    })
+                    .finally(() => {
+                        // ─── RESET BUTTON ───
+                        submitBtn.disabled = false;
+                        if (btnText) btnText.style.display = 'inline';
+                        if (btnLoader) btnLoader.style.display = 'none';
+                        if (icon) icon.style.display = 'inline';
+                    });
+                });
+            }
+        });
+    </script>
 @endpush
 
 @endsection

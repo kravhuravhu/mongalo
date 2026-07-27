@@ -17,13 +17,17 @@ class Event extends Model
         'location',
         'capacity',
         'is_past',
+        'is_free',
+        'price',
         'sort_order',
     ];
 
     protected $casts = [
         'is_past' => 'boolean',
+        'is_free' => 'boolean',
         'date' => 'date',
         'capacity' => 'integer',
+        'price' => 'decimal:2',
     ];
 
     protected $table = 'events';
@@ -72,5 +76,13 @@ class Event extends Model
             return Carbon::parse($this->time)->format('g:i A');
         }
         return 'Time TBD';
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        if ($this->is_free) {
+            return 'Free';
+        }
+        return $this->price > 0 ? 'R' . number_format($this->price, 2) : 'Free';
     }
 }

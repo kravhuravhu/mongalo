@@ -12,6 +12,7 @@ class EventRegistration extends Model
         'email',
         'phone',
         'registration_id',
+        'payment_status',
     ];
 
     protected $table = 'event_registrations';

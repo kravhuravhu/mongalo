@@ -101,7 +101,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('invite.send') }}">
+                    <form method="POST" action="{{ route('invite.send') }}" class="form-loading">
                         @csrf
 
                         <div class="invite__form-group">

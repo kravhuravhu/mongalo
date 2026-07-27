@@ -84,7 +84,7 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('contact.send') }}">
+                        <form method="POST" action="{{ route('contact.send') }}" class="form-loading">
                             @csrf
 
                             <div class="contact__hero-form-row">
