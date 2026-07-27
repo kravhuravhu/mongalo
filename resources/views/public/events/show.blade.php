@@ -71,7 +71,6 @@
                     <div class="event-detail__hero-features">
                         <span><i class="fas fa-check-circle"></i> Free registration</span>
                         <span><i class="fas fa-check-circle"></i> Bring a friend</span>
-                        <span><i class="fas fa-check-circle"></i> Certificate of attendance</span>
                     </div>
                 </div>
 
@@ -89,7 +88,7 @@
 
                         <div id="registrationMessage"></div>
 
-                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}" class="form-loading">
+                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
 
@@ -109,9 +108,10 @@
                             </div>
 
                             <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
-                                <i class="fas fa-ticket-alt"></i> 
-                                <span class="btn-text">Register Now</span>
-                                <span class="btn-loader" style="display: none;">
+                                <span id="registerBtnText">
+                                    <i class="fas fa-ticket-alt"></i> Register Now
+                                </span>
+                                <span id="registerBtnLoader" style="display: none;">
                                     <i class="fas fa-spinner fa-spin"></i> Registering...
                                 </span>
                             </button>
@@ -126,7 +126,7 @@
         </div>
     </section>
 
-    {{-- WHAT TO EXPECT (Default Gold Theme) --}}
+    {{-- WHAT TO EXPECT --}}
     <section class="event-detail__expect">
         <div class="event-detail__expect-bg">
             <div class="event-detail__expect-shape event-detail__expect-shape--1"></div>
@@ -156,7 +156,7 @@
                 <div class="event-detail__expect-item reveal" data-delay="200">
                     <div class="event-detail__expect-icon"><i class="fas fa-users"></i></div>
                     <h4>Community</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p>Connect with other believers, share stories, and build relationships that go beyond the event.</p>
                 </div>
 
                 <div class="event-detail__expect-item reveal" data-delay="300">
@@ -168,7 +168,7 @@
         </div>
     </section>
 
-    {{-- COMMUNITY CTA (Default Gold Theme) --}}
+    {{-- COMMUNITY CTA --}}
     <section class="event-detail__community">
         <div class="event-detail__community-bg">
             <div class="event-detail__community-shape event-detail__community-shape--1"></div>
@@ -195,33 +195,81 @@
             const form = document.getElementById('eventRegistrationForm');
             const messageDiv = document.getElementById('registrationMessage');
             const submitBtn = document.getElementById('registerBtn');
+            const btnText = document.getElementById('registerBtnText');
+            const btnLoader = document.getElementById('registerBtnLoader');
 
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
 
-                    const formData = new FormData(this);
-                    const btnText = submitBtn.querySelector('.btn-text');
-                    const btnLoader = submitBtn.querySelector('.btn-loader');
-                    const icon = submitBtn.querySelector('i');
-
                     // ─── SHOW LOADING ───
                     submitBtn.disabled = true;
-                    if (btnText) btnText.style.display = 'none';
-                    if (btnLoader) btnLoader.style.display = 'inline';
-                    if (icon) icon.style.display = 'none';
+                    btnText.style.display = 'none';
+                    btnLoader.style.display = 'inline';
+
+                    const formData = new FormData(this);
 
                     fetch(this.action, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json'
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
                         },
                         body: formData
                     })
-                    .then(response => response.json())
-                    .then(data => {
+                    .then(function(response) {
+                        const contentType = response.headers.get('content-type');
+                        if (!contentType || !contentType.includes('application/json')) {
+                            throw new Error('Server returned HTML instead of JSON.');
+                        }
+                        return response.json();
+                    })
+                    .then(function(data) {
                         if (data.success) {
+                            // ─── BUILD CALENDAR LINK ───
+                            const eventDate = new Date(data.event_date + 'T' + data.event_time);
+                            const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000); // 2 hours later
+                            
+                            const formatDate = function(date) {
+                                return date.toISOString().replace(/-|:|\.\d+/g, '');
+                            };
+                            
+                            const googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' +
+                                '&text=' + encodeURIComponent(data.event_title) +
+                                '&dates=' + formatDate(eventDate) + '/' + formatDate(endDate) +
+                                '&details=' + encodeURIComponent(data.event_description || '') +
+                                '&location=' + encodeURIComponent(data.event_location || '') +
+                                '&sf=true&output=xml';
+
+                            const icsDownload = function() {
+                                const icsContent = [
+                                    'BEGIN:VCALENDAR',
+                                    'VERSION:2.0',
+                                    'PRODID:-//The Collective//Event//EN',
+                                    'BEGIN:VEVENT',
+                                    'UID:' + data.registration_id + '@thecollective.co.za',
+                                    'DTSTAMP:' + formatDate(new Date()),
+                                    'DTSTART:' + formatDate(eventDate),
+                                    'DTEND:' + formatDate(endDate),
+                                    'SUMMARY:' + data.event_title,
+                                    'DESCRIPTION:' + (data.event_description || ''),
+                                    'LOCATION:' + (data.event_location || ''),
+                                    'END:VEVENT',
+                                    'END:VCALENDAR'
+                                ].join('\n');
+                                
+                                const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(blob);
+                                link.download = data.event_title.replace(/\s+/g, '_') + '.ics';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                URL.revokeObjectURL(link.href);
+                            };
+
+                            // ─── BUILD SUCCESS HTML ───
                             let html = `
                                 <div class="registration-success">
                                     <div class="registration-success__icon">
@@ -232,9 +280,17 @@
                                     <div class="registration-success__id">
                                         <strong>Registration ID:</strong> ${data.registration_id}
                                     </div>
+                                    <div class="registration-success__actions">
+                                        <a href="${googleCalendarUrl}" target="_blank" class="btn btn--primary btn--sm">
+                                            <i class="fas fa-calendar-plus"></i> Add to Google Calendar
+                                        </a>
+                                        <button onclick="${icsDownload.toString()}(); icsDownload();" class="btn btn--secondary btn--sm">
+                                            <i class="fas fa-download"></i> Download .ics
+                                        </button>
+                                    </div>
                             `;
 
-                            // ─── SHOW BANKING DETAILS ───
+                            // ─── IF PAID EVENT, SHOW BANKING DETAILS ───
                             if (!data.is_free && data.banking_details) {
                                 html += `
                                     <div class="registration-success__banking">
@@ -260,11 +316,11 @@
                                                 <span class="label">Reference</span>
                                                 <span class="value" style="font-weight: 700; color: var(--gold);">${data.banking_details.reference}</span>
                                             </div>
-                                            <div style="grid-column: 1 / -1; text-align: center; font-weight: 600; font-size: 1.1rem; padding-top: 8px; border-top: 1px solid var(--border);">
+                                            <div style="grid-column: 1 / -1; text-align: center; font-weight: 600; font-size: 1.1rem; padding-top: 8px; border-top: 1px solid rgba(21, 87, 36, 0.1);">
                                                 Amount: R${data.amount}
                                             </div>
                                         </div>
-                                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px;">
+                                        <p>
                                             <i class="fas fa-info-circle"></i> 
                                             Please use your Registration ID as reference when making payment.
                                         </p>
@@ -272,12 +328,26 @@
                                 `;
                             }
 
-                            html += `
-                                </div>
-                            `;
+                            html += `</div>`;
 
                             messageDiv.innerHTML = html;
                             form.reset();
+
+                            // ─── HIDE THE FORM ───
+                            const formCard = form.closest('.event-detail__form-card');
+                            if (formCard) {
+                                const fields = formCard.querySelectorAll('.event-detail__form-group');
+                                fields.forEach(function(field) {
+                                    field.style.display = 'none';
+                                });
+                                const note = formCard.querySelector('.event-detail__form-note');
+                                if (note) note.style.display = 'none';
+                                const subtitle = formCard.querySelector('.event-detail__form-subtitle');
+                                if (subtitle) subtitle.style.display = 'none';
+                                const title = formCard.querySelector('.event-detail__form-title');
+                                if (title) title.style.display = 'none';
+                                submitBtn.style.display = 'none';
+                            }
 
                             // ─── SHOW WHATSAPP POPUP ───
                             if (data.show_whatsapp) {
@@ -290,21 +360,19 @@
                             }
                         }
                     })
-                    .catch(error => {
+                    .catch(function(error) {
                         console.error('Error:', error);
                         messageDiv.innerHTML = `
                             <div class="registration-error">
                                 <i class="fas fa-exclamation-circle"></i>
-                                Something went wrong. Please try again.
+                                Error: ${error.message || 'Something went wrong. Please try again.'}
                             </div>
                         `;
                     })
-                    .finally(() => {
-                        // ─── RESET BUTTON ───
+                    .finally(function() {
                         submitBtn.disabled = false;
-                        if (btnText) btnText.style.display = 'inline';
-                        if (btnLoader) btnLoader.style.display = 'none';
-                        if (icon) icon.style.display = 'inline';
+                        btnText.style.display = 'inline';
+                        btnLoader.style.display = 'none';
                     });
                 });
             }

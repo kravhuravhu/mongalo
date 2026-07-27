@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Services\PhoneService;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
@@ -40,41 +41,45 @@ class EventController extends Controller
         return view('public.events.show', compact('event'));
     }
 
-    public function register(EventRegistrationRequest $request)
+    public function register(Request $request)
     {
-        $validated = $request->validated();
+        $request->validate([
+            'event_id' => 'required|exists:events,id',
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|max:50',
+        ]);
 
-        $event = Event::findOrFail($validated['event_id']);
+        $event = Event::findOrFail($request->event_id);
 
-        // Format phone number
-        $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
-
-        // ─── CHECK IF EVENT IS FREE ───
         $isFree = $event->is_free ?? true;
         $amount = $event->price ?? 0;
 
         $registration = EventRegistration::create([
             'event_id' => $event->id,
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
             'registration_id' => EventRegistration::generateRegistrationId(),
             'payment_status' => $isFree ? 'free' : 'pending',
         ]);
 
-        // ─── BUILD RESPONSE ───
         $response = [
             'success' => true,
             'registration_id' => $registration->registration_id,
             'show_whatsapp' => true,
+            'event_title' => $event->title,
+            'event_description' => $event->description,
+            'event_location' => $event->location,
+            'event_date' => $event->date->format('Y-m-d'),
+            'event_time' => $event->time,
+            'is_free' => $isFree,
         ];
 
         if ($isFree) {
             $response['message'] = 'Registration successful! You are registered for this event.';
-            $response['is_free'] = true;
         } else {
-            $response['message'] = 'Registration successful! Please use the banking details below to complete your payment.';
-            $response['is_free'] = false;
+            $response['message'] = 'Registration successful! Please complete payment using the details below.';
             $response['amount'] = $amount;
             $response['banking_details'] = [
                 'bank' => config('app.bank_name', 'Nedbank'),
