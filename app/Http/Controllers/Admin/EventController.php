@@ -62,8 +62,12 @@ class EventController extends Controller
             'time' => 'required',
             'location' => 'required|max:255',
             'capacity' => 'nullable|integer|min:1',
-            'is_past' => 'boolean',
+            'is_free' => 'boolean',
+            'price' => 'nullable|numeric|min:0',
         ]);
+
+        // Automatically determine if event is past based on date
+        $isPast = Carbon::parse($request->date)->isPast();
 
         Event::create([
             'title' => $request->title,
@@ -73,18 +77,19 @@ class EventController extends Controller
             'time' => $request->time,
             'location' => $request->location,
             'capacity' => $request->capacity,
-            'is_past' => $request->is_past ?? false,
+            'is_past' => $isPast,
+            'is_free' => $request->has('is_free'),
+            'price' => $request->has('is_free') ? 0 : ($request->price ?? 0),
             'sort_order' => Event::count() + 1,
         ]);
 
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
-
+    
     public function edit(Event $event)
     {
         return view('admin.events.edit', compact('event'));
     }
-
     public function update(Request $request, Event $event)
     {
         $request->validate([
@@ -94,8 +99,12 @@ class EventController extends Controller
             'time' => 'required',
             'location' => 'required|max:255',
             'capacity' => 'nullable|integer|min:1',
-            'is_past' => 'boolean',
+            'is_free' => 'boolean',
+            'price' => 'nullable|numeric|min:0',
         ]);
+
+        // Auto determine past events
+        $isPast = Carbon::parse($request->date)->isPast();
 
         $event->update([
             'title' => $request->title,
@@ -105,7 +114,9 @@ class EventController extends Controller
             'time' => $request->time,
             'location' => $request->location,
             'capacity' => $request->capacity,
-            'is_past' => $request->is_past ?? false,
+            'is_past' => $isPast,
+            'is_free' => $request->has('is_free'),
+            'price' => $request->has('is_free') ? 0 : ($request->price ?? 0),
         ]);
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated successfully!');
@@ -113,12 +124,20 @@ class EventController extends Controller
 
     public function registrations(Event $event)
     {
-        // redirect back
+
         if (!$event) {
             return redirect()->route('admin.events.index')->with('error', 'Event not found.');
         }
         
+        // ─── LOAD REGISTRATIONS ───
         $registrations = $event->registrations()->orderBy('created_at', 'desc')->get();
+        
+        // ─── FALLBACK ───
+        if ($registrations->count() === 0) {
+            $registrations = EventRegistration::where('event_id', $event->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
         
         return view('admin.events.registrations', compact('event', 'registrations'));
     }

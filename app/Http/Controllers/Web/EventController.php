@@ -43,6 +43,7 @@ class EventController extends Controller
 
     public function register(Request $request)
     {
+        // ─── VALIDATE ───
         $request->validate([
             'event_id' => 'required|exists:events,id',
             'name' => 'required|max:255',
@@ -50,11 +51,14 @@ class EventController extends Controller
             'phone' => 'required|max:50',
         ]);
 
+        // ─── FIND EVENT ───
         $event = Event::findOrFail($request->event_id);
 
+        // ─── CHECK FREE/PAID ───
         $isFree = $event->is_free ?? true;
         $amount = $event->price ?? 0;
 
+        // ─── CREATE REGISTRATION ───
         $registration = EventRegistration::create([
             'event_id' => $event->id,
             'name' => $request->name,
@@ -64,6 +68,7 @@ class EventController extends Controller
             'payment_status' => $isFree ? 'free' : 'pending',
         ]);
 
+        // ─── BUILD RESPONSE ───
         $response = [
             'success' => true,
             'registration_id' => $registration->registration_id,
@@ -74,12 +79,12 @@ class EventController extends Controller
             'event_date' => $event->date->format('Y-m-d'),
             'event_time' => $event->time,
             'is_free' => $isFree,
+            'message' => $isFree 
+                ? 'Registration successful! You are registered for this event.' 
+                : 'Registration successful! Please complete payment using the details below.',
         ];
 
-        if ($isFree) {
-            $response['message'] = 'Registration successful! You are registered for this event.';
-        } else {
-            $response['message'] = 'Registration successful! Please complete payment using the details below.';
+        if (!$isFree) {
             $response['amount'] = $amount;
             $response['banking_details'] = [
                 'bank' => config('app.bank_name', 'Nedbank'),

@@ -90,7 +90,7 @@
                 }, 400);
             });
 
-            // Fallback: hide loader after 3 seconds even if load event doesn't fire
+            // Fallback
             setTimeout(function() {
                 if (!loader.classList.contains('admin-loader--hidden')) {
                     wrapper.style.transition = 'opacity 0.4s ease';
@@ -114,14 +114,9 @@
             }, 5000);
         }
 
-        // ─── CONFIRM DELETE ───
-        document.querySelectorAll('.delete-confirm').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
-                    e.preventDefault();
-                }
-            });
-        });
+        // ─── REMOVED: DUPLICATE DELETE CONFIRMATION ───
+        // The delete confirmation is now handled by admin.js with a custom modal.
+        // Do NOT add a confirm() handler here.
 
         // ─── REAL-TIME SEARCH ───
         const searchInput = document.getElementById('adminSearchInput');
@@ -168,13 +163,7 @@
                         searchResults.innerHTML = data.html;
                         
                         // Re-bind delete confirm on new rows
-                        searchResults.querySelectorAll('.delete-confirm').forEach(function(btn) {
-                            btn.addEventListener('click', function(e) {
-                                if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
-                                    e.preventDefault();
-                                }
-                            });
-                        });
+                        // The delete-confirm forms will be handled by the outer listener in admin.js
                     }
 
                     if (data.total !== undefined) {

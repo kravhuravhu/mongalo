@@ -54,6 +54,15 @@
                     @enderror
                 </div>
             </div>
+            
+            <div class="form-group">
+                <div class="event-status">
+                    <span class="status-badge {{ Carbon\Carbon::parse($event->date)->isPast() ? 'status-past' : 'status-upcoming' }}">
+                        {{ Carbon\Carbon::parse($event->date)->isPast() ? 'Past Event' : 'Upcoming Event' }}
+                    </span>
+                    <span class="form-help">Status is automatically determined by the event date</span>
+                </div>
+            </div>
 
             {{-- ─── LOCATION ─── --}}
             <div class="form-group">
@@ -74,13 +83,24 @@
                 <span class="form-help">Leave empty for unlimited</span>
             </div>
 
-            {{-- ─── PAST EVENT ─── --}}
-            <div class="form-group">
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="checkbox" name="is_past" value="1" {{ old('is_past', $event->is_past) ? 'checked' : '' }}>
-                    Mark as Past Event
-                </label>
-                <span class="form-help">Check if this event has already happened</span>
+            {{-- ─── FREE / PAID ─── --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" name="is_free" value="1" {{ old('is_free', $event->is_free) ? 'checked' : '' }} id="eventIsFree">
+                        Free Event
+                    </label>
+                    <span class="form-help">Check if this event is free</span>
+                </div>
+
+                <div class="form-group" id="priceGroup" style="{{ old('is_free', $event->is_free) ? 'display: none;' : '' }}">
+                    <label for="price">Price (ZAR)</label>
+                    <input type="number" name="price" id="price" placeholder="199.99" step="0.01" min="0" value="{{ old('price', $event->price ?? 0) }}">
+                    @error('price')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                    <span class="form-help">Set the event price</span>
+                </div>
             </div>
 
             {{-- ─── SUBMIT ─── --}}
@@ -120,6 +140,19 @@
                 if (btnText) btnText.style.display = 'none';
                 if (btnLoader) btnLoader.style.display = 'inline';
                 if (icon) icon.style.display = 'none';
+            });
+        }
+
+        const isFreeCheckbox = document.getElementById('eventIsFree');
+        const priceGroup = document.getElementById('priceGroup');
+        
+        if (isFreeCheckbox && priceGroup) {
+            isFreeCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    priceGroup.style.display = 'none';
+                } else {
+                    priceGroup.style.display = 'block';
+                }
             });
         }
     });
