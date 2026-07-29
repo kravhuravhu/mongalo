@@ -35,7 +35,7 @@ $adminRoutes = function () {
         Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
         Route::put('/events/{event}', [EventController::class, 'update'])->name('admin.events.update');
         Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
-        Route::get('/events/{id}/registrations', [EventController::class, 'registrations'])->name('admin.events.registrations');
+        Route::get('/events/{event}/registrations', [EventController::class, 'registrations'])->name('admin.events.registrations');
 
         // Baptism Requests
         Route::get('/baptisms', [BaptismRequestController::class, 'index'])->name('admin.baptisms');

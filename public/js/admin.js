@@ -105,16 +105,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 350);
     }
 
-    /* ─── REAL-TIME SEARCH ─── */
-    const searchInput = document.getElementById('adminSearchInput');
-    const searchResults = document.getElementById('adminSearchResults');
-    const searchSpinner = document.getElementById('adminSearchSpinner');
-    const clearBtn = document.getElementById('adminSearchClear');
+    // ─── BOOKS SEARCH ───
+    const booksSearchInput = document.getElementById('adminSearchInput');
+    const booksSearchResults = document.getElementById('adminSearchResults');
+    const booksSearchSpinner = document.getElementById('adminSearchSpinner');
+    const booksClearBtn = document.getElementById('adminSearchClear');
 
-    if (searchInput && searchResults) {
+    if (booksSearchInput && booksSearchResults) {
         let searchTimeout = null;
 
-        function performSearch(query) {
+        function performBooksSearch(query) {
             const url = new URL(window.location.href);
             const filter = url.searchParams.get('filter') || '';
 
@@ -126,8 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 searchUrl += 'search=' + encodeURIComponent(query);
             }
 
-            if (searchSpinner) {
-                searchSpinner.style.display = 'inline-block';
+            if (booksSearchSpinner) {
+                booksSearchSpinner.style.display = 'inline-block';
             }
 
             fetch(searchUrl, {
@@ -144,14 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(function(data) {
                 if (data.html) {
-                    searchResults.innerHTML = data.html;
+                    booksSearchResults.innerHTML = data.html;
 
                     // Re-bind delete confirm on new rows
-                    searchResults.querySelectorAll('.delete-confirm').forEach(function(form) {
+                    booksSearchResults.querySelectorAll('.delete-confirm').forEach(function(form) {
                         form.addEventListener('submit', function(e) {
                             e.preventDefault();
-                            // Delete modal logic will be re-attached
-                            // The outer event listener will handle it
+                            // Delete modal logic will be handled by outer listener
                         });
                     });
                 }
@@ -163,27 +162,27 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                if (clearBtn) {
+                if (booksClearBtn) {
                     if (query.length > 0) {
-                        clearBtn.style.display = 'inline-flex';
+                        booksClearBtn.style.display = 'inline-flex';
                     } else {
-                        clearBtn.style.display = 'none';
+                        booksClearBtn.style.display = 'none';
                     }
                 }
 
-                if (searchSpinner) {
-                    searchSpinner.style.display = 'none';
+                if (booksSearchSpinner) {
+                    booksSearchSpinner.style.display = 'none';
                 }
             })
             .catch(function(error) {
                 console.error('Search error:', error);
-                if (searchSpinner) {
-                    searchSpinner.style.display = 'none';
+                if (booksSearchSpinner) {
+                    booksSearchSpinner.style.display = 'none';
                 }
             });
         }
 
-        searchInput.addEventListener('input', function() {
+        booksSearchInput.addEventListener('input', function() {
             const query = this.value.trim();
 
             if (searchTimeout) {
@@ -191,16 +190,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             searchTimeout = setTimeout(function() {
-                performSearch(query);
+                performBooksSearch(query);
             }, 400);
         });
 
-        if (clearBtn) {
-            clearBtn.addEventListener('click', function(e) {
+        if (booksClearBtn) {
+            booksClearBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                searchInput.value = '';
-                searchInput.focus();
-                performSearch('');
+                booksSearchInput.value = '';
+                booksSearchInput.focus();
+                performBooksSearch('');
             });
         }
 
@@ -208,21 +207,424 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', function(e) {
             if ((e.ctrlKey || e.metaKey) && e.key === '/') {
                 e.preventDefault();
-                searchInput.focus();
-                searchInput.select();
+                booksSearchInput.focus();
+                booksSearchInput.select();
             }
 
             if (e.key === 'Escape') {
-                if (document.activeElement === searchInput) {
-                    searchInput.value = '';
-                    searchInput.blur();
-                    performSearch('');
+                if (document.activeElement === booksSearchInput) {
+                    booksSearchInput.value = '';
+                    booksSearchInput.blur();
+                    performBooksSearch('');
                 }
             }
         });
 
-        if (searchInput.value.trim().length > 0 && clearBtn) {
-            clearBtn.style.display = 'inline-flex';
+        if (booksSearchInput.value.trim().length > 0 && booksClearBtn) {
+            booksClearBtn.style.display = 'inline-flex';
+        }
+    }
+
+    // ─── EVENTS SEARCH ───
+    const eventsSearchInput = document.getElementById('eventsSearchInput');
+    const eventsSearchResults = document.getElementById('eventsSearchResults');
+    const eventsSearchSpinner = document.getElementById('eventsSearchSpinner');
+    const eventsClearBtn = document.getElementById('eventsSearchClear');
+
+    if (eventsSearchInput && eventsSearchResults) {
+        let eventsSearchTimeout = null;
+
+        function performEventsSearch(query) {
+            const url = new URL(window.location.href);
+            const filter = url.searchParams.get('filter') || '';
+
+            let searchUrl = window.location.pathname + '?';
+            if (filter) {
+                searchUrl += 'filter=' + filter + '&';
+            }
+            if (query) {
+                searchUrl += 'search=' + encodeURIComponent(query);
+            }
+
+            if (eventsSearchSpinner) {
+                eventsSearchSpinner.style.display = 'inline-block';
+            }
+
+            fetch(searchUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.html) {
+                    eventsSearchResults.innerHTML = data.html;
+
+                    eventsSearchResults.querySelectorAll('.delete-confirm').forEach(function(form) {
+                        form.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                        });
+                    });
+                }
+
+                if (data.total !== undefined) {
+                    const countEl = document.querySelector('.events-index__filter-count');
+                    if (countEl) {
+                        countEl.textContent = data.total + ' events';
+                    }
+                }
+
+                if (eventsClearBtn) {
+                    if (query.length > 0) {
+                        eventsClearBtn.style.display = 'inline-flex';
+                    } else {
+                        eventsClearBtn.style.display = 'none';
+                    }
+                }
+
+                if (eventsSearchSpinner) {
+                    eventsSearchSpinner.style.display = 'none';
+                }
+            })
+            .catch(function(error) {
+                console.error('Search error:', error);
+                if (eventsSearchSpinner) {
+                    eventsSearchSpinner.style.display = 'none';
+                }
+            });
+        }
+
+        eventsSearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (eventsSearchTimeout) {
+                clearTimeout(eventsSearchTimeout);
+            }
+
+            eventsSearchTimeout = setTimeout(function() {
+                performEventsSearch(query);
+            }, 400);
+        });
+
+        if (eventsClearBtn) {
+            eventsClearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                eventsSearchInput.value = '';
+                eventsSearchInput.focus();
+                performEventsSearch('');
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+                if (document.activeElement !== eventsSearchInput) {
+                    eventsSearchInput.focus();
+                    eventsSearchInput.select();
+                }
+            }
+
+            if (e.key === 'Escape') {
+                if (document.activeElement === eventsSearchInput) {
+                    eventsSearchInput.value = '';
+                    eventsSearchInput.blur();
+                    performEventsSearch('');
+                }
+            }
+        });
+
+        if (eventsSearchInput.value.trim().length > 0 && eventsClearBtn) {
+            eventsClearBtn.style.display = 'inline-flex';
+        }
+    }
+
+    // ─── BAPTISMS SEARCH ───
+    const baptismsSearchInput = document.getElementById('baptismsSearchInput');
+    const baptismsSearchResults = document.getElementById('baptismsSearchResults');
+    const baptismsSearchSpinner = document.getElementById('baptismsSearchSpinner');
+    const baptismsClearBtn = document.getElementById('baptismsSearchClear');
+
+    if (baptismsSearchInput && baptismsSearchResults) {
+        let baptismsSearchTimeout = null;
+
+        function performBaptismsSearch(query) {
+            const url = new URL(window.location.href);
+            const status = url.searchParams.get('status') || '';
+
+            let searchUrl = window.location.pathname + '?';
+            if (status) {
+                searchUrl += 'status=' + status + '&';
+            }
+            if (query) {
+                searchUrl += 'search=' + encodeURIComponent(query);
+            }
+
+            if (baptismsSearchSpinner) {
+                baptismsSearchSpinner.style.display = 'inline-block';
+            }
+
+            fetch(searchUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.html) {
+                    baptismsSearchResults.innerHTML = data.html;
+                }
+
+                if (data.total !== undefined) {
+                    const countEl = document.querySelector('.baptisms-index__count');
+                    if (countEl) {
+                        countEl.textContent = data.total + ' total requests';
+                    }
+                }
+
+                if (baptismsClearBtn) {
+                    if (query.length > 0) {
+                        baptismsClearBtn.style.display = 'inline-flex';
+                    } else {
+                        baptismsClearBtn.style.display = 'none';
+                    }
+                }
+
+                if (baptismsSearchSpinner) {
+                    baptismsSearchSpinner.style.display = 'none';
+                }
+            })
+            .catch(function(error) {
+                console.error('Search error:', error);
+                if (baptismsSearchSpinner) {
+                    baptismsSearchSpinner.style.display = 'none';
+                }
+            });
+        }
+
+        baptismsSearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (baptismsSearchTimeout) {
+                clearTimeout(baptismsSearchTimeout);
+            }
+
+            baptismsSearchTimeout = setTimeout(function() {
+                performBaptismsSearch(query);
+            }, 400);
+        });
+
+        if (baptismsClearBtn) {
+            baptismsClearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                baptismsSearchInput.value = '';
+                baptismsSearchInput.focus();
+                performBaptismsSearch('');
+            });
+        }
+
+        if (baptismsSearchInput.value.trim().length > 0 && baptismsClearBtn) {
+            baptismsClearBtn.style.display = 'inline-flex';
+        }
+    }
+
+    // ─── MESSAGES SEARCH ───
+    const messagesSearchInput = document.getElementById('messagesSearchInput');
+    const messagesSearchResults = document.getElementById('messagesSearchResults');
+    const messagesSearchSpinner = document.getElementById('messagesSearchSpinner');
+    const messagesClearBtn = document.getElementById('messagesSearchClear');
+
+    if (messagesSearchInput && messagesSearchResults) {
+        let messagesSearchTimeout = null;
+
+        function performMessagesSearch(query) {
+            const url = new URL(window.location.href);
+            const status = url.searchParams.get('status') || '';
+
+            let searchUrl = window.location.pathname + '?';
+            if (status) {
+                searchUrl += 'status=' + status + '&';
+            }
+            if (query) {
+                searchUrl += 'search=' + encodeURIComponent(query);
+            }
+
+            if (messagesSearchSpinner) {
+                messagesSearchSpinner.style.display = 'inline-block';
+            }
+
+            fetch(searchUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.html) {
+                    messagesSearchResults.innerHTML = data.html;
+                }
+
+                if (data.total !== undefined) {
+                    const countEl = document.querySelector('.messages-index__count');
+                    if (countEl) {
+                        countEl.textContent = data.total + ' total messages';
+                    }
+                }
+
+                if (messagesClearBtn) {
+                    if (query.length > 0) {
+                        messagesClearBtn.style.display = 'inline-flex';
+                    } else {
+                        messagesClearBtn.style.display = 'none';
+                    }
+                }
+
+                if (messagesSearchSpinner) {
+                    messagesSearchSpinner.style.display = 'none';
+                }
+            })
+            .catch(function(error) {
+                console.error('Search error:', error);
+                if (messagesSearchSpinner) {
+                    messagesSearchSpinner.style.display = 'none';
+                }
+            });
+        }
+
+        messagesSearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (messagesSearchTimeout) {
+                clearTimeout(messagesSearchTimeout);
+            }
+
+            messagesSearchTimeout = setTimeout(function() {
+                performMessagesSearch(query);
+            }, 400);
+        });
+
+        if (messagesClearBtn) {
+            messagesClearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                messagesSearchInput.value = '';
+                messagesSearchInput.focus();
+                performMessagesSearch('');
+            });
+        }
+
+        if (messagesSearchInput.value.trim().length > 0 && messagesClearBtn) {
+            messagesClearBtn.style.display = 'inline-flex';
+        }
+    }
+
+    // ─── INVITES SEARCH ───
+    const invitesSearchInput = document.getElementById('invitesSearchInput');
+    const invitesSearchResults = document.getElementById('invitesSearchResults');
+    const invitesSearchSpinner = document.getElementById('invitesSearchSpinner');
+    const invitesClearBtn = document.getElementById('invitesSearchClear');
+
+    if (invitesSearchInput && invitesSearchResults) {
+        let invitesSearchTimeout = null;
+
+        function performInvitesSearch(query) {
+            const url = new URL(window.location.href);
+            const status = url.searchParams.get('status') || '';
+
+            let searchUrl = window.location.pathname + '?';
+            if (status) {
+                searchUrl += 'status=' + status + '&';
+            }
+            if (query) {
+                searchUrl += 'search=' + encodeURIComponent(query);
+            }
+
+            if (invitesSearchSpinner) {
+                invitesSearchSpinner.style.display = 'inline-block';
+            }
+
+            fetch(searchUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.html) {
+                    invitesSearchResults.innerHTML = data.html;
+                }
+
+                if (data.total !== undefined) {
+                    const countEl = document.querySelector('.invites-index__count');
+                    if (countEl) {
+                        countEl.textContent = data.total + ' total requests';
+                    }
+                }
+
+                if (invitesClearBtn) {
+                    if (query.length > 0) {
+                        invitesClearBtn.style.display = 'inline-flex';
+                    } else {
+                        invitesClearBtn.style.display = 'none';
+                    }
+                }
+
+                if (invitesSearchSpinner) {
+                    invitesSearchSpinner.style.display = 'none';
+                }
+            })
+            .catch(function(error) {
+                console.error('Search error:', error);
+                if (invitesSearchSpinner) {
+                    invitesSearchSpinner.style.display = 'none';
+                }
+            });
+        }
+
+        invitesSearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (invitesSearchTimeout) {
+                clearTimeout(invitesSearchTimeout);
+            }
+
+            invitesSearchTimeout = setTimeout(function() {
+                performInvitesSearch(query);
+            }, 400);
+        });
+
+        if (invitesClearBtn) {
+            invitesClearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                invitesSearchInput.value = '';
+                invitesSearchInput.focus();
+                performInvitesSearch('');
+            });
+        }
+
+        if (invitesSearchInput.value.trim().length > 0 && invitesClearBtn) {
+            invitesClearBtn.style.display = 'inline-flex';
         }
     }
 
@@ -237,11 +639,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-                // Store original for reset
                 submitBtn._originalText = originalText;
                 submitBtn._originalIcon = originalIcon;
 
-                // Re-enable after 30 seconds (safety net)
                 setTimeout(function() {
                     if (submitBtn.disabled) {
                         submitBtn.disabled = false;

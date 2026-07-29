@@ -32,6 +32,13 @@
             </span>
         </td>
         <td>
+            @if($event->is_free)
+                <span class="badge badge-free">Free</span>
+            @else
+                <span class="events-index__price">R{{ number_format($event->price ?? 0, 2) }}</span>
+            @endif
+        </td>
+        <td>
             @if($event->is_past)
                 <span class="badge badge-completed">Past</span>
             @else
@@ -40,7 +47,8 @@
         </td>
         <td>
             <div class="events-index__actions">
-                <a href="{{ route('admin.events.registrations', $event->id) }}" class="btn btn--secondary btn--sm" title="View Registrations">
+                {{-- Pass the ENTIRE event object --}}
+                <a href="{{ route('admin.events.registrations', $event) }}" class="btn btn--secondary btn--sm" title="View Registrations">
                     <i class="fas fa-users"></i>
                 </a>
                 <a href="{{ route('admin.events.edit', $event) }}" class="btn btn--secondary btn--sm" title="Edit">
@@ -60,7 +68,7 @@
     </tr>
 @empty
     <tr>
-        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">
+        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">
             <i class="fas fa-calendar-alt" style="font-size: 2rem; display: block; margin-bottom: 12px; opacity: 0.3;"></i>
             No events found.
         </td>

@@ -93,15 +93,6 @@
                 </div>
             </div>
 
-            {{-- ─── PAST EVENT ─── --}}
-            <div class="form-group">
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="checkbox" name="is_past" value="1" {{ old('is_past') ? 'checked' : '' }}>
-                    Mark as Past Event
-                </label>
-                <span class="form-help">Check if this event has already happened</span>
-            </div>
-
             {{-- ─── SUBMIT ─── --}}
             <div class="events-form__actions">
                 <button type="submit" class="btn btn--primary btn--lg" id="submitBtn">

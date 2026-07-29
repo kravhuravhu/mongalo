@@ -41,15 +41,30 @@
                 <i class="fas fa-map-marker-alt"></i> 
                 {{ $event->location ?? 'Location TBD' }}
             </span>
+            <span class="events-registrations__stat">
+                <i class="fas fa-tag"></i>
+                @if($event->is_free)
+                    Free Event
+                @else
+                    R{{ number_format($event->price ?? 0, 2) }} per person
+                @endif
+            </span>
         </div>
     </div>
 
-    {{-- ─── show if registrations exist ─── --}}
-    @if($registrations->count() > 0)
-        <div style="background: #d4edda; color: #155724; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.85rem;">
-            <i class="fas fa-check-circle"></i> Found {{ $registrations->count() }} registration(s) for this event.
-        </div>
-    @endif
+    {{-- ─── DEBUG: Show if registrations exist ─── --}}
+    @php
+        $count = $registrations->count();
+    @endphp
+    <div style="background: #e8f0fe; color: #1a5a8c; padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 0.85rem; border-left: 3px solid #1a5a8c; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-info-circle" style="font-size: 1.1rem;"></i>
+        <span>Found <strong>{{ $count }}</strong> registration(s) for this event.</span>
+        @if($count > 0)
+            <span style="background: #d4edda; color: #155724; padding: 2px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600;">
+                <i class="fas fa-check-circle"></i> Data loaded
+            </span>
+        @endif
+    </div>
 
     {{-- ─── REGISTRATIONS TABLE ─── --}}
     <div class="table-wrap">
@@ -61,6 +76,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Registration ID</th>
+                    <th>Payment Status</th>
                     <th>Registered At</th>
                 </tr>
             </thead>
@@ -87,6 +103,11 @@
                             </code>
                         </td>
                         <td>
+                            <span class="badge badge-{{ $registration->payment_status ?? 'pending' }}">
+                                {{ ucfirst($registration->payment_status ?? 'pending') }}
+                            </span>
+                        </td>
+                        <td>
                             <span style="font-size: 0.85rem; color: var(--text-muted);">
                                 {{ $registration->created_at->format('M d, Y g:i A') }}
                             </span>
@@ -94,7 +115,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">
                             <i class="fas fa-users" style="font-size: 2rem; display: block; margin-bottom: 12px; opacity: 0.3;"></i>
                             No registrations for this event yet.
                         </td>
@@ -112,9 +133,6 @@
             </span>
             <a href="#" class="btn btn--secondary btn--sm">
                 <i class="fas fa-file-csv"></i> CSV
-            </a>
-            <a href="#" class="btn btn--secondary btn--sm">
-                <i class="fas fa-file-excel"></i> Excel
             </a>
         </div>
     @endif

@@ -49,12 +49,6 @@
                             <i class="fas fa-clock"></i>
                             <span>{{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
                         </div>
-                        @if($event->capacity)
-                            <div class="event-detail__hero-meta-item">
-                                <i class="fas fa-users"></i>
-                                <span>{{ $event->registrations()->count() }}/{{ $event->capacity }} registered</span>
-                            </div>
-                        @endif
                         @if(!$event->is_free && $event->price > 0)
                             <div class="event-detail__hero-meta-item">
                                 <i class="fas fa-tag"></i>
@@ -169,7 +163,7 @@
     </section>
 
     {{-- COMMUNITY CTA --}}
-    <section class="event-detail__community">
+    <!-- <section class="event-detail__community">
         <div class="event-detail__community-bg">
             <div class="event-detail__community-shape event-detail__community-shape--1"></div>
             <div class="event-detail__community-shape event-detail__community-shape--2"></div>
@@ -184,7 +178,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 
 </div>
 
