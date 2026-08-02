@@ -70,7 +70,7 @@
         }
     }
 
-    /* ─── HERO ─── (Events Theme) */
+    /* ─── HERO ─── (Events Theme) ─── */
     & .events__hero {
         padding: 60px 0 80px;
         position: relative;
@@ -89,29 +89,16 @@
             position: absolute;
             inset: 0;
             z-index: 1;
-            background: linear-gradient(
-                160deg,
-                rgba(40, 35, 30, 0.10) 0%,
-                rgba(60, 50, 40, 0.25) 25%,
-                rgba(80, 65, 50, 0.45) 50%,
-                rgba(30, 25, 20, 0.70) 75%,
-                rgba(20, 18, 15, 0.85) 100%
-            );
+            background: linear-gradient(160deg, rgba(40, 35, 30, 0.10) 0%, rgba(60, 50, 40, 0.25) 25%, rgba(80, 65, 50, 0.45) 50%, rgba(30, 25, 20, 0.70) 75%, rgba(20, 18, 15, 0.85) 100%);
             pointer-events: none;
         }
 
-        /* ─── Warm glow overlay ─── */
         &::after {
             content: '';
             position: absolute;
             inset: 0;
             z-index: 1;
-            background: radial-gradient(
-                ellipse at 40% 30%,
-                rgba(230, 126, 34, 0.08) 0%,
-                rgba(230, 126, 34, 0.03) 40%,
-                transparent 70%
-            );
+            background: radial-gradient(ellipse at 40% 30%, rgba(230, 126, 34, 0.08) 0%, rgba(230, 126, 34, 0.03) 40%, transparent 70%);
             pointer-events: none;
         }
 
@@ -212,9 +199,7 @@
             & .events__hero-pattern {
                 position: absolute;
                 inset: 0;
-                background-image: 
-                    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+                background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
                 background-size: 60px 60px;
                 opacity: 0.3;
                 pointer-events: none;
@@ -362,7 +347,6 @@
             }
         }
 
-        /* ─── COUNTDOWN ─── */
         & .events__countdown {
             background: rgba(0, 0, 0, 0.233);
             backdrop-filter: blur(10px);
@@ -489,7 +473,7 @@
         }
     }
 
-    /* ─── UPCOMING EVENTS ─── (Default Gold Theme) */
+    /* ─── UPCOMING EVENTS ─── */
     & .events__upcoming {
         padding: 80px 0;
         position: relative;
@@ -744,7 +728,7 @@
         }
     }
 
-    /* ─── PAST EVENTS ─── (Default Gold Theme) */
+    /* ─── PAST EVENTS ─── */
     & .events__past {
         padding: 60px 0;
         position: relative;
@@ -897,7 +881,7 @@
         }
     }
 
-    /* ─── INVITE ARTHUR ─── (Default Gold Theme) */
+    /* ─── INVITE ARTHUR ─── */
     & .events__invite {
         padding: 80px 0;
         position: relative;
@@ -1170,7 +1154,7 @@
         }
     }
 
-    /* ─── COMMUNITY ─── (Default Gold Theme) */
+    /* ─── COMMUNITY ─── */
     & .events__community {
         padding: 80px 0;
         position: relative;
@@ -1725,7 +1709,6 @@
 
 /* ─── EVENT DETAIL ─── */
 .event-detail {
-    /* ─── EVENT DETAIL FLOATING ORBS ─── */
     & .event-detail__orbs {
         position: fixed;
         inset: 0;
@@ -1796,7 +1779,6 @@
         }
     }
 
-    /* ─── HERO ─── (Events Theme) */
     & .event-detail__hero {
         padding: 60px 0 80px;
         position: relative;
@@ -1900,9 +1882,7 @@
             & .event-detail__hero-pattern {
                 position: absolute;
                 inset: 0;
-                background-image: 
-                    linear-gradient(rgba(166, 124, 78, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(166, 124, 78, 0.02) 1px, transparent 1px);
+                background-image: linear-gradient(rgba(166, 124, 78, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(166, 124, 78, 0.02) 1px, transparent 1px);
                 background-size: 60px 60px;
                 opacity: 0.5;
             }
@@ -1935,7 +1915,6 @@
             align-items: start;
         }
 
-        /* ─── LEFT: Event Details ─── */
         & .event-detail__hero-content {
             padding-top: 8px;
 
@@ -2056,7 +2035,6 @@
             }
         }
 
-        /* ─── RIGHT: Registration Form ─── */
         & .event-detail__hero-form {
             display: flex;
             align-items: flex-start;
@@ -2195,7 +2173,6 @@
         }
     }
 
-    /* ─── WHAT TO EXPECT ─── (Default Gold Theme) */
     & .event-detail__expect {
         padding: 80px 0;
         position: relative;
@@ -2308,7 +2285,6 @@
         }
     }
 
-    /* ─── COMMUNITY ─── (Default Gold Theme) */
     & .event-detail__community {
         padding: 60px 0;
         position: relative;
@@ -2442,7 +2418,7 @@
         }
     }
 
-    /* ─── RESPONSIVE ─── */
+    /* ─── EVENT DETAIL RESPONSIVE ─── */
     @media (max-width: 1200px) {
         & .event-detail__hero .event-detail__hero-grid {
             grid-template-columns: 1fr;
@@ -2750,6 +2726,23 @@
         }
     }
 
+    & .registration-success__actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 12px 0 16px;
+
+        & .btn {
+            font-size: 0.8rem;
+            padding: 8px 18px;
+
+            & i {
+                margin-right: 6px;
+            }
+        }
+    }
+
     & .registration-success__banking {
         background: rgba(255, 255, 255, 0.6);
         border-radius: var(--radius-sm);
@@ -2766,43 +2759,43 @@
             border-bottom: 1px solid rgba(21, 87, 36, 0.1);
             padding-bottom: 8px;
         }
+    }
 
-        & .registration-success__banking-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 16px;
+    & .registration-success__banking-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 16px;
 
-            & div {
-                display: flex;
-                flex-direction: column;
+        & div {
+            display: flex;
+            flex-direction: column;
 
-                & .label {
-                    font-size: 0.65rem;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.06em;
-                    color: rgba(21, 87, 36, 0.6);
-                }
+            & .label {
+                font-size: 0.65rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: rgba(21, 87, 36, 0.6);
+            }
 
-                & .value {
-                    font-size: 0.9rem;
-                    font-weight: 500;
-                    color: #155724;
-                }
+            & .value {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: #155724;
             }
         }
+    }
 
-        & p {
-            font-size: 0.8rem;
-            color: rgba(21, 87, 36, 0.7);
-            margin-top: 12px;
-            text-align: center;
-            border-top: 1px solid rgba(21, 87, 36, 0.1);
-            padding-top: 12px;
+    & .registration-success__banking p {
+        font-size: 0.8rem;
+        color: rgba(21, 87, 36, 0.7);
+        margin-top: 12px;
+        text-align: center;
+        border-top: 1px solid rgba(21, 87, 36, 0.1);
+        padding-top: 12px;
 
-            & i {
-                margin-right: 4px;
-            }
+        & i {
+            margin-right: 4px;
         }
     }
 }
@@ -2837,7 +2830,7 @@
     }
 }
 
-/* ─── RESPONSIVE ─── */
+/* ─── REGISTRATION SUCCESS RESPONSIVE ─── */
 @media (max-width: 540px) {
     .registration-success {
         padding: 18px 14px;
@@ -2860,6 +2853,16 @@
                 & .value {
                     font-size: 0.8rem;
                 }
+            }
+        }
+
+        & .registration-success__actions {
+            flex-direction: column;
+            align-items: stretch;
+
+            & .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     }
@@ -2891,60 +2894,313 @@
     }
 }
 
-/* ─── REGISTER BUTTON LOADER ─── */
-#registerBtn {
-    position: relative;
-    min-height: 48px;
-}
-
-#registerBtn .btn-loader {
-    display: none;
-}
-
-#registerBtn .btn-loader i {
-    margin-right: 8px;
-}
-
-#registerBtn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 540px) {
-    #registerBtn {
-        min-height: 44px;
-        font-size: 0.8rem;
-    }
-}
-
-/* ─── REGISTRATION SUCCESS ACTIONS ─── */
-.registration-success__actions {
+/* ─── PENDING REGISTRATION NOTICE ─── */
+.pending-registration-notice {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid #e8a838;
+    box-shadow: 0 8px 30px rgba(232, 168, 56, 0.08);
+    padding: 32px 32px 28px;
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 12px 0 16px;
-}
+    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
 
-.registration-success__actions .btn {
-    font-size: 0.8rem;
-    padding: 8px 18px;
-}
-
-.registration-success__actions .btn i {
-    margin-right: 6px;
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 540px) {
-    .registration-success__actions {
-        flex-direction: column;
-        align-items: stretch;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #e8a838, #f5c842);
     }
-    
-    .registration-success__actions .btn {
-        width: 100%;
+
+    & .pending-registration-notice__icon {
+        font-size: 2.4rem;
+        color: #e8a838;
+        flex-shrink: 0;
+        background: rgba(232, 168, 56, 0.08);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
         justify-content: center;
+    }
+
+    & .pending-registration-notice__content {
+        flex: 1;
+
+        & h4 {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #1a1a2e;
+        }
+
+        & > p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+    }
+
+    & .pending-registration-notice__user-details {
+        background: #f7f5f2;
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin-bottom: 16px;
+    }
+
+    & .pending-registration-notice__user-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid rgba(166, 124, 78, 0.06);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        & .pending-registration-notice__label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        & .pending-registration-notice__value {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+
+            &.pending-registration-notice__value--highlight {
+                font-weight: 700;
+                color: var(--gold);
+                font-family: monospace;
+                font-size: 0.9rem;
+            }
+        }
+    }
+
+    & .pending-registration-notice__banking {
+        background: #d4edda;
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        margin-bottom: 16px;
+        border: 1px solid #b7dfb9;
+
+        & h5 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #155724;
+            margin-bottom: 12px;
+        }
+    }
+
+    & .pending-registration-notice__banking-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 16px;
+
+        & div {
+            display: flex;
+            flex-direction: column;
+            padding: 2px 0;
+        }
+    }
+
+    & .pending-registration-notice__banking-label {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: rgba(21, 87, 36, 0.5);
+    }
+
+    & .pending-registration-notice__banking-value {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #155724;
+    }
+
+    & .pending-registration-notice__note {
+        font-size: 0.8rem;
+        color: rgba(21, 87, 36, 0.7);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(21, 87, 36, 0.1);
+    }
+
+    & .pending-registration-notice__actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        & .btn {
+            font-size: 0.8rem;
+            padding: 8px 18px;
+        }
+
+        & form {
+            display: inline;
+        }
+
+        & > form > .btn--outline,
+        & .btn--outline {
+            color: var(--text-muted);
+            border-color: var(--gold);
+
+            &:hover {
+                background: var(--gold-dark);
+                color: #fff;
+                border-color: var(--gold-dark);
+            }
+        }
+    }
+}
+
+/* ─── FORM STATUS ─── */
+.event-detail__form-status {
+    text-align: center;
+    padding: 10px 0;
+
+    & .event-detail__form-status-icon {
+        font-size: 3rem;
+        color: #28a745;
+        margin-bottom: 8px;
+    }
+
+    & h4 {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    & > p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    & .event-detail__form-status-details {
+        background: var(--bg);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin: 12px 0;
+        text-align: left;
+
+        & div {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        & .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        & .value {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+    }
+
+    & .event-detail__form-status-note {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        background: #fff3cd;
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+/* ─── PENDING REGISTRATION RESPONSIVE ─── */
+@media (max-width: 820px) {
+    .pending-registration-notice {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 24px 20px;
+
+        & .pending-registration-notice__icon {
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+        }
+
+        & .pending-registration-notice__user-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        & .pending-registration-notice__banking-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+
+            & div {
+                align-items: center;
+            }
+        }
+
+        & .pending-registration-notice__actions {
+            justify-content: center;
+        }
+    }
+
+    .event-detail__form-status-details div {
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+    }
+}
+
+@media (max-width: 540px) {
+    .pending-registration-notice {
+        padding: 20px 16px;
+
+        & .pending-registration-notice__icon {
+            width: 44px;
+            height: 44px;
+            font-size: 1.6rem;
+        }
+
+        & .pending-registration-notice__banking {
+            padding: 12px 14px;
+        }
+
+        & .pending-registration-notice__actions {
+            flex-direction: column;
+            align-items: stretch;
+
+            & .btn,
+            & form {
+                width: 100%;
+            }
+
+            & .btn {
+                justify-content: center;
+            }
+        }
+    }
+
+    .event-detail__form-status-icon {
+        font-size: 2.4rem;
     }
 }

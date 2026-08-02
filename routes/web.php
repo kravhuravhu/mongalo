@@ -34,6 +34,8 @@ Route::get('/books/{slug}', [
 Route::get('/events', [
     EventController::class, 'index'
 ])->name('events.index');
+// ─── EVENTS ───
+Route::post('/events/clear-registration', [EventController::class, 'clearRegistration'])->name('events.clear.registration');
 
 Route::get('/events/{slug}', [
     EventController::class, 'show'

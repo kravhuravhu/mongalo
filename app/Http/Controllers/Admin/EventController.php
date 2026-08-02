@@ -29,7 +29,9 @@ class EventController extends Controller
         if ($request->filter === 'upcoming') {
             $query->where('is_past', false)->where('date', '>=', Carbon::today());
         } elseif ($request->filter === 'past') {
-            $query->where('is_past', true)->orWhere('date', '<', Carbon::today());
+            $query->where(function($q) {
+                $q->where('is_past', true)->orWhere('date', '<', Carbon::today());
+            });
         }
 
         // ─── SORT BY LATEST ───
@@ -37,15 +39,21 @@ class EventController extends Controller
 
         $events = $query->paginate(20);
 
+        // ─── GET COUNTS FOR DISPLAY ───
+        $upcomingCount = Event::where('is_past', false)->where('date', '>=', Carbon::today())->count();
+        $pastCount = Event::where('is_past', true)->orWhere('date', '<', Carbon::today())->count();
+
         // ─── AJAX REQUEST ───
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('admin.events._table', compact('events'))->render(),
                 'total' => $events->total(),
+                'upcomingCount' => $upcomingCount,
+                'pastCount' => $pastCount,
             ]);
         }
 
-        return view('admin.events.index', compact('events'));
+        return view('admin.events.index', compact('events', 'upcomingCount', 'pastCount'));
     }
 
     public function create()
@@ -66,8 +74,7 @@ class EventController extends Controller
             'price' => 'nullable|numeric|min:0',
         ]);
 
-        // Automatically determine if event is past based on date
-        $isPast = Carbon::parse($request->date)->isPast();
+        $isPast = $request->is_past ?? Carbon::parse($request->date)->isPast();
 
         Event::create([
             'title' => $request->title,
@@ -103,8 +110,7 @@ class EventController extends Controller
             'price' => 'nullable|numeric|min:0',
         ]);
 
-        // Auto determine past events
-        $isPast = Carbon::parse($request->date)->isPast();
+        $isPast = $request->is_past ?? Carbon::parse($request->date)->isPast();
 
         $event->update([
             'title' => $request->title,
@@ -140,6 +146,54 @@ class EventController extends Controller
         }
         
         return view('admin.events.registrations', compact('event', 'registrations'));
+    }
+
+    public function updateRegistration(Request $request, EventRegistration $registration)
+    {
+        // ─── Determine new status ───
+        $status = $request->input('status', 'paid');
+        
+        // If event is free, set to free
+        if ($registration->event->is_free) {
+            $status = 'free';
+        }
+        
+        $registration->update([
+            'payment_status' => $status,
+        ]);
+
+        // ─── CLEAR SESSION FOR THIS EVENT ───
+        $sessionKey = 'pending_registration_' . $registration->event_id;
+        if (session()->has($sessionKey)) {
+            // Update session with new status instead of clearing
+            $sessionData = session($sessionKey);
+            $sessionData['payment_status'] = $status;
+            session()->put($sessionKey, $sessionData);
+            
+            \Log::info('Session updated for registration', [
+                'session_key' => $sessionKey,
+                'registration_id' => $registration->registration_id,
+                'new_status' => $status,
+            ]);
+        }
+
+        return redirect()->route('admin.events.registrations', $registration->event_id)
+            ->with('success', 'Registration marked as ' . ucfirst($status) . '!');
+    }
+
+    public function resendConfirmation(EventRegistration $registration)
+    {
+        $event = $registration->event;
+        
+        try {
+            Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
+            
+            return redirect()->route('admin.events.registrations', $event->id)
+                ->with('success', 'Confirmation email resent successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.events.registrations', $event->id)
+                ->with('error', 'Failed to send email. Please try again.');
+        }
     }
 
     public function destroy(Event $event)

@@ -15,7 +15,120 @@
         <div class="event-detail__orb event-detail__orb--5"></div>
     </div>
 
-    {{-- HERO --}}
+    {{-- ─── PENDING REGISTRATION NOTICE ─── --}}
+    @if($pendingRegistration)
+        <div class="wrap" style="margin-top: 30px;">
+            <div class="pending-registration-notice">
+                <div class="pending-registration-notice__icon">
+                    @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
+                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                    @else
+                        <i class="fas fa-clock" style="color: #e8a838;"></i>
+                    @endif
+                </div>
+                <div class="pending-registration-notice__content">
+                    <h4>
+                        @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
+                            You're Registered!
+                        @else
+                            Payment Pending
+                        @endif
+                    </h4>
+                    
+                    <div class="pending-registration-notice__user-details">
+                        <div class="pending-registration-notice__user-row">
+                            <span class="pending-registration-notice__label">Name</span>
+                            <span class="pending-registration-notice__value">{{ $pendingRegistration['name'] }}</span>
+                        </div>
+                        <div class="pending-registration-notice__user-row">
+                            <span class="pending-registration-notice__label">Email</span>
+                            <span class="pending-registration-notice__value">{{ $pendingRegistration['email'] }}</span>
+                        </div>
+                        <div class="pending-registration-notice__user-row">
+                            <span class="pending-registration-notice__label">Phone</span>
+                            <span class="pending-registration-notice__value">{{ $pendingRegistration['phone'] }}</span>
+                        </div>
+                        <div class="pending-registration-notice__user-row">
+                            <span class="pending-registration-notice__label">Registration ID</span>
+                            <span class="pending-registration-notice__value pending-registration-notice__value--highlight">{{ $pendingRegistration['registration_id'] }}</span>
+                        </div>
+                        <div class="pending-registration-notice__user-row">
+                            <span class="pending-registration-notice__label">Status</span>
+                            <span>
+                                @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
+                                    <span class="badge badge-completed">Confirmed</span>
+                                @else
+                                    <span class="badge badge-pending">Pending Payment</span>
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- ─── BANKING DETAILS (Only if pending) ─── --}}
+                    @if($pendingRegistration['payment_status'] === 'pending' && !$pendingRegistration['is_free'] && $pendingRegistration['banking_details'])
+                        <div class="pending-registration-notice__banking">
+                            <h5>💳 Complete Your Payment</h5>
+                            <div class="pending-registration-notice__banking-grid">
+                                <div>
+                                    <span class="pending-registration-notice__banking-label">Bank</span>
+                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['bank'] }}</span>
+                                </div>
+                                <div>
+                                    <span class="pending-registration-notice__banking-label">Account Name</span>
+                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['account_name'] }}</span>
+                                </div>
+                                <div>
+                                    <span class="pending-registration-notice__banking-label">Account Number</span>
+                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['account_number'] }}</span>
+                                </div>
+                                <div>
+                                    <span class="pending-registration-notice__banking-label">Branch Code</span>
+                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['branch_code'] }}</span>
+                                </div>
+                                <div style="grid-column: 1 / -1; text-align: center; padding-top: 12px; border-top: 1px solid rgba(21, 87, 36, 0.1);">
+                                    <span class="pending-registration-notice__banking-label">Reference</span>
+                                    <span class="pending-registration-notice__banking-value" style="font-weight: 700; color: var(--gold); font-size: 1.1rem; display: block;">
+                                        {{ $pendingRegistration['banking_details']['reference'] }}
+                                    </span>
+                                    <span style="font-size: 0.75rem; color: rgba(21, 87, 36, 0.6);">
+                                        <i class="fas fa-info-circle"></i> Use this exact reference
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pending-registration-notice__note">
+                                <i class="fas fa-hourglass-half"></i>
+                                Please complete your payment within <strong>48 hours</strong>.
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="pending-registration-notice__actions">
+                        <a href="{{ route('contact') }}" class="btn btn--secondary">
+                            <i class="fas fa-envelope"></i> Need Help?
+                        </a>
+                        <a href="#" onclick="window.print()" class="btn btn--outline">
+                            <i class="fas fa-print"></i> Print Details
+                        </a>
+                        <form method="POST" action="{{ route('events.clear.registration') }}" style="display: inline;">
+                            @csrf
+                            <input type="hidden" name="event_id" value="{{ $event->id }}">
+                            <input type="hidden" name="event_slug" value="{{ $event->slug }}">
+                            <button type="submit" class="btn btn--outline">
+                                <i class="fas fa-redo"></i> New Registration
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ─── FORM IS HIDDEN ─── --}}
+        <div style="display: none;">
+            <!-- user already registered -->
+        </div>
+    @endif
+
+    {{-- ─── HERO ─── --}}
     <section class="event-detail__hero">
         <div class="event-detail__hero-bg">
             <div class="event-detail__hero-orb event-detail__hero-orb--1"></div>
@@ -49,6 +162,12 @@
                             <i class="fas fa-clock"></i>
                             <span>{{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
                         </div>
+                        @if($event->capacity)
+                            <div class="event-detail__hero-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>{{ $event->registrations()->count() }}/{{ $event->capacity }} registered</span>
+                            </div>
+                        @endif
                         @if(!$event->is_free && $event->price > 0)
                             <div class="event-detail__hero-meta-item">
                                 <i class="fas fa-tag"></i>
@@ -71,49 +190,81 @@
                 {{-- Registration Form --}}
                 <div class="event-detail__hero-form">
                     <div class="event-detail__form-card">
-                        <h3 class="event-detail__form-title">Register for This Event</h3>
-                        <p class="event-detail__form-subtitle">
-                            @if(!$event->is_free && $event->price > 0)
-                                R{{ number_format($event->price, 2) }} per person
-                            @else
-                                Free registration
-                            @endif
-                        </p>
-
-                        <div id="registrationMessage"></div>
-
-                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
-                            @csrf
-                            <input type="hidden" name="event_id" value="{{ $event->id }}">
-
-                            <div class="event-detail__form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
+                        @if($pendingRegistration)
+                            {{-- ─── SHOW REGISTRATION STATUS INSTEAD OF FORM ─── --}}
+                            <div class="event-detail__form-status">
+                                <div class="event-detail__form-status-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4>You're Registered!</h4>
+                                <p>You have already registered for this event.</p>
+                                <div class="event-detail__form-status-details">
+                                    <div>
+                                        <span class="label">Registration ID</span>
+                                        <span class="value">{{ $pendingRegistration['registration_id'] }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="label">Status</span>
+                                        <span class="badge badge-pending">
+                                            @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
+                                                <span class="badge badge-completed">Confirmed</span>
+                                            @else
+                                                <span class="badge badge-pending">Pending Payment</span>
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="event-detail__form-status-note">
+                                    <i class="fas fa-info-circle"></i>
+                                    Banking details are shown above. Please complete payment to confirm your spot.
+                                </div>
                             </div>
+                        @else
+                            {{-- ─── SHOW FORM ─── --}}
+                            <h3 class="event-detail__form-title">Register for This Event</h3>
+                            <p class="event-detail__form-subtitle">
+                                @if(!$event->is_free && $event->price > 0)
+                                    R{{ number_format($event->price, 2) }} per person
+                                @else
+                                    Free registration
+                                @endif
+                            </p>
 
-                            <div class="event-detail__form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
-                            </div>
+                            <div id="registrationMessage"></div>
 
-                            <div class="event-detail__form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
-                            </div>
+                            <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
+                                @csrf
+                                <input type="hidden" name="event_id" value="{{ $event->id }}">
 
-                            <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
-                                <span id="registerBtnText">
-                                    <i class="fas fa-ticket-alt"></i> Register Now
-                                </span>
-                                <span id="registerBtnLoader" style="display: none;">
-                                    <i class="fas fa-spinner fa-spin"></i> Registering...
-                                </span>
-                            </button>
-                        </form>
+                                <div class="event-detail__form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
+                                </div>
 
-                        <p class="event-detail__form-note">
-                            <i class="fas fa-lock"></i> Your information is safe with us.
-                        </p>
+                                <div class="event-detail__form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
+                                </div>
+
+                                <div class="event-detail__form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
+                                </div>
+
+                                <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
+                                    <span id="registerBtnText">
+                                        <i class="fas fa-ticket-alt"></i> Register Now
+                                    </span>
+                                    <span id="registerBtnLoader" style="display: none;">
+                                        <i class="fas fa-spinner fa-spin"></i> Registering...
+                                    </span>
+                                </button>
+                            </form>
+
+                            <p class="event-detail__form-note">
+                                <i class="fas fa-lock"></i> Your information is safe with us.
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -163,7 +314,7 @@
     </section>
 
     {{-- COMMUNITY CTA --}}
-    <!-- <section class="event-detail__community">
+    <section class="event-detail__community">
         <div class="event-detail__community-bg">
             <div class="event-detail__community-shape event-detail__community-shape--1"></div>
             <div class="event-detail__community-shape event-detail__community-shape--2"></div>
@@ -178,12 +329,13 @@
                 </a>
             </div>
         </div>
-    </section> -->
+    </section>
 
 </div>
 
 @push('scripts')
     <script src="{{ secure_asset('js/events.js') }}"></script>
+    @if(!$pendingRegistration)
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('eventRegistrationForm');
@@ -223,7 +375,7 @@
                         if (data.success) {
                             // ─── BUILD CALENDAR LINK ───
                             const eventDate = new Date(data.event_date + 'T' + data.event_time);
-                            const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000); // 2 hours later
+                            const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
                             
                             const formatDate = function(date) {
                                 return date.toISOString().replace(/-|:|\.\d+/g, '');
@@ -235,33 +387,6 @@
                                 '&details=' + encodeURIComponent(data.event_description || '') +
                                 '&location=' + encodeURIComponent(data.event_location || '') +
                                 '&sf=true&output=xml';
-
-                            const icsDownload = function() {
-                                const icsContent = [
-                                    'BEGIN:VCALENDAR',
-                                    'VERSION:2.0',
-                                    'PRODID:-//The Collective//Event//EN',
-                                    'BEGIN:VEVENT',
-                                    'UID:' + data.registration_id + '@thecollective.co.za',
-                                    'DTSTAMP:' + formatDate(new Date()),
-                                    'DTSTART:' + formatDate(eventDate),
-                                    'DTEND:' + formatDate(endDate),
-                                    'SUMMARY:' + data.event_title,
-                                    'DESCRIPTION:' + (data.event_description || ''),
-                                    'LOCATION:' + (data.event_location || ''),
-                                    'END:VEVENT',
-                                    'END:VCALENDAR'
-                                ].join('\n');
-                                
-                                const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-                                const link = document.createElement('a');
-                                link.href = URL.createObjectURL(blob);
-                                link.download = data.event_title.replace(/\s+/g, '_') + '.ics';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                URL.revokeObjectURL(link.href);
-                            };
 
                             // ─── BUILD SUCCESS HTML ───
                             let html = `
@@ -278,9 +403,6 @@
                                         <a href="${googleCalendarUrl}" target="_blank" class="btn btn--primary btn--sm">
                                             <i class="fas fa-calendar-plus"></i> Add to Google Calendar
                                         </a>
-                                        <button onclick="${icsDownload.toString()}(); icsDownload();" class="btn btn--secondary btn--sm">
-                                            <i class="fas fa-download"></i> Download .ics
-                                        </button>
                                     </div>
                             `;
 
@@ -352,6 +474,11 @@
                                     }
                                 }, 1000);
                             }
+
+                            // ─── RELOAD PAGE AFTER 3 SECONDS TO SHOW PENDING NOTICE ───
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
                         }
                     })
                     .catch(function(error) {
@@ -372,6 +499,7 @@
             }
         });
     </script>
+    @endif
 @endpush
 
 @endsection

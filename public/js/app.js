@@ -165,7 +165,7 @@ function showWhatsAppPopup() {
         
         autoMinimizeTimer = setTimeout(function() {
             minimizeWhatsAppPopup();
-        }, 30000);
+        }, 7000);
     }
     if (minimized) {
         minimized.style.display = 'none';
