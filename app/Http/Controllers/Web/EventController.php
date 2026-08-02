@@ -3,22 +3,15 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EventRegistrationRequest;
 use App\Models\Event;
 use App\Models\EventRegistration;
-use App\Services\PhoneService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventRegistrationConfirmation;
 
 class EventController extends Controller
 {
-    protected PhoneService $phoneService;
-
-    public function __construct(PhoneService $phoneService)
-    {
-        $this->phoneService = $phoneService;
-    }
-
     public function index()
     {
         $today = Carbon::today();
@@ -38,12 +31,25 @@ class EventController extends Controller
     public function show($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
-        return view('public.events.show', compact('event'));
+        
+        // ─── PENDING REGISTRATION IN SESSION ───
+        $pendingRegistration = null;
+        $sessionKey = 'pending_registration_' . $event->id;
+        
+        if (session()->has($sessionKey)) {
+            $pendingRegistration = session($sessionKey);
+
+            if (isset($pendingRegistration['expires_at']) && now()->gt($pendingRegistration['expires_at'])) {
+                session()->forget($sessionKey);
+                $pendingRegistration = null;
+            }
+        }
+        
+        return view('public.events.show', compact('event', 'pendingRegistration'));
     }
 
     public function register(Request $request)
     {
-        // ─── VALIDATE ───
         $request->validate([
             'event_id' => 'required|exists:events,id',
             'name' => 'required|max:255',
@@ -51,10 +57,8 @@ class EventController extends Controller
             'phone' => 'required|max:50',
         ]);
 
-        // ─── FIND EVENT ───
         $event = Event::findOrFail($request->event_id);
 
-        // ─── CHECK FREE/PAID ───
         $isFree = $event->is_free ?? true;
         $amount = $event->price ?? 0;
 
@@ -67,6 +71,33 @@ class EventController extends Controller
             'registration_id' => EventRegistration::generateRegistrationId(),
             'payment_status' => $isFree ? 'free' : 'pending',
         ]);
+
+        // ─── STORE IN SESSION ───
+        $sessionKey = 'pending_registration_' . $event->id;
+        session()->put($sessionKey, [
+            'registration_id' => $registration->registration_id,
+            'name' => $registration->name,
+            'email' => $registration->email,
+            'phone' => $registration->phone,
+            'amount' => $amount,
+            'payment_status' => $registration->payment_status,
+            'is_free' => $isFree,
+            'banking_details' => $isFree ? null : [
+                'bank' => config('app.bank_name', 'Nedbank'),
+                'account_name' => config('app.bank_account_name', 'The Collective'),
+                'account_number' => config('app.bank_account_number', '1234567890'),
+                'branch_code' => config('app.bank_branch_code', '198765'),
+                'reference' => $registration->registration_id,
+            ],
+            'expires_at' => now()->addHours(48),
+        ]);
+
+        // ─── SEND CONFIRMATION EMAIL ───
+        try {
+            Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send registration email: ' . $e->getMessage());
+        }
 
         // ─── BUILD RESPONSE ───
         $response = [
@@ -96,5 +127,19 @@ class EventController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function clearRegistration(Request $request)
+    {
+        $eventId = $request->input('event_id');
+        $eventSlug = $request->input('event_slug');
+        $sessionKey = 'pending_registration_' . $eventId;
+        
+        if (session()->has($sessionKey)) {
+            session()->forget($sessionKey);
+        }
+        
+        return redirect()->route('events.show', $eventSlug)
+            ->with('success', 'Registration cleared. You can now register again.');
     }
 }

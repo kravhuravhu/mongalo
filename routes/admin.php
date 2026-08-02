@@ -37,6 +37,10 @@ $adminRoutes = function () {
         Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
         Route::get('/events/{event}/registrations', [EventController::class, 'registrations'])->name('admin.events.registrations');
 
+        // ─── Registration Management ───
+        Route::put('/events/registrations/{registration}', [EventController::class, 'updateRegistration'])->name('admin.events.registrations.update');
+        Route::post('/events/registrations/{registration}/resend', [EventController::class, 'resendConfirmation'])->name('admin.events.registrations.resend');
+        
         // Baptism Requests
         Route::get('/baptisms', [BaptismRequestController::class, 'index'])->name('admin.baptisms');
         Route::put('/baptisms/{baptismRequest}', [BaptismRequestController::class, 'update'])->name('admin.baptisms.update');

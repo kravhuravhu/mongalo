@@ -47,7 +47,6 @@
         </td>
         <td>
             <div class="events-index__actions">
-                {{-- Pass the ENTIRE event object --}}
                 <a href="{{ route('admin.events.registrations', $event) }}" class="btn btn--secondary btn--sm" title="View Registrations">
                     <i class="fas fa-users"></i>
                 </a>

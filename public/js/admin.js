@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    /* ─── DELETE CONFIRMATION MODAL ─── */
+    /* ─── CUSTOM CONFIRMATION MODAL ─── */
     document.querySelectorAll('.delete-confirm').forEach(function(form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -19,35 +19,40 @@ document.addEventListener('DOMContentLoaded', function() {
             const btn = this.querySelector('button[type="submit"]');
             const itemName = btn.getAttribute('data-title') || 'this item';
             const itemType = btn.getAttribute('data-type') || 'item';
+            
+            // ─── DETERMINE ACTION TYPE ───
+            const isMarkPaid = this.querySelector('input[name="status"]')?.value === 'paid';
+            const actionLabel = isMarkPaid ? 'Mark as Paid' : 'Delete';
+            const actionIcon = isMarkPaid ? 'fa-check-circle' : 'fa-trash-alt';
+            const actionColor = isMarkPaid ? '#28a745' : '#dc3545';
+            const confirmText = isMarkPaid 
+                ? `Are you sure you want to mark <strong>${itemName}</strong> as PAID? This confirms payment and cannot be undone.`
+                : `Are you sure you want to delete <strong>${itemName}</strong>?<br><span class="delete-modal__warning">This action cannot be undone.</span>`;
 
             // ─── CREATE MODAL ───
             const overlay = document.createElement('div');
             overlay.className = 'delete-modal-overlay';
             overlay.innerHTML = `
                 <div class="delete-modal">
-                    <div class="delete-modal__icon">
-                        <i class="fas fa-trash-alt"></i>
+                    <div class="delete-modal__icon" style="background: ${isMarkPaid ? '#d4edda' : '#f8d7da'};">
+                        <i class="fas ${actionIcon}" style="color: ${actionColor};"></i>
                     </div>
-                    <h3 class="delete-modal__title">Delete ${itemType}</h3>
+                    <h3 class="delete-modal__title">${actionLabel} ${itemType}</h3>
                     <p class="delete-modal__text">
-                        Are you sure you want to delete <strong>${itemName}</strong>?
-                        <br>
-                        <span class="delete-modal__warning">This action cannot be undone.</span>
+                        ${confirmText}
                     </p>
                     <div class="delete-modal__actions">
                         <button class="btn btn--secondary delete-modal__cancel">
                             <i class="fas fa-times"></i> Cancel
                         </button>
-                        <button class="btn btn--danger delete-modal__confirm">
-                            <i class="fas fa-trash"></i> Yes, Delete
+                        <button class="btn ${isMarkPaid ? 'btn--success' : 'btn--danger'} delete-modal__confirm">
+                            <i class="fas ${actionIcon}"></i> ${isMarkPaid ? 'Yes, Mark Paid' : 'Yes, Delete'}
                         </button>
                     </div>
                 </div>
             `;
 
             document.body.appendChild(overlay);
-
-            // Store reference to the form
             overlay._originalForm = this;
 
             // ─── ANIMATE IN ───
@@ -68,9 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.querySelector('.delete-modal__confirm').addEventListener('click', function() {
                 const confirmBtn = this;
                 confirmBtn.disabled = true;
-                confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
-
-                // Submit the original form
+                confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 const originalForm = overlay._originalForm;
                 originalForm.submit();
             });
@@ -273,10 +276,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
 
+                // ─── UPDATE TOTAL COUNT ───
                 if (data.total !== undefined) {
                     const countEl = document.querySelector('.events-index__filter-count');
                     if (countEl) {
-                        countEl.textContent = data.total + ' events';
+                        if (data.upcomingCount !== undefined && data.pastCount !== undefined) {
+                            countEl.innerHTML = data.total + ' events <span style="font-size: 0.65rem; color: var(--text-muted); margin-left: 8px;">(' + data.upcomingCount + ' upcoming · ' + data.pastCount + ' past)</span>';
+                        } else {
+                            countEl.textContent = data.total + ' events';
+                        }
                     }
                 }
 

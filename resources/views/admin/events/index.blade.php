@@ -52,7 +52,12 @@
             </a>
         @endif
         
-        <span class="events-index__filter-count">{{ $events->total() }} events</span>
+        <span class="events-index__filter-count">
+            {{ $events->total() }} events
+            <span style="font-size: 0.65rem; color: var(--text-muted); margin-left: 8px;">
+                ({{ $upcomingCount ?? 0 }} upcoming · {{ $pastCount ?? 0 }} past)
+            </span>
+        </span>
     </div>
 
     {{-- ─── EVENTS TABLE ─── --}}
