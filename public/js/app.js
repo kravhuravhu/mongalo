@@ -139,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
 const COOKIE_NAME = 'whatsapp_popup';
 let isPopupMinimized = false;
 let autoMinimizeTimer = null;
+let countdownTimer = null;
+let countdownSeconds = 30;
 
 function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -154,22 +156,83 @@ function setCookie(name, value, minutes) {
 function showWhatsAppPopup() {
     const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
+    
     if (popup) {
         popup.classList.add('show');
         popup.classList.remove('whatsapp-popup--minimized');
         isPopupMinimized = false;
-
+        
+        // ─── START COUNTDOWN ───
+        startCountdown();
+        
+        // ─── AUTO-MINIMIZE AFTER COUNTDOWN ───
         if (autoMinimizeTimer) {
             clearTimeout(autoMinimizeTimer);
         }
-        
         autoMinimizeTimer = setTimeout(function() {
             minimizeWhatsAppPopup();
-        }, 7000);
+        }, countdownSeconds * 1000);
     }
     if (minimized) {
         minimized.style.display = 'none';
     }
+}
+
+function startCountdown() {
+    const countdownEl = document.getElementById('whatsappCountdown');
+    const badgeEl = document.getElementById('whatsappMinimizedBadge');
+    
+    if (!countdownEl) return;
+    
+    // ─── RESET COUNTDOWN ───
+    countdownSeconds = 30;
+    countdownEl.textContent = countdownSeconds;
+    countdownEl.classList.remove('whatsapp-popup__timer-countdown--warning');
+    
+    if (badgeEl) {
+        badgeEl.textContent = countdownSeconds + 's';
+    }
+    
+    // ─── CLEAR EXISTING TIMER ───
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+    }
+    
+    // ─── START COUNTDOWN ───
+    countdownTimer = setInterval(function() {
+        countdownSeconds--;
+        
+        if (countdownEl) {
+            countdownEl.textContent = countdownSeconds;
+            
+            // ─── WARNING STATE (last 5 seconds) ───
+            if (countdownSeconds <= 5) {
+                countdownEl.classList.add('whatsapp-popup__timer-countdown--warning');
+            } else {
+                countdownEl.classList.remove('whatsapp-popup__timer-countdown--warning');
+            }
+        }
+        
+        if (badgeEl) {
+            badgeEl.textContent = countdownSeconds + 's';
+        }
+        
+        // ─── WHEN COUNTDOWN REACHES 0 ───
+        if (countdownSeconds <= 0) {
+            clearInterval(countdownTimer);
+            countdownTimer = null;
+            
+            if (countdownEl) {
+                countdownEl.textContent = '0';
+            }
+            if (badgeEl) {
+                badgeEl.textContent = '0s';
+            }
+            
+            // ─── AUTO-MINIMIZE ───
+            minimizeWhatsAppPopup();
+        }
+    }, 1000);
 }
 
 function hideWhatsAppPopup() {
@@ -181,11 +244,16 @@ function hideWhatsAppPopup() {
     if (autoMinimizeTimer) {
         clearTimeout(autoMinimizeTimer);
     }
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+    }
 }
 
 function minimizeWhatsAppPopup() {
     const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
+    
     if (popup) {
         popup.classList.add('whatsapp-popup--minimized');
         popup.classList.remove('show');
@@ -193,27 +261,45 @@ function minimizeWhatsAppPopup() {
     }
     if (minimized) {
         minimized.style.display = 'flex';
+        
+        // ─── UPDATE BADGE WITH REMAINING TIME ───
+        const badge = document.getElementById('whatsappMinimizedBadge');
+        if (badge && countdownSeconds > 0) {
+            badge.textContent = countdownSeconds + 's';
+        } else if (badge) {
+            badge.textContent = '0s';
+        }
     }
     if (autoMinimizeTimer) {
         clearTimeout(autoMinimizeTimer);
+    }
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
     }
 }
 
 function restoreWhatsAppPopup() {
     const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
+    
     if (popup) {
         popup.classList.remove('whatsapp-popup--minimized');
         popup.classList.add('show');
         isPopupMinimized = false;
         
-        // Reset auto-minimize timer
+        // ─── RESTART COUNTDOWN ───
+        if (!countdownTimer && countdownSeconds > 0) {
+            startCountdown();
+        }
+        
+        // ─── RESET AUTO-MINIMIZE TIMER ───
         if (autoMinimizeTimer) {
             clearTimeout(autoMinimizeTimer);
         }
         autoMinimizeTimer = setTimeout(function() {
             minimizeWhatsAppPopup();
-        }, 30000);
+        }, countdownSeconds * 1000);
     }
     if (minimized) {
         minimized.style.display = 'none';
@@ -229,6 +315,10 @@ function dismissPopup() {
     }
     if (autoMinimizeTimer) {
         clearTimeout(autoMinimizeTimer);
+    }
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
     }
 }
 
@@ -247,9 +337,13 @@ function joinCommunity() {
     if (autoMinimizeTimer) {
         clearTimeout(autoMinimizeTimer);
     }
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+    }
 }
 
-// Show WhatsApp popup on page load if no cookie
+// ─── SHOW WHATSAPP POPUP ON PAGE LOAD ───
 document.addEventListener('DOMContentLoaded', function() {
     const cookie = getCookie(COOKIE_NAME);
     if (!cookie) {
