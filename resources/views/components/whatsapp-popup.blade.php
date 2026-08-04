@@ -9,10 +9,19 @@
         </div>
         <h3 class="whatsapp-popup__title">Join {{ env('PROJECT_NAME', 'The Collective') }}</h3>
         <p class="whatsapp-popup__desc">Connect with hundreds of believers on WhatsApp. Get daily encouragement, book updates, and be part of the journey.</p>
+        
         <div class="whatsapp-popup__stats">
             <span><i class="fas fa-users"></i> 247+ members</span>
             <span><i class="fas fa-check-circle"></i> Free to join</span>
         </div>
+
+        {{-- ─── COUNTDOWN TIMER ─── --}}
+        <div class="whatsapp-popup__timer">
+            <span class="whatsapp-popup__timer-label">Closes in</span>
+            <span class="whatsapp-popup__timer-countdown" id="whatsappCountdown">30</span>
+            <span class="whatsapp-popup__timer-label">s</span>
+        </div>
+
         <div class="whatsapp-popup__actions">
             <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary" onclick="joinCommunity()">
                 <i class="fab fa-whatsapp"></i> Join Community
@@ -26,4 +35,5 @@
 <div id="whatsappPopupMinimized" class="whatsapp-popup-minimized" onclick="restoreWhatsAppPopup()" style="display:none;">
     <i class="fab fa-whatsapp"></i>
     <span>Join Community</span>
+    <span class="whatsapp-popup-minimized__badge" id="whatsappMinimizedBadge">30s</span>
 </div>
