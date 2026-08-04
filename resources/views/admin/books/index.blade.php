@@ -67,7 +67,9 @@
                 <tr>
                     <th style="width: 40px;">#</th>
                     <th>Title</th>
+                    <th>Cover</th>
                     <th>Price</th>
+                    <th>File</th>
                     <th>Status</th>
                     <th style="width: 80px;">Sort</th>
                     <th style="width: 120px;">Actions</th>
@@ -79,7 +81,11 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             <div class="books-index__title">
-                                <span class="books-index__title-color" style="background:{{ $book->cover_color ?? '#a67c4e' }};"></span>
+                                @if($book->cover_image)
+                                    <img src="{{ asset('storage/books/covers/' . $book->cover_image) }}" alt="{{ $book->title }}" style="width: 40px; height: 55px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); flex-shrink: 0;">
+                                @else
+                                    <span class="books-index__title-color" style="background:{{ $book->cover_color ?? '#a67c4e' }};"></span>
+                                @endif
                                 <div>
                                     <strong>{{ $book->title }}</strong>
                                     @if($book->subtitle)
@@ -89,11 +95,32 @@
                             </div>
                         </td>
                         <td>
+                            @if($book->cover_image)
+                                <span class="badge badge-free" style="background: #d4edda; color: #155724;">
+                                    <i class="fas fa-check-circle"></i> Uploaded
+                                </span>
+                            @else
+                                <span class="badge badge-read" style="background: #f8d7da; color: #721c24;">
+                                    <i class="fas fa-times-circle"></i> None
+                                </span>
+                            @endif
+                        </td>
+                        <td>
                             @if($book->is_free)
                                 <span class="badge badge-free">Free</span>
                             @else
-                                {{-- Use raw_price attribute to avoid formatting issues --}}
-                                <span class="books-index__price">{{ $book->price }}</span>
+                                <span class="books-index__price">R{{ number_format((float) $book->price, 2) }}</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($book->book_file)
+                                <span class="badge badge-free" style="background: #d4edda; color: #155724;">
+                                    <i class="fas fa-check-circle"></i> {{ strtoupper($book->file_type) }}
+                                </span>
+                            @else
+                                <span class="badge badge-read" style="background: #f8d7da; color: #721c24;">
+                                    <i class="fas fa-times-circle"></i> None
+                                </span>
                             @endif
                         </td>
                         <td>
@@ -125,7 +152,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">
                             <i class="fas fa-book" style="font-size: 2rem; display: block; margin-bottom: 12px; opacity: 0.3;"></i>
                             No books found.
                             @if(request('search') || request('filter'))

@@ -52,8 +52,8 @@
                     <div class="books__hero-search">
                         <div class="books__hero-search-wrapper">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search for a book or resource..." class="books__hero-search-input">
-                            <button class="books__hero-search-btn">Search</button>
+                            <input type="text" placeholder="Search for a book or resource..." class="books__hero-search-input" id="bookSearchInput">
+                            <button class="books__hero-search-btn" id="bookSearchBtn">Search</button>
                         </div>
                     </div>
 
@@ -128,14 +128,21 @@
                 <p class="section-header__subtitle">From paid publications to free downloads, find the resource that fits where you are right now.</p>
             </div>
 
-            <div class="books__grid-masonry">
+            <div class="books__grid-masonry" id="bookGrid">
                 @forelse($paidBooks as $index => $book)
                     <div class="books__grid-item books__grid-item--paid" data-category="paid" style="animation-delay: {{ $index * 0.06 }}s;">
                         <div class="books__grid-card books__grid-card--paid">
-                            <div class="books__grid-cover" style="background:{{ $book->cover_color ?? '#a67c4e' }};">
-                                <span class="books__grid-cover-title">{{ $book->title }}</span>
+                            <div class="books__grid-cover {{ $book->cover_image ? 'books__grid-cover--with-image' : '' }}" style="background:{{ $book->cover_color ?? '#a67c4e' }};">
+                                @if($book->cover_image)
+                                    <img src="{{ asset('storage/books/covers/' . $book->cover_image) }}" 
+                                        alt="{{ $book->title }}" 
+                                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+                                @endif
+                                <span class="books__grid-cover-title" style="position: relative; z-index: 2;">
+                                    {{ $book->title }}
+                                </span>
                                 @if($book->is_featured)
-                                    <span class="books__grid-cover-badge">★ Featured</span>
+                                    <span class="books__grid-cover-badge" style="position: relative; z-index: 2;">★ Featured</span>
                                 @endif
                                 <div class="books__grid-cover-shine"></div>
                             </div>
@@ -143,9 +150,9 @@
                                 <h4 class="books__grid-name">{{ $book->title }}</h4>
                                 <p class="books__grid-desc">{{ Str::limit($book->description, 90) }}</p>
                                 <div class="books__grid-footer">
-                                    <span class="books__grid-price">{{ $book->price }}</span>
+                                    <span class="books__grid-price">{{ $book->formatted_price }}</span>
                                     <a href="{{ route('books.show', $book->slug) }}" class="books__grid-btn">
-                                        <span>Details</span>
+                                        <span>View Details</span>
                                         <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -160,8 +167,15 @@
                     <div class="books__grid-item books__grid-item--free" data-category="free" style="animation-delay: {{ ($paidBooks->count() + $index) * 0.06 }}s;">
                         <div class="books__grid-card books__grid-card--free">
                             <div class="books__grid-cover" style="background:{{ $resource->cover_color ?? '#4A9E9E' }};">
-                                <span class="books__grid-cover-title">{{ $resource->title }}</span>
-                                <span class="books__grid-cover-badge books__grid-cover-badge--free">Free</span>
+                                @if($resource->cover_image)
+                                    <img src="{{ asset('storage/books/covers/' . $resource->cover_image) }}" 
+                                         alt="{{ $resource->title }}" 
+                                         style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+                                @endif
+                                <span class="books__grid-cover-title" style="position: relative; z-index: 2; {{ $resource->cover_image ? 'text-shadow: 0 2px 20px rgba(0,0,0,0.5);' : '' }}">
+                                    {{ $resource->title }}
+                                </span>
+                                <span class="books__grid-cover-badge books__grid-cover-badge--free" style="position: relative; z-index: 2;">Free</span>
                                 <div class="books__grid-cover-shine"></div>
                             </div>
                             <div class="books__grid-info">
@@ -169,9 +183,9 @@
                                 <p class="books__grid-desc">{{ $resource->subtitle ?? 'Free Download' }}</p>
                                 <div class="books__grid-footer">
                                     <span class="books__grid-price books__grid-price--free">Free</span>
-                                    <a href="#" class="books__grid-btn books__grid-btn--free">
-                                        <span>Download</span>
-                                        <i class="fas fa-download"></i>
+                                    <a href="{{ route('books.show', $resource->slug) }}" class="books__grid-btn books__grid-btn--free">
+                                        <span>View Details</span>
+                                        <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
@@ -237,16 +251,23 @@
                 <div class="books__spotlight-grid">
                     <div class="books__spotlight-cover">
                         <div class="books__spotlight-book" style="background:{{ $divineBook->cover_color ?? '#8B5E3C' }};">
-                            <span class="books__spotlight-book-title">{{ $divineBook->title }}</span>
-                            <div class="books__spotlight-book-divider"></div>
-                            <span class="books__spotlight-book-author">Arthur Mongalo</span>
+                            @if($divineBook->cover_image)
+                                <img src="{{ asset('storage/books/covers/' . $divineBook->cover_image) }}" 
+                                     alt="{{ $divineBook->title }}" 
+                                     style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+                            @endif
+                            <span class="books__spotlight-book-title" style="position: relative; z-index: 2; {{ $divineBook->cover_image ? 'text-shadow: 0 2px 30px rgba(0,0,0,0.6);' : '' }}">
+                                {{ $divineBook->title }}
+                            </span>
+                            <div class="books__spotlight-book-divider" style="position: relative; z-index: 2;"></div>
+                            <span class="books__spotlight-book-author" style="position: relative; z-index: 2;">Arthur Mongalo</span>
                         </div>
                     </div>
 
                     <div class="books__spotlight-content">
                         <span class="books__spotlight-eyebrow">Bestseller</span>
                         <h2 class="books__spotlight-title">Discover Your <span>Divine Identity</span></h2>
-                        <p class="books__spotlight-text">An invitation to encounter the living God in profound and life-changing ways. Divine Identity explores the supernatural dimensions of faith, the transformative power of divine encounters and the boundless love of God, drawing you closer to walking in the extraordinary life He has designed for you.</p>
+                        <p class="books__spotlight-text">{{ $divineBook->description }}</p>
 
                         <div class="books__spotlight-testimonial">
                             <div class="books__spotlight-stars">
@@ -265,7 +286,7 @@
                                 <span>Read More</span>
                                 <i class="fas fa-arrow-right"></i>
                             </a>
-                            <span class="books__spotlight-price">{{ $divineBook->price }}</span>
+                            <span class="books__spotlight-price">{{ $divineBook->formatted_price }}</span>
                         </div>
                     </div>
                 </div>

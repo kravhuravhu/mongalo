@@ -16,6 +16,11 @@ class Book extends Model
         'is_free',
         'is_featured',
         'cover_color',
+        'cover_image',
+        'book_file',
+        'file_type',
+        'file_size',
+        'download_count',
         'sort_order',
     ];
 
@@ -23,10 +28,12 @@ class Book extends Model
         'is_free' => 'boolean',
         'is_featured' => 'boolean',
         'price' => 'decimal:2',
+        'download_count' => 'integer',
     ];
 
     protected $table = 'books';
 
+    /* ─── BOOT ─── */
     public static function boot()
     {
         parent::boot();
@@ -37,8 +44,34 @@ class Book extends Model
         });
     }
 
+    /* ─── RELATIONSHIPS ─── */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /* ─── ACCESSORS ─── */
+    public function getCoverUrlAttribute()
+    {
+        if ($this->cover_image) {
+            return asset('storage/books/covers/' . $this->cover_image);
+        }
+        return null;
+    }
+
+    public function getBookFileUrlAttribute()
+    {
+        if ($this->book_file) {
+            return asset('storage/books/files/' . $this->book_file);
+        }
+        return null;
+    }
+
     public function getFormattedPriceAttribute()
     {
+        if ($this->is_free) {
+            return 'Free';
+        }
         return $this->price > 0 ? 'R ' . number_format($this->price, 2) : 'Free';
     }
 
@@ -47,8 +80,13 @@ class Book extends Model
         return (float) $this->attributes['price'];
     }
 
-    public function getPriceAttribute($value)
+    public function getIsPurchasableAttribute()
     {
-        return $value > 0 ? 'R ' . number_format($value, 2) : 'Free';
+        return $this->price > 0 && !$this->is_free;
+    }
+
+    public function getIsDownloadableAttribute()
+    {
+        return $this->book_file !== null;
     }
 }
