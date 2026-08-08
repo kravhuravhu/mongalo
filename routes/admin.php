@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\BaptismRequestController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\InviteRequestController;
+use App\Http\Controllers\Admin\OrderController;
 
 // Admin routes | dev & prod
 $adminRoutes = function () {
@@ -20,7 +21,7 @@ $adminRoutes = function () {
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-        // Books Management
+        // ─── BOOKS MANAGEMENT ───
         Route::get('/books', [BookController::class, 'index'])->name('admin.books.index');
         Route::get('/books/create', [BookController::class, 'create'])->name('admin.books.create');
         Route::post('/books', [BookController::class, 'store'])->name('admin.books.store');
@@ -28,7 +29,7 @@ $adminRoutes = function () {
         Route::put('/books/{book}', [BookController::class, 'update'])->name('admin.books.update');
         Route::delete('/books/{book}', [BookController::class, 'destroy'])->name('admin.books.destroy');
 
-        // Events Management
+        // ─── EVENTS MANAGEMENT ───
         Route::get('/events', [EventController::class, 'index'])->name('admin.events.index');
         Route::get('/events/create', [EventController::class, 'create'])->name('admin.events.create');
         Route::post('/events', [EventController::class, 'store'])->name('admin.events.store');
@@ -40,19 +41,25 @@ $adminRoutes = function () {
         // ─── Registration Management ───
         Route::put('/events/registrations/{registration}', [EventController::class, 'updateRegistration'])->name('admin.events.registrations.update');
         Route::post('/events/registrations/{registration}/resend', [EventController::class, 'resendConfirmation'])->name('admin.events.registrations.resend');
-        
-        // Baptism Requests
+
+        // ─── BAPTISM REQUESTS ───
         Route::get('/baptisms', [BaptismRequestController::class, 'index'])->name('admin.baptisms');
         Route::put('/baptisms/{baptismRequest}', [BaptismRequestController::class, 'update'])->name('admin.baptisms.update');
 
-        // Contact Messages
+        // ─── CONTACT MESSAGES ───
         Route::get('/messages', [ContactMessageController::class, 'index'])->name('admin.messages');
         Route::get('/messages/{message}', [ContactMessageController::class, 'show'])->name('admin.messages.show');
         Route::put('/messages/{message}', [ContactMessageController::class, 'update'])->name('admin.messages.update');
 
-        // Invite Requests
+        // ─── INVITE REQUESTS ───
         Route::get('/invites', [InviteRequestController::class, 'index'])->name('admin.invites');
         Route::put('/invites/{invite}', [InviteRequestController::class, 'update'])->name('admin.invites.update');
+
+        // ─── ORDERS MANAGEMENT ───
+        Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+        Route::put('/orders/{order}', [OrderController::class, 'update'])->name('admin.orders.update');
+        Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
     });
 };
 

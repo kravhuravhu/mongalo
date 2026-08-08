@@ -1,3 +1,10 @@
+@php
+    $pendingBaptisms = App\Models\BaptismRequest::where('status', 'pending')->count();
+    $unreadMessages = App\Models\ContactMessage::where('status', 'unread')->count();
+    $pendingInvites = App\Models\InviteRequest::where('status', 'pending')->count();
+    $pendingOrders = App\Models\Order::where('payment_status', 'pending')->count();
+@endphp
+
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
         {{ env('PROJECT_NAME', 'The Collective') }}
@@ -24,6 +31,16 @@
            class="nav-item {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
             <i class="fas fa-calendar-alt"></i>
             <span>Events</span>
+        </a>
+
+        {{-- Orders --}}
+        <a href="{{ route('admin.orders.index') }}" 
+           class="nav-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Orders</span>
+            @if($pendingOrders > 0)
+                <span class="nav-badge">{{ $pendingOrders }}</span>
+            @endif
         </a>
 
         {{-- Baptism Requests --}}

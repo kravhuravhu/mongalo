@@ -25,6 +25,18 @@
         <div class="stat-label"><i class="fas fa-users"></i> Registrations</div>
     </div>
 
+    {{-- Total Orders --}}
+    <div class="stat-card">
+        <div class="stat-number">{{ $stats['total_orders'] }}</div>
+        <div class="stat-label"><i class="fas fa-shopping-cart"></i> Total Orders</div>
+    </div>
+
+    {{-- Total Revenue --}}
+    <div class="stat-card">
+        <div class="stat-number">R{{ number_format($stats['total_revenue'], 0) }}</div>
+        <div class="stat-label"><i class="fas fa-credit-card"></i> Revenue</div>
+    </div>
+
     {{-- Baptism Requests --}}
     <div class="stat-card">
         <div class="stat-number">{{ $stats['total_baptisms'] }}</div>
@@ -53,6 +65,10 @@
         </div>
         <table>
             <tbody>
+                <tr>
+                    <td><i class="fas fa-shopping-cart" style="color: var(--gold); width: 20px;"></i> Pending Orders</td>
+                    <td><span class="badge badge-pending">{{ $stats['pending_orders'] }}</span></td>
+                </tr>
                 <tr>
                     <td><i class="fas fa-water" style="color: var(--gold); width: 20px;"></i> Baptism Requests</td>
                     <td><span class="badge badge-pending">{{ $stats['pending_baptisms'] }}</span></td>
@@ -97,6 +113,39 @@
         </table>
     </div>
 
+</div>
+
+{{-- Recent Orders --}}
+<div class="table-wrap" style="margin-top: 24px;">
+    <div style="padding: 16px 20px; border-bottom: 1px solid var(--border);">
+        <h3 style="font-size: 0.9rem; font-weight: 600;">Recent Orders</h3>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Book</th>
+                <th>Buyer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($recentOrders as $order)
+                <tr>
+                    <td><code>{{ $order->order_number }}</code></td>
+                    <td>{{ $order->book->title ?? 'N/A' }}</td>
+                    <td>{{ $order->buyer_name }}</td>
+                    <td><span style="color: var(--gold); font-weight: 600;">R{{ number_format($order->amount, 2) }}</span></td>
+                    <td><span class="badge badge-{{ $order->payment_status }}">{{ ucfirst($order->payment_status) }}</span></td>
+                    <td>{{ $order->created_at->format('M d, Y') }}</td>
+                </tr>
+            @empty
+                <tr><td colspan="6" style="color: var(--text-muted);">No orders yet.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
 
 {{-- Recent Registrations --}}

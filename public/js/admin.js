@@ -737,4 +737,99 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 400);
         }, 5000);
     }
+
+    // ─── ORDERS SEARCH ───
+    const ordersSearchInput = document.getElementById('ordersSearchInput');
+    const ordersSearchResults = document.getElementById('ordersSearchResults');
+    const ordersSearchSpinner = document.getElementById('ordersSearchSpinner');
+    const ordersClearBtn = document.getElementById('ordersSearchClear');
+
+    if (ordersSearchInput && ordersSearchResults) {
+        let ordersSearchTimeout = null;
+
+        function performOrdersSearch(query) {
+            const url = new URL(window.location.href);
+            const status = url.searchParams.get('status') || '';
+
+            let searchUrl = window.location.pathname + '?';
+            if (status) {
+                searchUrl += 'status=' + status + '&';
+            }
+            if (query) {
+                searchUrl += 'search=' + encodeURIComponent(query);
+            }
+
+            if (ordersSearchSpinner) {
+                ordersSearchSpinner.style.display = 'inline-block';
+            }
+
+            fetch(searchUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.html) {
+                    ordersSearchResults.innerHTML = data.html;
+                }
+
+                if (data.total !== undefined) {
+                    const countEl = document.querySelector('.orders-index__filter-count');
+                    if (countEl) {
+                        countEl.textContent = data.total + ' orders';
+                    }
+                }
+
+                if (ordersClearBtn) {
+                    if (query.length > 0) {
+                        ordersClearBtn.style.display = 'inline-flex';
+                    } else {
+                        ordersClearBtn.style.display = 'none';
+                    }
+                }
+
+                if (ordersSearchSpinner) {
+                    ordersSearchSpinner.style.display = 'none';
+                }
+            })
+            .catch(function(error) {
+                console.error('Search error:', error);
+                if (ordersSearchSpinner) {
+                    ordersSearchSpinner.style.display = 'none';
+                }
+            });
+        }
+
+        ordersSearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (ordersSearchTimeout) {
+                clearTimeout(ordersSearchTimeout);
+            }
+
+            ordersSearchTimeout = setTimeout(function() {
+                performOrdersSearch(query);
+            }, 400);
+        });
+
+        if (ordersClearBtn) {
+            ordersClearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                ordersSearchInput.value = '';
+                ordersSearchInput.focus();
+                performOrdersSearch('');
+            });
+        }
+
+        if (ordersSearchInput.value.trim().length > 0 && ordersClearBtn) {
+            ordersClearBtn.style.display = 'inline-flex';
+        }
+    }
 });
