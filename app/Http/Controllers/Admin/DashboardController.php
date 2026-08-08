@@ -9,6 +9,7 @@ use App\Models\BaptismRequest;
 use App\Models\ContactMessage;
 use App\Models\InviteRequest;
 use App\Models\EventRegistration;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
@@ -24,11 +25,17 @@ class DashboardController extends Controller
             'pending_baptisms' => BaptismRequest::where('status', 'pending')->count(),
             'unread_messages' => ContactMessage::where('status', 'unread')->count(),
             'pending_invites' => InviteRequest::where('status', 'pending')->count(),
+            // ─── ORDERS ───
+            'total_orders' => Order::count(),
+            'pending_orders' => Order::where('payment_status', 'pending')->count(),
+            'paid_orders' => Order::where('payment_status', 'paid')->count(),
+            'total_revenue' => Order::where('payment_status', 'paid')->sum('amount'),
         ];
 
         $recentEvents = Event::orderBy('date', 'desc')->limit(5)->get();
         $recentRegistrations = EventRegistration::with('event')->orderBy('created_at', 'desc')->limit(5)->get();
+        $recentOrders = Order::with('book')->orderBy('created_at', 'desc')->limit(5)->get();
 
-        return view('admin.dashboard', compact('stats', 'recentEvents', 'recentRegistrations'));
+        return view('admin.dashboard', compact('stats', 'recentEvents', 'recentRegistrations', 'recentOrders'));
     }
 }
