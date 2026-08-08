@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
+use App\Services\AdminNotificationService;
 use App\Services\PhoneService;
 
 class ContactController extends Controller
 {
     protected PhoneService $phoneService;
+    protected AdminNotificationService $notificationService;
 
-    public function __construct(PhoneService $phoneService)
-    {
+    public function __construct(
+        PhoneService $phoneService,
+        AdminNotificationService $notificationService
+    ) {
         $this->phoneService = $phoneService;
+        $this->notificationService = $notificationService;
     }
 
     public function index()
@@ -30,7 +35,7 @@ class ContactController extends Controller
             $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
         }
 
-        ContactMessage::create([
+        $message = ContactMessage::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
@@ -38,6 +43,9 @@ class ContactController extends Controller
             'message' => $validated['message'],
             'status' => 'unread',
         ]);
+
+        // ─── SEND ADMIN NOTIFICATION ───
+        $this->notificationService->notifyNewContact($message);
 
         return redirect()->route('contact')->with('success', 'Your message has been sent. We will get back to you within 24 hours!');
     }

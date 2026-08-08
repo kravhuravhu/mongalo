@@ -15,10 +15,12 @@ class PaymentService
 {
     protected array $gateways = [];
     protected string $defaultGateway;
+    protected AdminNotificationService $notificationService;
 
     public function __construct()
     {
         $this->defaultGateway = config('payment.default_gateway', 'payfast');
+        $this->notificationService = app(AdminNotificationService::class);
         $this->loadGateways();
     }
 
@@ -146,7 +148,6 @@ class PaymentService
         try {
             $result = $gateway->processResponse($data);
 
-            // ─── LOG THE RESULT ───
             Log::info('Payment processing result', [
                 'success' => $result['success'],
                 'gateway' => $gateway->getName(),
@@ -154,7 +155,6 @@ class PaymentService
                 'status' => $result['status'] ?? 'unknown',
             ]);
 
-            // ─── UPDATE ORDER STATUS ───
             $orderNumber = $result['order_number'] ?? null;
             
             if ($orderNumber) {
@@ -171,10 +171,12 @@ class PaymentService
                             'gateway' => $gateway->getName(),
                         ]);
 
-                        // ─── SEND CONFIRMATION EMAIL ───
+                        // ─── SEND CUSTOMER CONFIRMATION ───
                         $this->sendOrderConfirmation($order);
+                        
+                        // ─── SEND ADMIN NOTIFICATION ───
+                        $this->notificationService->notifyNewOrder($order);
                     } else {
-                        // ─── CHECK IF STATUS IS PENDING ───
                         $status = $result['status'] ?? 'unknown';
                         if (strtoupper($status) === 'PENDING') {
                             Log::info('Payment pending, waiting for confirmation', [
