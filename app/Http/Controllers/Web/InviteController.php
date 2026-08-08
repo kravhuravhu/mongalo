@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InviteRequest;
 use App\Models\InviteRequest as InviteRequestModel;
+use App\Services\AdminNotificationService;
 use App\Services\PhoneService;
 
 class InviteController extends Controller
 {
     protected PhoneService $phoneService;
+    protected AdminNotificationService $notificationService;
 
-    public function __construct(PhoneService $phoneService)
-    {
+    public function __construct(
+        PhoneService $phoneService,
+        AdminNotificationService $notificationService
+    ) {
         $this->phoneService = $phoneService;
+        $this->notificationService = $notificationService;
     }
 
     public function index()
@@ -28,7 +33,7 @@ class InviteController extends Controller
         // Format phone number
         $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
 
-        InviteRequestModel::create([
+        $invite = InviteRequestModel::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
@@ -39,6 +44,9 @@ class InviteController extends Controller
             'message' => $validated['message'] ?? null,
             'status' => 'pending',
         ]);
+
+        // ─── SEND ADMIN NOTIFICATION ───
+        $this->notificationService->notifyNewInvite($invite);
 
         return redirect()->route('invite', ['#invite-form'])->with('success', 'Your invitation request has been sent. Arthur will respond within 48 hours!');
     }

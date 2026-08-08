@@ -130,4 +130,15 @@ return [
     'bank_account_number' => env('BANK_ACCOUNT_NUMBER', '1234567890'),
     'bank_branch_code' => env('BANK_BRANCH_CODE', '198765'),
 
+     /*
+    |--------------------------------------------------------------------------
+    | Admin Notification Settings
+    |--------------------------------------------------------------------------
+    |
+    | These settings control admin email notifications for various events.
+    |
+    */
+    'admin_email' => env('ADMIN_EMAIL', 'admin@mongalo.co.za'),
+    'admin_name' => env('ADMIN_NAME', 'The Collective Mongalo'),
+
 ];
