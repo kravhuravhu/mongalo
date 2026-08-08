@@ -3285,3 +3285,76 @@
         height: 280px;
     }
 }
+
+/* ─── BUY BOOK FORM ─── */
+.buy-book-form {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    
+    & .buy-book-form__group {
+        margin-bottom: 14px;
+        
+        & label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            color: var(--text);
+            
+            & .required {
+                color: #dc3545;
+                margin-left: 2px;
+            }
+        }
+        
+        & input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: #fff;
+            
+            &:focus {
+                outline: none;
+                border-color: var(--gold);
+                box-shadow: 0 0 0 3px var(--gold-dim);
+            }
+        }
+    }
+    
+    & .buy-book-form__actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+        
+        & .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 12px 20px;
+        }
+    }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 540px) {
+    .buy-book-form {
+        padding: 16px 18px;
+        
+        & .buy-book-form__actions {
+            flex-direction: column;
+            
+            & .btn {
+                width: 100%;
+            }
+        }
+    }
+}

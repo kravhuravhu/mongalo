@@ -18,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin.auth' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
+        // ─── CSRF EXCEPTION - PAYMENT ROUTES ───
+        $middleware->validateCsrfTokens(except: [
+            'payment/webhook/*',
+            'payment/return/*',
+            'payment/cancel/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
