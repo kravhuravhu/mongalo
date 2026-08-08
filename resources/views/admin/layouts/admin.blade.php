@@ -16,6 +16,11 @@
     <!-- Admin CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/admin/admin.css') }}">
     @stack('styles')
+
+    <!-- Chart.js -->
+    @if(request()->routeIs('admin.dashboard'))
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    @endif
 </head>
 <body>
 
@@ -47,7 +52,7 @@
 </div>
 
 {{-- ─── SCRIPTS ─── --}}
-<script src="{{ secure_asset('js/admin.js') }}"></script>
+<script src="{{ secure_asset('js/admin.js') }}" defer></script>
 @stack('scripts')
 
 {{-- ─── FLASH MESSAGES ─── --}}
@@ -67,7 +72,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ─── HIDE LOADER WHEN PAGE FULLY LOADED ───
+        // ─── HIDE LOADER ───
         const loader = document.getElementById('adminLoader');
         const wrapper = document.getElementById('adminWrapper');
 
@@ -114,10 +119,6 @@
             }, 5000);
         }
 
-        // ─── REMOVED: DUPLICATE DELETE CONFIRMATION ───
-        // The delete confirmation is now handled by admin.js with a custom modal.
-        // Do NOT add a confirm() handler here.
-
         // ─── REAL-TIME SEARCH ───
         const searchInput = document.getElementById('adminSearchInput');
         const searchResults = document.getElementById('adminSearchResults');
@@ -161,9 +162,6 @@
                 .then(function(data) {
                     if (data.html) {
                         searchResults.innerHTML = data.html;
-                        
-                        // Re-bind delete confirm on new rows
-                        // The delete-confirm forms will be handled by the outer listener in admin.js
                     }
 
                     if (data.total !== undefined) {
