@@ -8,6 +8,7 @@
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
         <span>Admin</span>
+        <br>
         {{ env('PROJECT_NAME', 'The Collective') }}
     </a>
 

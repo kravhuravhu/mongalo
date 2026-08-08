@@ -27,7 +27,6 @@ class DashboardController extends Controller
             'pending_baptisms' => BaptismRequest::where('status', 'pending')->count(),
             'unread_messages' => ContactMessage::where('status', 'unread')->count(),
             'pending_invites' => InviteRequest::where('status', 'pending')->count(),
-            // ─── ORDERS ───
             'total_orders' => Order::count(),
             'pending_orders' => Order::where('payment_status', 'pending')->count(),
             'paid_orders' => Order::where('payment_status', 'paid')->count(),
@@ -35,24 +34,81 @@ class DashboardController extends Controller
             'total_revenue' => Order::where('payment_status', 'paid')->sum('amount'),
         ];
 
-        // ─── MONTHLY REVENUE CHART DATA ───
-        $monthlyRevenue = [];
-        $monthlyOrders = [];
-        $months = [];
+        // ─── ORDER STATUS BREAKDOWN (PERCENTAGES) ───
+        $totalOrders = $stats['total_orders'];
+        if ($totalOrders > 0) {
+            $stats['paid_percentage'] = round(($stats['paid_orders'] / $totalOrders) * 100, 1);
+            $stats['pending_percentage'] = round(($stats['pending_orders'] / $totalOrders) * 100, 1);
+            $stats['failed_percentage'] = round(($stats['failed_orders'] / $totalOrders) * 100, 1);
+        } else {
+            $stats['paid_percentage'] = 0;
+            $stats['pending_percentage'] = 0;
+            $stats['failed_percentage'] = 0;
+        }
 
-        for ($i = 11; $i >= 0; $i--) {
-            $date = Carbon::now()->subMonths($i);
-            $startOfMonth = $date->copy()->startOfMonth();
-            $endOfMonth = $date->copy()->endOfMonth();
+        // ─── CURRENT PERIOD (This Month) ───
+        $currentMonthStart = Carbon::now()->startOfMonth();
+        $currentMonthEnd = Carbon::now()->endOfMonth();
+        $previousMonthStart = Carbon::now()->subMonth()->startOfMonth();
+        $previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
 
-            $months[] = $date->format('M');
-            $monthlyRevenue[] = Order::where('payment_status', 'paid')
-                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+        // ─── CURRENT PERIOD COUNTS ───
+        $currentOrders = Order::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->count();
+        $currentRevenue = Order::where('payment_status', 'paid')
+            ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->sum('amount');
+        $currentRegistrations = EventRegistration::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->count();
+        $currentPendingOrders = Order::where('payment_status', 'pending')
+            ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->count();
+
+        // ─── PREVIOUS PERIOD COUNTS ───
+        $previousOrders = Order::whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])->count();
+        $previousRevenue = Order::where('payment_status', 'paid')
+            ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
+            ->sum('amount');
+        $previousRegistrations = EventRegistration::whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])->count();
+        $previousPendingOrders = Order::where('payment_status', 'pending')
+            ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
+            ->count();
+
+        // ─── CALCULATE PERCENTAGE CHANGES ───
+        $stats['orders_change'] = $this->calculatePercentageChange($previousOrders, $currentOrders);
+        $stats['revenue_change'] = $this->calculatePercentageChange($previousRevenue, $currentRevenue);
+        $stats['registrations_change'] = $this->calculatePercentageChange($previousRegistrations, $currentRegistrations);
+        $stats['pending_change'] = $this->calculatePercentageChange($previousPendingOrders, $currentPendingOrders);
+
+        // ─── CHART DATA: DAILY TRENDS FOR CURRENT MONTH ───
+        $dailyRevenue = [];
+        $dailyOrders = [];
+        $dailyLabels = [];
+
+        // ─── GET ALL DAYS IN CURRENT MONTH ───
+        $daysInMonth = Carbon::now()->daysInMonth;
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $date = Carbon::create($currentYear, $currentMonth, $day);
+            $startOfDay = $date->copy()->startOfDay();
+            $endOfDay = $date->copy()->endOfDay();
+
+            $dailyLabels[] = $date->format('d');
+            
+            // ─── REVENUE FOR THIS DAY ───
+            $dailyRevenue[] = Order::where('payment_status', 'paid')
+                ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->sum('amount');
-            $monthlyOrders[] = Order::where('payment_status', 'paid')
-                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            
+            // ─── ORDERS FOR THIS DAY ───
+            $dailyOrders[] = Order::where('payment_status', 'paid')
+                ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->count();
         }
+
+        // ─── CHECK IF DATA EXISTS ───
+        $hasData = collect($dailyRevenue)->sum() > 0;
+        $hasOrders = collect($dailyOrders)->sum() > 0;
 
         // ─── TOP BOOKS ───
         $topBooks = Order::where('payment_status', 'paid')
@@ -78,9 +134,13 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact(
             'stats',
-            'monthlyRevenue',
-            'monthlyOrders',
-            'months',
+            'dailyRevenue',
+            'dailyOrders',
+            'dailyLabels',
+            'daysInMonth',
+            'currentMonth',
+            'hasData',
+            'hasOrders',
             'topBooks',
             'recentOrders',
             'recentRegistrations',
@@ -88,5 +148,16 @@ class DashboardController extends Controller
             'recentMessages',
             'upcomingEvents'
         ));
+    }
+
+    /* ─── CALCULATE PERCENTAGE CHANGE ─── */
+    private function calculatePercentageChange($previous, $current)
+    {
+        if ($previous == 0) {
+            return $current > 0 ? 100 : 0;
+        }
+
+        $change = (($current - $previous) / $previous) * 100;
+        return round($change, 1);
     }
 }

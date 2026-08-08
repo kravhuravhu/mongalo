@@ -10,6 +10,7 @@
 
     {{-- ─── STATS CARDS ─── --}}
     <div class="dashboard__stats-grid">
+        {{-- TOTAL ORDERS --}}
         <div class="dashboard__stat-card">
             <div class="dashboard__stat-icon" style="background: rgba(166, 124, 78, 0.08);">
                 <i class="fas fa-shopping-cart" style="color: #a67c4e;"></i>
@@ -17,12 +18,23 @@
             <div class="dashboard__stat-content">
                 <span class="dashboard__stat-number">{{ $stats['total_orders'] }}</span>
                 <span class="dashboard__stat-label">Total Orders</span>
-                <span class="dashboard__stat-change dashboard__stat-change--up">
-                    <i class="fas fa-arrow-up"></i> +12%
-                </span>
+                @if(isset($stats['orders_change']) && $stats['orders_change'] > 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--up">
+                        <i class="fas fa-arrow-up"></i> +{{ $stats['orders_change'] }}%
+                    </span>
+                @elseif(isset($stats['orders_change']) && $stats['orders_change'] < 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--down">
+                        <i class="fas fa-arrow-down"></i> {{ $stats['orders_change'] }}%
+                    </span>
+                @else
+                    <span class="dashboard__stat-change" style="color: var(--text-muted); background: var(--bg);">
+                        <i class="fas fa-minus"></i> 0%
+                    </span>
+                @endif
             </div>
         </div>
 
+        {{-- TOTAL REVENUE --}}
         <div class="dashboard__stat-card">
             <div class="dashboard__stat-icon" style="background: rgba(40, 167, 69, 0.08);">
                 <i class="fas fa-credit-card" style="color: #28a745;"></i>
@@ -30,12 +42,23 @@
             <div class="dashboard__stat-content">
                 <span class="dashboard__stat-number">R{{ number_format($stats['total_revenue'], 0) }}</span>
                 <span class="dashboard__stat-label">Total Revenue</span>
-                <span class="dashboard__stat-change dashboard__stat-change--up">
-                    <i class="fas fa-arrow-up"></i> +8%
-                </span>
+                @if(isset($stats['revenue_change']) && $stats['revenue_change'] > 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--up">
+                        <i class="fas fa-arrow-up"></i> +{{ $stats['revenue_change'] }}%
+                    </span>
+                @elseif(isset($stats['revenue_change']) && $stats['revenue_change'] < 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--down">
+                        <i class="fas fa-arrow-down"></i> {{ $stats['revenue_change'] }}%
+                    </span>
+                @else
+                    <span class="dashboard__stat-change" style="color: var(--text-muted); background: var(--bg);">
+                        <i class="fas fa-minus"></i> 0%
+                    </span>
+                @endif
             </div>
         </div>
 
+        {{-- PENDING ORDERS --}}
         <div class="dashboard__stat-card">
             <div class="dashboard__stat-icon" style="background: rgba(232, 168, 56, 0.08);">
                 <i class="fas fa-clock" style="color: #e8a838;"></i>
@@ -43,12 +66,23 @@
             <div class="dashboard__stat-content">
                 <span class="dashboard__stat-number">{{ $stats['pending_orders'] }}</span>
                 <span class="dashboard__stat-label">Pending Orders</span>
-                <span class="dashboard__stat-change dashboard__stat-change--down">
-                    <i class="fas fa-arrow-down"></i> -3%
-                </span>
+                @if(isset($stats['pending_change']) && $stats['pending_change'] > 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--up" style="color: #e8a838; background: rgba(232, 168, 56, 0.08);">
+                        <i class="fas fa-arrow-up"></i> +{{ $stats['pending_change'] }}%
+                    </span>
+                @elseif(isset($stats['pending_change']) && $stats['pending_change'] < 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--down">
+                        <i class="fas fa-arrow-down"></i> {{ $stats['pending_change'] }}%
+                    </span>
+                @else
+                    <span class="dashboard__stat-change" style="color: var(--text-muted); background: var(--bg);">
+                        <i class="fas fa-minus"></i> 0%
+                    </span>
+                @endif
             </div>
         </div>
 
+        {{-- TOTAL REGISTRATIONS --}}
         <div class="dashboard__stat-card">
             <div class="dashboard__stat-icon" style="background: rgba(74, 158, 158, 0.08);">
                 <i class="fas fa-users" style="color: #4A9E9E;"></i>
@@ -56,32 +90,64 @@
             <div class="dashboard__stat-content">
                 <span class="dashboard__stat-number">{{ $stats['total_registrations'] }}</span>
                 <span class="dashboard__stat-label">Registrations</span>
-                <span class="dashboard__stat-change dashboard__stat-change--up">
-                    <i class="fas fa-arrow-up"></i> +5%
-                </span>
+                @if(isset($stats['registrations_change']) && $stats['registrations_change'] > 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--up">
+                        <i class="fas fa-arrow-up"></i> +{{ $stats['registrations_change'] }}%
+                    </span>
+                @elseif(isset($stats['registrations_change']) && $stats['registrations_change'] < 0)
+                    <span class="dashboard__stat-change dashboard__stat-change--down">
+                        <i class="fas fa-arrow-down"></i> {{ $stats['registrations_change'] }}%
+                    </span>
+                @else
+                    <span class="dashboard__stat-change" style="color: var(--text-muted); background: var(--bg);">
+                        <i class="fas fa-minus"></i> 0%
+                    </span>
+                @endif
             </div>
         </div>
     </div>
 
     {{-- ─── CHARTS ROW ─── --}}
     <div class="dashboard__charts-row" id="chartsContainer">
+        {{-- REVENUE CHART --}}
         <div class="dashboard__chart-card dashboard__chart-card--revenue">
             <div class="dashboard__chart-header">
                 <h3><i class="fas fa-chart-line"></i> Revenue Overview</h3>
-                <span class="dashboard__chart-period">Last 12 Months</span>
+                <span class="dashboard__chart-period">
+                    {{ Carbon\Carbon::now()->format('F Y') }} · Daily
+                </span>
             </div>
             <div class="dashboard__chart-body">
-                <canvas id="revenueChart"></canvas>
+                @if($hasData)
+                    <canvas id="revenueChart"></canvas>
+                @else
+                    <div class="dashboard__chart-empty">
+                        <i class="fas fa-chart-line" style="font-size: 2.4rem; color: var(--text-muted); opacity: 0.3;"></i>
+                        <p style="color: var(--text-muted); margin-top: 12px;">No revenue data available yet.</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); opacity: 0.6;">Daily sales will appear here once orders are placed.</p>
+                    </div>
+                @endif
             </div>
         </div>
 
+        {{-- ORDERS CHART --}}
         <div class="dashboard__chart-card dashboard__chart-card--orders">
             <div class="dashboard__chart-header">
                 <h3><i class="fas fa-shopping-bag"></i> Order Trends</h3>
-                <span class="dashboard__chart-period">Monthly Orders</span>
+                <span class="dashboard__chart-period">
+                    {{ Carbon\Carbon::now()->format('F Y') }} · Daily
+                </span>
             </div>
             <div class="dashboard__chart-body">
-                <canvas id="ordersChart"></canvas>
+                @if($hasOrders)
+                    <canvas id="ordersChart"></canvas>
+                @else
+                    <div class="dashboard__chart-empty">
+                        <i class="fas fa-shopping-bag" style="font-size: 2.4rem; color: var(--text-muted); opacity: 0.3;"></i>
+                        <p style="color: var(--text-muted); margin-top: 12px;">No order data available yet.</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); opacity: 0.6;">Daily order trends will appear here once orders are placed.</p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -132,10 +198,10 @@
                                 <span class="dashboard__order-status-dot dashboard__order-status-dot--paid"></span>
                                 Paid
                             </span>
-                            <span class="dashboard__order-status-number">{{ $stats['paid_orders'] }}</span>
+                            <span class="dashboard__order-status-number">{{ $stats['paid_orders'] }} ({{ $stats['paid_percentage'] }}%)</span>
                         </div>
                         <div class="dashboard__order-status-bar">
-                            <div class="dashboard__order-status-bar-fill dashboard__order-status-bar-fill--paid" style="width: {{ $stats['total_orders'] > 0 ? ($stats['paid_orders'] / $stats['total_orders'] * 100) : 0 }}%;"></div>
+                            <div class="dashboard__order-status-bar-fill dashboard__order-status-bar-fill--paid" style="width: {{ $stats['paid_percentage'] }}%;"></div>
                         </div>
                     </div>
 
@@ -145,10 +211,10 @@
                                 <span class="dashboard__order-status-dot dashboard__order-status-dot--pending"></span>
                                 Pending
                             </span>
-                            <span class="dashboard__order-status-number">{{ $stats['pending_orders'] }}</span>
+                            <span class="dashboard__order-status-number">{{ $stats['pending_orders'] }} ({{ $stats['pending_percentage'] }}%)</span>
                         </div>
                         <div class="dashboard__order-status-bar">
-                            <div class="dashboard__order-status-bar-fill dashboard__order-status-bar-fill--pending" style="width: {{ $stats['total_orders'] > 0 ? ($stats['pending_orders'] / $stats['total_orders'] * 100) : 0 }}%;"></div>
+                            <div class="dashboard__order-status-bar-fill dashboard__order-status-bar-fill--pending" style="width: {{ $stats['pending_percentage'] }}%;"></div>
                         </div>
                     </div>
 
@@ -158,10 +224,10 @@
                                 <span class="dashboard__order-status-dot dashboard__order-status-dot--failed"></span>
                                 Failed
                             </span>
-                            <span class="dashboard__order-status-number">{{ $stats['failed_orders'] }}</span>
+                            <span class="dashboard__order-status-number">{{ $stats['failed_orders'] }} ({{ $stats['failed_percentage'] }}%)</span>
                         </div>
                         <div class="dashboard__order-status-bar">
-                            <div class="dashboard__order-status-bar-fill dashboard__order-status-bar-fill--failed" style="width: {{ $stats['total_orders'] > 0 ? ($stats['failed_orders'] / $stats['total_orders'] * 100) : 0 }}%;"></div>
+                            <div class="dashboard__order-status-bar-fill dashboard__order-status-bar-fill--failed" style="width: {{ $stats['failed_percentage'] }}%;"></div>
                         </div>
                     </div>
                 </div>
@@ -360,23 +426,30 @@
             purple: '#6f42c1',
         };
 
-        // ─── LAZY LOAD CHARTS WITH INTERSECTION OBSERVER ───
+        // ─── LAZY LOAD CHARTS(INTERSECTION OBSERVER) ───
         function initCharts() {
-            // ─── REVENUE CHART ───
+            // ─── CHECK IF DATA EXISTS ───
+            const hasData = @json($hasData);
+            const hasOrders = @json($hasOrders);
+            
+            if (!hasData && !hasOrders) {
+                return; // No data to render
+            }
+            
+            // ─── REVENUE CHART (Daily) ───
             const revenueCtx = document.getElementById('revenueChart');
-            if (revenueCtx) {
+            if (revenueCtx && hasData) {
                 new Chart(revenueCtx, {
                     type: 'bar',
                     data: {
-                        labels: @json($months),
+                        labels: @json($dailyLabels),
                         datasets: [{
                             label: 'Revenue (R)',
-                            data: @json($monthlyRevenue),
-                            backgroundColor: colors.goldDim,
-                            borderColor: colors.gold,
-                            borderWidth: 2,
-                            borderRadius: 4,
-                            tension: 0.4,
+                            data: @json($dailyRevenue),
+                            backgroundColor: 'rgba(166, 124, 78, 0.4)',
+                            borderColor: '#a67c4e',
+                            borderWidth: 1.5,
+                            borderRadius: 2,
                         }]
                     },
                     options: {
@@ -389,7 +462,8 @@
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
-                                        return 'R' + context.parsed.y.toFixed(2);
+                                        const value = context.parsed.y;
+                                        return value > 0 ? 'R' + value.toFixed(2) : 'No sales';
                                     }
                                 }
                             }
@@ -406,6 +480,10 @@
                             x: {
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 15, // Show at most 15 day labels
+                                    autoSkip: true,
                                 }
                             }
                         }
@@ -413,25 +491,20 @@
                 });
             }
 
-            // ─── ORDERS CHART ───
+            // ─── ORDERS CHART (Daily) ───
             const ordersCtx = document.getElementById('ordersChart');
-            if (ordersCtx) {
+            if (ordersCtx && hasOrders) {
                 new Chart(ordersCtx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
-                        labels: @json($months),
+                        labels: @json($dailyLabels),
                         datasets: [{
                             label: 'Orders',
-                            data: @json($monthlyOrders),
-                            backgroundColor: 'rgba(74, 158, 158, 0.1)',
-                            borderColor: colors.blue,
-                            borderWidth: 2,
-                            pointBackgroundColor: colors.blue,
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2,
-                            pointRadius: 4,
-                            fill: true,
-                            tension: 0.4,
+                            data: @json($dailyOrders),
+                            backgroundColor: 'rgba(74, 158, 158, 0.4)',
+                            borderColor: '#4A9E9E',
+                            borderWidth: 1.5,
+                            borderRadius: 2,
                         }]
                     },
                     options: {
@@ -440,6 +513,14 @@
                         plugins: {
                             legend: {
                                 display: false,
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const value = context.parsed.y;
+                                        return value > 0 ? value + ' order(s)' : 'No orders';
+                                    }
+                                }
                             }
                         },
                         scales: {
@@ -452,6 +533,10 @@
                             x: {
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 15,
+                                    autoSkip: true,
                                 }
                             }
                         }
