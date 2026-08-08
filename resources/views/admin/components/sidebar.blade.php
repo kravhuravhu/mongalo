@@ -7,8 +7,8 @@
 
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
-        {{ env('PROJECT_NAME', 'The Collective') }}
         <span>Admin</span>
+        {{ env('PROJECT_NAME', 'The Collective') }}
     </a>
 
     <nav class="admin-nav">
