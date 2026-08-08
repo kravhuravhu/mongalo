@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\CommunityController;
 use App\Http\Controllers\Web\ResourceController;
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\InviteController;
+use App\Http\Controllers\Web\PaymentController;
 
 // Home
 Route::get('/', [
@@ -22,13 +23,11 @@ Route::get('/about', [
 ])->name('about');
 
 // Books
-Route::get('/books', [
-    BookController::class, 'index'
-])->name('books.index');
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+Route::get('/books/{slug}', [BookController::class, 'show'])->name('books.show');
+// ─── BOOK DOWNLOAD (Free) ───
+Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
 
-Route::get('/books/{slug}', [
-    BookController::class, 'show'
-])->name('books.show');
 
 // Events
 Route::get('/events', [
@@ -81,3 +80,30 @@ Route::get('/contact', [
 Route::post('/contact', [
     ContactController::class, 'send'
 ])->name('contact.send');
+
+// ─── PAYMENT ROUTES ───
+Route::prefix('payment')->name('payment.')->group(function () {
+    // ─── INITIATE PAYMENT (AJAX) ───
+    Route::post('/initiate', [PaymentController::class, 'initiate'])->name('initiate');
+
+    // ─── CHECKOUT ───
+    Route::get('/checkout/{gateway}/{order}', [PaymentController::class, 'checkout'])->name('checkout');
+
+    // ─── RETURN (Success) - GET ───
+    Route::any('/return/{gateway}', [PaymentController::class, 'return'])->name('return');
+
+    // ─── CANCEL - GET ───
+    Route::any('/cancel/{gateway}', [PaymentController::class, 'cancel'])->name('cancel');
+
+    // ─── WEBHOOK - POST ───
+    Route::post('/webhook/{gateway}', [PaymentController::class, 'webhook'])->name('webhook');
+
+    // ─── SUCCESS ───
+    Route::get('/success/{order}', [PaymentController::class, 'success'])->name('success');
+
+    // ─── FAILURE ───
+    Route::get('/failure/{order?}', [PaymentController::class, 'failure'])->name('failure');
+
+    // ─── DOWNLOAD ───
+    Route::get('/download/{token}', [PaymentController::class, 'download'])->name('download');
+});

@@ -8,6 +8,8 @@ use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventRegistrationConfirmation;
 
 class EventController extends Controller
 {
