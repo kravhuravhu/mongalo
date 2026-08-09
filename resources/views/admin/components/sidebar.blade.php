@@ -77,6 +77,16 @@
         {{-- Divider --}}
         <div class="nav-divider"></div>
 
+        {{-- ─── SYSTEM ─── --}}
+        <a href="{{ route('admin.cache.index') }}" 
+           class="nav-item {{ request()->routeIs('admin.cache.*') ? 'active' : '' }}">
+            <i class="fas fa-database"></i>
+            <span>Cache</span>
+        </a>
+
+        {{-- Divider --}}
+        <div class="nav-divider"></div>
+
         {{-- Logout --}}
         <form method="POST" action="{{ route('admin.logout') }}" class="nav-logout-form">
             @csrf

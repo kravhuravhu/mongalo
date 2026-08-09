@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BaptismRequestController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\InviteRequestController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CacheController;
 
 // Admin routes | dev & prod
 $adminRoutes = function () {
@@ -60,6 +61,13 @@ $adminRoutes = function () {
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
         Route::put('/orders/{order}', [OrderController::class, 'update'])->name('admin.orders.update');
         Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+
+        // ─── CACHE MANAGEMENT ───
+        Route::get('/cache', [CacheController::class, 'index'])->name('admin.cache.index');
+        Route::get('/cache/clear', [CacheController::class, 'clear'])->name('admin.cache.clear');
+        Route::get('/cache/warm', [CacheController::class, 'warm'])->name('admin.cache.warm');
+        Route::get('/cache/status', [CacheController::class, 'status'])->name('admin.cache.status');
+        Route::get('/cache/clear/{type}', [CacheController::class, 'clearType'])->name('admin.cache.clear.type');
     });
 };
 

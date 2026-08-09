@@ -4,25 +4,50 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Services\CacheService;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    protected CacheService $cacheService;
+
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
+
     public function index()
     {
-        $paidBooks = Book::where('is_free', false)->orderBy('sort_order')->get();
-        $freeBooks = Book::where('is_free', true)->orderBy('sort_order')->get();
+        // ─── GET CACHED DATA ───
+        $cacheKey = $this->cacheService->key('books', ['list' => 'all']);
+        
+        $data = $this->cacheService->rememberClosure($cacheKey, function () {
+            return [
+                'paidBooks' => Book::getCachedPaidBooks(),
+                'freeBooks' => Book::getCachedFreeBooks(),
+            ];
+        });
 
-        return view('public.books.index', compact('paidBooks', 'freeBooks'));
+        return view('public.books.index', $data);
     }
 
     public function show($slug)
     {
-        $book = Book::where('slug', $slug)->firstOrFail();
-        $relatedBooks = Book::where('id', '!=', $book->id)
-            ->where('is_free', $book->is_free)
-            ->limit(3)
-            ->get();
+        // ─── GET BOOK WITH CACHE ───
+        $cacheKey = $this->cacheService->key('book', ['slug' => $slug]);
+        
+        $book = $this->cacheService->rememberClosure($cacheKey, function () use ($slug) {
+            return Book::where('slug', $slug)->firstOrFail();
+        });
+
+        // ─── RELATED BOOKS (cache separately) ───
+        $relatedKey = $this->cacheService->key('books', ['related' => $book->id, 'is_free' => $book->is_free]);
+        $relatedBooks = $this->cacheService->rememberClosure($relatedKey, function () use ($book) {
+            return Book::where('id', '!=', $book->id)
+                ->where('is_free', $book->is_free)
+                ->limit(3)
+                ->get();
+        });
 
         return view('public.books.show', compact('book', 'relatedBooks'));
     }
@@ -42,6 +67,9 @@ class BookController extends Controller
 
         // ─── INCREMENT DOWNLOAD COUNT ───
         $book->increment('download_count');
+
+        // ─── CLEAR BOOK CACHE AFTER DOWNLOAD ───
+        $book->clearModelCache('book');
 
         $fileName = $book->slug . '.' . $book->file_type;
 
