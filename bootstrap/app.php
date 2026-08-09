@@ -17,7 +17,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin.auth' => \App\Http\Middleware\AdminMiddleware::class,
+            'bot.block' => \App\Http\Middleware\BotBlockerMiddleware::class,
+            'security.headers' => \App\Http\Middleware\SecurityHeadersMiddleware::class,
         ]);
+
+        // ─── GLOBAL MIDDLEWARE ───
+        $middleware->append([
+            \App\Http\Middleware\SecurityHeadersMiddleware::class,
+            \App\Http\Middleware\BotBlockerMiddleware::class,
+        ]);
+
         // ─── CSRF EXCEPTION - PAYMENT ROUTES ───
         $middleware->validateCsrfTokens(except: [
             'payment/webhook/*',

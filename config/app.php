@@ -141,4 +141,16 @@ return [
     'admin_email' => env('ADMIN_EMAIL', 'admin@mongalo.co.za'),
     'admin_name' => env('ADMIN_NAME', 'The Collective Mongalo'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bot Blocking Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This option controls whether bot blocking is enabled. When enabled,
+    | the BotBlocker middleware will block known malicious bots and scrapers.
+    |
+    */
+    'bot_blocking_enabled' => env('BOT_BLOCKING_ENABLED', true),
+
 ];
