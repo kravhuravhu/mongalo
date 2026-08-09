@@ -11,40 +11,19 @@ use App\Models\InviteRequest;
 use App\Models\EventRegistration;
 use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // ─── STATS CARDS ───
-        $stats = [
-            'total_books' => Book::count(),
-            'total_events' => Event::count(),
-            'total_registrations' => EventRegistration::count(),
-            'total_baptisms' => BaptismRequest::count(),
-            'total_messages' => ContactMessage::count(),
-            'total_invites' => InviteRequest::count(),
-            'pending_baptisms' => BaptismRequest::where('status', 'pending')->count(),
-            'unread_messages' => ContactMessage::where('status', 'unread')->count(),
-            'pending_invites' => InviteRequest::where('status', 'pending')->count(),
-            'total_orders' => Order::count(),
-            'pending_orders' => Order::where('payment_status', 'pending')->count(),
-            'paid_orders' => Order::where('payment_status', 'paid')->count(),
-            'failed_orders' => Order::where('payment_status', 'failed')->count(),
-            'total_revenue' => Order::where('payment_status', 'paid')->sum('amount'),
-        ];
-
-        // ─── ORDER STATUS BREAKDOWN (PERCENTAGES) ───
-        $totalOrders = $stats['total_orders'];
-        if ($totalOrders > 0) {
-            $stats['paid_percentage'] = round(($stats['paid_orders'] / $totalOrders) * 100, 1);
-            $stats['pending_percentage'] = round(($stats['pending_orders'] / $totalOrders) * 100, 1);
-            $stats['failed_percentage'] = round(($stats['failed_orders'] / $totalOrders) * 100, 1);
-        } else {
-            $stats['paid_percentage'] = 0;
-            $stats['pending_percentage'] = 0;
-            $stats['failed_percentage'] = 0;
-        }
+        $totalOrders = Order::count();
+        $paidOrders = Order::where('payment_status', 'paid')->count();
+        $pendingOrders = Order::where('payment_status', 'pending')->count();
+        $failedOrders = Order::where('payment_status', 'failed')->count();
+        $totalRevenue = Order::where('payment_status', 'paid')->sum('amount');
+        $totalRegistrations = EventRegistration::count();
 
         // ─── CURRENT PERIOD (This Month) ───
         $currentMonthStart = Carbon::now()->startOfMonth();
@@ -72,43 +51,67 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
             ->count();
 
-        // ─── CALCULATE PERCENTAGE CHANGES ───
-        $stats['orders_change'] = $this->calculatePercentageChange($previousOrders, $currentOrders);
-        $stats['revenue_change'] = $this->calculatePercentageChange($previousRevenue, $currentRevenue);
-        $stats['registrations_change'] = $this->calculatePercentageChange($previousRegistrations, $currentRegistrations);
-        $stats['pending_change'] = $this->calculatePercentageChange($previousPendingOrders, $currentPendingOrders);
+        $stats = [
+            'total_books' => Book::count(),
+            'total_events' => Event::count(),
+            'total_registrations' => $totalRegistrations,
+            'total_baptisms' => BaptismRequest::count(),
+            'total_messages' => ContactMessage::count(),
+            'total_invites' => InviteRequest::count(),
+            'pending_baptisms' => BaptismRequest::where('status', 'pending')->count(),
+            'unread_messages' => ContactMessage::where('status', 'unread')->count(),
+            'pending_invites' => InviteRequest::where('status', 'pending')->count(),
+            'total_orders' => $totalOrders,
+            'pending_orders' => $pendingOrders,
+            'paid_orders' => $paidOrders,
+            'failed_orders' => $failedOrders,
+            'total_revenue' => $totalRevenue,
+            'orders_change' => $this->calculatePercentageChange($previousOrders, $currentOrders),
+            'revenue_change' => $this->calculatePercentageChange($previousRevenue, $currentRevenue),
+            'registrations_change' => $this->calculatePercentageChange($previousRegistrations, $currentRegistrations),
+            'pending_change' => $this->calculatePercentageChange($previousPendingOrders, $currentPendingOrders),
+            'pending_percentage' => $totalOrders > 0 ? round(($pendingOrders / $totalOrders) * 100, 1) : 0,
+            'paid_percentage' => $totalOrders > 0 ? round(($paidOrders / $totalOrders) * 100, 1) : 0,
+            'failed_percentage' => $totalOrders > 0 ? round(($failedOrders / $totalOrders) * 100, 1) : 0,
+        ];
 
-        // ─── CHART DATA: DAILY TRENDS FOR CURRENT MONTH ───
-        $dailyRevenue = [];
-        $dailyOrders = [];
-        $dailyLabels = [];
+        // ─── GET DATE RANGE FOR CHARTS ───
+        $revenueRange = $request->get('revenue_range', 'daily');
+        $revenueStartDate = $request->get('revenue_start_date');
+        $revenueEndDate = $request->get('revenue_end_date');
+        
+        $ordersRange = $request->get('orders_range', 'daily');
+        $ordersStartDate = $request->get('orders_start_date');
+        $ordersEndDate = $request->get('orders_end_date');
 
-        // ─── GET ALL DAYS IN CURRENT MONTH ───
-        $daysInMonth = Carbon::now()->daysInMonth;
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
+        list($revenueLabels, $revenueData, $revenueStart, $revenueEnd) = $this->getChartData(
+            $revenueRange, $revenueStartDate, $revenueEndDate
+        );
 
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            $date = Carbon::create($currentYear, $currentMonth, $day);
-            $startOfDay = $date->copy()->startOfDay();
-            $endOfDay = $date->copy()->endOfDay();
+        list($ordersLabels, $ordersData, $ordersStart, $ordersEnd) = $this->getChartData(
+            $ordersRange, $ordersStartDate, $ordersEndDate
+        );
 
-            $dailyLabels[] = $date->format('d');
-            
-            // ─── REVENUE FOR THIS DAY ───
-            $dailyRevenue[] = Order::where('payment_status', 'paid')
-                ->whereBetween('created_at', [$startOfDay, $endOfDay])
-                ->sum('amount');
-            
-            // ─── ORDERS FOR THIS DAY ───
-            $dailyOrders[] = Order::where('payment_status', 'paid')
-                ->whereBetween('created_at', [$startOfDay, $endOfDay])
-                ->count();
-        }
+        $hasRevenueData = collect($revenueData)->sum() > 0;
+        $hasOrdersData = collect($ordersData)->sum() > 0;
 
-        // ─── CHECK IF DATA EXISTS ───
-        $hasData = collect($dailyRevenue)->sum() > 0;
-        $hasOrders = collect($dailyOrders)->sum() > 0;
+        // ─── UPCOMING EVENTS ───
+        $upcomingEvents = Event::where('is_past', false)
+            ->where('date', '>=', Carbon::today())
+            ->orderBy('date')
+            ->limit(6)
+            ->get()
+            ->map(function($event) {
+                $registered = $event->registrations()->count();
+                $capacity = $event->capacity ?? 0;
+                return [
+                    'event' => $event,
+                    'registered' => $registered,
+                    'capacity' => $capacity,
+                    'percentage' => $capacity > 0 ? round(($registered / $capacity) * 100, 1) : 0,
+                    'status' => $capacity > 0 && $registered >= $capacity ? 'full' : 'open',
+                ];
+            });
 
         // ─── TOP BOOKS ───
         $topBooks = Order::where('payment_status', 'paid')
@@ -119,28 +122,26 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        // ─── RECENT ACTIVITY ───
-        $recentOrders = Order::with('book')->orderBy('created_at', 'desc')->limit(5)->get();
-        $recentRegistrations = EventRegistration::with('event')->orderBy('created_at', 'desc')->limit(5)->get();
-        $recentBaptisms = BaptismRequest::orderBy('created_at', 'desc')->limit(5)->get();
-        $recentMessages = ContactMessage::orderBy('created_at', 'desc')->limit(5)->get();
-
-        // ─── UPCOMING EVENTS ───
-        $upcomingEvents = Event::where('is_past', false)
-            ->where('date', '>=', Carbon::today())
-            ->orderBy('date')
-            ->limit(5)
-            ->get();
+        // ─── RECENT ACTIVITY (Limit to 3 each) ───
+        $recentOrders = Order::with('book')->orderBy('created_at', 'desc')->limit(3)->get();
+        $recentRegistrations = EventRegistration::with('event')->orderBy('created_at', 'desc')->limit(3)->get();
+        $recentBaptisms = BaptismRequest::orderBy('created_at', 'desc')->limit(3)->get();
+        $recentMessages = ContactMessage::orderBy('created_at', 'desc')->limit(3)->get();
 
         return view('admin.dashboard', compact(
             'stats',
-            'dailyRevenue',
-            'dailyOrders',
-            'dailyLabels',
-            'daysInMonth',
-            'currentMonth',
-            'hasData',
-            'hasOrders',
+            'revenueLabels',
+            'revenueData',
+            'revenueStart',
+            'revenueEnd',
+            'revenueRange',
+            'ordersLabels',
+            'ordersData',
+            'ordersStart',
+            'ordersEnd',
+            'ordersRange',
+            'hasRevenueData',
+            'hasOrdersData',
             'topBooks',
             'recentOrders',
             'recentRegistrations',
@@ -148,6 +149,63 @@ class DashboardController extends Controller
             'recentMessages',
             'upcomingEvents'
         ));
+    }
+
+    /* ─── GET CHART DATA ─── */
+    private function getChartData($range, $startDate, $endDate)
+    {
+        if ($range === 'custom' && $startDate && $endDate) {
+            $start = Carbon::parse($startDate)->startOfDay();
+            $end = Carbon::parse($endDate)->endOfDay();
+        } else {
+            switch ($range) {
+                case 'weekly':
+                    $start = Carbon::now()->startOfWeek();
+                    $end = Carbon::now()->endOfWeek();
+                    break;
+                case 'monthly':
+                    $start = Carbon::now()->startOfMonth();
+                    $end = Carbon::now()->endOfMonth();
+                    break;
+                case 'daily':
+                default:
+                    $start = Carbon::now()->startOfMonth();
+                    $end = Carbon::now()->endOfDay();
+                    break;
+            }
+        }
+
+        $labels = [];
+        $data = [];
+
+        $days = $start->diffInDays($end) + 1;
+
+        if ($days > 31) {
+            $months = $start->diffInMonths($end) + 1;
+            for ($i = 0; $i < $months; $i++) {
+                $date = $start->copy()->addMonths($i);
+                $monthStart = $date->copy()->startOfMonth();
+                $monthEnd = $date->copy()->endOfMonth();
+
+                $labels[] = $date->format('M Y');
+                $data[] = Order::where('payment_status', 'paid')
+                    ->whereBetween('created_at', [$monthStart, $monthEnd])
+                    ->sum('amount');
+            }
+        } else {
+            for ($i = 0; $i < $days; $i++) {
+                $date = $start->copy()->addDays($i);
+                $dayStart = $date->copy()->startOfDay();
+                $dayEnd = $date->copy()->endOfDay();
+
+                $labels[] = $date->format('d M');
+                $data[] = Order::where('payment_status', 'paid')
+                    ->whereBetween('created_at', [$dayStart, $dayEnd])
+                    ->sum('amount');
+            }
+        }
+
+        return [$labels, $data, $start, $end];
     }
 
     /* ─── CALCULATE PERCENTAGE CHANGE ─── */
