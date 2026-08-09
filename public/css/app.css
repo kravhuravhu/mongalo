@@ -1009,7 +1009,7 @@ img {
         &.navbar--scrolled { height: 54px; }
         --navbar-height: 64px;
         --navbar-height-scrolled: 54px;
-        & .navbar__brand-text { font-size: 0.95rem; }
+        & .navbar__brand-text { font-size: 0.95rem!important; }
         & .navbar__mobile { padding: 20px 16px 24px; max-width: 300px; }
         & .navbar__mobile-link {
             font-size: 0.9rem;
@@ -1046,6 +1046,73 @@ img {
         & .navbar__toggle .navbar__toggle-bar {
             width: 18px;
             height: 2px;
+        }
+    }
+    /* ─── NAVBAR CTA (Desktop) ─── */
+    .navbar__item--cta {
+        margin-left: 4px;
+    }
+
+    .navbar__link--cta {
+        background: var(--gold);
+        color: #fff !important;
+        padding: 6px 16px;
+        border-radius: 50px;
+        
+        &:hover {
+            background: var(--gold-light) !important;
+            color: #fff !important;
+        }
+        
+        &.navbar__link--active {
+            background: var(--gold-dark) !important;
+            color: #fff !important;
+        }
+        
+        & .navbar__link-icon {
+            color: #fff !important;
+            opacity: 1 !important;
+        }
+    }
+
+    /* ─── HIDE DESKTOP CTA ON MOBILE ─── */
+    @media (max-width: 1024px) {
+        .navbar__item--cta {
+            display: none;
+        }
+    }
+
+    /* ─── MOBILE CTA BUTTON ─── */
+    .navbar__mobile-item--cta {
+        margin-top: 8px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+    }
+
+    .navbar__mobile-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 24px;
+        border-radius: 50px;
+        background: var(--gold);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(166, 124, 78, 0.2);
+        
+        &:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(166, 124, 78, 0.3);
+        }
+        
+        &.navbar__mobile-link--active {
+            background: var(--gold-dark);
         }
     }
 }
