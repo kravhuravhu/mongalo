@@ -301,18 +301,18 @@
                         <i class="fas fa-shopping-cart"></i> Orders
                     </button>
                     <button class="dashboard__activity-tab-compact" data-tab="registrations-compact">
-                        <i class="fas fa-users"></i> Reg
+                        <i class="fas fa-users"></i> Registrations
                     </button>
                     <button class="dashboard__activity-tab-compact" data-tab="baptisms-compact">
-                        <i class="fas fa-water"></i> Bapt
+                        <i class="fas fa-water"></i> Baptisms
                     </button>
                     <button class="dashboard__activity-tab-compact" data-tab="messages-compact">
-                        <i class="fas fa-envelope"></i> Msg
+                        <i class="fas fa-envelope"></i> Messages
                     </button>
                 </div>
 
                 <div class="dashboard__activity-list-compact">
-                    {{-- ORDERS (3 only) --}}
+                    {{-- ORDERS --}}
                     <div class="dashboard__activity-list-compact-inner dashboard__activity-list-compact-inner--active" id="activity-orders-compact">
                         @forelse($recentOrders as $order)
                             <div class="dashboard__activity-item-compact">
@@ -331,7 +331,7 @@
                         @endforelse
                     </div>
 
-                    {{-- REGISTRATIONS (3 only) --}}
+                    {{-- REGISTRATIONS --}}
                     <div class="dashboard__activity-list-compact-inner" id="activity-registrations-compact">
                         @forelse($recentRegistrations as $reg)
                             <div class="dashboard__activity-item-compact">
@@ -348,7 +348,7 @@
                         @endforelse
                     </div>
 
-                    {{-- BAPTISMS (3 only) --}}
+                    {{-- BAPTISMS --}}
                     <div class="dashboard__activity-list-compact-inner" id="activity-baptisms-compact">
                         @forelse($recentBaptisms as $baptism)
                             <div class="dashboard__activity-item-compact">
@@ -367,7 +367,7 @@
                         @endforelse
                     </div>
 
-                    {{-- MESSAGES (3 only) --}}
+                    {{-- MESSAGES --}}
                     <div class="dashboard__activity-list-compact-inner" id="activity-messages-compact">
                         @forelse($recentMessages as $message)
                             <div class="dashboard__activity-item-compact">
