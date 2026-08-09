@@ -660,7 +660,7 @@
     /* ─── THREE COLUMN ─── */
     .dashboard__three-col {
         display: grid;
-        /* grid-template-columns: 1fr 1fr 1fr; */
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 16px;
         margin-bottom: 24px;
     }

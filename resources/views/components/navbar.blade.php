@@ -25,7 +25,7 @@
             <span class="navbar__brand-dot"></span>
         </a>
 
-        {{-- CENTER: Nav Items --}}
+        {{-- CENTER: Nav Items (Desktop) --}}
         <ul class="navbar__links" role="menubar">
             <li class="navbar__item" role="none">
                 <a href="{{ route('home') }}" class="navbar__link {{ request()->routeIs('home') ? 'navbar__link--active' : '' }}" role="menuitem">
@@ -69,14 +69,16 @@
                     <span class="navbar__link-label">Contact</span>
                 </a>
             </li>
+            {{-- ─── INVITE ARTHUR (Desktop) ─── --}}
+            <li class="navbar__item navbar__item--cta" role="none">
+                <a href="{{ route('invite') }}" class="navbar__link navbar__link--cta {{ request()->routeIs('invite') ? 'navbar__link--active' : '' }}" role="menuitem">
+                    <span class="navbar__link-icon"><i class="fas fa-handshake" aria-hidden="true"></i></span>
+                    <span class="navbar__link-label">Invite Arthur</span>
+                </a>
+            </li>
         </ul>
 
-        {{-- RIGHT: Invite Arthur CTA --}}
-        <a href="{{ route('invite') }}" class="navbar__cta {{ request()->routeIs('invite') ? 'navbar__cta--active' : '' }}">
-            <i class="fas fa-handshake" aria-hidden="true"></i>
-            <span>Invite Arthur</span>
-        </a>
-
+        {{-- ─── HAMBURGER TOGGLE ─── --}}
         <button class="navbar__toggle" id="navbarToggle" aria-label="Toggle navigation menu" aria-expanded="false">
             <span class="navbar__toggle-bar"></span>
             <span class="navbar__toggle-bar"></span>
@@ -84,7 +86,7 @@
         </button>
     </div>
 
-    {{-- Mobile Menu --}}
+    {{-- ─── MOBILE MENU ─── --}}
     <div class="navbar__mobile" id="navbarMobile" role="dialog" aria-modal="true" aria-label="Mobile navigation">
         <div class="navbar__mobile-header">
             <span class="navbar__mobile-brand">{{ env('PROJECT_NAME', 'The Collective') }}</span>
@@ -92,6 +94,7 @@
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
+
         <ul class="navbar__mobile-links" role="menubar">
             <li class="navbar__mobile-item" role="none">
                 <a href="{{ route('home') }}" class="navbar__mobile-link {{ request()->routeIs('home') ? 'navbar__mobile-link--active' : '' }}" role="menuitem">
@@ -135,8 +138,9 @@
                     <span class="navbar__mobile-label">Get in Touch</span>
                 </a>
             </li>
+            {{-- ─── INVITE ARTHUR (Mobile - Inside Menu) ─── --}}
             <li class="navbar__mobile-item navbar__mobile-item--cta" role="none">
-                <a href="{{ route('invite') }}" class="navbar__mobile-cta">
+                <a href="{{ route('invite') }}" class="navbar__mobile-cta {{ request()->routeIs('invite') ? 'navbar__mobile-link--active' : '' }}">
                     <i class="fas fa-handshake" aria-hidden="true"></i>
                     <span>Invite Arthur</span>
                 </a>
@@ -147,6 +151,7 @@
         </div>
     </div>
 
+    {{-- Overlay --}}
     <div class="navbar__overlay" id="navbarOverlay"></div>
 </nav>
 
