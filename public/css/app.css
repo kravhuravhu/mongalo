@@ -1568,6 +1568,39 @@ img {
         }
     }
 
+    & .whatsapp-popup__timer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin: 12px 0 16px;
+        padding: 8px 16px;
+        background: rgba(37, 211, 102, 0.06);
+        border-radius: 50px;
+        border: 1px solid rgba(37, 211, 102, 0.1);
+        
+        & .whatsapp-popup__timer-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        & .whatsapp-popup__timer-countdown {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #25D366;
+            min-width: 28px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+            transition: color 0.3s ease;
+        }
+        
+        & .whatsapp-popup__timer-countdown--warning {
+            color: #dc3545;
+            animation: whatsappTimerPulse 0.5s ease-in-out infinite alternate;
+        }
+    }
+
     & .whatsapp-popup__actions {
         display: flex;
         flex-direction: column;
@@ -1602,7 +1635,61 @@ img {
     }
 }
 
-/* ─── WHATSAPP POPUP MINIMIZED ─── */
+/* ─── WHATSAPP POPUP MOBILE ─── */
+.whatsapp-popup--mobile {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: 100%;
+    width: auto;
+    padding: 16px 14px;
+    border-radius: 12px;
+    
+    & .whatsapp-popup__content {
+        & .whatsapp-popup__icon {
+            font-size: 2rem;
+        }
+        
+        & .whatsapp-popup__title {
+            font-size: 1rem;
+        }
+        
+        & .whatsapp-popup__desc {
+            font-size: 0.75rem;
+        }
+        
+        & .whatsapp-popup__stats {
+            font-size: 0.65rem;
+            gap: 8px;
+        }
+        
+        & .whatsapp-popup__timer {
+            padding: 4px 10px;
+            margin: 6px 0 10px;
+            
+            & .whatsapp-popup__timer-countdown {
+                font-size: 0.85rem;
+            }
+        }
+        
+        & .whatsapp-popup__actions {
+            & .btn {
+                font-size: 0.7rem;
+                padding: 8px 14px;
+            }
+        }
+        
+        & .whatsapp-popup__minimize {
+            top: -6px;
+            right: -6px;
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+/* ─── MINIMIZED BADGE ─── */
 .whatsapp-popup-minimized {
     position: fixed;
     bottom: 30px;
@@ -1642,54 +1729,14 @@ img {
     }
 }
 
+/* ─── REMOVE BADGE SECONDS ─── */
+.whatsapp-popup-minimized__badge {
+    display: none !important;
+}
+
 @keyframes popupMinimizedIn {
     0% { transform: scale(0.8) translateY(20px); opacity: 0; }
     100% { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-/* ─── WHATSAPP POPUP TIMER ─── */
-.whatsapp-popup__timer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin: 12px 0 16px;
-    padding: 8px 16px;
-    background: rgba(37, 211, 102, 0.06);
-    border-radius: 50px;
-    border: 1px solid rgba(37, 211, 102, 0.1);
-    
-    & .whatsapp-popup__timer-label {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        font-weight: 500;
-    }
-    
-    & .whatsapp-popup__timer-countdown {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #25D366;
-        min-width: 28px;
-        text-align: center;
-        font-variant-numeric: tabular-nums;
-        transition: color 0.3s ease;
-    }
-    
-    & .whatsapp-popup__timer-countdown--warning {
-        color: #dc3545;
-        animation: whatsappTimerPulse 0.5s ease-in-out infinite alternate;
-    }
-}
-
-/* ─── MINIMIZED BADGE ─── */
-.whatsapp-popup-minimized__badge {
-    font-size: 0.55rem;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 2px 8px;
-    border-radius: 50px;
-    color: #fff;
-    margin-left: 4px;
 }
 
 /* ─── TIMER PULSE ANIMATION ─── */
@@ -1700,23 +1747,35 @@ img {
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 520px) {
-    .whatsapp-popup__timer {
-        padding: 6px 12px;
-        margin: 8px 0 12px;
-        
-        & .whatsapp-popup__timer-label {
-            font-size: 0.65rem;
-        }
-        
-        & .whatsapp-popup__timer-countdown {
-            font-size: 0.95rem;
-            min-width: 22px;
-        }
+    .whatsapp-popup:not(.whatsapp-popup--mobile) {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+        padding: 16px 14px;
+        border-radius: 12px;
     }
     
-    .whatsapp-popup-minimized__badge {
-        font-size: 0.5rem;
-        padding: 1px 6px;
+    .whatsapp-popup:not(.whatsapp-popup--mobile) .whatsapp-popup__icon {
+        font-size: 2rem;
+    }
+    
+    .whatsapp-popup:not(.whatsapp-popup--mobile) .whatsapp-popup__title {
+        font-size: 1rem;
+    }
+    
+    .whatsapp-popup:not(.whatsapp-popup--mobile) .whatsapp-popup__desc {
+        font-size: 0.75rem;
+    }
+    
+    .whatsapp-popup:not(.whatsapp-popup--mobile) .whatsapp-popup__timer {
+        padding: 4px 10px;
+        margin: 6px 0 10px;
+    }
+    
+    .whatsapp-popup:not(.whatsapp-popup--mobile) .whatsapp-popup__actions .btn {
+        font-size: 0.7rem;
+        padding: 8px 14px;
     }
 }
 
