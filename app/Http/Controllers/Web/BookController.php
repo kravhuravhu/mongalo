@@ -23,8 +23,8 @@ class BookController extends Controller
         
         $data = $this->cacheService->rememberClosure($cacheKey, function () {
             return [
-                'paidBooks' => Book::getCachedPaidBooks(),
-                'freeBooks' => Book::getCachedFreeBooks(),
+                'paidBooks' => Book::where('is_free', false)->orderBy('sort_order')->get(),
+                'freeBooks' => Book::where('is_free', true)->orderBy('sort_order')->get(),
             ];
         });
 
@@ -33,21 +33,14 @@ class BookController extends Controller
 
     public function show($slug)
     {
-        // ─── GET BOOK WITH CACHE ───
-        $cacheKey = $this->cacheService->key('book', ['slug' => $slug]);
-        
-        $book = $this->cacheService->rememberClosure($cacheKey, function () use ($slug) {
-            return Book::where('slug', $slug)->firstOrFail();
-        });
+        // ─── GET BOOK DIRECTLY (NO CACHE TO AVOID INCOMPLETE OBJECT ISSUE) ───
+        $book = Book::where('slug', $slug)->firstOrFail();
 
-        // ─── RELATED BOOKS (cache separately) ───
-        $relatedKey = $this->cacheService->key('books', ['related' => $book->id, 'is_free' => $book->is_free]);
-        $relatedBooks = $this->cacheService->rememberClosure($relatedKey, function () use ($book) {
-            return Book::where('id', '!=', $book->id)
-                ->where('is_free', $book->is_free)
-                ->limit(3)
-                ->get();
-        });
+        // ─── GET RELATED BOOKS DIRECTLY ───
+        $relatedBooks = Book::where('id', '!=', $book->id)
+            ->where('is_free', $book->is_free)
+            ->limit(3)
+            ->get();
 
         return view('public.books.show', compact('book', 'relatedBooks'));
     }
@@ -67,9 +60,6 @@ class BookController extends Controller
 
         // ─── INCREMENT DOWNLOAD COUNT ───
         $book->increment('download_count');
-
-        // ─── CLEAR BOOK CACHE AFTER DOWNLOAD ───
-        $book->clearModelCache('book');
 
         $fileName = $book->slug . '.' . $book->file_type;
 

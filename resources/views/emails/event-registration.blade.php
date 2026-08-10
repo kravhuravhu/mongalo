@@ -131,7 +131,7 @@
                     <tr>
                         <td align="center" style="padding: 8px 0;">
                             <a href="{{ route('events.show', $event->slug) }}" style="display: inline-block; padding: 12px 36px; border-radius: 50px; background: #a67c4e; color: #ffffff; font-weight: 600; font-size: 15px; text-decoration: none; border: none; cursor: pointer; text-align: center;">
-                                &#128065; View Event Details
+                                View Event Details
                             </a>
                         </td>
                     </tr>

@@ -288,12 +288,37 @@
                             // ─── REDIRECT TO CHECKOUT ───
                             window.location.href = data.redirect_url;
                         } else {
+                            // ─── CHECK FOR FIELD-SPECIFIC ERRORS ───
+                            let errorMessage = data.message || 'Something went wrong. Please try again.';
+                            
+                            // ─── IF PHONE ERROR, HIGHLIGHT PHONE FIELD ───
+                            if (data.field === 'phone') {
+                                const phoneInput = document.getElementById('buyer_phone');
+                                if (phoneInput) {
+                                    phoneInput.style.borderColor = '#dc3545';
+                                    phoneInput.focus();
+                                    // ─── SCROLL TO PHONE FIELD ───
+                                    phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            }
+                            
+                            // ─── IF EMAIL ERROR, HIGHLIGHT EMAIL FIELD ───
+                            if (data.field === 'email') {
+                                const emailInput = document.getElementById('buyer_email');
+                                if (emailInput) {
+                                    emailInput.style.borderColor = '#dc3545';
+                                    emailInput.focus();
+                                    emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            }
+
                             messageDiv.innerHTML = `
                                 <div style="background: #f8d7da; color: #721c24; padding: 12px 16px; border-radius: 10px; border-left: 4px solid #dc3545;">
                                     <i class="fas fa-exclamation-circle"></i> 
-                                    ${data.message || 'Something went wrong. Please try again.'}
+                                    ${errorMessage}
                                 </div>
                             `;
+                            
                             // ─── RESET BUTTON ───
                             submitBtn.disabled = false;
                             btnText.style.display = 'inline';

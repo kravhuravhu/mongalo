@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class PaymentController extends Controller
 {
@@ -48,10 +49,37 @@ class PaymentController extends Controller
             ], 400);
         }
 
+        // ─── VALIDATE PHONE NUMBER ───
+        $phone = $request->phone;
+        $validatedPhone = $this->validatePhone($phone);
+
+        if (!$validatedPhone['valid']) {
+            return response()->json([
+                'success' => false,
+                'message' => $validatedPhone['message'],
+                'field' => 'phone',
+            ], 422);
+        }
+
+        // ─── VALIDATE EMAIL ───
+        $email = $request->email;
+        $validatedEmail = $this->validateEmail($email);
+
+        if (!$validatedEmail['valid']) {
+            return response()->json([
+                'success' => false,
+                'message' => $validatedEmail['message'],
+                'field' => 'email',
+            ], 422);
+        }
+
+        // ─── FORMAT PHONE FOR PAYFAST ───
+        $formattedPhone = $validatedPhone['formatted'];
+
         $result = $this->paymentService->initiatePayment($book, [
             'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
+            'email' => $validatedEmail['email'],
+            'phone' => $formattedPhone,
         ], $request->gateway);
 
         if (!$result['success']) {
@@ -349,5 +377,133 @@ class PaymentController extends Controller
             'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             default => 'application/octet-stream',
         };
+    }
+
+    /* ─── VALIDATE PHONE NUMBER ─── */
+    protected function validatePhone(?string $phone): array
+    {
+        // ─── IF NO PHONE PROVIDED, RETURN ERROR ───
+        if (empty($phone)) {
+            return [
+                'valid' => false,
+                'message' => 'Phone number is required for payment.',
+                'formatted' => null,
+            ];
+        }
+
+        // ─── REMOVE ALL NON-NUMERIC CHARACTERS ───
+        $cleaned = preg_replace('/[^0-9]/', '', $phone);
+
+        // ─── CHECK IF IT'S A VALID SA NUMBER ───
+        // SA numbers: 10 digits starting with 0[6-8] or 0[3-4]
+        // OR 11 digits starting with 27
+        $isValid = false;
+        $formatted = $phone;
+
+        // ─── CHECK 10-DIGIT SA NUMBER 0 CODE ───
+        if (strlen($cleaned) === 10 && preg_match('/^(0[6-8]|0[3-4])/', $cleaned)) {
+            $isValid = true;
+            // ─── FORMAT AS +27XXXXXXXXX ───
+            $formatted = '+27' . substr($cleaned, 1);
+        }
+
+        // ─── CHECK 11-DIGIT WITH 27 CODE ───
+        if (strlen($cleaned) === 11 && substr($cleaned, 0, 2) === '27') {
+            $isValid = true;
+            $formatted = '+' . $cleaned;
+        }
+
+        // ─── CHECK IF ALREADY HAS +27 ───
+        if (substr($phone, 0, 3) === '+27') {
+            $localDigits = preg_replace('/[^0-9]/', '', substr($phone, 3));
+            if (strlen($localDigits) === 9 && preg_match('/^[6-8][0-9]{8}$/', $localDigits)) {
+                $isValid = true;
+                $formatted = $phone;
+            }
+        }
+
+        // ─── CHECK IF ALREADY HAS + (international format) ───
+        if (substr($phone, 0, 1) === '+') {
+            $digits = preg_replace('/[^0-9]/', '', $phone);
+            if (strlen($digits) >= 10 && strlen($digits) <= 15) {
+                $isValid = true;
+                $formatted = $phone;
+            }
+        }
+
+        if (!$isValid) {
+            return [
+                'valid' => false,
+                'message' => 'Please enter a valid South African phone number (e.g., 071 461 1401 or +27 71 461 1401).',
+                'formatted' => null,
+            ];
+        }
+
+        return [
+            'valid' => true,
+            'message' => 'Phone number is valid.',
+            'formatted' => $formatted,
+        ];
+    }
+
+    /* ─── VALIDATE EMAIL ─── */
+    protected function validateEmail(string $email): array
+    {
+        // ─── CHECK IF EMAIL IS EMPTY ───
+        if (empty($email)) {
+            return [
+                'valid' => false,
+                'message' => 'Email address is required for payment.',
+                'email' => null,
+            ];
+        }
+
+        // ─── BASIC EMAIL VALIDATION ───
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return [
+                'valid' => false,
+                'message' => 'Please enter a valid email address (e.g., name@example.com).',
+                'email' => null,
+            ];
+        }
+
+        // ─── CHECK FOR COMMON TYPOS ───
+        $domain = substr(strrchr($email, "@"), 1);
+        $commonDomains = [
+            'gmail.com' => 'gmail.com',
+            'yahoo.com' => 'yahoo.com',
+            'outlook.com' => 'outlook.com',
+            'hotmail.com' => 'hotmail.com',
+            'icloud.com' => 'icloud.com',
+            'protonmail.com' => 'protonmail.com',
+            'co.za' => 'co.za',
+            // Common typo
+            'za' => 'co.za',
+            'gmail.co' => 'gmail.com',
+            'gmai.com' => 'gmail.com',
+            'gmal.com' => 'gmail.com',
+            'yaho.com' => 'yahoo.com',
+            'hotmail.co' => 'hotmail.com',
+        ];
+
+        // ─── CHECK FOR TYPOS IN COMMON DOMAINS ───
+        foreach ($commonDomains as $typo => $correct) {
+            if ($domain === $typo) {
+                $correctedEmail = str_replace($typo, $correct, $email);
+                return [
+                    'valid' => true,
+                    'message' => 'Did you mean ' . $correctedEmail . '?',
+                    'email' => $correctedEmail,
+                    'warning' => true,
+                ];
+            }
+        }
+
+        return [
+            'valid' => true,
+            'message' => 'Email is valid.',
+            'email' => $email,
+            'warning' => false,
+        ];
     }
 }

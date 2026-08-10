@@ -40,6 +40,15 @@ body {
     -webkit-font-smoothing: antialiased;
     padding-top: var(--navbar-height);
     overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── MAIN CONTENT WRAPPER ─── */
+main {
+    flex: 1 0 auto;
+    width: 100%;
 }
 
 a {
@@ -1321,7 +1330,8 @@ img {
     border-top: 1px solid var(--border);
     padding: 48px 0 36px;
     background: #fff;
-    bottom: 0;
+    margin-top: auto;
+    flex-shrink: 0;
 
     & .footer__inner {
         display: flex;
