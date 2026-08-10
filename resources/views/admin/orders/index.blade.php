@@ -88,8 +88,6 @@
                 <i class="fas fa-times"></i> Clear Filters
             </a>
         @endif
-        
-        <span class="orders-index__filter-count">{{ $orders->total() }} orders</span>
     </div>
 
     {{-- ─── ORDERS TABLE ─── --}}
