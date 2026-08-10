@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\AboutController;
 use App\Http\Controllers\Web\BookController;
 use App\Http\Controllers\Web\EventController;
+use App\Http\Controllers\Web\EventCalendarController;
 use App\Http\Controllers\Web\BaptismController;
 use App\Http\Controllers\Web\CommunityController;
 use App\Http\Controllers\Web\ResourceController;
@@ -25,8 +26,11 @@ Route::get('/books/download/{book}', [BookController::class, 'download'])->name(
 
 // ─── EVENTS ───
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/calendar', [EventCalendarController::class, 'index'])->name('events.calendar');
+Route::get('/events/calendar/events', [EventCalendarController::class, 'getEventsByDate'])->name('events.calendar.events');
 Route::post('/events/clear-registration', [EventController::class, 'clearRegistration'])->name('events.clear.registration');
 Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
+Route::post('/events/register', [EventController::class, 'register'])->name('events.register')->middleware('rate.limit:payment');
 
 // ─── RATE LIMITED: EVENT REGISTRATION ───
 Route::post('/events/register', [EventController::class, 'register'])
