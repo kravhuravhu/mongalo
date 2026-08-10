@@ -53,6 +53,7 @@ $adminRoutes = function () {
         Route::get('/messages', [ContactMessageController::class, 'index'])->name('admin.messages');
         Route::get('/messages/{message}', [ContactMessageController::class, 'show'])->name('admin.messages.show');
         Route::put('/messages/{message}', [ContactMessageController::class, 'update'])->name('admin.messages.update');
+        Route::post('/messages/{message}/mark-replied', [ContactMessageController::class, 'markReplied'])->name('admin.messages.mark-replied');
 
         // ─── INVITE REQUESTS ───
         Route::get('/invites', [InviteRequestController::class, 'index'])->name('admin.invites');
