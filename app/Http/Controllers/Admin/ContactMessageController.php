@@ -71,4 +71,14 @@ class ContactMessageController extends Controller
 
         return redirect()->route('admin.messages')->with('success', 'Message status updated successfully!');
     }
+
+    /**
+     * Quick reply - mark as replied
+     */
+    public function markReplied(ContactMessage $message)
+    {
+        $message->update(['status' => 'replied']);
+
+        return redirect()->back()->with('success', 'Message marked as replied!');
+    }
 }
