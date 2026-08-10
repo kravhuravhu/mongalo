@@ -22,32 +22,26 @@ class EventController extends Controller
 
     public function index()
     {
-        // ─── GET CACHED DATA ───
-        $cacheKey = $this->cacheService->key('events', ['list' => 'all']);
-        
-        $data = $this->cacheService->rememberClosure($cacheKey, function () {
-            $today = Carbon::today();
-            return [
-                'upcomingEvents' => Event::getCachedUpcomingEvents(),
-                'pastEvents' => Event::where('date', '<', $today)
-                    ->orderBy('date', 'desc')
-                    ->limit(5)
-                    ->get(),
-            ];
-        });
+        $today = Carbon::today();
 
-        return view('public.events.index', $data);
+        // ─── GET UPCOMING EVENTS ───
+        $upcomingEvents = Event::where('date', '>=', $today)
+            ->orderBy('date')
+            ->get();
+            
+        // ─── GET PAST EVENTS ───
+        $pastEvents = Event::where('date', '<', $today)
+            ->orderBy('date', 'desc')
+            ->limit(5)
+            ->get();
+
+        return view('public.events.index', compact('upcomingEvents', 'pastEvents'));
     }
 
     public function show($slug)
     {
-        // ─── GET EVENT WITH CACHE ───
-        $cacheKey = $this->cacheService->key('event', ['slug' => $slug]);
+        $event = Event::where('slug', $slug)->firstOrFail();
         
-        $event = $this->cacheService->rememberClosure($cacheKey, function () use ($slug) {
-            return Event::where('slug', $slug)->firstOrFail();
-        });
-
         // ─── PENDING REGISTRATION IN SESSION ───
         $pendingRegistration = null;
         $sessionKey = 'pending_registration_' . $event->id;
@@ -74,7 +68,19 @@ class EventController extends Controller
         ]);
 
         $event = Event::findOrFail($request->event_id);
-        $event->clearModelCache('event');
+
+        $isFree = $event->is_free ?? true;
+        $amount = $event->price ?? 0;
+
+        // ─── CREATE REGISTRATION ───
+        $registration = EventRegistration::create([
+            'event_id' => $event->id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'registration_id' => EventRegistration::generateRegistrationId(),
+            'payment_status' => $isFree ? 'free' : 'pending',
+        ]);
 
         // ─── STORE IN SESSION ───
         $sessionKey = 'pending_registration_' . $event->id;

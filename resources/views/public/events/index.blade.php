@@ -92,6 +92,15 @@
                         <a href="{{ route('events.show', $nextEvent->slug) }}" class="btn btn--primary btn--lg">
                             <i class="fas fa-ticket-alt"></i> Book Your Seat
                         </a>
+                        <a href="{{ route('events.calendar') }}" class="btn btn--outline btn--lg">
+                            <i class="fas fa-calendar-alt"></i> View Calendar
+                        </a>
+                    </div>
+                @else 
+                    <div class="events__hero-actions">
+                        <a href="{{ route('events.calendar') }}" class="btn btn--outline btn--lg">
+                            <i class="fas fa-calendar-alt"></i> View Calendar
+                        </a>
                     </div>
                 @endif
             </div>

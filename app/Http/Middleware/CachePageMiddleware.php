@@ -89,17 +89,28 @@ class CachePageMiddleware
 
         // ─── CHECK CACHE ───
         if (Cache::has($key)) {
-            $cachedResponse = Cache::get($key);
-            
-            // ─── LOG CACHE HIT ───
-            if (env('CACHE_DEBUG', false)) {
-                Log::info('Page cache hit', [
-                    'url' => $request->fullUrl(),
-                    'key' => $key,
-                ]);
-            }
+            try {
+                $cachedContent = Cache::get($key);
+                
+                // ─── LOG CACHE HIT ───
+                if (env('CACHE_DEBUG', false)) {
+                    Log::info('Page cache hit', [
+                        'url' => $request->fullUrl(),
+                        'key' => $key,
+                    ]);
+                }
 
-            return $cachedResponse;
+                // ─── RETURN CACHED CONTENT AS RESPONSE ───
+                return response($cachedContent);
+            } catch (\Exception $e) {
+                // ─── IF CACHE IS CORRUPTED, CLEAR IT ───
+                Log::warning('Page cache corrupted, clearing', [
+                    'key' => $key,
+                    'error' => $e->getMessage(),
+                ]);
+                Cache::forget($key);
+                // ─── CONTINUE TO GENERATE NEW CACHE ───
+            }
         }
 
         // ─── GET RESPONSE ───
@@ -109,14 +120,23 @@ class CachePageMiddleware
         if ($response->getStatusCode() === 200) {
             $ttl = (int) env('PAGE_CACHE_TTL', 3600);
             
-            Cache::put($key, $response, $ttl);
+            try {
+                // ─── STORE ONLY THE CONTENT, NOT THE FULL RESPONSE OBJECT ───
+                Cache::put($key, $response->getContent(), $ttl);
 
-            // ─── LOG CACHE STORE ───
-            if (env('CACHE_DEBUG', false)) {
-                Log::info('Page cache stored', [
-                    'url' => $request->fullUrl(),
+                // ─── LOG CACHE STORE ───
+                if (env('CACHE_DEBUG', false)) {
+                    Log::info('Page cache stored', [
+                        'url' => $request->fullUrl(),
+                        'key' => $key,
+                        'ttl' => $ttl,
+                        'content_length' => strlen($response->getContent()),
+                    ]);
+                }
+            } catch (\Exception $e) {
+                Log::error('Page cache storage failed', [
                     'key' => $key,
-                    'ttl' => $ttl,
+                    'error' => $e->getMessage(),
                 ]);
             }
         }

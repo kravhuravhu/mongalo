@@ -162,12 +162,6 @@
                             <i class="fas fa-clock"></i>
                             <span>{{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
                         </div>
-                        @if($event->capacity)
-                            <div class="event-detail__hero-meta-item">
-                                <i class="fas fa-users"></i>
-                                <span>{{ $event->registrations()->count() }}/{{ $event->capacity }} registered</span>
-                            </div>
-                        @endif
                         @if(!$event->is_free && $event->price > 0)
                             <div class="event-detail__hero-meta-item">
                                 <i class="fas fa-tag"></i>

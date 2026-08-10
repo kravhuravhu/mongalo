@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Collection;
 
 class CacheService
 {
@@ -34,6 +35,7 @@ class CacheService
 
     /**
      * Get cached data or store closure result
+     * This is the safe version - it serializes properly
      */
     public function rememberClosure(string $key, \Closure $callback, ?int $ttl = null): mixed
     {
@@ -43,7 +45,85 @@ class CacheService
 
         $ttl = $ttl ?? $this->defaultTtl;
 
-        return Cache::remember($key, $ttl, $callback);
+        // ─── CHECK IF CACHE EXISTS ───
+        if (Cache::has($key)) {
+            $cached = Cache::get($key);
+            
+            // ─── IF CACHED DATA IS VALID, RETURN IT ───
+            if ($cached !== null) {
+                return $cached;
+            }
+        }
+
+        // ─── EXECUTE CALLBACK AND CACHE RESULT ───
+        $result = $callback();
+        
+        // ─── ONLY CACHE IF RESULT IS SERIALIZABLE ───
+        if ($this->isSerializable($result)) {
+            Cache::put($key, $result, $ttl);
+        } else {
+            Log::warning('Cache: Result not serializable', [
+                'key' => $key,
+                'type' => gettype($result),
+            ]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check if value is serializable for cache
+     */
+    protected function isSerializable($value): bool
+    {
+        // ─── NULL IS ALWAYS SERIALIZABLE ───
+        if ($value === null) {
+            return true;
+        }
+
+        // ─── SCALAR TYPES ARE ALWAYS SERIALIZABLE ───
+        if (is_scalar($value)) {
+            return true;
+        }
+
+        // ─── ARRAYS ARE SERIALIZABLE IF ALL VALUES ARE ───
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                if (!$this->isSerializable($item)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // ─── ELOQUENT COLLECTIONS AND MODELS ARE SERIALIZABLE ───
+        if ($value instanceof \Illuminate\Database\Eloquent\Collection) {
+            return true;
+        }
+
+        if ($value instanceof \Illuminate\Database\Eloquent\Model) {
+            return true;
+        }
+
+        // ─── STANDARD COLLECTIONS ARE SERIALIZABLE ───
+        if ($value instanceof \Illuminate\Support\Collection) {
+            return true;
+        }
+
+        // ─── CUSTOM OBJECTS MIGHT NOT BE SERIALIZABLE ───
+        if (is_object($value)) {
+            // ─── CHECK IF IT HAS A __SERIALIZE METHOD ───
+            if (method_exists($value, '__serialize') || method_exists($value, 'serialize')) {
+                return true;
+            }
+            
+            Log::warning('Cache: Object may not be serializable', [
+                'class' => get_class($value),
+            ]);
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -55,7 +135,20 @@ class CacheService
             return null;
         }
 
-        return Cache::get($key);
+        if (Cache::has($key)) {
+            try {
+                return Cache::get($key);
+            } catch (\Exception $e) {
+                Log::error('Cache: Failed to retrieve', [
+                    'key' => $key,
+                    'error' => $e->getMessage(),
+                ]);
+                Cache::forget($key);
+                return null;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -69,7 +162,15 @@ class CacheService
 
         $ttl = $ttl ?? $this->defaultTtl;
 
-        return Cache::put($key, $value, $ttl);
+        try {
+            return Cache::put($key, $value, $ttl);
+        } catch (\Exception $e) {
+            Log::error('Cache: Failed to store', [
+                'key' => $key,
+                'error' => $e->getMessage(),
+            ]);
+            return false;
+        }
     }
 
     /**
