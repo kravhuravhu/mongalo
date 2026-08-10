@@ -24,12 +24,10 @@ class EventController extends Controller
     {
         $today = Carbon::today();
 
-        // ─── GET UPCOMING EVENTS ───
         $upcomingEvents = Event::where('date', '>=', $today)
             ->orderBy('date')
             ->get();
             
-        // ─── GET PAST EVENTS ───
         $pastEvents = Event::where('date', '<', $today)
             ->orderBy('date', 'desc')
             ->limit(5)
@@ -42,21 +40,7 @@ class EventController extends Controller
     {
         $event = Event::where('slug', $slug)->firstOrFail();
         
-        // ─── PENDING REGISTRATION IN SESSION ───
-        $pendingRegistration = null;
-        $sessionKey = 'pending_registration_' . $event->id;
-        
-        if (session()->has($sessionKey)) {
-            $pendingRegistration = session($sessionKey);
-
-            // ─── CHECK IF EXPIRED ───
-            if (isset($pendingRegistration['expires_at']) && now()->gt($pendingRegistration['expires_at'])) {
-                session()->forget($sessionKey);
-                $pendingRegistration = null;
-            }
-        }
-        
-        return view('public.events.show', compact('event', 'pendingRegistration'));
+        return view('public.events.show', compact('event'));
     }
 
     public function register(Request $request)
@@ -83,26 +67,6 @@ class EventController extends Controller
             'payment_status' => $isFree ? 'free' : 'pending',
         ]);
 
-        // ─── STORE IN SESSION ───
-        $sessionKey = 'pending_registration_' . $event->id;
-        session()->put($sessionKey, [
-            'registration_id' => $registration->registration_id,
-            'name' => $registration->name,
-            'email' => $registration->email,
-            'phone' => $registration->phone,
-            'amount' => $amount,
-            'payment_status' => $registration->payment_status,
-            'is_free' => $isFree,
-            'banking_details' => $isFree ? null : [
-                'bank' => config('app.bank_name', 'Nedbank'),
-                'account_name' => config('app.bank_account_name', 'The Collective'),
-                'account_number' => config('app.bank_account_number', '1234567890'),
-                'branch_code' => config('app.bank_branch_code', '198765'),
-                'reference' => $registration->registration_id,
-            ],
-            'expires_at' => now()->addHours(48),
-        ]);
-
         // ─── SEND CONFIRMATION EMAIL ───
         try {
             Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
@@ -110,7 +74,7 @@ class EventController extends Controller
             \Log::error('Failed to send registration email: ' . $e->getMessage());
         }
 
-        // ─── BUILD RESPONSE ───
+        // ─── BUILD RESPONSE WITH REGISTRATION DATA ───
         $response = [
             'success' => true,
             'registration_id' => $registration->registration_id,
@@ -124,6 +88,19 @@ class EventController extends Controller
             'message' => $isFree 
                 ? 'Registration successful! You are registered for this event.' 
                 : 'Registration successful! Please complete payment using the details below.',
+            // ─── REGISTRATION DATA FOR LOCALSTORAGE ───
+            'registration_data' => [
+                'registration_id' => $registration->registration_id,
+                'name' => $registration->name,
+                'email' => $registration->email,
+                'phone' => $registration->phone,
+                'amount' => $amount,
+                'payment_status' => $registration->payment_status,
+                'is_free' => $isFree,
+                'event_id' => $event->id,
+                'event_slug' => $event->slug,
+                'expires_at' => now()->addHours(48)->toIso8601String(),
+            ],
         ];
 
         if (!$isFree) {
@@ -135,6 +112,7 @@ class EventController extends Controller
                 'branch_code' => config('app.bank_branch_code', '198765'),
                 'reference' => $registration->registration_id,
             ];
+            $response['registration_data']['banking_details'] = $response['banking_details'];
         }
 
         return response()->json($response);
@@ -144,13 +122,7 @@ class EventController extends Controller
     {
         $eventId = $request->input('event_id');
         $eventSlug = $request->input('event_slug');
-        $sessionKey = 'pending_registration_' . $eventId;
         
-        if (session()->has($sessionKey)) {
-            session()->forget($sessionKey);
-        }
-        
-        // ─── RETURN TO EVENT PAGE WITH SUCCESS MESSAGE ───
         return redirect()->route('events.show', $eventSlug)
             ->with('success', 'Registration cleared. You can now register again.');
     }
