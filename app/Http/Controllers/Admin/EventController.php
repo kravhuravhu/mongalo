@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationConfirmation;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -78,7 +79,7 @@ class EventController extends Controller
 
         $isPast = $request->is_past ?? Carbon::parse($request->date)->isPast();
 
-        Event::create([
+        $event = Event::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'description' => $request->description,
@@ -92,6 +93,14 @@ class EventController extends Controller
             'sort_order' => Event::count() + 1,
         ]);
 
+        Log::info('Event created by admin', [
+            'event_id' => $event->id,
+            'event_title' => $event->title,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
     
@@ -99,6 +108,7 @@ class EventController extends Controller
     {
         return view('admin.events.edit', compact('event'));
     }
+
     public function update(Request $request, Event $event)
     {
         $request->validate([
@@ -127,22 +137,33 @@ class EventController extends Controller
             'price' => $request->has('is_free') ? 0 : ($request->price ?? 0),
         ]);
 
+        Log::info('Event updated by admin', [
+            'event_id' => $event->id,
+            'event_title' => $event->title,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->route('admin.events.index')->with('success', 'Event updated successfully!');
     }
 
     public function registrations(Event $event)
     {
-
         if (!$event) {
             return redirect()->route('admin.events.index')->with('error', 'Event not found.');
         }
         
-        // ─── LOAD REGISTRATIONS ───
-        $registrations = $event->registrations()->orderBy('created_at', 'desc')->get();
+        // ─── LOAD REGISTRATIONS WITH EAGER LOADING ───
+        $registrations = $event->registrations()
+            ->with('event')  // ─── FIX: Eager load to prevent N+1 ───
+            ->orderBy('created_at', 'desc')
+            ->get();
         
         // ─── FALLBACK ───
         if ($registrations->count() === 0) {
             $registrations = EventRegistration::where('event_id', $event->id)
+                ->with('event')
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
@@ -160,8 +181,19 @@ class EventController extends Controller
             $status = 'free';
         }
         
+        $oldStatus = $registration->payment_status;
         $registration->update([
             'payment_status' => $status,
+        ]);
+
+        Log::info('Registration status updated by admin', [
+            'registration_id' => $registration->registration_id,
+            'event_id' => $registration->event_id,
+            'old_status' => $oldStatus,
+            'new_status' => $status,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
         ]);
 
         // ─── CLEAR SESSION FOR THIS EVENT ───
@@ -172,7 +204,7 @@ class EventController extends Controller
             $sessionData['payment_status'] = $status;
             session()->put($sessionKey, $sessionData);
             
-            \Log::info('Session updated for registration', [
+            Log::info('Session updated for registration', [
                 'session_key' => $sessionKey,
                 'registration_id' => $registration->registration_id,
                 'new_status' => $status,
@@ -183,23 +215,44 @@ class EventController extends Controller
             ->with('success', 'Registration marked as ' . ucfirst($status) . '!');
     }
 
-    public function resendConfirmation(EventRegistration $registration)
+    public function resendConfirmation(EventRegistration $registration, Request $request)
     {
         $event = $registration->event;
         
         try {
             Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
             
+            Log::info('Confirmation email resent by admin', [
+                'registration_id' => $registration->registration_id,
+                'email' => $registration->email,
+                'admin_id' => session('admin_id'),
+                'ip' => $request->ip(),
+            ]);
+            
             return redirect()->route('admin.events.registrations', $event->id)
                 ->with('success', 'Confirmation email resent successfully!');
         } catch (\Exception $e) {
+            Log::error('Failed to resend confirmation email', [
+                'registration_id' => $registration->registration_id,
+                'error' => $e->getMessage(),
+                'ip' => $request->ip(),
+            ]);
+            
             return redirect()->route('admin.events.registrations', $event->id)
                 ->with('error', 'Failed to send email. Please try again.');
         }
     }
 
-    public function destroy(Event $event)
+    public function destroy(Event $event, Request $request)
     {
+        Log::info('Event deleted by admin', [
+            'event_id' => $event->id,
+            'event_title' => $event->title,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+
         $event->delete();
         return redirect()->route('admin.events.index')->with('success', 'Event deleted successfully!');
     }

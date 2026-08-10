@@ -23,6 +23,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{slug}', [BookController::class, 'show'])->name('books.show');
 Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
+Route::get('/books/preview/{slug}', [BookController::class, 'preview'])->name('books.preview');
 
 // ─── EVENTS ───
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
@@ -30,7 +31,6 @@ Route::get('/events/calendar', [EventCalendarController::class, 'index'])->name(
 Route::get('/events/calendar/events', [EventCalendarController::class, 'getEventsByDate'])->name('events.calendar.events');
 Route::post('/events/clear-registration', [EventController::class, 'clearRegistration'])->name('events.clear.registration');
 Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
-Route::post('/events/register', [EventController::class, 'register'])->name('events.register')->middleware('rate.limit:payment');
 
 // ─── RATE LIMITED: EVENT REGISTRATION ───
 Route::post('/events/register', [EventController::class, 'register'])
@@ -60,7 +60,10 @@ Route::get('/community', [CommunityController::class, 'index'])->name('community
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
 // ─── CONTACT ───
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+// GET route with rate limiting to prevent abuse
+Route::get('/contact', [ContactController::class, 'index'])
+    ->name('contact')
+    ->middleware('rate.limit:contact_get');
 
 // ─── RATE LIMITED: CONTACT SEND ───
 Route::post('/contact', [ContactController::class, 'send'])
@@ -76,13 +79,13 @@ Route::prefix('payment')->name('payment.')->group(function () {
 
     Route::get('/checkout/{gateway}/{order}', [PaymentController::class, 'checkout'])->name('checkout');
 
-    // ─── RETURN (Success) - GET ───
+    // ─── RETURN (Success) - Requires CSRF validation ───
     Route::any('/return/{gateway}', [PaymentController::class, 'return'])->name('return');
 
-    // ─── CANCEL - GET ───
+    // ─── CANCEL - Requires CSRF validation ───
     Route::any('/cancel/{gateway}', [PaymentController::class, 'cancel'])->name('cancel');
 
-    // ─── WEBHOOK - POST ───
+    // ─── WEBHOOK - POST (CSRF exempt) ───
     Route::post('/webhook/{gateway}', [PaymentController::class, 'webhook'])->name('webhook');
 
     // ─── SUCCESS ───

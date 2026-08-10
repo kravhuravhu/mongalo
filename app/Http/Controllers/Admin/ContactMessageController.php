@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ContactMessageController extends Controller
 {
@@ -47,6 +48,13 @@ class ContactMessageController extends Controller
     {
         if ($message->status === 'unread') {
             $message->update(['status' => 'read']);
+            
+            Log::info('Contact message marked as read', [
+                'message_id' => $message->id,
+                'from' => $message->email,
+                'admin_id' => session('admin_id'),
+                'admin_name' => session('admin_name'),
+            ]);
         }
         return view('admin.messages.show', compact('message'));
     }
@@ -57,15 +65,29 @@ class ContactMessageController extends Controller
             'status' => 'required|in:unread,read,replied',
         ]);
 
+        $oldStatus = $message->status;
+        $newStatus = $request->status;
+
         $message->update([
-            'status' => $request->status,
+            'status' => $newStatus,
+        ]);
+
+        Log::info('Contact message status updated by admin', [
+            'message_id' => $message->id,
+            'from' => $message->email,
+            'subject' => $message->subject,
+            'old_status' => $oldStatus,
+            'new_status' => $newStatus,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
         ]);
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Status updated successfully!',
-                'status' => $request->status,
+                'status' => $newStatus,
             ]);
         }
 
@@ -75,9 +97,18 @@ class ContactMessageController extends Controller
     /**
      * Quick reply - mark as replied
      */
-    public function markReplied(ContactMessage $message)
+    public function markReplied(ContactMessage $message, Request $request)
     {
         $message->update(['status' => 'replied']);
+
+        Log::info('Contact message marked as replied by admin', [
+            'message_id' => $message->id,
+            'from' => $message->email,
+            'subject' => $message->subject,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
 
         return redirect()->back()->with('success', 'Message marked as replied!');
     }

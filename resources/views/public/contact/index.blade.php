@@ -78,12 +78,6 @@
                         <h3 class="contact__hero-form-title">Send a Message</h3>
                         <p class="contact__hero-form-subtitle">We reply within 24 hours</p>
 
-                        @if(session('success'))
-                            <div class="contact__hero-form-success">
-                                <i class="fas fa-check-circle"></i> {{ session('success') }}
-                            </div>
-                        @endif
-
                         <form method="POST" action="{{ route('contact.send') }}" class="form-loading">
                             @csrf
 

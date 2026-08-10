@@ -12,9 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
+        // ─── ONLY WEBHOOKS SHOULD BE EXEMPT ───
         'payment/webhook/*',
-        'payment/return/*',
-        'payment/cancel/*',
         '/payment/webhook/*',
         'payment/webhook/payfast',
         'payment/webhook/yoco',

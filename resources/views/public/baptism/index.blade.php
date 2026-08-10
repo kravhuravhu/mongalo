@@ -261,22 +261,6 @@
 
                 {{-- ─── FORM ─── --}}
                 <div class="baptism__form-wrapper">
-                    @if(session('success'))
-                        <div class="baptism__form-success">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                        </div>
-                    @endif
-
-                    @if($errors->any())
-                        <div class="baptism__form-errors">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
                     <form method="POST" action="{{ route('baptism.request') }}" class="baptism__form-form form-loading">
                         @csrf

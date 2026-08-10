@@ -48,7 +48,7 @@ class RateLimitServiceProvider extends ServiceProvider
                 });
         });
 
-        // ─── CONTACT FORM RATE LIMIT ───
+        // ─── CONTACT FORM RATE LIMIT (POST) ───
         RateLimiter::for('contact', function (Request $request) {
             $maxAttempts = config('app.rate_limits.contact', 3);
             return Limit::perMinute($maxAttempts)
@@ -57,6 +57,17 @@ class RateLimitServiceProvider extends ServiceProvider
                     return response()->json([
                         'success' => false,
                         'message' => 'Too many contact form submissions. Please wait before sending another message.',
+                    ], 429);
+                });
+        });
+
+        // ─── CONTACT GET RATE LIMIT ───
+        RateLimiter::for('contact_get', function (Request $request) {
+            return Limit::perMinute(30)
+                ->by($request->ip())
+                ->response(function () {
+                    return response()->view('errors.429', [
+                        'message' => 'Too many requests. Please wait a moment before refreshing.',
                     ], 429);
                 });
         });

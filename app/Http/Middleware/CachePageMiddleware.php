@@ -183,7 +183,6 @@ class CachePageMiddleware
         }
 
         // ─── CHECK FOR USER-SPECIFIC DATA ───
-        $sessionKeys = session()->all();
         $excludedSessionKeys = [
             '_token',
             '_previous',
@@ -220,7 +219,16 @@ class CachePageMiddleware
         $query = preg_replace('/&?nocache=[^&]*/', '', $query);
         $query = preg_replace('/&?_nocache=[^&]*/', '', $query);
         
-        $key = 'page_' . md5($method . '_' . $url . '_' . $query);
+        // ─── ADD FLASH MESSAGE STATE TO KEY ───
+        $flashKeys = ['success', 'error', 'warning', 'info'];
+        $flashState = '';
+        foreach ($flashKeys as $key) {
+            if (session()->has($key)) {
+                $flashState .= $key . '=' . md5(session()->get($key) ?? '') . '_';
+            }
+        }
+        
+        $key = 'page_' . md5($method . '_' . $url . '_' . $query . '_' . $flashState);
         
         return $key;
     }

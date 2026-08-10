@@ -7,6 +7,7 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class BookController extends Controller
 {
@@ -57,7 +58,6 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        //  dd($request->all(), $request->allFiles());
         $request->validate([
             'title' => 'required|max:255',
             'subtitle' => 'nullable|max:255',
@@ -108,7 +108,15 @@ class BookController extends Controller
             $bookData['file_size'] = $this->formatFileSize($bookFile->getSize());
         }
 
-        Book::create($bookData);
+        $book = Book::create($bookData);
+
+        Log::info('Book created by admin', [
+            'book_id' => $book->id,
+            'book_title' => $book->title,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
 
         return redirect()->route('admin.books.index')->with('success', 'Book created successfully!');
     }
@@ -177,11 +185,27 @@ class BookController extends Controller
 
         $book->update($bookData);
 
+        Log::info('Book updated by admin', [
+            'book_id' => $book->id,
+            'book_title' => $book->title,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->route('admin.books.index')->with('success', 'Book updated successfully!');
     }
 
-    public function destroy(Book $book)
+    public function destroy(Book $book, Request $request)
     {
+        Log::info('Book deleted by admin', [
+            'book_id' => $book->id,
+            'book_title' => $book->title,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+
         /* ─── DELETE FILES ─── */
         if ($book->cover_image) {
             Storage::disk('public')->delete('books/covers/' . $book->cover_image);
@@ -195,7 +219,7 @@ class BookController extends Controller
     }
 
     /* ─── HELPER: Format File Size ─── */
-    private function formatFileSize($bytes)
+    private function formatFileSize($bytes): string
     {
         if ($bytes >= 1048576) {
             return number_format($bytes / 1048576, 2) . ' MB';
