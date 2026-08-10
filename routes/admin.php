@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\InviteRequestController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CacheController;
+use App\Http\Controllers\Admin\ExportController;
 
 // Admin routes | dev & prod
 $adminRoutes = function () {
@@ -69,6 +70,12 @@ $adminRoutes = function () {
         Route::get('/cache/warm', [CacheController::class, 'warm'])->name('admin.cache.warm');
         Route::get('/cache/status', [CacheController::class, 'status'])->name('admin.cache.status');
         Route::get('/cache/clear/{type}', [CacheController::class, 'clearType'])->name('admin.cache.clear.type');
+
+        // ─── EXPORTS ───
+        Route::get('/export/orders', [ExportController::class, 'orders'])->name('admin.export.orders');
+        Route::get('/export/registrations', [ExportController::class, 'registrations'])->name('admin.export.registrations');
+        Route::get('/export/baptisms', [ExportController::class, 'baptisms'])->name('admin.export.baptisms');
+        Route::get('/export/messages', [ExportController::class, 'messages'])->name('admin.export.messages');
     });
 };
 

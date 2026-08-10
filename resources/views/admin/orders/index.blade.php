@@ -26,6 +26,11 @@
                 <i class="fas fa-keyboard"></i> Type to search · <kbd>Ctrl</kbd>+<kbd>/</kbd> to focus · <kbd>Esc</kbd> to clear
             </span>
         </div>
+        <div class="orders-index__actions">
+            <a href="{{ route('admin.export.orders') }}" class="btn btn--success">
+                <i class="fas fa-download"></i> Export CSV
+            </a>
+        </div>
     </div>
 
     {{-- ─── STATS ─── --}}
@@ -83,6 +88,8 @@
                 <i class="fas fa-times"></i> Clear Filters
             </a>
         @endif
+        
+        <span class="orders-index__filter-count">{{ $orders->total() }} orders</span>
     </div>
 
     {{-- ─── ORDERS TABLE ─── --}}
