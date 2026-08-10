@@ -16,80 +16,62 @@
     </div>
 
     {{-- ─── PENDING REGISTRATION NOTICE ─── --}}
-    @if($pendingRegistration)
+    <div id="pendingRegistrationContainer" style="display: none;">
         <div class="wrap" style="margin-top: 30px;">
-            <div class="pending-registration-notice">
-                <div class="pending-registration-notice__icon">
-                    @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
-                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
-                    @else
-                        <i class="fas fa-clock" style="color: #e8a838;"></i>
-                    @endif
+            <div class="pending-registration-notice" id="pendingRegistrationNotice">
+                <div class="pending-registration-notice__icon" id="pendingIcon">
+                    <i class="fas fa-check-circle" style="color: #28a745;"></i>
                 </div>
                 <div class="pending-registration-notice__content">
-                    <h4>
-                        @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
-                            You're Registered!
-                        @else
-                            Payment Pending
-                        @endif
-                    </h4>
+                    <h4 id="pendingTitle">You're Registered!</h4>
                     
                     <div class="pending-registration-notice__user-details">
                         <div class="pending-registration-notice__user-row">
                             <span class="pending-registration-notice__label">Name</span>
-                            <span class="pending-registration-notice__value">{{ $pendingRegistration['name'] }}</span>
+                            <span class="pending-registration-notice__value" id="pendingName"></span>
                         </div>
                         <div class="pending-registration-notice__user-row">
                             <span class="pending-registration-notice__label">Email</span>
-                            <span class="pending-registration-notice__value">{{ $pendingRegistration['email'] }}</span>
+                            <span class="pending-registration-notice__value" id="pendingEmail"></span>
                         </div>
                         <div class="pending-registration-notice__user-row">
                             <span class="pending-registration-notice__label">Phone</span>
-                            <span class="pending-registration-notice__value">{{ $pendingRegistration['phone'] }}</span>
+                            <span class="pending-registration-notice__value" id="pendingPhone"></span>
                         </div>
                         <div class="pending-registration-notice__user-row">
                             <span class="pending-registration-notice__label">Registration ID</span>
-                            <span class="pending-registration-notice__value pending-registration-notice__value--highlight">{{ $pendingRegistration['registration_id'] }}</span>
+                            <span class="pending-registration-notice__value pending-registration-notice__value--highlight" id="pendingRegId"></span>
                         </div>
                         <div class="pending-registration-notice__user-row">
                             <span class="pending-registration-notice__label">Status</span>
-                            <span>
-                                @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
-                                    <span class="badge badge-completed">Confirmed</span>
-                                @else
-                                    <span class="badge badge-pending">Pending Payment</span>
-                                @endif
-                            </span>
+                            <span id="pendingStatus"></span>
                         </div>
                     </div>
 
                     {{-- ─── BANKING DETAILS (Only if pending) ─── --}}
-                    @if($pendingRegistration['payment_status'] === 'pending' && !$pendingRegistration['is_free'] && $pendingRegistration['banking_details'])
+                    <div id="pendingBanking" style="display: none;">
                         <div class="pending-registration-notice__banking">
                             <h5>💳 Complete Your Payment</h5>
                             <div class="pending-registration-notice__banking-grid">
                                 <div>
                                     <span class="pending-registration-notice__banking-label">Bank</span>
-                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['bank'] }}</span>
+                                    <span class="pending-registration-notice__banking-value" id="pendingBank"></span>
                                 </div>
                                 <div>
                                     <span class="pending-registration-notice__banking-label">Account Name</span>
-                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['account_name'] }}</span>
+                                    <span class="pending-registration-notice__banking-value" id="pendingAccountName"></span>
                                 </div>
                                 <div>
                                     <span class="pending-registration-notice__banking-label">Account Number</span>
-                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['account_number'] }}</span>
+                                    <span class="pending-registration-notice__banking-value" id="pendingAccountNumber"></span>
                                 </div>
                                 <div>
                                     <span class="pending-registration-notice__banking-label">Branch Code</span>
-                                    <span class="pending-registration-notice__banking-value">{{ $pendingRegistration['banking_details']['branch_code'] }}</span>
+                                    <span class="pending-registration-notice__banking-value" id="pendingBranchCode"></span>
                                 </div>
                                 <div style="grid-column: 1 / -1; text-align: center; padding-top: 12px; border-top: 1px solid rgba(21, 87, 36, 0.1);">
                                     <span class="pending-registration-notice__banking-label">Reference</span>
-                                    <span class="pending-registration-notice__banking-value" style="font-weight: 700; color: var(--gold); font-size: 1.1rem; display: block;">
-                                        {{ $pendingRegistration['banking_details']['reference'] }}
-                                    </span>
+                                    <span class="pending-registration-notice__banking-value" style="font-weight: 700; color: var(--gold); font-size: 1.1rem; display: block;" id="pendingReference"></span>
                                     <span style="font-size: 0.75rem; color: rgba(21, 87, 36, 0.6);">
                                         <i class="fas fa-info-circle"></i> Use this exact reference
                                     </span>
@@ -100,7 +82,7 @@
                                 Please complete your payment within <strong>48 hours</strong>.
                             </div>
                         </div>
-                    @endif
+                    </div>
 
                     <div class="pending-registration-notice__actions">
                         <a href="{{ route('contact') }}" class="btn btn--secondary">
@@ -109,8 +91,6 @@
                         <a href="#" onclick="window.print()" class="btn btn--outline">
                             <i class="fas fa-print"></i> Print Details
                         </a>
-                        
-                        {{-- ─── NEW REGISTRATION BUTTON ─── --}}
                         <form method="POST" action="{{ route('events.clear.registration') }}" style="display: inline;" id="clearRegistrationForm">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
@@ -123,12 +103,7 @@
                 </div>
             </div>
         </div>
-
-        {{-- ─── FORM IS HIDDEN ─── --}}
-        <div style="display: none;">
-            <!-- user already registered -->
-        </div>
-    @endif
+    </div>
 
     {{-- ─── HERO ─── --}}
     <section class="event-detail__hero">
@@ -185,85 +160,50 @@
 
                 {{-- Registration Form --}}
                 <div class="event-detail__hero-form">
-                    <div class="event-detail__form-card">
-                        @if($pendingRegistration)
-                            {{-- ─── SHOW REGISTRATION STATUS INSTEAD OF FORM ─── --}}
-                            <div class="event-detail__form-status">
-                                <div class="event-detail__form-status-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <h4>You're Registered!</h4>
-                                <p>You have already registered for this event.</p>
-                                <div class="event-detail__form-status-details">
-                                    <div>
-                                        <span class="label">Registration ID</span>
-                                        <span class="value">{{ $pendingRegistration['registration_id'] }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="label">Status</span>
-                                        <span>
-                                            @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
-                                                <span class="badge badge-completed">Confirmed</span>
-                                            @else
-                                                <span class="badge badge-pending">Pending Payment</span>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                                {{-- ─── ONLY SHOW BANKING NOTE IF PAID EVENT ─── --}}
-                                @if(!$pendingRegistration['is_free'] && $pendingRegistration['payment_status'] === 'pending')
-                                    <div class="event-detail__form-status-note">
-                                        <i class="fas fa-info-circle"></i>
-                                        Banking details are shown above. Please complete payment to confirm your spot.
-                                    </div>
-                                @endif
+                    <div class="event-detail__form-card" id="registrationFormCard">
+                        <h3 class="event-detail__form-title">Register for This Event</h3>
+                        <p class="event-detail__form-subtitle">
+                            @if(!$event->is_free && $event->price > 0)
+                                R{{ number_format($event->price, 2) }} per person
+                            @else
+                                Free registration
+                            @endif
+                        </p>
+
+                        <div id="registrationMessage"></div>
+
+                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
+                            @csrf
+                            <input type="hidden" name="event_id" value="{{ $event->id }}">
+
+                            <div class="event-detail__form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
                             </div>
-                        @else
-                            {{-- ─── SHOW FORM ─── --}}
-                            <h3 class="event-detail__form-title">Register for This Event</h3>
-                            <p class="event-detail__form-subtitle">
-                                @if(!$event->is_free && $event->price > 0)
-                                    R{{ number_format($event->price, 2) }} per person
-                                @else
-                                    Free registration
-                                @endif
-                            </p>
 
-                            <div id="registrationMessage"></div>
+                            <div class="event-detail__form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
+                            </div>
 
-                            <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
-                                @csrf
-                                <input type="hidden" name="event_id" value="{{ $event->id }}">
+                            <div class="event-detail__form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
+                            </div>
 
-                                <div class="event-detail__form-group">
-                                    <label for="name">Full Name</label>
-                                    <input type="text" name="name" id="name" placeholder="Thabo Mokoena" required>
-                                </div>
+                            <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
+                                <span id="registerBtnText">
+                                    <i class="fas fa-ticket-alt"></i> Register Now
+                                </span>
+                                <span id="registerBtnLoader" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Registering...
+                                </span>
+                            </button>
+                        </form>
 
-                                <div class="event-detail__form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" name="email" id="email" placeholder="thabo@example.co.za" required>
-                                </div>
-
-                                <div class="event-detail__form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
-                                </div>
-
-                                <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
-                                    <span id="registerBtnText">
-                                        <i class="fas fa-ticket-alt"></i> Register Now
-                                    </span>
-                                    <span id="registerBtnLoader" style="display: none;">
-                                        <i class="fas fa-spinner fa-spin"></i> Registering...
-                                    </span>
-                                </button>
-                            </form>
-
-                            <p class="event-detail__form-note">
-                                <i class="fas fa-lock"></i> Your information is safe with us.
-                            </p>
-                        @endif
+                        <p class="event-detail__form-note">
+                            <i class="fas fa-lock"></i> Your information is safe with us.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -334,210 +274,261 @@
 
 @push('scripts')
     <script src="{{ secure_asset('js/events.js') }}"></script>
-    @if(!$pendingRegistration)
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('eventRegistrationForm');
-            const messageDiv = document.getElementById('registrationMessage');
-            const submitBtn = document.getElementById('registerBtn');
-            const btnText = document.getElementById('registerBtnText');
-            const btnLoader = document.getElementById('registerBtnLoader');
+    document.addEventListener('DOMContentLoaded', function() {
+        // ─── CONSTANTS ───
+        const EVENT_ID = {{ $event->id }};
+        const STORAGE_KEY = 'pending_registration_' + EVENT_ID;
+        const container = document.getElementById('pendingRegistrationContainer');
+        const formCard = document.getElementById('registrationFormCard');
 
-            // ─── CHECK IF REGISTRATION SUCCESS IS ALREADY SHOWN ───
-            if (sessionStorage.getItem('registration_success_' + {{ $event->id ?? 0 }})) {
-                // ─── HIDE FORM AND SHOW SUCCESS ───
-                const formCard = document.querySelector('.event-detail__form-card');
-                if (formCard) {
-                    const fields = formCard.querySelectorAll('.event-detail__form-group');
-                    fields.forEach(function(field) {
-                        field.style.display = 'none';
-                    });
-                    const note = formCard.querySelector('.event-detail__form-note');
-                    if (note) note.style.display = 'none';
-                    const subtitle = formCard.querySelector('.event-detail__form-subtitle');
-                    if (subtitle) subtitle.style.display = 'none';
-                    const title = formCard.querySelector('.event-detail__form-title');
-                    if (title) title.style.display = 'none';
-                    if (submitBtn) submitBtn.style.display = 'none';
-                    
-                    // ─── SHOW A MESSAGE ───
-                    messageDiv.innerHTML = `
-                        <div class="registration-success">
-                            <div class="registration-success__icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h4 class="registration-success__title">Registration Complete!</h4>
-                            <p class="registration-success__message">You have already registered for this event.</p>
-                            <div class="registration-success__actions">
-                                <button onclick="window.location.reload()" class="btn btn--primary btn--sm">
-                                    <i class="fas fa-sync"></i> Refresh Status
-                                </button>
-                            </div>
-                        </div>
-                    `;
+        // ─── CHECK LOCALSTORAGE FOR PENDING REGISTRATION ───
+        function loadPendingRegistration() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const data = JSON.parse(stored);
+                    // ─── CHECK IF EXPIRED ───
+                    if (data.expires_at && new Date(data.expires_at) < new Date()) {
+                        localStorage.removeItem(STORAGE_KEY);
+                        return false;
+                    }
+                    return data;
+                } catch (e) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    return false;
                 }
             }
+            return false;
+        }
 
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
+        function showPendingRegistration(data) {
+            container.style.display = 'block';
+            if (formCard) {
+                const fields = formCard.querySelectorAll('.event-detail__form-group');
+                fields.forEach(function(field) {
+                    field.style.display = 'none';
+                });
+                const note = formCard.querySelector('.event-detail__form-note');
+                if (note) note.style.display = 'none';
+                const subtitle = formCard.querySelector('.event-detail__form-subtitle');
+                if (subtitle) subtitle.style.display = 'none';
+                const title = formCard.querySelector('.event-detail__form-title');
+                if (title) title.style.display = 'none';
+                const submitBtn = document.getElementById('registerBtn');
+                if (submitBtn) submitBtn.style.display = 'none';
+            }
 
-                    // ─── SHOW LOADING ───
-                    submitBtn.disabled = true;
-                    btnText.style.display = 'none';
-                    btnLoader.style.display = 'inline';
+            // ─── FILL IN DATA ───
+            document.getElementById('pendingName').textContent = data.name;
+            document.getElementById('pendingEmail').textContent = data.email;
+            document.getElementById('pendingPhone').textContent = data.phone;
+            document.getElementById('pendingRegId').textContent = data.registration_id;
 
-                    const formData = new FormData(this);
+            // ─── STATUS ───
+            const statusSpan = document.getElementById('pendingStatus');
+            if (data.payment_status === 'paid' || data.is_free) {
+                statusSpan.innerHTML = '<span class="badge badge-completed">Confirmed</span>';
+                document.getElementById('pendingIcon').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i>';
+                document.getElementById('pendingTitle').textContent = 'You\'re Registered!';
+            } else {
+                statusSpan.innerHTML = '<span class="badge badge-pending">Pending Payment</span>';
+                document.getElementById('pendingIcon').innerHTML = '<i class="fas fa-clock" style="color: #e8a838;"></i>';
+                document.getElementById('pendingTitle').textContent = 'Payment Pending';
+            }
 
-                    fetch(this.action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: formData
-                    })
-                    .then(function(response) {
-                        const contentType = response.headers.get('content-type');
-                        if (!contentType || !contentType.includes('application/json')) {
-                            throw new Error('Server returned HTML instead of JSON.');
-                        }
-                        return response.json();
-                    })
-                    .then(function(data) {
-                        if (data.success) {
-                            // ─── STORE IN SESSION ───
-                            sessionStorage.setItem('registration_success_' + {{ $event->id ?? 0 }}, 'true');
+            // ─── BANKING DETAILS ───
+            if (data.banking_details && !data.is_free && data.payment_status === 'pending') {
+                document.getElementById('pendingBanking').style.display = 'block';
+                document.getElementById('pendingBank').textContent = data.banking_details.bank;
+                document.getElementById('pendingAccountName').textContent = data.banking_details.account_name;
+                document.getElementById('pendingAccountNumber').textContent = data.banking_details.account_number;
+                document.getElementById('pendingBranchCode').textContent = data.banking_details.branch_code;
+                document.getElementById('pendingReference').textContent = data.banking_details.reference;
+            } else {
+                document.getElementById('pendingBanking').style.display = 'none';
+            }
+        }
 
-                            // ─── BUILD CALENDAR LINK ───
-                            const eventDate = new Date(data.event_date + 'T' + data.event_time);
-                            const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
-                            
-                            const formatDate = function(date) {
-                                return date.toISOString().replace(/-|:|\.\d+/g, '');
-                            };
-                            
-                            const googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' +
-                                '&text=' + encodeURIComponent(data.event_title) +
-                                '&dates=' + formatDate(eventDate) + '/' + formatDate(endDate) +
-                                '&details=' + encodeURIComponent(data.event_description || '') +
-                                '&location=' + encodeURIComponent(data.event_location || '') +
-                                '&sf=true&output=xml';
+        // ─── CHECK FOR PENDING REGISTRATION ───
+        const pendingData = loadPendingRegistration();
+        if (pendingData) {
+            showPendingRegistration(pendingData);
+        }
 
-                            // ─── BUILD SUCCESS HTML ───
-                            let html = `
-                                <div class="registration-success">
-                                    <div class="registration-success__icon">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                    <h4 class="registration-success__title">Registration Successful!</h4>
-                                    <p class="registration-success__message">${data.message}</p>
-                                    <div class="registration-success__id">
-                                        <strong>Registration ID:</strong> ${data.registration_id}
-                                    </div>
-                                    <div class="registration-success__actions">
-                                        <a href="${googleCalendarUrl}" target="_blank" class="btn btn--primary btn--sm">
-                                            <i class="fas fa-calendar-plus"></i> Add to Google Calendar
-                                        </a>
-                                        <button onclick="window.location.reload()" class="btn btn--secondary btn--sm">
-                                            <i class="fas fa-eye"></i> View Status
-                                        </button>
-                                    </div>
-                            `;
+        // ─── REGISTRATION FORM ───
+        const form = document.getElementById('eventRegistrationForm');
+        const messageDiv = document.getElementById('registrationMessage');
+        const submitBtn = document.getElementById('registerBtn');
+        const btnText = document.getElementById('registerBtnText');
+        const btnLoader = document.getElementById('registerBtnLoader');
 
-                            // ─── IF PAID EVENT, SHOW BANKING DETAILS ───
-                            if (!data.is_free && data.banking_details) {
-                                html += `
-                                    <div class="registration-success__banking">
-                                        <h5>Banking Details</h5>
-                                        <div class="registration-success__banking-grid">
-                                            <div>
-                                                <span class="label">Bank</span>
-                                                <span class="value">${data.banking_details.bank}</span>
-                                            </div>
-                                            <div>
-                                                <span class="label">Account Name</span>
-                                                <span class="value">${data.banking_details.account_name}</span>
-                                            </div>
-                                            <div>
-                                                <span class="label">Account Number</span>
-                                                <span class="value">${data.banking_details.account_number}</span>
-                                            </div>
-                                            <div>
-                                                <span class="label">Branch Code</span>
-                                                <span class="value">${data.banking_details.branch_code}</span>
-                                            </div>
-                                            <div style="grid-column: 1 / -1;">
-                                                <span class="label">Reference</span>
-                                                <span class="value" style="font-weight: 700; color: var(--gold);">${data.banking_details.reference}</span>
-                                            </div>
-                                            <div style="grid-column: 1 / -1; text-align: center; font-weight: 600; font-size: 1.1rem; padding-top: 8px; border-top: 1px solid rgba(21, 87, 36, 0.1);">
-                                                Amount: R${data.amount}
-                                            </div>
-                                        </div>
-                                        <p>
-                                            <i class="fas fa-info-circle"></i> 
-                                            Please use your Registration ID as reference when making payment.
-                                        </p>
-                                    </div>
-                                `;
-                            }
+        if (form && !pendingData) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-                            html += `</div>`;
+                submitBtn.disabled = true;
+                btnText.style.display = 'none';
+                btnLoader.style.display = 'inline';
 
-                            messageDiv.innerHTML = html;
-                            form.reset();
+                const formData = new FormData(this);
 
-                            // ─── HIDE THE FORM ───
-                            const formCard = form.closest('.event-detail__form-card');
-                            if (formCard) {
-                                const fields = formCard.querySelectorAll('.event-detail__form-group');
-                                fields.forEach(function(field) {
-                                    field.style.display = 'none';
-                                });
-                                const note = formCard.querySelector('.event-detail__form-note');
-                                if (note) note.style.display = 'none';
-                                const subtitle = formCard.querySelector('.event-detail__form-subtitle');
-                                if (subtitle) subtitle.style.display = 'none';
-                                const title = formCard.querySelector('.event-detail__form-title');
-                                if (title) title.style.display = 'none';
-                                submitBtn.style.display = 'none';
-                            }
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(function(response) {
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Server returned HTML instead of JSON.');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.success) {
+                        // ─── SAVE TO LOCALSTORAGE ───
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(data.registration_data));
 
-                            // ─── SHOW WHATSAPP POPUP ───
-                            if (data.show_whatsapp) {
-                                setTimeout(function() {
-                                    const popup = document.getElementById('whatsappPopup');
-                                    if (popup) {
-                                        popup.classList.add('show');
-                                    }
-                                }, 1000);
-                            }
+                        // ─── BUILD CALENDAR LINK ───
+                        const eventDate = new Date(data.event_date + 'T' + data.event_time);
+                        const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
+                        
+                        const formatDate = function(date) {
+                            return date.toISOString().replace(/-|:|\.\d+/g, '');
+                        };
+                        
+                        const googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' +
+                            '&text=' + encodeURIComponent(data.event_title) +
+                            '&dates=' + formatDate(eventDate) + '/' + formatDate(endDate) +
+                            '&details=' + encodeURIComponent(data.event_description || '') +
+                            '&location=' + encodeURIComponent(data.event_location || '') +
+                            '&sf=true&output=xml';
 
-                            // ─── RESET BUTTON ───
-                            submitBtn.disabled = false;
-                            btnText.style.display = 'inline';
-                            btnLoader.style.display = 'none';
-                        }
-                    })
-                    .catch(function(error) {
-                        console.error('Error:', error);
-                        messageDiv.innerHTML = `
-                            <div class="registration-error">
-                                <i class="fas fa-exclamation-circle"></i>
-                                Error: ${error.message || 'Something went wrong. Please try again.'}
-                            </div>
+                        // ─── BUILD SUCCESS HTML ───
+                        let html = `
+                            <div class="registration-success">
+                                <div class="registration-success__icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4 class="registration-success__title">Registration Successful!</h4>
+                                <p class="registration-success__message">${data.message}</p>
+                                <div class="registration-success__id">
+                                    <strong>Registration ID:</strong> ${data.registration_id}
+                                </div>
+                                <div class="registration-success__actions">
+                                    <a href="${googleCalendarUrl}" target="_blank" class="btn btn--primary btn--sm">
+                                        <i class="fas fa-calendar-plus"></i> Add to Google Calendar
+                                    </a>
+                                    <button onclick="window.location.reload()" class="btn btn--secondary btn--sm">
+                                        <i class="fas fa-eye"></i> View Status
+                                    </button>
+                                </div>
                         `;
+
+                        if (!data.is_free && data.banking_details) {
+                            html += `
+                                <div class="registration-success__banking">
+                                    <h5>Banking Details</h5>
+                                    <div class="registration-success__banking-grid">
+                                        <div>
+                                            <span class="label">Bank</span>
+                                            <span class="value">${data.banking_details.bank}</span>
+                                        </div>
+                                        <div>
+                                            <span class="label">Account Name</span>
+                                            <span class="value">${data.banking_details.account_name}</span>
+                                        </div>
+                                        <div>
+                                            <span class="label">Account Number</span>
+                                            <span class="value">${data.banking_details.account_number}</span>
+                                        </div>
+                                        <div>
+                                            <span class="label">Branch Code</span>
+                                            <span class="value">${data.banking_details.branch_code}</span>
+                                        </div>
+                                        <div style="grid-column: 1 / -1;">
+                                            <span class="label">Reference</span>
+                                            <span class="value" style="font-weight: 700; color: var(--gold);">${data.banking_details.reference}</span>
+                                        </div>
+                                        <div style="grid-column: 1 / -1; text-align: center; font-weight: 600; font-size: 1.1rem; padding-top: 8px; border-top: 1px solid rgba(21, 87, 36, 0.1);">
+                                            Amount: R${data.amount}
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <i class="fas fa-info-circle"></i> 
+                                        Please use your Registration ID as reference when making payment.
+                                    </p>
+                                </div>
+                            `;
+                        }
+
+                        html += `</div>`;
+
+                        messageDiv.innerHTML = html;
+
+                        // ─── HIDE FORM ───
+                        const fields = formCard.querySelectorAll('.event-detail__form-group');
+                        fields.forEach(function(field) {
+                            field.style.display = 'none';
+                        });
+                        const note = formCard.querySelector('.event-detail__form-note');
+                        if (note) note.style.display = 'none';
+                        const subtitle = formCard.querySelector('.event-detail__form-subtitle');
+                        if (subtitle) subtitle.style.display = 'none';
+                        const title = formCard.querySelector('.event-detail__form-title');
+                        if (title) title.style.display = 'none';
+                        submitBtn.style.display = 'none';
+
+                        // ─── SHOW WHATSAPP POPUP ───
+                        if (data.show_whatsapp) {
+                            setTimeout(function() {
+                                const popup = document.getElementById('whatsappPopup');
+                                if (popup) {
+                                    popup.classList.add('show');
+                                }
+                            }, 1000);
+                        }
+
                         submitBtn.disabled = false;
                         btnText.style.display = 'inline';
                         btnLoader.style.display = 'none';
-                    });
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                    messageDiv.innerHTML = `
+                        <div class="registration-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Error: ${error.message || 'Something went wrong. Please try again.'}
+                        </div>
+                    `;
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline';
+                    btnLoader.style.display = 'none';
                 });
-            }
-        });
+            });
+        }
+
+        // ─── CLEAR REGISTRATION FORM ───
+        const clearForm = document.getElementById('clearRegistrationForm');
+        if (clearForm) {
+            clearForm.addEventListener('submit', function(e) {
+                // ─── CLEAR LOCALSTORAGE BEFORE SUBMIT ───
+                localStorage.removeItem(STORAGE_KEY);
+                // ─── FORM WILL SUBMIT NORMALLY ───
+            });
+        }
+    });
     </script>
-    @endif
+@endpush
+
+@push('styles')
+    <link rel="stylesheet" href="{{ secure_asset('css/events.css') }}">
 @endpush
 
 @endsection
