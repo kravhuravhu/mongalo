@@ -1,127 +1,159 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Registration Confirmation</title>
-    <style>
-        body { font-family: 'Inter', Arial, sans-serif; color: #1a1a2e; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { border-bottom: 2px solid #a67c4e; padding-bottom: 12px; margin-bottom: 24px; }
-        .header h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.6rem; color: #a67c4e; margin: 0; }
-        .header p { color: #6a6a7a; margin: 4px 0 0; }
-        .details { background: #f7f5f2; border-radius: 10px; padding: 20px; margin: 20px 0; border: 1px solid rgba(166, 124, 78, 0.12); }
-        .details h3 { font-family: 'Playfair Display', serif; font-weight: 700; margin: 0 0 12px; }
-        .details .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); }
-        .details .row:last-child { border-bottom: none; }
-        .details .label { color: #6a6a7a; font-weight: 500; }
-        .details .value { font-weight: 600; }
-        .banking { background: #fff; border-radius: 10px; padding: 20px; margin: 20px 0; border: 2px solid #a67c4e; }
-        .banking h4 { font-family: 'Playfair Display', serif; font-weight: 700; color: #a67c4e; margin: 0 0 12px; }
-        .banking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
-        .banking-grid .label { font-size: 0.7rem; text-transform: uppercase; color: #6a6a7a; font-weight: 600; letter-spacing: 0.06em; }
-        .banking-grid .value { font-weight: 500; }
-        .reference { background: #a67c4e; color: #fff; padding: 4px 12px; border-radius: 4px; font-weight: 700; font-size: 1.1rem; display: inline-block; }
-        .footer { margin-top: 30px; padding-top: 16px; border-top: 1px solid rgba(166, 124, 78, 0.12); font-size: 0.8rem; color: #6a6a7a; text-align: center; }
-        .footer a { color: #a67c4e; text-decoration: none; }
-        .btn { display: inline-block; padding: 10px 24px; background: #a67c4e; color: #fff; border-radius: 50px; text-decoration: none; font-weight: 600; }
-        .badge { display: inline-block; padding: 3px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
-        .badge-free { background: #d4edda; color: #155724; }
-        .badge-pending { background: #fff3cd; color: #856404; }
-        @media (max-width: 540px) {
-            .banking-grid { grid-template-columns: 1fr; }
-            .details .row { flex-direction: column; padding: 4px 0; }
-        }
-    </style>
-</head>
-<body>
+@extends('emails.layouts.email')
 
-<div class="header">
-    <h1>{{ env('PROJECT_NAME') }}</h1>
-    <p>Event Registration Confirmation</p>
-</div>
+@section('title', 'Registration Confirmation: ' . $event->title)
 
-<h2>Hello {{ $registration->name }},</h2>
-<p>You have successfully registered for:</p>
+@section('header')
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #1a1a2e; padding: 32px 36px 28px; border-bottom: 4px solid #a67c4e;">
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="font-family: 'Georgia', serif; font-weight: 700; font-size: 20px; color: #ffffff; margin: 0;">
+                            {{ env('PROJECT_NAME', 'The Collective') }}
+                            <span style="color: #a67c4e;">· Registration</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 6px;">
+                            <span style="display: inline-block; padding: 2px 14px; border-radius: 50px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background: #28a745; color: #ffffff;">
+                                &#10003; Confirmed
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+@endsection
 
-<div class="details">
-    <h3>{{ $event->title }}</h3>
-    <div class="row">
-        <span class="label">Date</span>
-        <span class="value">{{ $event->date->format('l, F d, Y') }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Time</span>
-        <span class="value">{{ \Carbon\Carbon::parse($event->time)->format('g:i A') }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Location</span>
-        <span class="value">{{ $event->location }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Registration ID</span>
-        <span class="value" style="font-family: monospace; font-weight: 700; color: #a67c4e;">{{ $registration->registration_id }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Status</span>
-        <span>
-            @if($isFree)
-                <span class="badge badge-free">FREE</span>
-            @else
-                <span class="badge badge-pending">PENDING PAYMENT</span>
-            @endif
-        </span>
-    </div>
-</div>
-
-@if(!$isFree && $bankingDetails)
-    <div class="banking">
-        <h4>💳 Complete Your Payment</h4>
-        <p style="margin-bottom: 16px;">Use the banking details below to complete your registration. Your spot is reserved for <strong>48 hours</strong>.</p>
-
-        <div class="banking-grid">
-            <div>
-                <div class="label">Bank</div>
-                <div class="value">{{ $bankingDetails['bank'] }}</div>
-            </div>
-            <div>
-                <div class="label">Account Name</div>
-                <div class="value">{{ $bankingDetails['account_name'] }}</div>
-            </div>
-            <div>
-                <div class="label">Account Number</div>
-                <div class="value">{{ $bankingDetails['account_number'] }}</div>
-            </div>
-            <div>
-                <div class="label">Branch Code</div>
-                <div class="value">{{ $bankingDetails['branch_code'] }}</div>
-            </div>
-            <div style="grid-column: 1 / -1; text-align: center; padding-top: 12px; border-top: 1px solid rgba(166, 124, 78, 0.1);">
-                <div class="label">Reference</div>
-                <div class="reference">{{ $bankingDetails['reference'] }}</div>
-                <p style="font-size: 0.8rem; color: #6a6a7a; margin-top: 8px;">
-                    <i class="fas fa-info-circle"></i> 
-                    Use this exact reference when making payment.
+@section('body')
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 32px 36px 28px;">
+        <tr>
+            <td>
+                <h2 style="font-family: 'Georgia', serif; font-weight: 700; font-size: 22px; color: #1a1a2e; margin: 0 0 4px 0;">Registration Confirmed</h2>
+                <p style="color: #6a6a7a; font-size: 15px; margin: 0 0 16px 0; line-height: 1.7;">
+                    Hello <strong style="color: #1a1a2e;">{{ $registration->name }}</strong>,
                 </p>
-            </div>
-        </div>
-    </div>
-@endif
+                <p style="color: #6a6a7a; font-size: 15px; margin: 0 0 20px 0; line-height: 1.7;">
+                    You have successfully registered for <strong style="color: #1a1a2e;">{{ $event->title }}</strong>. Please find the event details below.
+                </p>
 
-<p style="margin: 20px 0;">
-    <a href="{{ route('events.show', $event->slug) }}" class="btn">
-        View Event Details
-    </a>
-</p>
+                {{-- ─── EVENT DETAILS ─── --}}
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #f7f5f2; border-radius: 10px; padding: 16px 20px; border: 1px solid rgba(166, 124, 78, 0.06); margin-bottom: 20px;">
+                    <tr>
+                        <td>
+                            <h4 style="font-family: 'Georgia', serif; font-weight: 700; font-size: 15px; color: #a67c4e; margin: 0 0 10px 0;">&#128197; Event Details</h4>
 
-<div class="footer">
-    <p>&copy; {{ date('Y') }} {{ env('PROJECT_NAME', 'The Collective') }} · Gauteng, South Africa</p>
-    <p>
-        <a href="mailto:hello@thecollective.co.za">hello@thecollective.co.za</a> · 
-        <a href="tel:+27714611401">+27 71 461 1401</a>
-    </p>
-    <p style="font-size: 0.7rem; margin-top: 8px;">
-        If you have any questions, feel free to reply to this email or contact us on WhatsApp.
-    </p>
-</div>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Event</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #1a1a2e;">{{ $event->title }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Date</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #1a1a2e;">{{ $event->date->format('l, F d, Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Time</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #1a1a2e;">{{ Carbon\Carbon::parse($event->time)->format('H:i') }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Location</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #1a1a2e;">{{ $event->location }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Registration ID</td>
+                                    <td style="font-weight: 700; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; font-family: monospace; color: #a67c4e;">{{ $registration->registration_id }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0;">Status</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; text-align: right;">
+                                        @if($isFree)
+                                            <span style="display: inline-block; padding: 2px 12px; border-radius: 50px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background: #d4edda; color: #155724;">Free</span>
+                                        @else
+                                            <span style="display: inline-block; padding: 2px 12px; border-radius: 50px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background: #fff3cd; color: #856404;">Pending Payment</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
 
-</body>
-</html>
+                {{-- ─── BANKING DETAILS (Paid Events Only) ─── --}}
+                @if(!$isFree && $bankingDetails)
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #ffffff; border-radius: 10px; padding: 20px; margin: 20px 0; border: 2px solid #a67c4e;">
+                        <tr>
+                            <td>
+                                <h4 style="font-family: 'Georgia', serif; font-weight: 700; color: #a67c4e; margin: 0 0 12px 0; font-size: 16px;">💳 Complete Your Payment</h4>
+                                <p style="font-size: 14px; color: #6a6a7a; margin-bottom: 16px; line-height: 1.6;">
+                                    Your spot is reserved for <strong>48 hours</strong>. Use the banking details below to complete your registration.
+                                </p>
+
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding: 4px 0; width: 50%; vertical-align: top;">
+                                            <div style="font-size: 0.65rem; text-transform: uppercase; color: #6a6a7a; font-weight: 600; letter-spacing: 0.06em;">Bank</div>
+                                            <div style="font-weight: 500; font-size: 14px; color: #1a1a2e;">{{ $bankingDetails['bank'] }}</div>
+                                        </td>
+                                        <td style="padding: 4px 0; width: 50%; vertical-align: top;">
+                                            <div style="font-size: 0.65rem; text-transform: uppercase; color: #6a6a7a; font-weight: 600; letter-spacing: 0.06em;">Account Name</div>
+                                            <div style="font-weight: 500; font-size: 14px; color: #1a1a2e;">{{ $bankingDetails['account_name'] }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 4px 0; width: 50%; vertical-align: top; border-top: 1px solid rgba(166, 124, 78, 0.06);">
+                                            <div style="font-size: 0.65rem; text-transform: uppercase; color: #6a6a7a; font-weight: 600; letter-spacing: 0.06em;">Account Number</div>
+                                            <div style="font-weight: 500; font-size: 14px; color: #1a1a2e;">{{ $bankingDetails['account_number'] }}</div>
+                                        </td>
+                                        <td style="padding: 4px 0; width: 50%; vertical-align: top; border-top: 1px solid rgba(166, 124, 78, 0.06);">
+                                            <div style="font-size: 0.65rem; text-transform: uppercase; color: #6a6a7a; font-weight: 600; letter-spacing: 0.06em;">Branch Code</div>
+                                            <div style="font-weight: 500; font-size: 14px; color: #1a1a2e;">{{ $bankingDetails['branch_code'] }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding: 16px 0 0 0; text-align: center; border-top: 1px solid rgba(166, 124, 78, 0.1);">
+                                            <div style="font-size: 0.65rem; text-transform: uppercase; color: #6a6a7a; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 4px;">Reference</div>
+                                            <div style="background: #a67c4e; color: #ffffff; padding: 4px 16px; border-radius: 4px; font-weight: 700; font-size: 1.1rem; display: inline-block; font-family: monospace; letter-spacing: 1px;">{{ $bankingDetails['reference'] }}</div>
+                                            <p style="font-size: 0.75rem; color: #6a6a7a; margin-top: 8px;">
+                                                <i class="fas fa-info-circle"></i> Use this exact reference when making payment.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                @endif
+
+                {{-- ─── VIEW EVENT BUTTON ─── --}}
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center" style="padding: 8px 0;">
+                            <a href="{{ route('events.show', $event->slug) }}" style="display: inline-block; padding: 12px 36px; border-radius: 50px; background: #a67c4e; color: #ffffff; font-weight: 600; font-size: 15px; text-decoration: none; border: none; cursor: pointer; text-align: center;">
+                                &#128065; View Event Details
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+@endsection
+
+@section('footer')
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 20px 36px; border-top: 1px solid rgba(166, 124, 78, 0.06); text-align: center; background: #faf9f7;">
+        <tr>
+            <td>
+                <p style="font-size: 11px; color: #6a6a7a; margin: 0 0 4px 0;">
+                    &copy; {{ date('Y') }} {{ env('PROJECT_NAME', 'The Collective') }} &middot; Gauteng, South Africa
+                </p>
+                <p style="font-size: 11px; color: #6a6a7a; margin: 0;">
+                    <a href="mailto:hello@thecollective.co.za" style="color: #a67c4e; text-decoration: none;">hello@thecollective.co.za</a>
+                    <span style="color: rgba(166, 124, 78, 0.12); margin: 0 6px;">&middot;</span>
+                    <a href="tel:+27714611401" style="color: #a67c4e; text-decoration: none;">+27 71 461 1401</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+@endsection

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', env('PROJECT_NAME', 'The Collective'))</title>
+    <link rel="stylesheet" href="{{ secure_asset('css/email.css') }}">
 </head>
 <body style="margin:0; padding:0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f7f5f2; color: #1a1a2e; line-height: 1.6; -webkit-font-smoothing: antialiased;">
 
