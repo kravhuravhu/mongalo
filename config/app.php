@@ -153,4 +153,23 @@ return [
     */
     'bot_blocking_enabled' => env('BOT_BLOCKING_ENABLED', true),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Rate Limiting Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This option controls rate limiting for various endpoints.
+    |
+    */
+    'rate_limits' => [
+        'enabled' => env('RATE_LIMIT_ENABLED', true),
+        'global' => (int) env('RATE_LIMIT_GLOBAL', 60),
+        'login' => (int) env('RATE_LIMIT_LOGIN', 5),
+        'contact' => (int) env('RATE_LIMIT_CONTACT', 3),
+        'baptism' => (int) env('RATE_LIMIT_BAPTISM', 3),
+        'invite' => (int) env('RATE_LIMIT_INVITE', 3),
+        'payment' => (int) env('RATE_LIMIT_PAYMENT', 10),
+        'api' => (int) env('RATE_LIMIT_API', 60),
+    ],
+
 ];
