@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\QueryCacheable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class Event extends Model
 {
+    use QueryCacheable;
+
     protected $fillable = [
         'title',
         'slug',
@@ -39,6 +42,15 @@ class Event extends Model
             if (empty($event->slug)) {
                 $event->slug = Str::slug($event->title);
             }
+        });
+
+        // ─── CLEAR CACHE ON SAVE/DELETE ───
+        static::saved(function ($event) {
+            $event->clearModelCache('event');
+        });
+
+        static::deleted(function ($event) {
+            $event->clearModelCache('event');
         });
     }
 
@@ -84,5 +96,45 @@ class Event extends Model
             return 'Free';
         }
         return $this->price > 0 ? 'R' . number_format($this->price, 2) : 'Free';
+    }
+
+    /* ─── SCOPES WITH CACHE ─── */
+    public static function getCachedUpcomingEvents()
+    {
+        $instance = new static();
+        $key = $instance->versionedQueryKey('event', ['upcoming' => true]);
+        
+        return $instance->cachedQuery($key, function () {
+            return self::where('is_past', false)
+                ->where('date', '>=', Carbon::today())
+                ->orderBy('date')
+                ->get();
+        });
+    }
+
+    public static function getCachedEventsWithRegistrations()
+    {
+        $instance = new static();
+        $key = $instance->versionedQueryKey('event', ['with_registrations' => true]);
+        
+        return $instance->cachedQuery($key, function () {
+            return self::with('registrations')
+                ->where('is_past', false)
+                ->where('date', '>=', Carbon::today())
+                ->orderBy('date')
+                ->limit(6)
+                ->get()
+                ->map(function($event) {
+                    $registered = $event->registrations()->count();
+                    $capacity = $event->capacity ?? 0;
+                    return [
+                        'event' => $event,
+                        'registered' => $registered,
+                        'capacity' => $capacity,
+                        'percentage' => $capacity > 0 ? round(($registered / $capacity) * 100, 1) : 0,
+                        'status' => $capacity > 0 && $registered >= $capacity ? 'full' : 'open',
+                    ];
+                });
+        });
     }
 }

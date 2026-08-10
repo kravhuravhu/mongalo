@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\QueryCacheable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Book extends Model
 {
+    use QueryCacheable;
+
     protected $fillable = [
         'title',
         'slug',
@@ -41,6 +44,15 @@ class Book extends Model
             if (empty($book->slug)) {
                 $book->slug = Str::slug($book->title);
             }
+        });
+
+        // ─── CLEAR CACHE ON SAVE/DELETE ───
+        static::saved(function ($book) {
+            $book->clearModelCache('book');
+        });
+
+        static::deleted(function ($book) {
+            $book->clearModelCache('book');
         });
     }
 
@@ -88,5 +100,36 @@ class Book extends Model
     public function getIsDownloadableAttribute()
     {
         return $this->book_file !== null;
+    }
+
+    /* ─── SCOPES WITH CACHE ─── */
+    public static function getCachedFeatured()
+    {
+        $instance = new static();
+        $key = $instance->versionedQueryKey('book', ['featured' => true]);
+        
+        return $instance->cachedQuery($key, function () {
+            return self::where('is_featured', true)->first();
+        });
+    }
+
+    public static function getCachedPaidBooks()
+    {
+        $instance = new static();
+        $key = $instance->versionedQueryKey('book', ['paid' => true]);
+        
+        return $instance->cachedQuery($key, function () {
+            return self::where('is_free', false)->orderBy('sort_order')->get();
+        });
+    }
+
+    public static function getCachedFreeBooks()
+    {
+        $instance = new static();
+        $key = $instance->versionedQueryKey('book', ['free' => true]);
+        
+        return $instance->cachedQuery($key, function () {
+            return self::where('is_free', true)->orderBy('sort_order')->get();
+        });
     }
 }

@@ -19,12 +19,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin.auth' => \App\Http\Middleware\AdminMiddleware::class,
             'bot.block' => \App\Http\Middleware\BotBlockerMiddleware::class,
             'security.headers' => \App\Http\Middleware\SecurityHeadersMiddleware::class,
+            'cache.page' => \App\Http\Middleware\CachePageMiddleware::class,
         ]);
 
         // ─── GLOBAL MIDDLEWARE ───
         $middleware->append([
             \App\Http\Middleware\SecurityHeadersMiddleware::class,
             \App\Http\Middleware\BotBlockerMiddleware::class,
+            \App\Http\Middleware\CachePageMiddleware::class,
         ]);
 
         // ─── CSRF EXCEPTION - PAYMENT ROUTES ───
