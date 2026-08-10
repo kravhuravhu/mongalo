@@ -12,81 +12,64 @@ use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\InviteController;
 use App\Http\Controllers\Web\PaymentController;
 
-// Home
-Route::get('/', [
-    HomeController::class, 'index'
-])->name('home');
+// ─── HOME ───
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// About
-Route::get('/about', [
-    AboutController::class, 'index'
-])->name('about');
+// ─── ABOUT ───
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-// Books
+// ─── BOOKS ───
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{slug}', [BookController::class, 'show'])->name('books.show');
-// ─── BOOK DOWNLOAD (Free) ───
 Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
 
-
-// Events
-Route::get('/events', [
-    EventController::class, 'index'
-])->name('events.index');
 // ─── EVENTS ───
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::post('/events/clear-registration', [EventController::class, 'clearRegistration'])->name('events.clear.registration');
+Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
 
-Route::get('/events/{slug}', [
-    EventController::class, 'show'
-])->name('events.show');
+// ─── RATE LIMITED: EVENT REGISTRATION ───
+Route::post('/events/register', [EventController::class, 'register'])
+    ->name('events.register')
+    ->middleware('rate.limit:payment');
 
-Route::post('/events/register', [
-    EventController::class, 'register'
-])->name('events.register');
+// ─── INVITE ARTHUR ───
+Route::get('/invite', [InviteController::class, 'index'])->name('invite');
 
-// Invite Arthur
-Route::get('/invite', [
-    InviteController::class, 'index'
-])->name('invite');
+// ─── RATE LIMITED: INVITE SEND ───
+Route::post('/invite', [InviteController::class, 'send'])
+    ->name('invite.send')
+    ->middleware('rate.limit:invite');
 
-Route::post('/invite', [
-    InviteController::class, 'send'
-])->name('invite.send');
+// ─── BAPTISM ───
+Route::get('/baptism', [BaptismController::class, 'index'])->name('baptism');
 
-// Baptism
-Route::get('/baptism', [
-    BaptismController::class, 'index'
-])->name('baptism');
+// ─── RATE LIMITED: BAPTISM REQUEST ───
+Route::post('/baptism/request', [BaptismController::class, 'request'])
+    ->name('baptism.request')
+    ->middleware('rate.limit:baptism');
 
-Route::post('/baptism/request', [
-    BaptismController::class, 'request'
-])->name('baptism.request');
+// ─── COMMUNITY ───
+Route::get('/community', [CommunityController::class, 'index'])->name('community');
 
-// Community
-Route::get('/community', [
-    CommunityController::class, 'index'
-])->name('community');
+// ─── RESOURCES ───
+Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
-// Resources
-Route::get('/resources', [
-    ResourceController::class, 'index'
-])->name('resources');
+// ─── CONTACT ───
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
-// Contact
-Route::get('/contact', [
-    ContactController::class, 'index'
-])->name('contact');
-
-Route::post('/contact', [
-    ContactController::class, 'send'
-])->name('contact.send');
+// ─── RATE LIMITED: CONTACT SEND ───
+Route::post('/contact', [ContactController::class, 'send'])
+    ->name('contact.send')
+    ->middleware('rate.limit:contact');
 
 // ─── PAYMENT ROUTES ───
 Route::prefix('payment')->name('payment.')->group(function () {
-    // ─── INITIATE PAYMENT (AJAX) ───
-    Route::post('/initiate', [PaymentController::class, 'initiate'])->name('initiate');
+    // ─── RATE LIMITED: INITIATE PAYMENT ───
+    Route::post('/initiate', [PaymentController::class, 'initiate'])
+        ->name('initiate')
+        ->middleware('rate.limit:payment');
 
-    // ─── CHECKOUT ───
     Route::get('/checkout/{gateway}/{order}', [PaymentController::class, 'checkout'])->name('checkout');
 
     // ─── RETURN (Success) - GET ───

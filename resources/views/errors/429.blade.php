@@ -10,11 +10,18 @@
     <div class="error-page__code">429</div>
     <h1 class="error-page__title">Too Many Requests</h1>
     <p class="error-page__text">
-        You have made too many requests in a short period. Please wait a moment and try again.
+        {{ $message ?? 'You have made too many requests in a short period. Please wait a moment and try again.' }}
     </p>
 
+    @if(isset($retry_after))
+        <p class="error-page__text" style="font-size: 1.2rem; font-weight: 600; color: var(--gold);">
+            <i class="fas fa-clock"></i>
+            Please wait <strong>{{ $retry_after }}</strong> minute(s) before trying again.
+        </p>
+    @endif
+
     <div class="error-page__actions">
-        <a href="{{ url()->current() }}" class="btn btn--primary">
+        <a href="{{ url()->previous() }}" class="btn btn--primary">
             <i class="fas fa-redo"></i> Try Again
         </a>
         <a href="{{ route('home') }}" class="btn btn--secondary">
@@ -24,6 +31,6 @@
 
     <p class="error-page__help">
         <i class="fas fa-info-circle"></i>
-        Please wait a few minutes before making another request.
+        This limit is in place to protect our servers and ensure fair usage.
     </p>
 @endsection

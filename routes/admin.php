@@ -13,12 +13,13 @@ use App\Http\Controllers\Admin\CacheController;
 
 // Admin routes | dev & prod
 $adminRoutes = function () {
-    // Authentication
+    // ─── AUTHENTICATION (Rate Limited) ───
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('rate.limit:login');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    // Protected Routes
+    // ─── PROTECTED ROUTES ───
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
@@ -39,7 +40,7 @@ $adminRoutes = function () {
         Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
         Route::get('/events/{event}/registrations', [EventController::class, 'registrations'])->name('admin.events.registrations');
 
-        // ─── Registration Management ───
+        // ─── REGISTRATION MANAGEMENT ───
         Route::put('/events/registrations/{registration}', [EventController::class, 'updateRegistration'])->name('admin.events.registrations.update');
         Route::post('/events/registrations/{registration}/resend', [EventController::class, 'resendConfirmation'])->name('admin.events.registrations.resend');
 
