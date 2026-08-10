@@ -49,6 +49,7 @@ class EventController extends Controller
         if (session()->has($sessionKey)) {
             $pendingRegistration = session($sessionKey);
 
+            // ─── CHECK IF EXPIRED ───
             if (isset($pendingRegistration['expires_at']) && now()->gt($pendingRegistration['expires_at'])) {
                 session()->forget($sessionKey);
                 $pendingRegistration = null;
@@ -149,6 +150,7 @@ class EventController extends Controller
             session()->forget($sessionKey);
         }
         
+        // ─── RETURN TO EVENT PAGE WITH SUCCESS MESSAGE ───
         return redirect()->route('events.show', $eventSlug)
             ->with('success', 'Registration cleared. You can now register again.');
     }

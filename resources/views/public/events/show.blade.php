@@ -109,11 +109,13 @@
                         <a href="#" onclick="window.print()" class="btn btn--outline">
                             <i class="fas fa-print"></i> Print Details
                         </a>
-                        <form method="POST" action="{{ route('events.clear.registration') }}" style="display: inline;">
+                        
+                        {{-- ─── NEW REGISTRATION BUTTON ─── --}}
+                        <form method="POST" action="{{ route('events.clear.registration') }}" style="display: inline;" id="clearRegistrationForm">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
                             <input type="hidden" name="event_slug" value="{{ $event->slug }}">
-                            <button type="submit" class="btn btn--outline">
+                            <button type="submit" class="btn btn--outline" id="newRegistrationBtn">
                                 <i class="fas fa-redo"></i> New Registration
                             </button>
                         </form>
@@ -341,6 +343,41 @@
             const btnText = document.getElementById('registerBtnText');
             const btnLoader = document.getElementById('registerBtnLoader');
 
+            // ─── CHECK IF REGISTRATION SUCCESS IS ALREADY SHOWN ───
+            if (sessionStorage.getItem('registration_success_' + {{ $event->id ?? 0 }})) {
+                // ─── HIDE FORM AND SHOW SUCCESS ───
+                const formCard = document.querySelector('.event-detail__form-card');
+                if (formCard) {
+                    const fields = formCard.querySelectorAll('.event-detail__form-group');
+                    fields.forEach(function(field) {
+                        field.style.display = 'none';
+                    });
+                    const note = formCard.querySelector('.event-detail__form-note');
+                    if (note) note.style.display = 'none';
+                    const subtitle = formCard.querySelector('.event-detail__form-subtitle');
+                    if (subtitle) subtitle.style.display = 'none';
+                    const title = formCard.querySelector('.event-detail__form-title');
+                    if (title) title.style.display = 'none';
+                    if (submitBtn) submitBtn.style.display = 'none';
+                    
+                    // ─── SHOW A MESSAGE ───
+                    messageDiv.innerHTML = `
+                        <div class="registration-success">
+                            <div class="registration-success__icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h4 class="registration-success__title">Registration Complete!</h4>
+                            <p class="registration-success__message">You have already registered for this event.</p>
+                            <div class="registration-success__actions">
+                                <button onclick="window.location.reload()" class="btn btn--primary btn--sm">
+                                    <i class="fas fa-sync"></i> Refresh Status
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -370,6 +407,9 @@
                     })
                     .then(function(data) {
                         if (data.success) {
+                            // ─── STORE IN SESSION ───
+                            sessionStorage.setItem('registration_success_' + {{ $event->id ?? 0 }}, 'true');
+
                             // ─── BUILD CALENDAR LINK ───
                             const eventDate = new Date(data.event_date + 'T' + data.event_time);
                             const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
@@ -400,6 +440,9 @@
                                         <a href="${googleCalendarUrl}" target="_blank" class="btn btn--primary btn--sm">
                                             <i class="fas fa-calendar-plus"></i> Add to Google Calendar
                                         </a>
+                                        <button onclick="window.location.reload()" class="btn btn--secondary btn--sm">
+                                            <i class="fas fa-eye"></i> View Status
+                                        </button>
                                     </div>
                             `;
 
@@ -472,10 +515,10 @@
                                 }, 1000);
                             }
 
-                            // ─── RELOAD PAGE AFTER 3 SECONDS TO SHOW PENDING NOTICE ───
-                            setTimeout(function() {
-                                window.location.reload();
-                            }, 3000);
+                            // ─── RESET BUTTON ───
+                            submitBtn.disabled = false;
+                            btnText.style.display = 'inline';
+                            btnLoader.style.display = 'none';
                         }
                     })
                     .catch(function(error) {
@@ -486,8 +529,6 @@
                                 Error: ${error.message || 'Something went wrong. Please try again.'}
                             </div>
                         `;
-                    })
-                    .finally(function() {
                         submitBtn.disabled = false;
                         btnText.style.display = 'inline';
                         btnLoader.style.display = 'none';
