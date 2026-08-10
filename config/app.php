@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'Africa/Johannesburg',
+    'timezone' => env('APP_TIMEZONE', 'Africa/Johannesburg'),
 
     /*
     |--------------------------------------------------------------------------
@@ -125,12 +125,20 @@ return [
 
     'admin_domain' => env('ADMIN_DOMAIN', 'admin.localhost'),
 
-    'bank_name' => env('BANK_NAME', 'Nedbank'),
-    'bank_account_name' => env('BANK_ACCOUNT_NAME', 'The Collective'),
-    'bank_account_number' => env('BANK_ACCOUNT_NUMBER', '1234567890'),
-    'bank_branch_code' => env('BANK_BRANCH_CODE', '198765'),
+    /*
+    |--------------------------------------------------------------------------
+    | Banking Details
+    |--------------------------------------------------------------------------
+    |
+    | These settings control banking details shown for payments.
+    |
+    */
+    'bank_name' => env('BANK_NAME', ''),
+    'bank_account_name' => env('BANK_ACCOUNT_NAME', ''),
+    'bank_account_number' => env('BANK_ACCOUNT_NUMBER', ''),
+    'bank_branch_code' => env('BANK_BRANCH_CODE', ''),
 
-     /*
+    /*
     |--------------------------------------------------------------------------
     | Admin Notification Settings
     |--------------------------------------------------------------------------
@@ -138,9 +146,29 @@ return [
     | These settings control admin email notifications for various events.
     |
     */
-    'admin_email' => env('ADMIN_EMAIL', 'admin@mongalo.co.za'),
-    'admin_name' => env('ADMIN_NAME', 'The Collective Mongalo'),
+    'admin_email' => env('ADMIN_EMAIL', env('MAIL_FROM_ADDRESS', 'admin@example.com')),
+    'admin_name' => env('ADMIN_NAME', 'Admin'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Settings
+    |--------------------------------------------------------------------------
+    |
+    | These settings control contact information.
+    |
+    */
+    'app_contact_email' => env('CONTACT_EMAIL', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+    'app_contact_phone' => env('CONTACT_PHONE', '+27 71 461 1401'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | WhatsApp Community
+    |--------------------------------------------------------------------------
+    |
+    | These settings control the WhatsApp community invite URL.
+    |
+    */
+    'whatsapp_invite_url' => env('WHATSAPP_INVITE_URL', '#'),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,6 +194,7 @@ return [
         'global' => (int) env('RATE_LIMIT_GLOBAL', 60),
         'login' => (int) env('RATE_LIMIT_LOGIN', 5),
         'contact' => (int) env('RATE_LIMIT_CONTACT', 3),
+        'contact_get' => (int) env('RATE_LIMIT_CONTACT_GET', 30),
         'baptism' => (int) env('RATE_LIMIT_BAPTISM', 3),
         'invite' => (int) env('RATE_LIMIT_INVITE', 3),
         'payment' => (int) env('RATE_LIMIT_PAYMENT', 10),

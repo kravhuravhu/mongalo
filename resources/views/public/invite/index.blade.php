@@ -95,11 +95,6 @@
                 </div>
 
                 <div class="invite__form-wrapper">
-                    @if(session('success'))
-                        <div class="invite__form-success">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                        </div>
-                    @endif
 
                     <form method="POST" action="{{ route('invite.send') }}" class="form-loading">
                         @csrf

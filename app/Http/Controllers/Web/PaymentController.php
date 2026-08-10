@@ -7,6 +7,7 @@ use App\Mail\OrderConfirmation;
 use App\Models\Book;
 use App\Models\Order;
 use App\Services\PaymentService;
+use App\Services\PhoneService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -16,10 +17,12 @@ use Throwable;
 class PaymentController extends Controller
 {
     protected PaymentService $paymentService;
+    protected PhoneService $phoneService;
 
-    public function __construct(PaymentService $paymentService)
+    public function __construct(PaymentService $paymentService, PhoneService $phoneService)
     {
         $this->paymentService = $paymentService;
+        $this->phoneService = $phoneService;
     }
 
     /* ─── INITIATE PAYMENT ─── */
@@ -42,6 +45,7 @@ class PaymentController extends Controller
 
         $book = Book::findOrFail($request->book_id);
 
+        // ─── VALIDATE BOOK IS PURCHASABLE ───
         if ($book->is_free) {
             return response()->json([
                 'success' => false,
@@ -49,9 +53,23 @@ class PaymentController extends Controller
             ], 400);
         }
 
+        if (!$book->book_file) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This book is not available for purchase yet.',
+            ], 400);
+        }
+
+        if ($book->price <= 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid book price.',
+            ], 400);
+        }
+
         // ─── VALIDATE PHONE NUMBER ───
         $phone = $request->phone;
-        $validatedPhone = $this->validatePhone($phone);
+        $validatedPhone = $this->phoneService->validatePhone($phone);
 
         if (!$validatedPhone['valid']) {
             return response()->json([
@@ -142,8 +160,19 @@ class PaymentController extends Controller
             'session' => session()->all(),
         ]);
 
-        // ─── GET ORDER NUMBER FROM SESSION OR REQUEST ───
-        $orderNumber = session('payment_order_number') ?? $request->get('m_payment_id');
+        // ─── PRIORITIZE REQUEST DATA OVER SESSION ───
+        $orderNumber = $request->get('m_payment_id') 
+            ?? $request->get('order_number') 
+            ?? session('payment_order_number');
+        
+        if (!$orderNumber) {
+            // ─── CHECK RAW INPUT ───
+            $rawInput = file_get_contents('php://input');
+            if ($rawInput) {
+                parse_str($rawInput, $parsedData);
+                $orderNumber = $parsedData['m_payment_id'] ?? null;
+            }
+        }
         
         if (!$orderNumber) {
             Log::warning('No order number found in return');
@@ -216,7 +245,9 @@ class PaymentController extends Controller
             'data' => $request->all(),
         ]);
 
-        $orderNumber = $request->get('m_payment_id') ?? $request->get('order_number') ?? session('payment_order_number');
+        $orderNumber = $request->get('m_payment_id') 
+            ?? $request->get('order_number') 
+            ?? session('payment_order_number');
 
         // ─── CLEAR SESSION ───
         session()->forget(['payment_order_number', 'payment_status']);
@@ -379,73 +410,6 @@ class PaymentController extends Controller
         };
     }
 
-    /* ─── VALIDATE PHONE NUMBER ─── */
-    protected function validatePhone(?string $phone): array
-    {
-        // ─── IF NO PHONE PROVIDED, RETURN ERROR ───
-        if (empty($phone)) {
-            return [
-                'valid' => false,
-                'message' => 'Phone number is required for payment.',
-                'formatted' => null,
-            ];
-        }
-
-        // ─── REMOVE ALL NON-NUMERIC CHARACTERS ───
-        $cleaned = preg_replace('/[^0-9]/', '', $phone);
-
-        // ─── CHECK IF IT'S A VALID SA NUMBER ───
-        // SA numbers: 10 digits starting with 0[6-8] or 0[3-4]
-        // OR 11 digits starting with 27
-        $isValid = false;
-        $formatted = $phone;
-
-        // ─── CHECK 10-DIGIT SA NUMBER 0 CODE ───
-        if (strlen($cleaned) === 10 && preg_match('/^(0[6-8]|0[3-4])/', $cleaned)) {
-            $isValid = true;
-            // ─── FORMAT AS +27XXXXXXXXX ───
-            $formatted = '+27' . substr($cleaned, 1);
-        }
-
-        // ─── CHECK 11-DIGIT WITH 27 CODE ───
-        if (strlen($cleaned) === 11 && substr($cleaned, 0, 2) === '27') {
-            $isValid = true;
-            $formatted = '+' . $cleaned;
-        }
-
-        // ─── CHECK IF ALREADY HAS +27 ───
-        if (substr($phone, 0, 3) === '+27') {
-            $localDigits = preg_replace('/[^0-9]/', '', substr($phone, 3));
-            if (strlen($localDigits) === 9 && preg_match('/^[6-8][0-9]{8}$/', $localDigits)) {
-                $isValid = true;
-                $formatted = $phone;
-            }
-        }
-
-        // ─── CHECK IF ALREADY HAS + (international format) ───
-        if (substr($phone, 0, 1) === '+') {
-            $digits = preg_replace('/[^0-9]/', '', $phone);
-            if (strlen($digits) >= 10 && strlen($digits) <= 15) {
-                $isValid = true;
-                $formatted = $phone;
-            }
-        }
-
-        if (!$isValid) {
-            return [
-                'valid' => false,
-                'message' => 'Please enter a valid South African phone number (e.g., 071 461 1401 or +27 71 461 1401).',
-                'formatted' => null,
-            ];
-        }
-
-        return [
-            'valid' => true,
-            'message' => 'Phone number is valid.',
-            'formatted' => $formatted,
-        ];
-    }
-
     /* ─── VALIDATE EMAIL ─── */
     protected function validateEmail(string $email): array
     {
@@ -477,7 +441,7 @@ class PaymentController extends Controller
             'icloud.com' => 'icloud.com',
             'protonmail.com' => 'protonmail.com',
             'co.za' => 'co.za',
-            // Common typo
+            // Common typos
             'za' => 'co.za',
             'gmail.co' => 'gmail.com',
             'gmai.com' => 'gmail.com',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BaptismRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BaptismRequestController extends Controller
 {
@@ -49,15 +50,28 @@ class BaptismRequestController extends Controller
             'status' => 'required|in:pending,contacted,completed',
         ]);
 
+        $oldStatus = $baptismRequest->status;
+        $newStatus = $request->status;
+
         $baptismRequest->update([
-            'status' => $request->status,
+            'status' => $newStatus,
+        ]);
+
+        Log::info('Baptism request status updated by admin', [
+            'baptism_id' => $baptismRequest->id,
+            'name' => $baptismRequest->name,
+            'old_status' => $oldStatus,
+            'new_status' => $newStatus,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
         ]);
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Status updated successfully!',
-                'status' => $request->status,
+                'status' => $newStatus,
             ]);
         }
 

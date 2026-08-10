@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 class CacheController extends Controller
 {
@@ -51,12 +52,26 @@ class CacheController extends Controller
             $message = 'All cache cleared successfully!';
         }
 
+        Log::info('Cache cleared by admin', [
+            'type' => $type ?? 'all',
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->route('admin.cache.index')->with('success', $message);
     }
 
-    public function warm()
+    public function warm(Request $request)
     {
         Artisan::call('cache:warm');
+        
+        Log::info('Cache warmed by admin', [
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
+        ]);
+        
         return redirect()->route('admin.cache.index')->with('success', 'Cache warmed successfully!');
     }
 

@@ -115,9 +115,9 @@
                     &copy; {{ date('Y') }} {{ env('PROJECT_NAME', 'The Collective') }} &middot; Gauteng, South Africa
                 </p>
                 <p style="font-size: 10px; color: #6a6a7a; margin: 0;">
-                    <a href="mailto:{{ config('app.admin_email') }}" style="color: #4A9E9E; text-decoration: none;">{{ config('app.admin_email') }}</a>
+                    <a href="mailto:{{ config('app.admin_email', 'admin@example.com') }}" style="color: #4A9E9E; text-decoration: none;">{{ config('app.admin_email', 'admin@example.com') }}</a>
                     <span style="color: rgba(166, 124, 78, 0.12); margin: 0 6px;">&middot;</span>
-                    <a href="tel:+27714611401" style="color: #4A9E9E; text-decoration: none;">+27 71 461 1401</a>
+                    <a href="tel:{{ config('app.app_contact_phone', '+27 71 461 1401') }}" style="color: #4A9E9E; text-decoration: none;">{{ config('app.app_contact_phone', '+27 71 461 1401') }}</a>
                 </p>
             </td>
         </tr>

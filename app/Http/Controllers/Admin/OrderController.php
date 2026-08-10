@@ -86,7 +86,9 @@ class OrderController extends Controller
             'order_number' => $order->order_number,
             'old_status' => $oldStatus,
             'new_status' => $newStatus,
-            'admin' => session('admin_name', 'Admin'),
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
         ]);
 
         if ($request->ajax()) {
@@ -102,14 +104,16 @@ class OrderController extends Controller
             ->with('success', 'Order status updated successfully!');
     }
 
-    public function destroy(Order $order)
+    public function destroy(Order $order, Request $request)
     {
         $orderNumber = $order->order_number;
         $order->delete();
 
         Log::info('Order deleted by admin', [
             'order_number' => $orderNumber,
-            'admin' => session('admin_name', 'Admin'),
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
         ]);
 
         return redirect()->route('admin.orders.index')

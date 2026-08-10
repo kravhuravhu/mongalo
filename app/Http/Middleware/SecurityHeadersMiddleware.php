@@ -26,6 +26,19 @@ class SecurityHeadersMiddleware
         // ─── REFERRER POLICY ───
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
+        // ─── CONTENT SECURITY POLICY ───
+        $response->headers->set('Content-Security-Policy', 
+            "default-src 'self'; " .
+            "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.google.com https://cdn.jsdelivr.net; " .
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; " .
+            "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " .
+            "img-src 'self' data: https:; " .
+            "connect-src 'self'; " .
+            "frame-src 'self' https://www.google.com; " .
+            "object-src 'none'; " .
+            "base-uri 'self';"
+        );
+
         // ─── PREVENT CACHING OF SENSITIVE PAGES ───
         if ($request->is('admin/*') || $request->is('payment/*') || $request->is('checkout/*')) {
             $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');

@@ -70,4 +70,73 @@ class PhoneService
         
         return false;
     }
+
+    /**
+     * Validate phone number with detailed response
+     */
+    public function validatePhone(?string $phone): array
+    {
+        // ─── IF NO PHONE PROVIDED, RETURN ERROR ───
+        if (empty($phone)) {
+            return [
+                'valid' => false,
+                'message' => 'Phone number is required.',
+                'formatted' => null,
+            ];
+        }
+
+        // ─── REMOVE ALL NON-NUMERIC CHARACTERS ───
+        $cleaned = preg_replace('/[^0-9]/', '', $phone);
+
+        // ─── CHECK IF IT'S A VALID SA NUMBER ───
+        // SA numbers: 10 digits starting with 0[6-8] or 0[3-4]
+        // OR 11 digits starting with 27
+        $isValid = false;
+        $formatted = $phone;
+
+        // ─── CHECK 10-DIGIT SA NUMBER 0 CODE ───
+        if (strlen($cleaned) === 10 && preg_match('/^(0[6-8]|0[3-4])/', $cleaned)) {
+            $isValid = true;
+            // ─── FORMAT AS +27XXXXXXXXX ───
+            $formatted = '+27' . substr($cleaned, 1);
+        }
+
+        // ─── CHECK 11-DIGIT WITH 27 CODE ───
+        if (strlen($cleaned) === 11 && substr($cleaned, 0, 2) === '27') {
+            $isValid = true;
+            $formatted = '+' . $cleaned;
+        }
+
+        // ─── CHECK IF ALREADY HAS +27 ───
+        if (substr($phone, 0, 3) === '+27') {
+            $localDigits = preg_replace('/[^0-9]/', '', substr($phone, 3));
+            if (strlen($localDigits) === 9 && preg_match('/^[6-8][0-9]{8}$/', $localDigits)) {
+                $isValid = true;
+                $formatted = $phone;
+            }
+        }
+
+        // ─── CHECK IF ALREADY HAS + (international format) ───
+        if (substr($phone, 0, 1) === '+') {
+            $digits = preg_replace('/[^0-9]/', '', $phone);
+            if (strlen($digits) >= 10 && strlen($digits) <= 15) {
+                $isValid = true;
+                $formatted = $phone;
+            }
+        }
+
+        if (!$isValid) {
+            return [
+                'valid' => false,
+                'message' => 'Please enter a valid South African phone number (e.g., 071 461 1401 or +27 71 461 1401).',
+                'formatted' => null,
+            ];
+        }
+
+        return [
+            'valid' => true,
+            'message' => 'Phone number is valid.',
+            'formatted' => $formatted,
+        ];
+    }
 }

@@ -137,11 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ─── WHATSAPP POPUP ───
 const COOKIE_NAME = 'whatsapp_popup_dismissed';
-const SESSION_KEY = 'whatsapp_popup_shown';
-let isPopupMinimized = false;
-let autoMinimizeTimer = null;
-let countdownTimer = null;
-let countdownSeconds = 15;
 
 function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -154,119 +149,30 @@ function setCookie(name, value, minutes) {
     document.cookie = name + '=' + value + '; expires=' + date.toUTCString() + '; path=/; SameSite=Lax';
 }
 
-function showWhatsAppPopup() {
-    // ─── CHECK COOKIE ───
-    if (getCookie(COOKIE_NAME) === 'dismissed') {
-        return;
-    }
-
-    // ─── CHECK SESSION ───
-    if (sessionStorage.getItem(SESSION_KEY)) {
-        // ─── SHOW MINIMIZED BADGE IF SESSION EXISTS ───
-        const minimized = document.getElementById('whatsappPopupMinimized');
-        if (minimized) {
-            minimized.style.display = 'flex';
-        }
-        return;
-    }
-
+function initWhatsAppPopup() {
+    const isDismissed = getCookie(COOKIE_NAME) === 'dismissed';
     const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
     const isMobile = window.innerWidth <= 520;
 
-    if (popup) {
-        popup.classList.add('show');
-        popup.classList.remove('whatsapp-popup--minimized');
-        isPopupMinimized = false;
-
-        // ─── START COUNTDOWN ───
-        startCountdown();
-
-        // ─── AUTO-MINIMIZE AFTER COUNTDOWN ───
-        if (autoMinimizeTimer) {
-            clearTimeout(autoMinimizeTimer);
-        }
-        autoMinimizeTimer = setTimeout(function() {
-            minimizeWhatsAppPopup();
-        }, countdownSeconds * 1000);
-
-        // ─── MARK SESSION AS SHOWN ───
-        sessionStorage.setItem(SESSION_KEY, 'true');
-    }
-    if (minimized) {
-        minimized.style.display = 'flex';
-    }
-}
-
-function startCountdown() {
-    const countdownEl = document.getElementById('whatsappCountdown');
-    const badgeEl = document.getElementById('whatsappMinimizedBadge');
-
-    if (!countdownEl) return;
-
-    // ─── RESET COUNTDOWN TO 15 SECONDS ───
-    countdownSeconds = 15;
-    countdownEl.textContent = countdownSeconds;
-    countdownEl.classList.remove('whatsapp-popup__timer-countdown--warning');
-
-    if (badgeEl) {
-        badgeEl.textContent = countdownSeconds + 's';
+    // ─── IF DISMISSED, HIDE EVERYTHING ───
+    if (isDismissed) {
+        if (popup) popup.style.display = 'none';
+        if (minimized) minimized.style.display = 'none';
+        return;
     }
 
-    // ─── CLEAR EXISTING TIMER ───
-    if (countdownTimer) {
-        clearInterval(countdownTimer);
+    // ─── MOBILE: SHOW ONLY MINIMIZED BADGE ───
+    if (isMobile) {
+        if (minimized) minimized.style.display = 'flex';
+        return;
     }
 
-    // ─── START COUNTDOWN ───
-    countdownTimer = setInterval(function() {
-        countdownSeconds--;
-
-        if (countdownEl) {
-            countdownEl.textContent = countdownSeconds;
-
-            // ─── WARNING STATE (last 5 seconds) ───
-            if (countdownSeconds <= 5) {
-                countdownEl.classList.add('whatsapp-popup__timer-countdown--warning');
-            } else {
-                countdownEl.classList.remove('whatsapp-popup__timer-countdown--warning');
-            }
-        }
-
-        if (badgeEl) {
-            badgeEl.textContent = countdownSeconds + 's';
-        }
-
-        // ─── WHEN COUNTDOWN REACHES 0 ───
-        if (countdownSeconds <= 0) {
-            clearInterval(countdownTimer);
-            countdownTimer = null;
-
-            if (countdownEl) {
-                countdownEl.textContent = '0';
-            }
-            if (badgeEl) {
-                badgeEl.textContent = '0s';
-            }
-
-            // ─── AUTO-MINIMIZE ───
-            minimizeWhatsAppPopup();
-        }
-    }, 1000);
-}
-
-function hideWhatsAppPopup() {
-    const popup = document.getElementById('whatsappPopup');
-    if (popup) {
-        popup.classList.remove('show');
-        popup.classList.remove('whatsapp-popup--minimized');
-    }
-    if (autoMinimizeTimer) {
-        clearTimeout(autoMinimizeTimer);
-    }
-    if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
+    // ─── DESKTOP: SHOW POPUP AFTER DELAY ───
+    if (!isDismissed) {
+        setTimeout(function() {
+            if (popup) popup.classList.add('show');
+        }, 3000);
     }
 }
 
@@ -276,27 +182,9 @@ function minimizeWhatsAppPopup() {
 
     if (popup) {
         popup.classList.remove('show');
-        popup.classList.add('whatsapp-popup--minimized');
-        isPopupMinimized = true;
     }
-
-    // ─── ALWAYS SHOW MINIMIZED BADGE ───
     if (minimized) {
         minimized.style.display = 'flex';
-        // ─── REMOVE SECONDS FROM BADGE ───
-        const badge = document.getElementById('whatsappMinimizedBadge');
-        if (badge) {
-            badge.textContent = '';
-        }
-    }
-
-    if (autoMinimizeTimer) {
-        clearTimeout(autoMinimizeTimer);
-        autoMinimizeTimer = null;
-    }
-    if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
     }
 }
 
@@ -304,60 +192,27 @@ function restoreWhatsAppPopup() {
     const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
 
-    // ─── CHECK IF POPUP EXISTS ───
-    if (!popup) {
-        console.warn('WhatsApp popup element not found');
-        return;
-    }
-
     // ─── CHECK IF DISMISSED ───
     if (getCookie(COOKIE_NAME) === 'dismissed') {
-        if (minimized) {
-            minimized.style.display = 'none';
-        }
+        if (minimized) minimized.style.display = 'none';
         return;
     }
 
     // ─── RESTORE POPUP ───
-    popup.classList.remove('whatsapp-popup--minimized');
-    popup.classList.add('show');
-    isPopupMinimized = false;
-
-    // ─── HIDE MINIMIZED BADGE ───
+    if (popup) {
+        popup.classList.add('show');
+    }
     if (minimized) {
         minimized.style.display = 'none';
     }
-
-    // ─── RESTART COUNTDOWN ───
-    if (!countdownTimer) {
-        startCountdown();
-    }
-
-    // ─── RESET AUTO-MINIMIZE TIMER ───
-    if (autoMinimizeTimer) {
-        clearTimeout(autoMinimizeTimer);
-        autoMinimizeTimer = null;
-    }
-    autoMinimizeTimer = setTimeout(function() {
-        minimizeWhatsAppPopup();
-    }, countdownSeconds * 1000);
 }
 
 function dismissPopup() {
     setCookie(COOKIE_NAME, 'dismissed', 999999);
-    hideWhatsAppPopup();
+    const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
-    if (minimized) {
-        minimized.style.display = 'none';
-    }
-    if (autoMinimizeTimer) {
-        clearTimeout(autoMinimizeTimer);
-        autoMinimizeTimer = null;
-    }
-    if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
-    }
+    if (popup) popup.style.display = 'none';
+    if (minimized) minimized.style.display = 'none';
 }
 
 function remindLater() {
@@ -366,68 +221,19 @@ function remindLater() {
 
 function joinCommunity() {
     setCookie(COOKIE_NAME, 'dismissed', 999999);
-    hideWhatsAppPopup();
+    const popup = document.getElementById('whatsappPopup');
     const minimized = document.getElementById('whatsappPopupMinimized');
-    if (minimized) {
-        minimized.style.display = 'none';
-    }
-    if (autoMinimizeTimer) {
-        clearTimeout(autoMinimizeTimer);
-        autoMinimizeTimer = null;
-    }
-    if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
+    if (popup) popup.style.display = 'none';
+    if (minimized) minimized.style.display = 'none';
+    // Open WhatsApp link
+    const whatsappUrl = document.querySelector('.whatsapp-popup__actions .btn--primary')?.href;
+    if (whatsappUrl && whatsappUrl !== '#') {
+        window.open(whatsappUrl, '_blank');
     }
 }
 
 // ─── SHOW WHATSAPP POPUP ON PAGE LOAD ───
-document.addEventListener('DOMContentLoaded', function() {
-    // ─── CHECK COOKIE ───
-    const cookie = getCookie(COOKIE_NAME);
-    const sessionShown = sessionStorage.getItem(SESSION_KEY);
-    const isMobile = window.innerWidth <= 520;
-
-    // ─── IF DISMISSED, HIDE EVERYTHING ───
-    if (cookie === 'dismissed') {
-        const minimized = document.getElementById('whatsappPopupMinimized');
-        if (minimized) {
-            minimized.style.display = 'none';
-        }
-        return;
-    }
-
-    // ─── ON MOBILE: SHOW MINIMIZED BADGE ONLY ───
-    if (isMobile) {
-        const minimized = document.getElementById('whatsappPopupMinimized');
-        if (minimized) {
-            minimized.style.display = 'flex';
-            // ─── REMOVE SECONDS FROM BADGE ───
-            const badge = document.getElementById('whatsappMinimizedBadge');
-            if (badge) {
-                badge.textContent = '';
-            }
-        }
-        sessionStorage.setItem(SESSION_KEY, 'true');
-        return;
-    }
-
-    // ─── IF SESSION ALREADY SHOWN, SHOW MINIMIZED BADGE ───
-    if (sessionShown) {
-        const minimized = document.getElementById('whatsappPopupMinimized');
-        if (minimized) {
-            minimized.style.display = 'flex';
-            const badge = document.getElementById('whatsappMinimizedBadge');
-            if (badge) {
-                badge.textContent = '';
-            }
-        }
-        return;
-    }
-
-    // ─── DESKTOP ───
-    setTimeout(showWhatsAppPopup, 3000);
-});
+document.addEventListener('DOMContentLoaded', initWhatsAppPopup);
 
 // ─── ADD TO CALENDAR ───
 function addToCalendar(eventId) {
@@ -452,7 +258,9 @@ document.addEventListener('DOMContentLoaded', function() {
             this.appendChild(ripple);
             
             setTimeout(() => {
-                ripple.remove();
+                if (ripple.parentNode) {
+                    ripple.remove();
+                }
             }, 600);
         });
     });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\InviteRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InviteRequestController extends Controller
 {
@@ -49,15 +50,29 @@ class InviteRequestController extends Controller
             'status' => 'required|in:pending,contacted,confirmed',
         ]);
 
+        $oldStatus = $invite->status;
+        $newStatus = $request->status;
+
         $invite->update([
-            'status' => $request->status,
+            'status' => $newStatus,
+        ]);
+
+        Log::info('Invite request status updated by admin', [
+            'invite_id' => $invite->id,
+            'name' => $invite->name,
+            'event_name' => $invite->event_name,
+            'old_status' => $oldStatus,
+            'new_status' => $newStatus,
+            'admin_id' => session('admin_id'),
+            'admin_name' => session('admin_name'),
+            'ip' => $request->ip(),
         ]);
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Status updated successfully!',
-                'status' => $request->status,
+                'status' => $newStatus,
             ]);
         }
 

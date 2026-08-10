@@ -263,4 +263,236 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, { passive: true });
     }
+
+    // ─── PENDING REGISTRATION HANDLING ───
+    // This handles the pending registration notice display
+    // and form submission for event registration
+    const form = document.getElementById('eventRegistrationForm');
+    const messageDiv = document.getElementById('registrationMessage');
+    const submitBtn = document.getElementById('registerBtn');
+    const btnText = document.getElementById('registerBtnText');
+    const btnLoader = document.getElementById('registerBtnLoader');
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // ─── SHOW LOADING ───
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                if (btnText) btnText.style.display = 'none';
+                if (btnLoader) btnLoader.style.display = 'inline';
+            }
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            })
+            .then(function(response) {
+                // ─── CHECK IF RESPONSE IS JSON ───
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Server returned HTML instead of JSON.');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.success) {
+                    // ─── SAVE TO LOCALSTORAGE ───
+                    const STORAGE_KEY = 'pending_registration_' + data.registration_data.event_id;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data.registration_data));
+
+                    // ─── SHOW SUCCESS MESSAGE ───
+                    if (messageDiv) {
+                        let html = `
+                            <div class="registration-success">
+                                <div class="registration-success__icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4 class="registration-success__title">Registration Successful!</h4>
+                                <p class="registration-success__message">${data.message}</p>
+                                <div class="registration-success__id">
+                                    <strong>Registration ID:</strong> ${data.registration_id}
+                                </div>
+                                <div class="registration-success__actions">
+                                    <button onclick="window.location.reload()" class="btn btn--secondary btn--sm">
+                                        <i class="fas fa-eye"></i> View Status
+                                    </button>
+                                </div>
+                        `;
+
+                        if (!data.is_free && data.banking_details) {
+                            html += `
+                                <div class="registration-success__banking">
+                                    <h5>Banking Details</h5>
+                                    <div class="registration-success__banking-grid">
+                                        <div>
+                                            <span class="label">Bank</span>
+                                            <span class="value">${data.banking_details.bank}</span>
+                                        </div>
+                                        <div>
+                                            <span class="label">Account Name</span>
+                                            <span class="value">${data.banking_details.account_name}</span>
+                                        </div>
+                                        <div>
+                                            <span class="label">Account Number</span>
+                                            <span class="value">${data.banking_details.account_number}</span>
+                                        </div>
+                                        <div>
+                                            <span class="label">Branch Code</span>
+                                            <span class="value">${data.banking_details.branch_code}</span>
+                                        </div>
+                                        <div style="grid-column: 1 / -1;">
+                                            <span class="label">Reference</span>
+                                            <span class="value" style="font-weight: 700; color: var(--gold);">${data.banking_details.reference}</span>
+                                        </div>
+                                        <div style="grid-column: 1 / -1; text-align: center; font-weight: 600; font-size: 1.1rem; padding-top: 8px; border-top: 1px solid rgba(21, 87, 36, 0.1);">
+                                            Amount: R${data.amount}
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <i class="fas fa-info-circle"></i> 
+                                        Please use your Registration ID as reference when making payment.
+                                    </p>
+                                </div>
+                            `;
+                        }
+
+                        html += `</div>`;
+                        messageDiv.innerHTML = html;
+                    }
+
+                    // ─── HIDE FORM ───
+                    const formCard = document.getElementById('registrationFormCard');
+                    if (formCard) {
+                        const fields = formCard.querySelectorAll('.event-detail__form-group');
+                        fields.forEach(function(field) {
+                            field.style.display = 'none';
+                        });
+                        const note = formCard.querySelector('.event-detail__form-note');
+                        if (note) note.style.display = 'none';
+                        const subtitle = formCard.querySelector('.event-detail__form-subtitle');
+                        if (subtitle) subtitle.style.display = 'none';
+                        const title = formCard.querySelector('.event-detail__form-title');
+                        if (title) title.style.display = 'none';
+                        if (submitBtn) submitBtn.style.display = 'none';
+                    }
+
+                    // ─── SHOW WHATSAPP POPUP ───
+                    if (data.show_whatsapp) {
+                        setTimeout(function() {
+                            const popup = document.getElementById('whatsappPopup');
+                            if (popup) {
+                                popup.classList.add('show');
+                            }
+                        }, 1000);
+                    }
+
+                    // ─── RESET BUTTON ───
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        if (btnText) btnText.style.display = 'inline';
+                        if (btnLoader) btnLoader.style.display = 'none';
+                    }
+                } else {
+                    // ─── HANDLE DUPLICATE REGISTRATION ───
+                    if (data.existing) {
+                        // ─── SHOW THAT USER IS ALREADY REGISTERED ───
+                        if (messageDiv) {
+                            messageDiv.innerHTML = `
+                                <div class="registration-error" style="background: #fff3cd; color: #856404; border-left-color: #e8a838;">
+                                    <i class="fas fa-info-circle"></i>
+                                    <div>
+                                        <strong>${data.message}</strong>
+                                        <br>
+                                        <span style="font-size: 0.85rem;">Registration ID: ${data.registration_id}</span>
+                                        <br>
+                                        <button onclick="window.location.reload()" class="btn btn--primary btn--sm" style="margin-top: 8px;">
+                                            <i class="fas fa-eye"></i> View Status
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        // ─── HANDLE OTHER ERRORS ───
+                        let errorMessage = data.message || 'Something went wrong. Please try again.';
+                        
+                        if (data.field === 'phone') {
+                            const phoneInput = document.getElementById('phone');
+                            if (phoneInput) {
+                                phoneInput.style.borderColor = '#dc3545';
+                                phoneInput.focus();
+                                phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }
+                        
+                        if (data.field === 'email') {
+                            const emailInput = document.getElementById('email');
+                            if (emailInput) {
+                                emailInput.style.borderColor = '#dc3545';
+                                emailInput.focus();
+                                emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }
+
+                        if (messageDiv) {
+                            messageDiv.innerHTML = `
+                                <div class="registration-error">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    ${errorMessage}
+                                </div>
+                            `;
+                        }
+                    }
+
+                    // ─── RESET BUTTON ───
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        if (btnText) btnText.style.display = 'inline';
+                        if (btnLoader) btnLoader.style.display = 'none';
+                    }
+                }
+            })
+            .catch(function(error) {
+                console.error('Registration error:', error);
+                
+                if (messageDiv) {
+                    messageDiv.innerHTML = `
+                        <div class="registration-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Error: ${error.message || 'Something went wrong. Please try again.'}
+                        </div>
+                    `;
+                }
+                
+                // ─── RESET BUTTON ───
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    if (btnText) btnText.style.display = 'inline';
+                    if (btnLoader) btnLoader.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // ─── CLEAR REGISTRATION FORM ───
+    const clearForm = document.getElementById('clearRegistrationForm');
+    if (clearForm) {
+        clearForm.addEventListener('submit', function(e) {
+            // ─── CLEAR LOCALSTORAGE BEFORE SUBMIT ───
+            const eventId = this.querySelector('input[name="event_id"]')?.value;
+            if (eventId) {
+                const STORAGE_KEY = 'pending_registration_' + eventId;
+                localStorage.removeItem(STORAGE_KEY);
+            }
+        });
+    }
 });

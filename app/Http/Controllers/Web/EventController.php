@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationConfirmation;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -54,6 +55,39 @@ class EventController extends Controller
 
         $event = Event::findOrFail($request->event_id);
 
+        // ─── CHECK FOR DUPLICATE REGISTRATION ───
+        $existing = EventRegistration::where('event_id', $request->event_id)
+            ->where('email', $request->email)
+            ->where(function($q) {
+                $q->whereNull('expires_at')
+                  ->orWhere('expires_at', '>', now());
+            })
+            ->first();
+        
+        if ($existing) {
+            Log::info('Duplicate registration attempt', [
+                'event_id' => $request->event_id,
+                'email' => $request->email,
+                'existing_registration_id' => $existing->registration_id,
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'You are already registered for this event. Check your email for confirmation.',
+                'existing' => true,
+                'registration_id' => $existing->registration_id,
+                'registration_data' => [
+                    'registration_id' => $existing->registration_id,
+                    'name' => $existing->name,
+                    'email' => $existing->email,
+                    'phone' => $existing->phone,
+                    'payment_status' => $existing->payment_status,
+                    'event_id' => $event->id,
+                    'event_slug' => $event->slug,
+                ],
+            ], 409);
+        }
+
         $isFree = $event->is_free ?? true;
         $amount = $event->price ?? 0;
 
@@ -67,11 +101,14 @@ class EventController extends Controller
             'payment_status' => $isFree ? 'free' : 'pending',
         ]);
 
+        // ─── CLEAR EVENT CACHE ───
+        $event->clearModelCache('event');
+
         // ─── SEND CONFIRMATION EMAIL ───
         try {
             Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
         } catch (\Exception $e) {
-            \Log::error('Failed to send registration email: ' . $e->getMessage());
+            Log::error('Failed to send registration email: ' . $e->getMessage());
         }
 
         // ─── BUILD RESPONSE WITH REGISTRATION DATA ───
@@ -115,6 +152,12 @@ class EventController extends Controller
             $response['registration_data']['banking_details'] = $response['banking_details'];
         }
 
+        Log::info('Event registration created', [
+            'event_id' => $event->id,
+            'registration_id' => $registration->registration_id,
+            'email' => $request->email,
+        ]);
+
         return response()->json($response);
     }
 
@@ -123,7 +166,9 @@ class EventController extends Controller
         $eventId = $request->input('event_id');
         $eventSlug = $request->input('event_slug');
         
+        // ─── ADD CACHE-BUSTING PARAMETER ───
         return redirect()->route('events.show', $eventSlug)
-            ->with('success', 'Registration cleared. You can now register again.');
+            ->with('success', 'Registration cleared. You can now register again.')
+            ->with('_nocache', time());
     }
 }

@@ -47,6 +47,9 @@ class ContactController extends Controller
         // ─── SEND ADMIN NOTIFICATION ───
         $this->notificationService->notifyNewContact($message);
 
-        return redirect()->route('contact')->with('success', 'Your message has been sent. We will get back to you within 24 hours!');
+        // ─── ADD CACHE-BUSTING PARAMETER ───
+        return redirect()->route('contact')
+            ->with('success', 'Your message has been sent. We will get back to you within 24 hours!')
+            ->with('_nocache', time());
     }
 }
