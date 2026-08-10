@@ -49,6 +49,9 @@
                     R{{ number_format($event->price ?? 0, 2) }} per person
                 @endif
             </span>
+            <a href="{{ route('admin.export.registrations', ['event_id' => $event->id]) }}" class="btn btn--success btn--sm">
+                <i class="fas fa-download"></i> Export CSV
+            </a>
         </div>
     </div>
 
@@ -172,7 +175,7 @@
             <span class="events-registrations__export-label">
                 <i class="fas fa-download"></i> Export:
             </span>
-            <a href="#" class="btn btn--secondary btn--sm">
+            <a href="{{ route('admin.export.registrations') }}" class="btn btn--secondary btn--sm">
                 <i class="fas fa-file-csv"></i> CSV
             </a>
         </div>
