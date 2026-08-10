@@ -199,7 +199,7 @@
                                     </div>
                                     <div>
                                         <span class="label">Status</span>
-                                        <span class="badge badge-pending">
+                                        <span>
                                             @if($pendingRegistration['payment_status'] === 'paid' || $pendingRegistration['is_free'])
                                                 <span class="badge badge-completed">Confirmed</span>
                                             @else
@@ -208,10 +208,13 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="event-detail__form-status-note">
-                                    <i class="fas fa-info-circle"></i>
-                                    Banking details are shown above. Please complete payment to confirm your spot.
-                                </div>
+                                {{-- ─── ONLY SHOW BANKING NOTE IF PAID EVENT ─── --}}
+                                @if(!$pendingRegistration['is_free'] && $pendingRegistration['payment_status'] === 'pending')
+                                    <div class="event-detail__form-status-note">
+                                        <i class="fas fa-info-circle"></i>
+                                        Banking details are shown above. Please complete payment to confirm your spot.
+                                    </div>
+                                @endif
                             </div>
                         @else
                             {{-- ─── SHOW FORM ─── --}}

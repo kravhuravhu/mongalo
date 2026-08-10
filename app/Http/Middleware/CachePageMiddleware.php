@@ -160,13 +160,48 @@ class CachePageMiddleware
         }
 
         // ─── CHECK FOR SESSION DATA ───
-        if (session()->has('payment_order_number') || session()->has('pending_registration')) {
+        if (session()->has('payment_order_number') || session()->has('payment_status')) {
             return false;
         }
 
-        // ─── CHECK FOR FLASH MESSAGES ───
-        if (session()->has('success') || session()->has('error') || session()->has('warning')) {
+        // ─── CHECK FOR PENDING REGISTRATION ───
+        if (session()->has('pending_registration_')) {
             return false;
+        }
+
+        // ─── CHECK FOR ANY PENDING REGISTRATION IN SESSION ───
+        $sessionKeys = session()->all();
+        foreach (array_keys($sessionKeys) as $key) {
+            if (str_starts_with($key, 'pending_registration_')) {
+                return false;
+            }
+        }
+
+        // ─── CHECK FOR FLASH MESSAGES ───
+        if (session()->has('success') || session()->has('error') || session()->has('warning') || session()->has('info')) {
+            return false;
+        }
+
+        // ─── CHECK FOR USER-SPECIFIC DATA ───
+        $sessionKeys = session()->all();
+        $excludedSessionKeys = [
+            '_token',
+            '_previous',
+            '_flash',
+            '_old_input',
+            'login_web_59ba36addc2b2f9401580f014c7f58ea4e30989d', // Laravel's session auth key
+        ];
+        
+        foreach (array_keys($sessionKeys) as $key) {
+            if (str_starts_with($key, 'pending_registration_')) {
+                return false;
+            }
+            if (str_starts_with($key, 'payment_')) {
+                return false;
+            }
+            if (str_starts_with($key, 'cart_')) {
+                return false;
+            }
         }
 
         return true;
