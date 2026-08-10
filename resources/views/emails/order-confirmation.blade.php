@@ -31,7 +31,7 @@
         <tr>
             <td>
                 <h2 style="font-family: 'Georgia', serif; font-weight: 700; font-size: 22px; color: #1a1a2e; margin: 0 0 4px 0;">Order Confirmation</h2>
-                <p style="color: #6a6a7a; font-size: 15px; margin: 0 0 16px 0;">
+                <p style="color: #6a6a7a; font-size: 15px; margin: 0 0 16px 0; line-height: 1.7;">
                     Hello <strong style="color: #1a1a2e;">{{ $buyerName }}</strong>,
                 </p>
                 <p style="color: #6a6a7a; font-size: 15px; margin: 0 0 20px 0; line-height: 1.7;">
@@ -46,30 +46,30 @@
 
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                 <tr>
-                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Order Number</td>
-                                    <td style="font-weight: 600; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #a67c4e; font-family: monospace;">{{ $orderNumber }}</td>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Order Number</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; font-family: monospace; color: #a67c4e;">{{ $orderNumber }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Book</td>
-                                    <td style="font-weight: 600; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right;">{{ $book->title }}</td>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Book</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #1a1a2e;">{{ $book->title }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Amount Paid</td>
-                                    <td style="font-weight: 700; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #a67c4e;">R{{ number_format($order->amount, 2) }}</td>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Amount Paid</td>
+                                    <td style="font-weight: 700; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #a67c4e;">R{{ number_format($order->amount, 2) }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Status</td>
-                                    <td style="font-weight: 600; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right;">
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Status</td>
+                                    <td style="font-weight: 600; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right;">
                                         <span style="display: inline-block; padding: 2px 12px; border-radius: 50px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background: #d4edda; color: #155724;">Paid</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Purchase Date</td>
-                                    <td style="font-weight: 500; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #6a6a7a;">{{ $order->created_at->format('F d, Y g:i A') }}</td>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06);">Purchase Date</td>
+                                    <td style="font-weight: 500; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(166, 124, 78, 0.06); text-align: right; color: #6a6a7a;">{{ $order->created_at->format('F d, Y H:i') }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding-top: 4px;">Email</td>
-                                    <td style="font-weight: 500; font-size: 13px; padding-top: 4px; text-align: right; color: #6a6a7a;">{{ $buyerEmail }}</td>
+                                    <td style="color: #6a6a7a; font-weight: 500; font-size: 13px; padding: 6px 0;">Email</td>
+                                    <td style="font-weight: 500; font-size: 13px; padding: 6px 0; text-align: right; color: #6a6a7a;">{{ $buyerEmail }}</td>
                                 </tr>
                             </table>
                         </td>
@@ -82,7 +82,7 @@
                         <td align="center">
                             <div style="font-size: 38px; color: #a67c4e; opacity: 0.3; margin-bottom: 8px;">&#128196;</div>
                             <h4 style="font-family: 'Georgia', serif; font-weight: 700; font-size: 18px; color: #1a1a2e; margin: 0 0 4px 0;">Download Your Book</h4>
-                            <p style="color: #6a6a7a; font-size: 14px; margin: 0 0 16px 0;">
+                            <p style="color: #6a6a7a; font-size: 14px; margin: 0 0 16px 0; line-height: 1.6;">
                                 Click the button below to download <strong style="color: #1a1a2e;">{{ $book->title }}</strong> instantly.
                             </p>
                             <a href="{{ $downloadUrl }}" style="display: inline-block; padding: 12px 36px; border-radius: 50px; background: #a67c4e; color: #ffffff; font-weight: 600; font-size: 15px; text-decoration: none; border: none; cursor: pointer; text-align: center;">
