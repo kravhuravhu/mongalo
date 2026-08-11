@@ -37,8 +37,8 @@
         </div>
     </div>
 
-    {{-- ─── FLASH MESSAGES ─── --}}
-    @if(session('success'))
+    {{-- ─── FLASH MESSAGES (PHP VERSION - ONLY USED WHEN CACHE IS ENABLED) ─── --}}
+    @if(session('success') && env('PAGE_CACHE_ENABLED', true))
         <div class="flash-message-app flash-message-app--success" id="flashMessageApp" data-auto-dismiss="10000">
             <i class="fas fa-check-circle"></i>
             <span>{{ session('success') }}</span>
@@ -46,7 +46,7 @@
         </div>
     @endif
 
-    @if(session('error'))
+    @if(session('error') && env('PAGE_CACHE_ENABLED', true))
         <div class="flash-message-app flash-message-app--error" id="flashMessageApp" data-auto-dismiss="10000">
             <i class="fas fa-exclamation-circle"></i>
             <span>{{ session('error') }}</span>
@@ -54,12 +54,77 @@
         </div>
     @endif
 
-    @if(session('warning'))
+    @if(session('warning') && env('PAGE_CACHE_ENABLED', true))
         <div class="flash-message-app flash-message-app--warning" id="flashMessageApp" data-auto-dismiss="10000">
             <i class="fas fa-exclamation-triangle"></i>
             <span>{{ session('warning') }}</span>
             <button class="flash-message-app__close" onclick="this.parentElement.remove()">&times;</button>
         </div>
+    @endif
+
+    @if(session('info') && env('PAGE_CACHE_ENABLED', true))
+        <div class="flash-message-app flash-message-app--info" id="flashMessageApp" data-auto-dismiss="10000">
+            <i class="fas fa-info-circle"></i>
+            <span>{{ session('info') }}</span>
+            <button class="flash-message-app__close" onclick="this.parentElement.remove()">&times;</button>
+        </div>
+    @endif
+
+    {{-- ─── FLASH MESSAGES (JAVASCRIPT VERSION - FALLBACK FOR CACHED PAGES) ─── --}}
+    @if(session('success') || session('error') || session('warning') || session('info'))
+        <script>
+            // ─── DEFINE FUNCTION IN GLOBAL SCOPE ───
+            function showFlashMessage(message, type) {
+                // ─── REMOVE EXISTING FLASH MESSAGES ───
+                const existing = document.querySelectorAll('.flash-message-app');
+                existing.forEach(function(el) {
+                    el.remove();
+                });
+
+                const flash = document.createElement('div');
+                flash.className = 'flash-message-app flash-message-app--' + type;
+                
+                let icon = 'fa-info-circle';
+                if (type === 'success') icon = 'fa-check-circle';
+                else if (type === 'error') icon = 'fa-exclamation-circle';
+                else if (type === 'warning') icon = 'fa-exclamation-triangle';
+                
+                flash.innerHTML = `
+                    <i class="fas ${icon}"></i>
+                    <span>${message}</span>
+                    <button class="flash-message-app__close" onclick="this.parentElement.remove()">&times;</button>
+                `;
+                document.body.appendChild(flash);
+                
+                // ─── AUTO-DISMISS AFTER 10 SECONDS ───
+                setTimeout(function() {
+                    if (flash.parentNode) {
+                        flash.classList.add('flash-message-app--fade-out');
+                        setTimeout(function() {
+                            if (flash.parentNode) {
+                                flash.remove();
+                            }
+                        }, 400);
+                    }
+                }, 10000);
+            }
+
+            // ─── SHOW FLASH MESSAGES ON PAGE LOAD ───
+            document.addEventListener('DOMContentLoaded', function() {
+                @if(session('success'))
+                    showFlashMessage('{{ addslashes(session('success')) }}', 'success');
+                @endif
+                @if(session('error'))
+                    showFlashMessage('{{ addslashes(session('error')) }}', 'error');
+                @endif
+                @if(session('warning'))
+                    showFlashMessage('{{ addslashes(session('warning')) }}', 'warning');
+                @endif
+                @if(session('info'))
+                    showFlashMessage('{{ addslashes(session('info')) }}', 'info');
+                @endif
+            });
+        </script>
     @endif
 
     {{-- Floating Orbs --}}
@@ -119,16 +184,17 @@
                 }, 4500);
             }
 
-            // ─── FLASH MESSAGES AUTO-DISMISS ───
+            // ─── PHP FLASH MESSAGES AUTO-DISMISS ───
             const flash = document.getElementById('flashMessageApp');
             if (flash) {
-                // ─── AUTO-DISMISS / DATA ATTRIBUTE ───
                 const dismissTimeout = parseInt(flash.dataset.autoDismiss) || 10000;
                 
                 setTimeout(function() {
                     flash.classList.add('flash-message-app--fade-out');
                     setTimeout(function() {
-                        flash.remove();
+                        if (flash.parentNode) {
+                            flash.remove();
+                        }
                     }, 400);
                 }, dismissTimeout);
             }

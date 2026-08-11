@@ -46,9 +46,9 @@ class BaptismController extends Controller
         // ─── SEND ADMIN NOTIFICATION ───
         $this->notificationService->notifyNewBaptism($baptism);
 
-        // Flash success message
-        session()->flash('success', 'Your baptism request has been submitted. We will contact you soon!');
-
-        return redirect()->route('baptism', ['#baptism-form']);
+        // ─── SINGLE FLASH MESSAGE WITH CACHE-BUSTING ───
+        return redirect()->route('baptism', ['#baptism-form'])
+            ->with('success', 'Your baptism request has been submitted. We will contact you soon!')
+            ->with('_nocache', time());
     }
 }

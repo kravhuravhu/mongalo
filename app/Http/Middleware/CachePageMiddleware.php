@@ -17,6 +17,9 @@ class CachePageMiddleware
         'logout',
         'register',
         'contact',
+        'baptism',
+        'invite',
+        'events/*',
         'baptism/request',
         'invite/send',
         'events/register',
@@ -44,43 +47,33 @@ class CachePageMiddleware
             return $next($request);
         }
 
-        // ─── EXCLUDE ADMIN ROUTES ───
-        if ($request->is('admin/*') || $request->is('admin')) {
+        // ─── EXCLUDE ROUTES WITH FLASH MESSAGES ───
+        // Check if any flash messages exist in session
+        if ($this->hasFlashMessages()) {
+            // ─── CLEAR CACHE FOR THIS URL ───
+            $cacheKey = $this->generateCacheKey($request);
+            if (Cache::has($cacheKey)) {
+                Cache::forget($cacheKey);
+                if (env('CACHE_DEBUG', false)) {
+                    Log::info('Cache cleared - flash message present', [
+                        'url' => $request->fullUrl(),
+                        'key' => $cacheKey,
+                    ]);
+                }
+            }
+            // ─── PROCESS REQUEST WITHOUT CACHING ───
             return $next($request);
         }
 
-        // ─── EXCLUDE PAYMENT ROUTES ───
-        if ($request->is('payment/*')) {
-            return $next($request);
-        }
-
-        // ─── EXCLUDE CHECKOUT ROUTES ───
-        if ($request->is('checkout/*')) {
-            return $next($request);
-        }
-
-        // ─── EXCLUDE AUTH ROUTES ───
-        if ($request->is('login') || $request->is('logout') || $request->is('register')) {
-            return $next($request);
-        }
-
-        // ─── EXCLUDE FORM SUBMISSION ROUTES ───
-        if ($request->is('contact') && $request->method() === 'POST') {
-            return $next($request);
-        }
-        if ($request->is('baptism/request')) {
-            return $next($request);
-        }
-        if ($request->is('invite/send')) {
-            return $next($request);
-        }
-        if ($request->is('events/register')) {
-            return $next($request);
+        // ─── EXCLUDE SPECIFIC ROUTES ───
+        foreach ($this->excludedRoutes as $route) {
+            if ($request->is($route)) {
+                return $next($request);
+            }
         }
 
         // ─── CHECK IF REQUEST SHOULD BE CACHED ───
-        $shouldCache = $this->shouldCache($request);
-        if (!$shouldCache) {
+        if (!$this->shouldCache($request)) {
             return $next($request);
         }
 
@@ -100,16 +93,14 @@ class CachePageMiddleware
                     ]);
                 }
 
-                // ─── RETURN CACHED CONTENT AS RESPONSE ───
+                // ─── RETURN CACHED CONTENT ───
                 return response($cachedContent);
             } catch (\Exception $e) {
-                // ─── IF CACHE IS CORRUPTED, CLEAR IT ───
                 Log::warning('Page cache corrupted, clearing', [
                     'key' => $key,
                     'error' => $e->getMessage(),
                 ]);
                 Cache::forget($key);
-                // ─── CONTINUE TO GENERATE NEW CACHE ───
             }
         }
 
@@ -118,19 +109,36 @@ class CachePageMiddleware
 
         // ─── ONLY CACHE SUCCESSFUL RESPONSES ───
         if ($response->getStatusCode() === 200) {
+            // ─── DON'T CACHE IF FLASH MESSAGES WERE ADDED ───
+            if ($this->hasFlashMessages()) {
+                return $response;
+            }
+
+            // ─── DON'T CACHE IF USER IS AUTHENTICATED ───
+            if (auth()->check()) {
+                return $response;
+            }
+
+            // ─── DON'T CACHE IF PAYMENT SESSION DATA EXISTS ───
+            if (session()->has('payment_order_number') || session()->has('payment_status')) {
+                return $response;
+            }
+
+            // ─── DON'T CACHE IF PENDING REGISTRATION EXISTS ───
+            if ($this->hasPendingRegistration()) {
+                return $response;
+            }
+
             $ttl = (int) env('PAGE_CACHE_TTL', 3600);
             
             try {
-                // ─── STORE ONLY THE CONTENT, NOT THE FULL RESPONSE OBJECT ───
                 Cache::put($key, $response->getContent(), $ttl);
 
-                // ─── LOG CACHE STORE ───
                 if (env('CACHE_DEBUG', false)) {
                     Log::info('Page cache stored', [
                         'url' => $request->fullUrl(),
                         'key' => $key,
                         'ttl' => $ttl,
-                        'content_length' => strlen($response->getContent()),
                     ]);
                 }
             } catch (\Exception $e) {
@@ -142,6 +150,39 @@ class CachePageMiddleware
         }
 
         return $response;
+    }
+
+    /**
+     * Check if flash messages exist in session
+     */
+    protected function hasFlashMessages(): bool
+    {
+        $flashKeys = ['success', 'error', 'warning', 'info'];
+        foreach ($flashKeys as $key) {
+            if (session()->has($key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if pending registration exists in session
+     */
+    protected function hasPendingRegistration(): bool
+    {
+        if (session()->has('pending_registration_')) {
+            return true;
+        }
+
+        $sessionKeys = session()->all();
+        foreach (array_keys($sessionKeys) as $key) {
+            if (str_starts_with($key, 'pending_registration_')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -165,27 +206,12 @@ class CachePageMiddleware
         }
 
         // ─── CHECK FOR PENDING REGISTRATION ───
-        if (session()->has('pending_registration_')) {
+        if ($this->hasPendingRegistration()) {
             return false;
         }
 
-        // ─── CHECK FOR ANY PENDING REGISTRATION IN SESSION ───
-        $sessionKeys = session()->all();
-        foreach (array_keys($sessionKeys) as $key) {
-            if (str_starts_with($key, 'pending_registration_')) {
-                return false;
-            }
-        }
-
-        // ─── CHECK FOR FLASH MESSAGES - DO NOT CACHE ───
-        $flashKeys = ['success', 'error', 'warning', 'info'];
-        foreach ($flashKeys as $key) {
-            if (session()->has($key)) {
-                return false;
-            }
-        }
-
         // ─── CHECK FOR USER-SPECIFIC DATA ───
+        $sessionKeys = session()->all();
         $excludedSessionKeys = [
             '_token',
             '_previous',
@@ -222,17 +248,6 @@ class CachePageMiddleware
         $query = preg_replace('/&?nocache=[^&]*/', '', $query);
         $query = preg_replace('/&?_nocache=[^&]*/', '', $query);
         
-        // ─── ADD FLASH MESSAGE STATE TO KEY ───
-        $flashKeys = ['success', 'error', 'warning', 'info'];
-        $flashState = '';
-        foreach ($flashKeys as $key) {
-            if (session()->has($key)) {
-                $flashState .= $key . '=' . md5(session()->get($key) ?? '') . '_';
-            }
-        }
-        
-        $key = 'page_' . md5($method . '_' . $url . '_' . $query . '_' . $flashState);
-        
-        return $key;
+        return 'page_' . md5($method . '_' . $url . '_' . $query);
     }
 }
