@@ -48,6 +48,9 @@ class InviteController extends Controller
         // ─── SEND ADMIN NOTIFICATION ───
         $this->notificationService->notifyNewInvite($invite);
 
-        return redirect()->route('invite', ['#invite-form'])->with('success', 'Your invitation request has been sent. Arthur will respond within 48 hours!');
+        // ─── ADD CACHE-BUSTING PARAMETER ───
+        return redirect()->route('invite', ['#invite-form'])
+            ->with('success', 'Your invitation request has been sent. Arthur will respond within 48 hours!')
+            ->with('_nocache', time());
     }
 }

@@ -190,6 +190,114 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, { passive: true });
     }
+
+    // ─── PENDING REGISTRATION CHECK ON PAGE LOAD ───
+    (function checkPendingRegistration() {
+        // ─── FIND ALL PENDING REGISTRATION KEYS ───
+        const keys = Object.keys(localStorage);
+        const pendingKeys = keys.filter(key => key.startsWith('pending_registration_'));
+        
+        if (pendingKeys.length > 0) {
+            // ─── CHECK THE FIRST PENDING REGISTRATION ───
+            const key = pendingKeys[0];
+            const data = localStorage.getItem(key);
+            
+            if (data) {
+                try {
+                    const registration = JSON.parse(data);
+                    
+                    // ─── CHECK IF NOT EXPIRED ───
+                    if (registration.expires_at && new Date(registration.expires_at) > new Date()) {
+                        // ─── FIND THE EVENT ID IN THE PAGE ───
+                        const eventIdInput = document.querySelector('input[name="event_id"]');
+                        const eventId = eventIdInput ? eventIdInput.value : null;
+                        
+                        // ─── IF THIS IS THE SAME EVENT, SHOW PENDING NOTICE ───
+                        if (eventId && registration.event_id == eventId) {
+                            showPendingRegistration(registration);
+                        }
+                    } else {
+                        // ─── EXPIRED - REMOVE ───
+                        localStorage.removeItem(key);
+                    }
+                } catch (e) {
+                    console.error('Error parsing pending registration:', e);
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+    })();
+
+    function showPendingRegistration(data) {
+        const container = document.getElementById('pendingRegistrationContainer');
+        const formCard = document.getElementById('registrationFormCard');
+        
+        if (container) {
+            container.style.display = 'block';
+        }
+        
+        if (formCard) {
+            // ─── HIDE THE FORM ───
+            const fields = formCard.querySelectorAll('.event-detail__form-group');
+            fields.forEach(function(field) {
+                field.style.display = 'none';
+            });
+            const note = formCard.querySelector('.event-detail__form-note');
+            if (note) note.style.display = 'none';
+            const subtitle = formCard.querySelector('.event-detail__form-subtitle');
+            if (subtitle) subtitle.style.display = 'none';
+            const title = formCard.querySelector('.event-detail__form-title');
+            if (title) title.style.display = 'none';
+            const submitBtn = document.getElementById('registerBtn');
+            if (submitBtn) submitBtn.style.display = 'none';
+        }
+
+        // ─── FILL IN DATA ───
+        const nameEl = document.getElementById('pendingName');
+        const emailEl = document.getElementById('pendingEmail');
+        const phoneEl = document.getElementById('pendingPhone');
+        const regIdEl = document.getElementById('pendingRegId');
+        const statusEl = document.getElementById('pendingStatus');
+        const iconEl = document.getElementById('pendingIcon');
+        const titleEl = document.getElementById('pendingTitle');
+        
+        if (nameEl) nameEl.textContent = data.name;
+        if (emailEl) emailEl.textContent = data.email;
+        if (phoneEl) phoneEl.textContent = data.phone;
+        if (regIdEl) regIdEl.textContent = data.registration_id;
+
+        // ─── STATUS ───
+        if (statusEl) {
+            if (data.payment_status === 'paid' || data.is_free) {
+                statusEl.innerHTML = '<span class="badge badge-completed">Confirmed</span>';
+                if (iconEl) iconEl.innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i>';
+                if (titleEl) titleEl.textContent = 'You\'re Registered!';
+            } else {
+                statusEl.innerHTML = '<span class="badge badge-pending">Pending Payment</span>';
+                if (iconEl) iconEl.innerHTML = '<i class="fas fa-clock" style="color: #e8a838;"></i>';
+                if (titleEl) titleEl.textContent = 'Payment Pending';
+            }
+        }
+
+        // ─── BANKING DETAILS ───
+        const bankingEl = document.getElementById('pendingBanking');
+        if (bankingEl && data.banking_details && !data.is_free && data.payment_status === 'pending') {
+            bankingEl.style.display = 'block';
+            const bankEl = document.getElementById('pendingBank');
+            const accountNameEl = document.getElementById('pendingAccountName');
+            const accountNumberEl = document.getElementById('pendingAccountNumber');
+            const branchCodeEl = document.getElementById('pendingBranchCode');
+            const referenceEl = document.getElementById('pendingReference');
+            
+            if (bankEl) bankEl.textContent = data.banking_details.bank;
+            if (accountNameEl) accountNameEl.textContent = data.banking_details.account_name;
+            if (accountNumberEl) accountNumberEl.textContent = data.banking_details.account_number;
+            if (branchCodeEl) branchCodeEl.textContent = data.banking_details.branch_code;
+            if (referenceEl) referenceEl.textContent = data.banking_details.reference;
+        } else if (bankingEl) {
+            bankingEl.style.display = 'none';
+        }
+    }
 });
 
 // ─── EVENT DETAIL SCROLL REVEAL ───
@@ -264,9 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
 
-    // ─── PENDING REGISTRATION HANDLING ───
-    // This handles the pending registration notice display
-    // and form submission for event registration
+    // ─── REGISTRATION FORM HANDLING ───
     const form = document.getElementById('eventRegistrationForm');
     const messageDiv = document.getElementById('registrationMessage');
     const submitBtn = document.getElementById('registerBtn');
