@@ -153,29 +153,32 @@ class PaymentController extends Controller
         // ─── GET DATA FROM REQUEST ───
         $data = $request->all();
         
+        // ─── IF GET HAS NO DATA, CHECK POST BODY ───
+        if (empty($data)) {
+            $rawInput = file_get_contents('php://input');
+            if ($rawInput) {
+                parse_str($rawInput, $parsedData);
+                if (!empty($parsedData)) {
+                    $data = $parsedData;
+                }
+            }
+        }
+        
         Log::info('Payment return - redirect from gateway', [
             'gateway' => $gateway,
             'data' => $data,
+            'method' => $request->method(),
             'query_string' => $request->getQueryString(),
             'session' => session()->all(),
         ]);
 
         // ─── PRIORITIZE REQUEST DATA OVER SESSION ───
-        $orderNumber = $request->get('m_payment_id') 
-            ?? $request->get('order_number') 
+        $orderNumber = $data['m_payment_id'] 
+            ?? $data['order_number'] 
             ?? session('payment_order_number');
         
         if (!$orderNumber) {
-            // ─── CHECK RAW INPUT ───
-            $rawInput = file_get_contents('php://input');
-            if ($rawInput) {
-                parse_str($rawInput, $parsedData);
-                $orderNumber = $parsedData['m_payment_id'] ?? null;
-            }
-        }
-        
-        if (!$orderNumber) {
-            Log::warning('No order number found in return');
+            Log::warning('No order number found in return', ['data' => $data]);
             return redirect()->route('payment.failure')
                 ->with('error', 'Payment information not found.');
         }

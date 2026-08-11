@@ -39,7 +39,7 @@
 
     {{-- ─── FLASH MESSAGES ─── --}}
     @if(session('success'))
-        <div class="flash-message-app flash-message-app--success" id="flashMessageApp">
+        <div class="flash-message-app flash-message-app--success" id="flashMessageApp" data-auto-dismiss="10000">
             <i class="fas fa-check-circle"></i>
             <span>{{ session('success') }}</span>
             <button class="flash-message-app__close" onclick="this.parentElement.remove()">&times;</button>
@@ -47,7 +47,7 @@
     @endif
 
     @if(session('error'))
-        <div class="flash-message-app flash-message-app--error" id="flashMessageApp">
+        <div class="flash-message-app flash-message-app--error" id="flashMessageApp" data-auto-dismiss="10000">
             <i class="fas fa-exclamation-circle"></i>
             <span>{{ session('error') }}</span>
             <button class="flash-message-app__close" onclick="this.parentElement.remove()">&times;</button>
@@ -55,7 +55,7 @@
     @endif
 
     @if(session('warning'))
-        <div class="flash-message-app flash-message-app--warning" id="flashMessageApp">
+        <div class="flash-message-app flash-message-app--warning" id="flashMessageApp" data-auto-dismiss="10000">
             <i class="fas fa-exclamation-triangle"></i>
             <span>{{ session('warning') }}</span>
             <button class="flash-message-app__close" onclick="this.parentElement.remove()">&times;</button>
@@ -122,12 +122,15 @@
             // ─── FLASH MESSAGES AUTO-DISMISS ───
             const flash = document.getElementById('flashMessageApp');
             if (flash) {
+                // ─── AUTO-DISMISS / DATA ATTRIBUTE ───
+                const dismissTimeout = parseInt(flash.dataset.autoDismiss) || 10000;
+                
                 setTimeout(function() {
                     flash.classList.add('flash-message-app--fade-out');
                     setTimeout(function() {
                         flash.remove();
                     }, 400);
-                }, 5000);
+                }, dismissTimeout);
             }
 
             // ─── FORM SUBMIT WITH LOADING ───

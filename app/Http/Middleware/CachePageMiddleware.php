@@ -177,9 +177,12 @@ class CachePageMiddleware
             }
         }
 
-        // ─── CHECK FOR FLASH MESSAGES ───
-        if (session()->has('success') || session()->has('error') || session()->has('warning') || session()->has('info')) {
-            return false;
+        // ─── CHECK FOR FLASH MESSAGES - DO NOT CACHE ───
+        $flashKeys = ['success', 'error', 'warning', 'info'];
+        foreach ($flashKeys as $key) {
+            if (session()->has($key)) {
+                return false;
+            }
         }
 
         // ─── CHECK FOR USER-SPECIFIC DATA ───
@@ -188,7 +191,7 @@ class CachePageMiddleware
             '_previous',
             '_flash',
             '_old_input',
-            'login_web_59ba36addc2b2f9401580f014c7f58ea4e30989d', // Laravel's session auth key
+            'login_web_59ba36addc2b2f9401580f014c7f58ea4e30989d',
         ];
         
         foreach (array_keys($sessionKeys) as $key) {
