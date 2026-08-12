@@ -82,6 +82,11 @@ $adminRoutes = function () {
         // ─── ADMIN PASSWORD CHANGE ───
         Route::post('/change-password', [AuthController::class, 'changePassword'])->name('admin.change-password');
     });
+
+    // ─── FORGOT PASSWORD ───
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('admin.forgot-password');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('admin.reset-password');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('admin.reset-password.update');
 };
 
 // Dev: Path-based

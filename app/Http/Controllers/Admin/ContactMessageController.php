@@ -120,7 +120,7 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Build email reply template
+     * Build email reply template with styled HTML
      */
     public function getReplyTemplate(ContactMessage $message)
     {
@@ -130,25 +130,23 @@ class ContactMessageController extends Controller
         $website = config('app.url', 'https://thecollective.co.za');
         $projectName = config('app.name', 'The Collective');
 
-        // ─── BUILD QUOTED MESSAGE ───
+        // ─── BUILD QUOTED MESSAGE WITH STYLING ───
         $date = $message->created_at->format('F d, Y');
         $time = $message->created_at->format('g:i A');
-        $quotedMessage = "On {$date} at {$time}, {$message->name} wrote:\n\n";
-        $quotedMessage .= "> " . str_replace("\n", "\n> ", $message->message);
-        $quotedMessage .= "\n";
-
-        // ─── BUILD FULL EMAIL TEMPLATE ───
+        $quotedMessage = wordwrap($message->message, 70, "\n", true);
+        
+        // ─── BUILD HTML EMAIL TEMPLATE ───
         $body = "Hello {$message->name},\n\n";
-        $body .= "[Type your reply here]\n\n";
         $body .= "─────────────────────────────\n\n";
-        $body .= $quotedMessage;
+        $body .= "On {$date} at {$time}, {$message->name} wrote:\n\n";
+        $body .= "> " . str_replace("\n", "\n> ", $quotedMessage) . "\n";
         $body .= "\n─────────────────────────────\n\n";
-        $body .= "--\n";
-        $body .= $adminName . "\n";
-        $body .= $adminEmail . "\n";
-        $body .= $adminPhone . "\n";
-        $body .= $website . "\n";
-        $body .= $projectName;
+        $body .= "-- \n";
+        $body .= "{$adminName}\n";
+        $body .= "{$adminEmail}\n";
+        $body .= "{$adminPhone}\n";
+        $body .= "{$website}\n";
+        $body .= "{$projectName}";
 
         return response()->json([
             'subject' => 'Re: ' . $message->subject,
