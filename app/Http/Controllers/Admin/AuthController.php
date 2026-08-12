@@ -54,4 +54,48 @@ class AuthController extends Controller
         session()->forget(['admin_id', 'admin_name']);
         return redirect()->route('admin.login');
     }
+
+    /**
+     * Change admin password
+     */
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $admin = Admin::find(session('admin_id'));
+
+        if (!$admin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Admin not found.',
+            ], 404);
+        }
+
+        // ─── VERIFY CURRENT PASSWORD ───
+        if (!Hash::check($request->current_password, $admin->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Current password is incorrect.',
+            ], 422);
+        }
+
+        // ─── UPDATE PASSWORD ───
+        $admin->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        Log::info('Admin password changed', [
+            'admin_id' => $admin->id,
+            'admin_name' => $admin->name,
+            'ip' => $request->ip(),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password changed successfully!',
+        ]);
+    }
 }

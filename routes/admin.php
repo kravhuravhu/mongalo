@@ -54,6 +54,7 @@ $adminRoutes = function () {
         Route::get('/messages/{message}', [ContactMessageController::class, 'show'])->name('admin.messages.show');
         Route::put('/messages/{message}', [ContactMessageController::class, 'update'])->name('admin.messages.update');
         Route::post('/messages/{message}/mark-replied', [ContactMessageController::class, 'markReplied'])->name('admin.messages.mark-replied');
+        Route::get('/messages/{message}/reply-template', [ContactMessageController::class, 'getReplyTemplate'])->name('admin.messages.reply-template');
 
         // ─── INVITE REQUESTS ───
         Route::get('/invites', [InviteRequestController::class, 'index'])->name('admin.invites');
@@ -77,6 +78,9 @@ $adminRoutes = function () {
         Route::get('/export/registrations', [ExportController::class, 'registrations'])->name('admin.export.registrations');
         Route::get('/export/baptisms', [ExportController::class, 'baptisms'])->name('admin.export.baptisms');
         Route::get('/export/messages', [ExportController::class, 'messages'])->name('admin.export.messages');
+
+        // ─── ADMIN PASSWORD CHANGE ───
+        Route::post('/change-password', [AuthController::class, 'changePassword'])->name('admin.change-password');
     });
 };
 
