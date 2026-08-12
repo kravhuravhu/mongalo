@@ -122,6 +122,15 @@
             <span>View Site</span>
             <i class="fas fa-external-link-alt nav-item__external" style="font-size: 0.6rem; opacity: 0.4; margin-left: auto;"></i>
         </a>
+        
+        {{-- ─── CHANGE PASSWORD ─── --}}
+        <a href="#" class="nav-item" id="changePasswordLink">
+            <i class="fas fa-key"></i>
+            <span>Change Password</span>
+        </a>
+
+        {{-- Divider --}}
+        <div class="nav-divider"></div>
 
         {{-- Logout --}}
         <form method="POST" action="{{ route('admin.logout') }}" class="nav-logout-form">

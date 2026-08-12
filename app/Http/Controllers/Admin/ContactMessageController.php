@@ -95,21 +95,66 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Quick reply - mark as replied
+     * Mark message as replied (AJAX)
      */
     public function markReplied(ContactMessage $message, Request $request)
     {
+        $oldStatus = $message->status;
         $message->update(['status' => 'replied']);
 
         Log::info('Contact message marked as replied by admin', [
             'message_id' => $message->id,
             'from' => $message->email,
             'subject' => $message->subject,
+            'old_status' => $oldStatus,
             'admin_id' => session('admin_id'),
             'admin_name' => session('admin_name'),
             'ip' => $request->ip(),
         ]);
 
-        return redirect()->back()->with('success', 'Message marked as replied!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Message marked as replied!',
+            'status' => 'replied',
+        ]);
+    }
+
+    /**
+     * Build email reply template
+     */
+    public function getReplyTemplate(ContactMessage $message)
+    {
+        $adminName = config('app.admin_name', 'Admin');
+        $adminEmail = config('app.admin_email', 'admin@example.com');
+        $adminPhone = config('app.app_contact_phone', '+27 71 461 1401');
+        $website = config('app.url', 'https://thecollective.co.za');
+        $projectName = config('app.name', 'The Collective');
+
+        // ─── BUILD QUOTED MESSAGE ───
+        $date = $message->created_at->format('F d, Y');
+        $time = $message->created_at->format('g:i A');
+        $quotedMessage = "On {$date} at {$time}, {$message->name} wrote:\n\n";
+        $quotedMessage .= "> " . str_replace("\n", "\n> ", $message->message);
+        $quotedMessage .= "\n";
+
+        // ─── BUILD FULL EMAIL TEMPLATE ───
+        $body = "Hello {$message->name},\n\n";
+        $body .= "[Type your reply here]\n\n";
+        $body .= "─────────────────────────────\n\n";
+        $body .= $quotedMessage;
+        $body .= "\n─────────────────────────────\n\n";
+        $body .= "--\n";
+        $body .= $adminName . "\n";
+        $body .= $adminEmail . "\n";
+        $body .= $adminPhone . "\n";
+        $body .= $website . "\n";
+        $body .= $projectName;
+
+        return response()->json([
+            'subject' => 'Re: ' . $message->subject,
+            'to' => $message->email,
+            'body' => $body,
+            'name' => $message->name,
+        ]);
     }
 }
