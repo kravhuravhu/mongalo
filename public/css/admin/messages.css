@@ -1,3 +1,4 @@
+/* ─── MESSAGES INDEX ─── */
 .messages-index {
     & .messages-index__header {
         display: flex;
@@ -270,8 +271,280 @@
     }
 }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 768px) {
+/* ─── REPLY MODAL ─── */
+.reply-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+
+    &.reply-modal-overlay--visible {
+        opacity: 1;
+    }
+
+    & .reply-modal {
+        background: var(--surface);
+        border-radius: 24px;
+        padding: 40px 36px 32px;
+        max-width: 640px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+        transform: scale(0.92) translateY(20px);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+
+        &.reply-modal--visible {
+            transform: scale(1) translateY(0);
+        }
+
+        & .reply-modal__close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            font-size: 1rem;
+
+            &:hover {
+                background: var(--gold);
+                border-color: var(--gold);
+                color: #fff;
+                transform: rotate(90deg);
+            }
+        }
+
+        & .reply-modal__icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--gold-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+
+            & i {
+                font-size: 2rem;
+                color: var(--gold);
+            }
+        }
+
+        & .reply-modal__title {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        & .reply-modal__recipient {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+
+            & .reply-modal__recipient-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 4px 0;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid var(--border);
+                }
+
+                & .reply-modal__recipient-label {
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: var(--text-muted);
+                    min-width: 60px;
+                }
+
+                & .reply-modal__recipient-value {
+                    font-size: 0.85rem;
+                    color: var(--text);
+                    font-weight: 500;
+                    word-break: break-all;
+                }
+            }
+        }
+
+        & .reply-modal__preview {
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 16px;
+
+            & .reply-modal__preview-header {
+                padding: 10px 16px;
+                background: var(--gold-dim);
+                border-bottom: 1px solid var(--border);
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--gold);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                & i {
+                    font-size: 0.7rem;
+                }
+            }
+
+            & .reply-modal__preview-body {
+                padding: 16px;
+
+                & .reply-modal__preview-meta {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px 16px;
+                    font-size: 0.75rem;
+                    color: var(--text-muted);
+                    margin-bottom: 10px;
+                    padding-bottom: 10px;
+                    border-bottom: 1px solid var(--border);
+
+                    & span {
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+
+                    & strong {
+                        color: var(--text);
+                    }
+                }
+
+                & .reply-modal__preview-message {
+                    font-size: 0.9rem;
+                    color: var(--text);
+                    line-height: 1.7;
+                    white-space: pre-wrap;
+                    max-height: 150px;
+                    overflow-y: auto;
+
+                    &::-webkit-scrollbar {
+                        width: 4px;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background: var(--gold-dim);
+                        border-radius: 4px;
+                    }
+                }
+            }
+        }
+
+        & .reply-modal__note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px 14px;
+            background: #fff3cd;
+            border-radius: var(--radius);
+            color: #856404;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            & i {
+                font-size: 1rem;
+            }
+        }
+
+        & .reply-modal__actions {
+            display: flex;
+            gap: 12px;
+
+            & .btn {
+                flex: 1;
+                justify-content: center;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+/* ─── BREAKPOINTS ─── */
+@media (max-width: 1700px) {
+    .messages-index__search {
+        max-width: 440px;
+    }
+
+    .reply-modal {
+        padding: 36px 32px 28px;
+        max-width: 580px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .messages-index__search {
+        max-width: 400px;
+    }
+
+    .messages-index__filters .messages-index__filter {
+        padding: 5px 14px;
+        font-size: 0.75rem;
+    }
+
+    .message-detail__sender {
+        padding: 20px 24px;
+    }
+
+    .message-detail__body {
+        padding: 24px;
+    }
+
+    .message-detail__actions {
+        padding: 20px 24px;
+    }
+
+    .reply-modal {
+        padding: 32px 28px 24px;
+        max-width: 540px;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 56px;
+        height: 56px;
+
+        & i {
+            font-size: 1.6rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 1200px) {
     .messages-index__header {
         flex-direction: column;
         align-items: stretch !important;
@@ -279,6 +552,15 @@
 
     .messages-index__search {
         max-width: 100% !important;
+    }
+
+    .messages-index__filters {
+        gap: 3px;
+    }
+
+    .messages-index__filters .messages-index__filter {
+        padding: 4px 12px;
+        font-size: 0.7rem;
     }
 
     .message-detail__sender {
@@ -299,21 +581,57 @@
     .message-detail__actions {
         flex-direction: column;
         align-items: stretch;
+    }
 
-        & .btn {
-            justify-content: center;
-        }
+    .message-detail__actions .btn {
+        justify-content: center;
+    }
+
+    .reply-modal {
+        padding: 28px 24px 20px;
+        max-width: 500px;
+    }
+
+    .reply-modal .reply-modal__recipient-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .reply-modal .reply-modal__recipient-label {
+        min-width: auto;
+    }
+
+    .reply-modal .reply-modal__actions {
+        flex-direction: column;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        width: 100%;
     }
 }
 
-@media (max-width: 540px) {
-    .messages-index__filters {
-        gap: 2px;
+@media (max-width: 1024px) {
+    .messages-index__filters .messages-index__filter-count {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+    }
 
-        & .messages-index__filter {
-            font-size: 0.7rem;
-            padding: 4px 12px;
-        }
+    .messages-index__from strong {
+        font-size: 0.85rem;
+    }
+
+    .messages-index__subject {
+        font-size: 0.85rem;
+    }
+
+    .messages-index__preview {
+        font-size: 0.8rem;
+    }
+
+    .messages-index__actions .btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
     }
 
     .message-detail__header {
@@ -327,5 +645,775 @@
 
     .message-detail__card {
         border-radius: var(--radius-sm);
+    }
+
+    .message-detail__sender {
+        padding: 16px 20px;
+    }
+
+    .message-detail__avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 1rem;
+    }
+
+    .message-detail__sender-meta {
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+
+    .message-detail__body {
+        padding: 16px;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 1rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.9rem;
+    }
+
+    .message-detail__actions {
+        padding: 16px 20px;
+    }
+
+    .message-detail__actions .btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    .reply-modal {
+        padding: 24px 20px 18px;
+        max-width: 460px;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 48px;
+        height: 48px;
+
+        & i {
+            font-size: 1.4rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 1.1rem;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-meta {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.85rem;
+        max-height: 120px;
+    }
+}
+
+@media (max-width: 820px) {
+    .messages-index__filters {
+        gap: 2px;
+    }
+
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.65rem;
+        padding: 3px 10px;
+    }
+
+    .messages-index__filters .messages-index__badge {
+        font-size: 0.55rem;
+        padding: 1px 6px;
+    }
+
+    .messages-index__actions {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .messages-index__actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 4px 8px;
+        font-size: 0.65rem;
+    }
+
+    .message-detail__sender {
+        padding: 14px 16px;
+    }
+
+    .message-detail__body {
+        padding: 14px;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 0.95rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.85rem;
+        padding: 12px 16px;
+    }
+
+    .message-detail__actions {
+        padding: 14px 16px;
+    }
+
+    .reply-modal {
+        padding: 20px 16px 16px;
+        max-width: 400px;
+        border-radius: 16px;
+    }
+
+    .reply-modal .reply-modal__close {
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 44px;
+        height: 44px;
+        margin-bottom: 12px;
+
+        & i {
+            font-size: 1.2rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .reply-modal .reply-modal__recipient {
+        padding: 10px 14px;
+        margin-bottom: 16px;
+    }
+
+    .reply-modal .reply-modal__recipient-row {
+        padding: 2px 0;
+    }
+
+    .reply-modal .reply-modal__recipient-value {
+        font-size: 0.8rem;
+    }
+
+    .reply-modal .reply-modal__preview-body {
+        padding: 12px;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.8rem;
+        max-height: 100px;
+    }
+
+    .reply-modal .reply-modal__note {
+        font-size: 0.75rem;
+        padding: 8px 12px;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        font-size: 0.8rem;
+        padding: 10px 16px;
+    }
+}
+
+@media (max-width: 720px) {
+    .messages-index__search .messages-index__search-form {
+        flex-wrap: wrap;
+        padding: 8px;
+    }
+
+    .messages-index__search .messages-index__search-form input {
+        flex-basis: 100%;
+        padding: 6px 0;
+    }
+
+    .messages-index__search .messages-index__search-form .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+    }
+
+    .messages-index__count {
+        font-size: 0.75rem;
+    }
+
+    .message-detail__sender {
+        padding: 12px 14px;
+    }
+
+    .message-detail__avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 0.95rem;
+    }
+
+    .message-detail__body {
+        padding: 12px;
+    }
+
+    .message-detail__content {
+        font-size: 0.8rem;
+        padding: 10px 12px;
+    }
+
+    .message-detail__actions .btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .reply-modal {
+        padding: 16px 14px 14px;
+        max-width: 100%;
+        border-radius: 12px;
+        margin: 8px;
+    }
+
+    .reply-modal .reply-modal__close {
+        top: 10px;
+        right: 10px;
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 40px;
+        height: 40px;
+
+        & i {
+            font-size: 1rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 0.95rem;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        max-height: 80px;
+    }
+}
+
+@media (max-width: 540px) {
+    .messages-index__header {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .messages-index__search .messages-index__search-form {
+        padding: 6px;
+    }
+
+    .messages-index__search .messages-index__search-form input {
+        font-size: 0.75rem;
+        padding: 4px 0;
+    }
+
+    .messages-index__filters {
+        gap: 1px;
+        margin-bottom: 14px;
+    }
+
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.55rem;
+        padding: 2px 6px;
+    }
+
+    .messages-index__count {
+        font-size: 0.7rem;
+    }
+
+    .messages-index__from strong {
+        font-size: 0.75rem;
+    }
+
+    .messages-index__from a {
+        font-size: 0.65rem !important;
+    }
+
+    .messages-index__subject {
+        font-size: 0.75rem;
+    }
+
+    .messages-index__preview {
+        font-size: 0.7rem;
+    }
+
+    .messages-index__actions .btn {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+    }
+
+    .message-detail__header .btn {
+        font-size: 0.7rem;
+        padding: 6px 14px;
+    }
+
+    .message-detail__status-select {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+
+    .message-detail__sender {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .message-detail__avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 0.85rem;
+    }
+
+    .message-detail__sender-meta {
+        font-size: 0.7rem;
+        gap: 4px;
+    }
+
+    .message-detail__body {
+        padding: 10px;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 0.85rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.75rem;
+        padding: 8px 10px;
+        line-height: 1.6;
+    }
+
+    .message-detail__actions {
+        padding: 10px 12px;
+    }
+
+    .message-detail__actions .btn {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+
+    .reply-modal {
+        padding: 14px 12px 12px;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 36px;
+        height: 36px;
+
+        & i {
+            font-size: 0.9rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+    }
+
+    .reply-modal .reply-modal__recipient {
+        padding: 8px 10px;
+        margin-bottom: 12px;
+    }
+
+    .reply-modal .reply-modal__recipient-row {
+        padding: 2px 0;
+    }
+
+    .reply-modal .reply-modal__recipient-value {
+        font-size: 0.75rem;
+    }
+
+    .reply-modal .reply-modal__preview-body {
+        padding: 10px;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-meta {
+        font-size: 0.65rem;
+        gap: 4px 8px;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.75rem;
+        max-height: 60px;
+    }
+
+    .reply-modal .reply-modal__note {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        font-size: 0.7rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .messages-index__header {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.5rem;
+        padding: 1px 5px;
+    }
+
+    .messages-index__count {
+        font-size: 0.65rem;
+    }
+
+    .messages-index__actions .btn {
+        font-size: 0.55rem;
+        padding: 2px 4px;
+    }
+
+    .message-detail__sender {
+        padding: 8px 10px;
+    }
+
+    .message-detail__avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.65rem;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 0.8rem;
+    }
+
+    .message-detail__body {
+        padding: 8px;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 0.8rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.7rem;
+        padding: 6px 8px;
+    }
+
+    .message-detail__actions {
+        padding: 8px 10px;
+    }
+
+    .message-detail__actions .btn {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+
+    .reply-modal {
+        padding: 12px 10px 10px;
+    }
+
+    .reply-modal .reply-modal__close {
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        font-size: 0.65rem;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 8px;
+
+        & i {
+            font-size: 0.8rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .reply-modal .reply-modal__recipient {
+        padding: 6px 8px;
+        margin-bottom: 10px;
+    }
+
+    .reply-modal .reply-modal__recipient-row .reply-modal__recipient-label {
+        font-size: 0.65rem;
+    }
+
+    .reply-modal .reply-modal__recipient-row .reply-modal__recipient-value {
+        font-size: 0.7rem;
+    }
+
+    .reply-modal .reply-modal__preview-body {
+        padding: 8px;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.7rem;
+        max-height: 50px;
+    }
+
+    .reply-modal .reply-modal__note {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        font-size: 0.65rem;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 420px) {
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.45rem;
+        padding: 1px 4px;
+    }
+
+    .messages-index__actions .btn {
+        font-size: 0.5rem;
+        padding: 2px 4px;
+    }
+
+    .message-detail__header .btn {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+    }
+
+    .message-detail__status-select {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+
+    .message-detail__sender {
+        padding: 6px 8px;
+        gap: 8px;
+    }
+
+    .message-detail__avatar {
+        width: 24px;
+        height: 24px;
+        font-size: 0.55rem;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 0.75rem;
+    }
+
+    .message-detail__sender-meta {
+        font-size: 0.6rem;
+    }
+
+    .message-detail__body {
+        padding: 6px;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 0.75rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.65rem;
+        padding: 4px 6px;
+    }
+
+    .message-detail__actions .btn {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+    }
+
+    .reply-modal {
+        padding: 10px 8px 8px;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 28px;
+        height: 28px;
+
+        & i {
+            font-size: 0.7rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 0.75rem;
+    }
+
+    .reply-modal .reply-modal__recipient-row .reply-modal__recipient-value {
+        font-size: 0.65rem;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.65rem;
+        max-height: 40px;
+    }
+
+    .reply-modal .reply-modal__note {
+        font-size: 0.6rem;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        font-size: 0.6rem;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 350px) {
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.4rem;
+        padding: 1px 3px;
+    }
+
+    .messages-index__count {
+        font-size: 0.6rem;
+    }
+
+    .messages-index__actions .btn {
+        font-size: 0.45rem;
+        padding: 1px 3px;
+    }
+
+    .message-detail__header .btn {
+        font-size: 0.6rem;
+        padding: 3px 8px;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 0.7rem;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 0.7rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.6rem;
+    }
+
+    .message-detail__actions .btn {
+        font-size: 0.55rem;
+        padding: 2px 4px;
+    }
+
+    .reply-modal {
+        padding: 8px 6px 6px;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 24px;
+        height: 24px;
+
+        & i {
+            font-size: 0.6rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 0.7rem;
+    }
+
+    .reply-modal .reply-modal__recipient-row .reply-modal__recipient-label {
+        font-size: 0.6rem;
+    }
+
+    .reply-modal .reply-modal__recipient-row .reply-modal__recipient-value {
+        font-size: 0.6rem;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.6rem;
+        max-height: 30px;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        font-size: 0.55rem;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 300px) {
+    .messages-index__filters .messages-index__filter {
+        font-size: 0.35rem;
+        padding: 1px 2px;
+    }
+
+    .messages-index__count {
+        display: none;
+    }
+
+    .messages-index__actions .btn {
+        font-size: 0.4rem;
+        padding: 1px 2px;
+    }
+
+    .message-detail__header .btn {
+        font-size: 0.55rem;
+        padding: 2px 6px;
+    }
+
+    .message-detail__sender-info h3 {
+        font-size: 0.65rem;
+    }
+
+    .message-detail__subject h4 {
+        font-size: 0.65rem;
+    }
+
+    .message-detail__content {
+        font-size: 0.55rem;
+    }
+
+    .reply-modal {
+        padding: 6px 4px 4px;
+    }
+
+    .reply-modal .reply-modal__icon {
+        width: 20px;
+        height: 20px;
+
+        & i {
+            font-size: 0.5rem;
+        }
+    }
+
+    .reply-modal .reply-modal__title {
+        font-size: 0.65rem;
+    }
+
+    .reply-modal .reply-modal__recipient-row .reply-modal__recipient-value {
+        font-size: 0.55rem;
+    }
+
+    .reply-modal .reply-modal__preview-body .reply-modal__preview-message {
+        font-size: 0.55rem;
+        max-height: 25px;
+    }
+
+    .reply-modal .reply-modal__actions .btn {
+        font-size: 0.5rem;
+        padding: 2px 4px;
     }
 }

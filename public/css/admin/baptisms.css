@@ -1,3 +1,4 @@
+/* ─── BAPTISMS INDEX ─── */
 .baptisms-index {
     & .baptisms-index__header {
         display: flex;
@@ -159,8 +160,25 @@
     }
 }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 768px) {
+/* ─── BREAKPOINTS ─── */
+@media (max-width: 1700px) {
+    .baptisms-index__search {
+        max-width: 440px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .baptisms-index__search {
+        max-width: 400px;
+    }
+
+    .baptisms-index__filters .baptisms-index__filter {
+        padding: 5px 14px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 1200px) {
     .baptisms-index__header {
         flex-direction: column;
         align-items: stretch !important;
@@ -169,28 +187,306 @@
     .baptisms-index__search {
         max-width: 100% !important;
     }
+
+    .baptisms-index__filters {
+        gap: 3px;
+    }
+
+    .baptisms-index__filters .baptisms-index__filter {
+        padding: 4px 12px;
+        font-size: 0.7rem;
+    }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 1024px) {
+    .baptisms-index__filters .baptisms-index__badge {
+        font-size: 0.55rem;
+        padding: 1px 6px;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.8rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.8rem;
+    }
+
+    .baptisms-index__actions {
+        flex-wrap: wrap;
+    }
+
+    .baptisms-index__actions .baptisms-index__status-select {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+    }
+
+    .baptisms-index__actions .btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 820px) {
     .baptisms-index__filters {
         gap: 2px;
+    }
 
-        & .baptisms-index__filter {
-            font-size: 0.7rem;
-            padding: 4px 12px;
-        }
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.65rem;
+        padding: 3px 10px;
+    }
+
+    .baptisms-index__count {
+        font-size: 0.75rem;
+    }
+
+    .baptisms-index__contact strong {
+        font-size: 0.85rem;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.75rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.75rem;
     }
 
     .baptisms-index__actions {
         flex-direction: column;
         align-items: stretch;
+    }
 
-        & .baptisms-index__status-select {
-            width: 100%;
-        }
+    .baptisms-index__actions .baptisms-index__status-select {
+        width: 100%;
+    }
 
-        & .btn {
-            justify-content: center;
-        }
+    .baptisms-index__actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 4px 8px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .baptisms-index__search .baptisms-index__search-form {
+        flex-wrap: wrap;
+        padding: 8px;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form input {
+        flex-basis: 100%;
+        padding: 6px 0;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+    }
+
+    .baptisms-index__count {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .baptisms-index__header {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form {
+        padding: 6px;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form input {
+        font-size: 0.75rem;
+        padding: 4px 0;
+    }
+
+    .baptisms-index__filters {
+        gap: 1px;
+        margin-bottom: 14px;
+    }
+
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.55rem;
+        padding: 2px 6px;
+    }
+
+    .baptisms-index__filters .baptisms-index__badge {
+        font-size: 0.5rem;
+        padding: 1px 4px;
+    }
+
+    .baptisms-index__count {
+        font-size: 0.65rem;
+    }
+
+    .baptisms-index__contact strong {
+        font-size: 0.75rem;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.65rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.7rem;
+    }
+
+    .baptisms-index__actions .baptisms-index__status-select {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+    }
+
+    .baptisms-index__actions .btn {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .baptisms-index__header {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.5rem;
+        padding: 1px 5px;
+    }
+
+    .baptisms-index__count {
+        font-size: 0.6rem;
+    }
+
+    .baptisms-index__contact strong {
+        font-size: 0.7rem;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.6rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.65rem;
+    }
+
+    .baptisms-index__actions .baptisms-index__status-select {
+        font-size: 0.55rem;
+        padding: 2px 4px;
+    }
+
+    .baptisms-index__actions .btn {
+        font-size: 0.55rem;
+        padding: 2px 4px;
+    }
+}
+
+@media (max-width: 420px) {
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.45rem;
+        padding: 1px 4px;
+    }
+
+    .baptisms-index__count {
+        font-size: 0.55rem;
+    }
+
+    .baptisms-index__contact strong {
+        font-size: 0.65rem;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.55rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.6rem;
+    }
+
+    .baptisms-index__actions .baptisms-index__status-select {
+        font-size: 0.5rem;
+        padding: 1px 4px;
+    }
+
+    .baptisms-index__actions .btn {
+        font-size: 0.5rem;
+        padding: 2px 4px;
+    }
+}
+
+@media (max-width: 350px) {
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.4rem;
+        padding: 1px 3px;
+    }
+
+    .baptisms-index__filters .baptisms-index__badge {
+        font-size: 0.4rem;
+        padding: 1px 3px;
+    }
+
+    .baptisms-index__count {
+        display: none;
+    }
+
+    .baptisms-index__contact strong {
+        font-size: 0.6rem;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.5rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.55rem;
+    }
+
+    .baptisms-index__actions .baptisms-index__status-select {
+        font-size: 0.45rem;
+        padding: 1px 3px;
+    }
+
+    .baptisms-index__actions .btn {
+        font-size: 0.45rem;
+        padding: 1px 3px;
+    }
+}
+
+@media (max-width: 300px) {
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.35rem;
+        padding: 1px 2px;
+    }
+
+    .baptisms-index__contact strong {
+        font-size: 0.55rem;
+    }
+
+    .baptisms-index__contact a {
+        font-size: 0.45rem !important;
+    }
+
+    .baptisms-index__location {
+        font-size: 0.5rem;
+    }
+
+    .baptisms-index__actions .baptisms-index__status-select {
+        font-size: 0.4rem;
+        padding: 1px 2px;
+    }
+
+    .baptisms-index__actions .btn {
+        font-size: 0.4rem;
+        padding: 1px 2px;
     }
 }
