@@ -116,13 +116,16 @@
         {{-- Divider --}}
         <div class="nav-divider"></div>
 
-        {{-- ─── VIEW SITE (Before Logout) ─── --}}
+        {{-- ─── VIEW SITE  ─── --}}
         <a href="{{ route('home') }}" target="_blank" class="nav-item nav-item--view-site">
             <i class="fas fa-external-link-alt"></i>
             <span>View Site</span>
             <i class="fas fa-external-link-alt nav-item__external" style="font-size: 0.6rem; opacity: 0.4; margin-left: auto;"></i>
         </a>
-        
+
+        {{-- Divider --}}
+        <div class="nav-divider"></div>
+
         {{-- ─── CHANGE PASSWORD ─── --}}
         <a href="#" class="nav-item" id="changePasswordLink">
             <i class="fas fa-key"></i>

@@ -56,7 +56,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Change admin password
+     * Change admin password - auto logout on success
      */
     public function changePassword(Request $request)
     {
@@ -93,9 +93,69 @@ class AuthController extends Controller
             'ip' => $request->ip(),
         ]);
 
+        // ─── CLEAR SESSION AND LOGOUT ───
+        session()->forget(['admin_id', 'admin_name']);
+
         return response()->json([
             'success' => true,
-            'message' => 'Password changed successfully!',
+            'message' => 'Password changed successfully! You will be redirected to login.',
+            'logout' => true,
         ]);
+    }
+    
+    /**
+     * Send password reset link
+     */
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:admins,email',
+        ]);
+
+        $admin = Admin::where('email', $request->email)->first();
+        
+        // ─── GENERATE RESET TOKEN ───
+        $token = \Illuminate\Support\Str::random(64);
+        
+        // ─── STORE TOKEN IN DATABASE ───
+        \DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $request->email],
+            [
+                'token' => Hash::make($token),
+                'created_at' => now(),
+            ]
+        );
+
+        // ─── SEND RESET EMAIL ───
+        try {
+            \Mail::send('emails.admin.password-reset', [
+                'token' => $token,
+                'email' => $request->email,
+                'adminName' => $admin->name,
+            ], function($message) use ($request) {
+                $message->to($request->email)
+                        ->subject('Reset Your Admin Password - ' . env('PROJECT_NAME', 'The Collective'));
+            });
+
+            Log::info('Password reset link sent', [
+                'email' => $request->email,
+                'ip' => $request->ip(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Password reset link has been sent to your email.',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to send password reset email', [
+                'email' => $request->email,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send reset link. Please try again.',
+            ], 500);
+        }
     }
 }

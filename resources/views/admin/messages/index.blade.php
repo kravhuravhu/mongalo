@@ -110,9 +110,9 @@
                                 <a href="{{ route('admin.messages.show', $message) }}" class="btn btn--primary btn--sm" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="mailto:{{ $message->email }}" class="btn btn--secondary btn--sm" title="Reply">
+                                <!-- <a href="mailto:{{ $message->email }}" class="btn btn--secondary btn--sm" title="Reply">
                                     <i class="fas fa-reply"></i>
-                                </a>
+                                </a> -->
                             </div>
                         </td>
                     </tr>

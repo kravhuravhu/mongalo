@@ -429,14 +429,19 @@
                         // ─── RESET FORM ───
                         passwordForm.reset();
 
-                        // ─── CLOSE MODAL AFTER DELAY ───
-                        setTimeout(function() {
-                            closePasswordModal();
-                        }, 2000);
+                        // ─── REDIRECT TO LOGIN IF LOGOUT REQUIRED ───
+                        if (data.logout) {
+                            setTimeout(function() {
+                                window.location.href = '{{ route("admin.login") }}';
+                            }, 1500);
+                        } else {
+                            setTimeout(function() {
+                                closePasswordModal();
+                            }, 2000);
+                        }
                     } else {
                         // ─── SHOW ERROR ───
                         if (data.errors) {
-                            // ─── FIELD ERRORS ───
                             for (const [field, messages] of Object.entries(data.errors)) {
                                 const errorEl = document.getElementById(field + '_error');
                                 const inputEl = document.getElementById(field);
@@ -455,12 +460,12 @@
                                 </div>
                             `;
                         }
-                    }
 
-                    // ─── RESET BUTTON ───
-                    passwordSubmit.disabled = false;
-                    passwordBtnText.style.display = 'inline';
-                    passwordBtnLoader.style.display = 'none';
+                        // ─── RESET BUTTON ───
+                        passwordSubmit.disabled = false;
+                        passwordBtnText.style.display = 'inline';
+                        passwordBtnLoader.style.display = 'none';
+                    }
                 })
                 .catch(function(error) {
                     console.error('Error:', error);
