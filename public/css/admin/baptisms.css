@@ -42,6 +42,7 @@
                 background: transparent;
                 color: var(--text);
                 min-width: 100px;
+                min-height: 36px;
 
                 &:focus {
                     outline: none;
@@ -76,6 +77,7 @@
             text-decoration: none;
             transition: all var(--transition);
             border: 1px solid transparent;
+            min-height: 34px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -145,6 +147,7 @@
             background: var(--surface);
             cursor: pointer;
             transition: border-color var(--transition);
+            min-height: 30px;
 
             &:focus {
                 outline: none;
@@ -155,12 +158,13 @@
         & .btn {
             padding: 6px 10px;
             font-size: 0.75rem;
+            min-height: 30px;
         }
     }
 }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .baptisms-index__header {
         flex-direction: column;
         align-items: stretch !important;
@@ -171,26 +175,83 @@
     }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 1024px) {
     .baptisms-index__filters {
         gap: 2px;
+    }
 
-        & .baptisms-index__filter {
-            font-size: 0.7rem;
-            padding: 4px 12px;
-        }
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        min-height: 28px;
     }
 
     .baptisms-index__actions {
         flex-direction: column;
         align-items: stretch;
+    }
 
-        & .baptisms-index__status-select {
-            width: 100%;
-        }
+    .baptisms-index__actions .baptisms-index__status-select {
+        width: 100%;
+        min-height: 28px;
+    }
 
-        & .btn {
-            justify-content: center;
-        }
+    .baptisms-index__actions .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 28px;
+        font-size: 0.7rem;
+    }
+
+    .table-wrap table {
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 820px) {
+    .baptisms-index__search .baptisms-index__search-form {
+        flex-wrap: wrap;
+        padding: 6px;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form input {
+        flex-basis: 100%;
+        padding: 6px 0;
+        min-height: 32px;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 34px;
+    }
+}
+
+@media (max-width: 540px) {
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+        min-height: 24px;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form i {
+        display: none;
+    }
+
+    .baptisms-index__search .baptisms-index__search-form input {
+        font-size: 0.75rem;
+        min-height: 28px;
+    }
+}
+
+@media (max-width: 420px) {
+    .baptisms-index__filters {
+        gap: 0px;
+    }
+
+    .baptisms-index__filters .baptisms-index__filter {
+        font-size: 0.55rem;
+        padding: 1px 6px;
+        min-height: 20px;
     }
 }

@@ -1,10 +1,10 @@
 .invite {
-    /* ─── INVITE FLOATING ORBS ─── */
+    /* ─── FLOATING ORBS ─── */
     & .invite__orbs {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: 99;
+        z-index: 0;
         overflow: hidden;
 
         & .invite__orb {
@@ -214,7 +214,7 @@
                 padding: 6px 18px 6px 14px;
                 border-radius: 50px;
                 border: 1px solid var(--border);
-                transition: all 0.3s ease;
+                transition: all var(--transition);
                 cursor: default;
 
                 &:hover {
@@ -244,7 +244,6 @@
                 font-size: clamp(38px, 5vw, 64px);
                 line-height: 1.05;
                 letter-spacing: -0.02em;
-                animation: inviteTitleFade 1s ease-out;
 
                 & .invite__hero-gradient {
                     background: linear-gradient(130deg, var(--gold-light), var(--gold));
@@ -277,14 +276,12 @@
                 line-height: 1.8;
                 margin-bottom: 28px;
                 margin-top: 12px;
-                animation: inviteTextFade 1.2s ease-out;
             }
 
             & .invite__hero-features {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 8px;
-                animation: inviteFeaturesFade 1.4s ease-out;
 
                 & span {
                     font-size: 0.8rem;
@@ -315,60 +312,64 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: inviteVisualFade 1s ease-out;
         }
 
-        & .invite__hero-placeholder {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: var(--radius);
-            padding: 60px 40px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            text-align: center;
+        & .invite__hero-image {
             width: 100%;
             max-width: 380px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
             transition: all 0.4s ease;
 
             &:hover {
-                background: rgba(255, 255, 255, 0.6);
-                border-color: var(--gold);
-                box-shadow: 0 16px 48px rgba(166, 124, 78, 0.06);
-                transform: translateY(-4px);
+                transform: translateY(-6px) scale(1.01);
+                box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
             }
+        }
+
+        & .invite__hero-img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+
+            &:hover {
+                transform: scale(1.02);
+            }
+        }
+
+        & .invite__hero-img-fallback {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 420px;
+            background: var(--gold-dim);
+            border-radius: 20px;
+            color: var(--text-muted);
+            text-align: center;
 
             & i {
-                font-size: 4rem;
+                font-size: 3.2rem;
                 color: var(--gold);
-                opacity: 0.2;
-                display: block;
-                margin-bottom: 16px;
-                transition: all 0.4s ease;
-            }
-
-            &:hover i {
                 opacity: 0.3;
-                transform: scale(1.05) rotate(-5deg);
+                margin-bottom: 12px;
             }
 
             & span {
                 font-family: var(--font-serif);
-                font-weight: 700;
-                font-size: 1.4rem;
+                font-weight: 600;
+                font-size: 1.2rem;
                 color: var(--text);
-                display: block;
-                transition: color 0.3s ease;
-            }
-
-            &:hover span {
-                color: var(--gold);
             }
 
             & small {
                 font-size: 0.85rem;
                 color: var(--text-muted);
-                display: block;
                 margin-top: 4px;
             }
         }
@@ -585,6 +586,7 @@
                 font-size: 0.9rem;
                 transition: all 0.3s ease;
                 background: #fff;
+                min-height: 44px;
 
                 &:focus {
                     outline: none;
@@ -641,6 +643,7 @@
                     font-size: 0.9rem;
                     transition: all 0.3s ease;
                     background: #fff;
+                    min-height: 44px;
 
                     &:focus {
                         outline: none;
@@ -668,9 +671,10 @@
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             position: relative;
             overflow: hidden;
+            min-height: 48px;
 
             &::before {
                 content: '';
@@ -778,7 +782,7 @@
             margin-bottom: 12px;
             display: inline-block;
             animation: inviteCommunityPulse 3s ease-in-out infinite;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
 
             &:hover {
                 opacity: 0.5;
@@ -824,6 +828,7 @@
         }
 
         & .btn--lg {
+            min-height: 56px;
             padding: 16px 36px;
             font-size: 0.95rem;
             position: relative;
@@ -856,7 +861,67 @@
         }
     }
 
-    /* ─── RESPONSIVE ─── */
+    /* ────────────────────────────────────────────────────────── */
+    /* ─── BREAKPOINTS ─── */
+    /* ────────────────────────────────────────────────────────── */
+
+    /* ─── 1700px ─── */
+    @media (max-width: 1700px) {
+        & .invite__hero .invite__hero-grid {
+            gap: 50px;
+        }
+
+        & .invite__hero .invite__hero-image {
+            max-width: 340px;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 380px;
+        }
+
+        & .invite__form .invite__form-grid {
+            gap: 50px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 32px 28px;
+        }
+    }
+
+    /* ─── 1500px ─── */
+    @media (max-width: 1500px) {
+        & .invite__hero .invite__hero-grid {
+            gap: 40px;
+        }
+
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(34px, 4.5vw, 54px);
+        }
+
+        & .invite__hero .invite__hero-image {
+            max-width: 320px;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 360px;
+        }
+
+        & .invite__form .invite__form-grid {
+            gap: 40px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 28px 24px;
+        }
+
+        & .invite__form .invite__form-title {
+            font-size: clamp(26px, 3.2vw, 40px);
+        }
+    }
+
+    /* ─── 1200px ─── */
     @media (max-width: 1200px) {
         & .invite__hero .invite__hero-grid {
             grid-template-columns: 1fr;
@@ -873,164 +938,325 @@
             justify-items: center;
         }
 
+        & .invite__hero .invite__hero-visual {
+            order: -1;
+        }
+
+        & .invite__hero .invite__hero-image {
+            max-width: 340px;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 380px;
+        }
+
         & .invite__form .invite__form-grid {
             grid-template-columns: 1fr;
             gap: 40px;
         }
 
-        & .invite__hero .invite__hero-visual {
-            order: -1;
+        & .invite__form .invite__form-features {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 28px 24px;
         }
     }
 
+    /* ─── 1024px ─── */
     @media (max-width: 1024px) {
+        & .invite__hero {
+            padding: 60px 0 80px;
+        }
+
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(30px, 4vw, 48px);
+        }
+
+        & .invite__hero .invite__hero-text {
+            font-size: 1rem;
+        }
+
         & .invite__hero .invite__hero-features {
             grid-template-columns: 1fr 1fr;
         }
 
-        & .invite__form .invite__form-features {
-            grid-template-columns: 1fr 1fr;
+        & .invite__hero .invite__hero-image {
+            max-width: 320px;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 340px;
+        }
+
+        & .invite__form {
+            padding: 60px 0;
+        }
+
+        & .invite__form .invite__form-grid {
+            gap: 40px;
         }
 
         & .invite__form .invite__form-wrapper {
             padding: 28px 20px;
         }
-    }
-
-    @media (max-width: 820px) {
-        & .invite__hero .invite__hero-placeholder {
-            max-width: 100%;
-        }
-
-        & .invite__form .invite__form-row {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 720px) {
-        & .invite__hero {
-            padding: 60px 0 80px;
-        }
-
-        & .invite__hero .invite__hero-content .invite__hero-title {
-            font-size: 2.6rem;
-        }
-
-        & .invite__hero .invite__hero-features {
-            grid-template-columns: 1fr 1fr;
-        }
 
         & .invite__form .invite__form-title {
-            font-size: 2rem;
+            font-size: clamp(24px, 3vw, 38px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.9rem;
         }
 
         & .invite__form .invite__form-features {
             grid-template-columns: 1fr 1fr;
-        }
-
-        & .invite__form .invite__form-wrapper {
-            padding: 24px 16px;
-        }
-
-        & .invite__hero .invite__hero-particle {
-            display: none;
-        }
-    }
-
-    @media (max-width: 540px) {
-        & .invite__hero .invite__hero-content .invite__hero-title {
-            font-size: 2.2rem;
-        }
-
-        & .invite__hero .invite__hero-features {
-            grid-template-columns: 1fr;
-        }
-
-        & .invite__form .invite__form-features {
-            grid-template-columns: 1fr;
-        }
-
-        & .invite__form .invite__form-title {
-            font-size: 1.6rem;
         }
 
         & .invite__form .invite__form-group input,
         & .invite__form .invite__form-group textarea {
+            min-height: 40px;
             padding: 10px 14px;
             font-size: 0.85rem;
         }
 
+        & .invite__form .btn--block {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.8rem;
+        }
+
+        & .invite__community {
+            padding: 60px 0;
+        }
+
         & .invite__community .invite__community-title {
-            font-size: 2rem;
+            font-size: clamp(28px, 3.2vw, 40px);
         }
 
         & .invite__community .invite__community-desc {
+            font-size: 1rem;
+        }
+
+        & .invite__community .btn--lg {
+            min-height: 48px;
+            padding: 14px 28px;
             font-size: 0.9rem;
-        }
-
-        & .invite__hero .invite__hero-placeholder {
-            padding: 40px 24px;
-        }
-
-        & .invite__hero .invite__hero-placeholder i {
-            font-size: 3rem;
         }
     }
 
-    @media (max-width: 480px) {
-        & .invite__hero .invite__hero-content .invite__hero-title {
-            font-size: 1.8rem;
+    /* ─── 820px ─── */
+    @media (max-width: 820px) {
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(26px, 3.5vw, 40px);
         }
 
         & .invite__hero .invite__hero-text {
             font-size: 0.95rem;
         }
 
-        & .invite__hero .invite__hero-placeholder {
-            padding: 30px 20px;
+        & .invite__hero .invite__hero-features {
+            grid-template-columns: 1fr 1fr;
         }
 
-        & .invite__hero .invite__hero-placeholder i {
-            font-size: 2.6rem;
+        & .invite__hero .invite__hero-image {
+            max-width: 100%;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 320px;
+        }
+
+        & .invite__hero .invite__hero-particle {
+            display: none;
         }
 
         & .invite__form .invite__form-wrapper {
-            padding: 20px 14px;
+            padding: 24px 18px;
+        }
+
+        & .invite__form .invite__form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        & .invite__form .invite__form-features {
+            grid-template-columns: 1fr 1fr;
         }
 
         & .invite__form .invite__form-title {
-            font-size: 1.4rem;
+            font-size: clamp(22px, 2.8vw, 34px);
+        }
+
+        & .invite__form .invite__form-group {
+            margin-bottom: 14px;
+        }
+
+        & .invite__form .invite__form-group label {
+            font-size: 0.8rem;
+        }
+
+        & .invite__form .invite__form-group input,
+        & .invite__form .invite__form-group textarea {
+            min-height: 36px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
         }
 
         & .invite__form .btn--block {
-            font-size: 0.8rem;
-            padding: 12px;
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.75rem;
         }
 
         & .invite__community .invite__community-title {
-            font-size: 1.6rem;
+            font-size: clamp(24px, 2.8vw, 34px);
+        }
+
+        & .invite__community .invite__community-desc {
+            font-size: 0.95rem;
+        }
+
+        & .invite__community .btn--lg {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.85rem;
         }
     }
 
-    @media (max-width: 420px) {
-        & .invite__hero .invite__hero-content .invite__hero-title {
-            font-size: 1.5rem;
+    /* ─── 720px ─── */
+    @media (max-width: 720px) {
+        & .invite__hero {
+            padding: 50px 0 70px;
+        }
+
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(22px, 3vw, 34px);
+        }
+
+        & .invite__hero .invite__hero-text {
+            font-size: 0.9rem;
+        }
+
+        & .invite__hero .invite__hero-features {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        & .invite__hero .invite__hero-features span {
+            font-size: 0.75rem;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 280px;
+        }
+
+        & .invite__form {
+            padding: 50px 0;
+        }
+
+        & .invite__form .invite__form-grid {
+            gap: 32px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 20px 16px;
+        }
+
+        & .invite__form .invite__form-title {
+            font-size: clamp(20px, 2.5vw, 30px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.85rem;
+        }
+
+        & .invite__form .invite__form-features {
+            grid-template-columns: 1fr;
+        }
+
+        & .invite__form .invite__form-features span {
+            font-size: 0.78rem;
+        }
+
+        & .invite__form .invite__form-group input,
+        & .invite__form .invite__form-group textarea {
+            min-height: 32px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+
+        & .invite__form .btn--block {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.7rem;
+        }
+
+        & .invite__community {
+            padding: 50px 0;
+        }
+
+        & .invite__community .invite__community-title {
+            font-size: clamp(22px, 2.5vw, 30px);
+        }
+
+        & .invite__community .invite__community-desc {
+            font-size: 0.9rem;
+        }
+
+        & .invite__community .btn--lg {
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* ─── 540px ─── */
+    @media (max-width: 540px) {
+        & .invite__hero {
+            padding: 40px 0 60px;
+        }
+
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(18px, 2.5vw, 28px);
         }
 
         & .invite__hero .invite__hero-text {
             font-size: 0.85rem;
         }
 
-        & .invite__hero .invite__hero-placeholder {
-            padding: 24px 16px;
+        & .invite__hero .invite__hero-badge {
+            font-size: 0.6rem;
+            padding: 4px 14px 4px 10px;
         }
 
-        & .invite__hero .invite__hero-placeholder i {
-            font-size: 2.2rem;
+        & .invite__hero .invite__hero-features {
+            grid-template-columns: 1fr;
         }
 
-        & .invite__hero .invite__hero-placeholder span {
-            font-size: 1.1rem;
+        & .invite__hero .invite__hero-features span {
+            font-size: 0.72rem;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 260px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 18px 14px;
+        }
+
+        & .invite__form .invite__form-title {
+            font-size: clamp(18px, 2.2vw, 26px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.8rem;
         }
 
         & .invite__form .invite__form-group label {
@@ -1039,95 +1265,137 @@
 
         & .invite__form .invite__form-group input,
         & .invite__form .invite__form-group textarea {
-            font-size: 0.8rem;
-            padding: 8px 12px;
+            min-height: 28px;
+            padding: 4px 8px;
+            font-size: 0.7rem;
         }
 
         & .invite__form .btn--block {
-            font-size: 0.75rem;
-            padding: 10px;
+            min-height: 32px;
+            padding: 6px 12px;
+            font-size: 0.65rem;
         }
 
         & .invite__community .invite__community-title {
-            font-size: 1.4rem;
+            font-size: clamp(18px, 2.2vw, 26px);
         }
 
         & .invite__community .invite__community-desc {
             font-size: 0.85rem;
         }
+
+        & .invite__community .btn--lg {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
     }
 
-    @media (max-width: 350px) {
-        & .invite__hero .invite__hero-content .invite__hero-title {
-            font-size: 1.3rem;
+    /* ─── 480px ─── */
+    @media (max-width: 480px) {
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(16px, 2vw, 24px);
+        }
+
+        & .invite__hero .invite__hero-text {
+            font-size: 0.8rem;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 240px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 16px 12px;
+        }
+
+        & .invite__form .invite__form-title {
+            font-size: clamp(16px, 2vw, 24px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.75rem;
+        }
+
+        & .invite__form .invite__form-group input,
+        & .invite__form .invite__form-group textarea {
+            min-height: 24px;
+            padding: 4px 6px;
+            font-size: 0.65rem;
+        }
+
+        & .invite__form .btn--block {
+            min-height: 28px;
+            padding: 4px 10px;
+            font-size: 0.6rem;
+        }
+
+        & .invite__community .invite__community-title {
+            font-size: clamp(16px, 2vw, 24px);
+        }
+
+        & .invite__community .invite__community-desc {
+            font-size: 0.8rem;
+        }
+
+        & .invite__community .btn--lg {
+            min-height: 32px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+        }
+    }
+
+    /* ─── 420px ─── */
+    @media (max-width: 420px) {
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(14px, 1.8vw, 20px);
         }
 
         & .invite__hero .invite__hero-text {
             font-size: 0.75rem;
         }
 
-        & .invite__hero .invite__hero-placeholder {
-            padding: 20px 12px;
-        }
-
-        & .invite__hero .invite__hero-placeholder i {
-            font-size: 1.8rem;
-        }
-
-        & .invite__hero .invite__hero-placeholder span {
-            font-size: 1rem;
-        }
-
-        & .invite__form .invite__form-title {
-            font-size: 1.2rem;
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 220px;
         }
 
         & .invite__form .invite__form-wrapper {
-            padding: 16px 10px;
-        }
-
-        & .invite__community .invite__community-title {
-            font-size: 1.4rem;
-        }
-
-        & .invite__community .invite__community-desc {
-            font-size: 0.8rem;
-        }
-
-        & .invite__community .btn--lg {
-            padding: 12px 24px;
-            font-size: 0.8rem;
-        }
-    }
-
-    @media (max-width: 300px) {
-        & .invite__hero .invite__hero-content .invite__hero-title {
-            font-size: 1.1rem;
-        }
-
-        & .invite__hero .invite__hero-placeholder {
-            padding: 16px 10px;
-        }
-
-        & .invite__hero .invite__hero-placeholder i {
-            font-size: 1.6rem;
-        }
-
-        & .invite__hero .invite__hero-placeholder span {
-            font-size: 0.85rem;
+            padding: 14px 10px;
         }
 
         & .invite__form .invite__form-title {
-            font-size: 1rem;
+            font-size: clamp(14px, 1.5vw, 22px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.7rem;
+        }
+
+        & .invite__form .invite__form-group {
+            margin-bottom: 10px;
+        }
+
+        & .invite__form .invite__form-group label {
+            font-size: 0.7rem;
+        }
+
+        & .invite__form .invite__form-group input,
+        & .invite__form .invite__form-group textarea {
+            min-height: 20px;
+            padding: 2px 4px;
+            font-size: 0.6rem;
         }
 
         & .invite__form .btn--block {
-            font-size: 0.65rem;
-            padding: 8px;
+            min-height: 24px;
+            padding: 2px 8px;
+            font-size: 0.55rem;
         }
 
         & .invite__community .invite__community-title {
-            font-size: 1.2rem;
+            font-size: clamp(14px, 1.5vw, 22px);
         }
 
         & .invite__community .invite__community-desc {
@@ -1135,13 +1403,124 @@
         }
 
         & .invite__community .btn--lg {
-            padding: 10px 18px;
+            min-height: 28px;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+        }
+    }
+
+    /* ─── 350px ─── */
+    @media (max-width: 350px) {
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(12px, 1.5vw, 18px);
+        }
+
+        & .invite__hero .invite__hero-text {
             font-size: 0.7rem;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 200px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 12px 8px;
+        }
+
+        & .invite__form .invite__form-title {
+            font-size: clamp(12px, 1.2vw, 18px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.65rem;
+        }
+
+        & .invite__form .invite__form-group input,
+        & .invite__form .invite__form-group textarea {
+            min-height: 18px;
+            padding: 2px 4px;
+            font-size: 0.55rem;
+        }
+
+        & .invite__form .btn--block {
+            min-height: 20px;
+            padding: 2px 6px;
+            font-size: 0.5rem;
+        }
+
+        & .invite__community .invite__community-title {
+            font-size: clamp(12px, 1.2vw, 18px);
+        }
+
+        & .invite__community .invite__community-desc {
+            font-size: 0.7rem;
+        }
+
+        & .invite__community .btn--lg {
+            min-height: 24px;
+            padding: 2px 10px;
+            font-size: 0.6rem;
+        }
+    }
+
+    /* ─── 300px ─── */
+    @media (max-width: 300px) {
+        & .invite__hero .invite__hero-title {
+            font-size: clamp(10px, 1.2vw, 16px);
+        }
+
+        & .invite__hero .invite__hero-text {
+            font-size: 0.65rem;
+        }
+
+        & .invite__hero .invite__hero-img,
+        & .invite__hero .invite__hero-img-fallback {
+            height: 180px;
+        }
+
+        & .invite__form .invite__form-wrapper {
+            padding: 10px 6px;
+        }
+
+        & .invite__form .invite__form-title {
+            font-size: clamp(10px, 1vw, 16px);
+        }
+
+        & .invite__form .invite__form-desc {
+            font-size: 0.6rem;
+        }
+
+        & .invite__form .invite__form-group input,
+        & .invite__form .invite__form-group textarea {
+            min-height: 16px;
+            padding: 1px 2px;
+            font-size: 0.5rem;
+        }
+
+        & .invite__form .btn--block {
+            min-height: 18px;
+            padding: 1px 4px;
+            font-size: 0.45rem;
+        }
+
+        & .invite__community .invite__community-title {
+            font-size: clamp(10px, 1vw, 16px);
+        }
+
+        & .invite__community .invite__community-desc {
+            font-size: 0.65rem;
+        }
+
+        & .invite__community .btn--lg {
+            min-height: 20px;
+            padding: 2px 8px;
+            font-size: 0.55rem;
         }
     }
 }
 
-/* ─── ANIMATIONS ─── */
+/* ─── KEYFRAMES ─── */
 @keyframes inviteOrbFloat {
     0% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(20px, -15px) scale(1.02); }
@@ -1194,92 +1573,4 @@
 @keyframes inviteCommunityPulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
-}
-
-/* ─── INVITE HERO IMAGE ─── */
-& .invite__hero-image {
-    width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s ease;
-
-    &:hover {
-        transform: translateY(-6px) scale(1.01);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
-    }
-}
-
-& .invite__hero-img {
-    width: 100%;
-    height: 420px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-
-    &:hover {
-        transform: scale(1.02);
-    }
-}
-
-& .invite__hero-img-fallback {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 420px;
-    background: var(--gold-dim);
-    border-radius: 20px;
-    color: var(--text-muted);
-    text-align: center;
-
-    & i {
-        font-size: 3.2rem;
-        color: var(--gold);
-        opacity: 0.3;
-        margin-bottom: 12px;
-    }
-
-    & span {
-        font-family: var(--font-serif);
-        font-weight: 600;
-        font-size: 1.2rem;
-        color: var(--text);
-    }
-
-    & small {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-top: 4px;
-    }
-}
-
-@media (max-width: 1200px) {
-    & .invite__hero-image {
-        max-width: 320px;
-    }
-    & .invite__hero-img,
-    & .invite__hero-img-fallback {
-        height: 360px;
-    }
-}
-
-@media (max-width: 820px) {
-    & .invite__hero-image {
-        max-width: 100%;
-    }
-    & .invite__hero-img,
-    & .invite__hero-img-fallback {
-        height: 320px;
-    }
-}
-
-@media (max-width: 540px) {
-    & .invite__hero-img,
-    & .invite__hero-img-fallback {
-        height: 280px;
-    }
 }

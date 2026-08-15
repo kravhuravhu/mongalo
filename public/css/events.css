@@ -1,10 +1,10 @@
 .events {
-    /* ─── EVENTS FLOATING ORBS ─── */
+    /* ─── FLOATING ORBS ─── */
     & .events__orbs {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: 999;
+        z-index: 0;
         overflow: hidden;
 
         & .events__orb {
@@ -70,7 +70,7 @@
         }
     }
 
-    /* ─── HERO ─── (Events Theme) ─── */
+    /* ─── HERO ─── */
     & .events__hero {
         padding: 60px 0 80px;
         position: relative;
@@ -83,7 +83,6 @@
         background-repeat: no-repeat;
         text-align: center;
 
-        /* ─── Overlay ─── */
         &::before {
             content: '';
             position: absolute;
@@ -248,7 +247,7 @@
             border: 1px solid rgba(230, 126, 34, 0.15);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             cursor: default;
 
             &:hover {
@@ -280,7 +279,6 @@
             letter-spacing: -0.02em;
             color: #fff;
             margin-bottom: 12px;
-            animation: eventsTitleFade 1s ease-out;
             text-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
 
             & .events__hero-gradient {
@@ -313,7 +311,6 @@
             max-width: 48ch;
             margin: 0 auto 16px;
             line-height: 1.7;
-            animation: eventsTextFade 1.2s ease-out;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -324,7 +321,6 @@
             flex-wrap: wrap;
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.75);
-            animation: eventsMetaFade 1.4s ease-out;
 
             & span {
                 display: flex;
@@ -423,53 +419,10 @@
             gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
-            animation: eventsActionsFade 1.6s ease-out;
         }
 
-        & .btn--lg {
-            padding: 16px 36px;
-            font-size: 0.95rem;
-            position: relative;
-            overflow: hidden;
-
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-                transition: left 0.6s ease;
-            }
-
-            &:hover::before {
-                left: 100%;
-            }
-        }
-
-        & .btn--primary {
-            background: var(--gold);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.2);
-            &:hover {
-                background: var(--gold-light);
-                transform: translateY(-3px);
-                box-shadow: 0 12px 40px rgba(230, 126, 34, 0.25);
-            }
-        }
-
-        & .btn--outline {
-            background: transparent;
-            color: #fff;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-
-            &:hover {
-                border-color: var(--gold);
-                background: rgba(230, 126, 34, 0.1);
-                transform: translateY(-3px);
-                box-shadow: 0 8px 30px rgba(230, 126, 34, 0.06);
-            }
+        & .btn {
+            min-height: 52px;
         }
     }
 
@@ -679,43 +632,10 @@
             }
 
             & .events__upcoming-actions {
-                & .btn--sm {
+                & .btn {
+                    min-height: 36px;
                     padding: 6px 16px;
                     font-size: 0.7rem;
-                    position: relative;
-                    overflow: hidden;
-                    background: var(--gold);
-                    color: #fff;
-                    border: none;
-                    border-radius: 50px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    font-weight: 600;
-                    text-decoration: none;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: -100%;
-                        width: 100%;
-                        height: 100%;
-                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-                        transition: left 0.6s ease;
-                    }
-
-                    &:hover {
-                        background: var(--gold-light);
-                        transform: translateY(-2px);
-                        box-shadow: 0 8px 25px rgba(166, 124, 78, 0.15);
-
-                        &::before {
-                            left: 100%;
-                        }
-                    }
                 }
             }
         }
@@ -881,7 +801,7 @@
         }
     }
 
-    /* ─── INVITE ARTHUR ─── */
+    /* ─── INVITE ─── */
     & .events__invite {
         padding: 80px 0;
         position: relative;
@@ -1052,6 +972,7 @@
                 position: relative;
                 overflow: hidden;
                 box-shadow: 0 4px 15px rgba(166, 124, 78, 0.15);
+                min-height: 48px;
 
                 &::before {
                     content: '';
@@ -1229,7 +1150,7 @@
             margin-bottom: 12px;
             display: inline-block;
             animation: eventsCommunityPulse 3s ease-in-out infinite;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
 
             &:hover {
                 opacity: 0.5;
@@ -1289,6 +1210,7 @@
             box-shadow: 0 4px 15px rgba(166, 124, 78, 0.15);
             position: relative;
             overflow: hidden;
+            min-height: 56px;
 
             &::before {
                 content: '';
@@ -1325,8 +1247,84 @@
         }
     }
 
-    /* ─── RESPONSIVE ─── */
+    /* ────────────────────────────────────────────────────────── */
+    /* ─── BREAKPOINTS ─── */
+    /* ────────────────────────────────────────────────────────── */
+
+    /* ─── 1700px ─── */
+    @media (max-width: 1700px) {
+        & .events__hero .events__countdown {
+            max-width: 700px;
+            padding: 32px 24px;
+        }
+
+        & .events__hero .events__countdown-number {
+            font-size: 4.4rem;
+        }
+
+        & .events__hero .events__countdown-grid {
+            gap: 8px;
+        }
+
+        & .events__upcoming .events__upcoming-list {
+            max-width: 800px;
+            gap: 20px;
+        }
+    }
+
+    /* ─── 1500px ─── */
+    @media (max-width: 1500px) {
+        & .events__hero .events__countdown-number {
+            font-size: 4rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 3rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 56px;
+        }
+
+        & .events__upcoming .events__upcoming-list {
+            max-width: 740px;
+            gap: 18px;
+        }
+
+        & .events__past .events__past-grid {
+            max-width: 660px;
+        }
+    }
+
+    /* ─── 1200px ─── */
     @media (max-width: 1200px) {
+        & .events__hero .events__countdown {
+            max-width: 100%;
+            padding: 28px 20px;
+        }
+
+        & .events__hero .events__countdown-number {
+            font-size: 3.6rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 2.6rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 48px;
+        }
+
+        & .events__upcoming .events__upcoming-list {
+            grid-template-columns: 1fr;
+            max-width: 460px;
+        }
+
+        & .events__past .events__past-grid {
+            grid-template-columns: 1fr 1fr;
+            max-width: 480px;
+        }
+
         & .events__invite .events__invite-grid {
             grid-template-columns: 1fr;
             gap: 40px;
@@ -1340,39 +1338,36 @@
         & .events__invite .events__invite-visual {
             order: -1;
         }
-    }
 
-    @media (max-width: 1024px) {
-        & .events__upcoming .events__upcoming-list {
-            grid-template-columns: 1fr;
-            max-width: 460px;
-        }
-
-        & .events__past .events__past-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        & .events__hero .events__countdown {
+        & .events__invite .events__invite-placeholder {
             max-width: 100%;
-            padding: 28px 20px;
-        }
-
-        & .events__hero .events__countdown-number {
-            font-size: 4rem;
         }
     }
 
-    @media (max-width: 820px) {
+    /* ─── 1024px ─── */
+    @media (max-width: 1024px) {
+        & .events__hero {
+            padding: 50px 0 70px;
+        }
+
+        & .events__hero .events__hero-title {
+            font-size: clamp(30px, 4vw, 48px);
+        }
+
+        & .events__hero .events__hero-text {
+            font-size: 1rem;
+        }
+
         & .events__hero .events__countdown-number {
             font-size: 3.2rem;
         }
 
         & .events__hero .events__countdown-divider {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
         }
 
         & .events__hero .events__countdown-item {
-            min-width: 48px;
+            min-width: 42px;
         }
 
         & .events__hero .events__countdown {
@@ -1384,22 +1379,52 @@
             font-size: 0.5rem;
         }
 
-        & .events__invite .events__invite-placeholder {
-            max-width: 100%;
+        & .events__upcoming {
+            padding: 60px 0;
+        }
+
+        & .events__past {
+            padding: 50px 0;
+        }
+
+        & .events__invite {
+            padding: 60px 0;
+        }
+
+        & .events__invite .events__invite-title {
+            font-size: clamp(26px, 3vw, 38px);
+        }
+
+        & .events__invite .events__invite-text {
+            font-size: 0.9rem;
+        }
+
+        & .events__community {
+            padding: 60px 0;
+        }
+
+        & .events__community .events__community-title {
+            font-size: clamp(28px, 3.2vw, 40px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 1rem;
         }
     }
 
-    @media (max-width: 720px) {
-        & .events__hero {
-            padding: 40px 0 60px;
+    /* ─── 820px ─── */
+    @media (max-width: 820px) {
+        & .events__hero .events__hero-title {
+            font-size: clamp(26px, 3.5vw, 40px);
         }
 
-        & .events__hero .events__hero-title {
-            font-size: 2.2rem;
+        & .events__hero .events__hero-meta {
+            gap: 16px;
+            font-size: 0.8rem;
         }
 
         & .events__hero .events__countdown-number {
-            font-size: 2.4rem;
+            font-size: 2.8rem;
         }
 
         & .events__hero .events__countdown-divider {
@@ -1415,6 +1440,28 @@
             border-radius: 14px;
         }
 
+        & .events__hero .events__countdown-label {
+            font-size: 0.45rem;
+        }
+
+        & .events__hero .events__hero-actions .btn {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.8rem;
+        }
+
+        & .events__upcoming .events__upcoming-card {
+            padding: 18px 16px 16px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-name {
+            font-size: 1rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-desc {
+            font-size: 0.78rem;
+        }
+
         & .events__past .events__past-grid {
             grid-template-columns: 1fr;
             max-width: 360px;
@@ -1422,46 +1469,6 @@
 
         & .events__invite .events__invite-features {
             grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 540px) {
-        & .events__hero .events__hero-title {
-            font-size: 1.8rem;
-        }
-
-        & .events__hero .events__hero-actions .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        & .events__hero .events__countdown-number {
-            font-size: 1.8rem;
-        }
-
-        & .events__hero .events__countdown-grid {
-            gap: 4px;
-        }
-
-        & .events__hero .events__countdown-item {
-            min-width: 30px;
-        }
-
-        & .events__hero .events__countdown-divider {
-            font-size: 1.4rem;
-        }
-
-        & .events__hero .events__countdown {
-            padding: 16px 12px;
-            border-radius: 12px;
-        }
-
-        & .events__hero .events__countdown-label {
-            font-size: 0.45rem;
-        }
-
-        & .events__upcoming .events__upcoming-card {
-            padding: 18px 14px;
         }
 
         & .events__invite .events__invite-placeholder {
@@ -1473,145 +1480,407 @@
         }
     }
 
-    @media (max-width: 480px) {
+    /* ─── 720px ─── */
+    @media (max-width: 720px) {
+        & .events__hero {
+            padding: 40px 0 60px;
+        }
+
+        & .events__hero .events__hero-title {
+            font-size: clamp(22px, 3vw, 34px);
+        }
+
+        & .events__hero .events__hero-text {
+            font-size: 0.95rem;
+        }
+
         & .events__hero .events__countdown-number {
-            font-size: 1.4rem;
+            font-size: 2.4rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 1.6rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 34px;
+        }
+
+        & .events__hero .events__countdown {
+            padding: 16px 12px;
+            border-radius: 12px;
         }
 
         & .events__hero .events__countdown-label {
             font-size: 0.4rem;
         }
 
-        & .events__hero .events__countdown-item {
-            min-width: 24px;
+        & .events__hero .events__hero-actions {
+            gap: 10px;
         }
 
-        & .events__hero .events__countdown-divider {
-            font-size: 1.2rem;
-        }
-
-        & .events__hero .events__countdown {
-            padding: 14px 10px;
-        }
-
-        & .events__hero .events__hero-meta {
-            gap: 12px;
+        & .events__hero .events__hero-actions .btn {
+            min-height: 40px;
+            padding: 10px 20px;
             font-size: 0.75rem;
+        }
+
+        & .events__upcoming {
+            padding: 50px 0;
+        }
+
+        & .events__upcoming .events__upcoming-list {
+            gap: 16px;
         }
 
         & .events__upcoming .events__upcoming-card .events__upcoming-meta {
             flex-direction: column;
             gap: 4px;
         }
-    }
 
-    @media (max-width: 420px) {
-        & .events__hero .events__hero-title {
-            font-size: 1.5rem;
+        & .events__past {
+            padding: 40px 0;
         }
 
-        & .events__hero .events__countdown-number {
-            font-size: 1.2rem;
-        }
-
-        & .events__hero .events__countdown-divider {
-            font-size: 1rem;
-        }
-
-        & .events__hero .events__countdown-item {
-            min-width: 20px;
-        }
-
-        & .events__hero .events__hero-actions .btn {
-            font-size: 0.75rem;
-            padding: 10px 18px;
-        }
-
-        & .events__past .events__past-card {
-            padding: 10px 12px;
-        }
-
-        & .events__past .events__past-day {
-            font-size: 0.85rem;
+        & .events__invite {
+            padding: 50px 0;
         }
 
         & .events__invite .events__invite-title {
-            font-size: 1.6rem;
+            font-size: clamp(24px, 2.8vw, 34px);
         }
 
         & .events__invite .events__invite-text {
             font-size: 0.85rem;
         }
+
+        & .events__invite .events__invite-btn {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.8rem;
+        }
+
+        & .events__community {
+            padding: 50px 0;
+        }
+
+        & .events__community .events__community-title {
+            font-size: clamp(24px, 2.8vw, 34px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 0.95rem;
+        }
+
+        & .events__community .events__community-btn {
+            min-height: 48px;
+            padding: 14px 28px;
+            font-size: 0.9rem;
+        }
     }
 
-    @media (max-width: 350px) {
+    /* ─── 540px ─── */
+    @media (max-width: 540px) {
+        & .events__hero {
+            padding: 30px 0 50px;
+        }
+
         & .events__hero .events__hero-title {
-            font-size: 1.3rem;
+            font-size: clamp(18px, 2.5vw, 28px);
+        }
+
+        & .events__hero .events__hero-text {
+            font-size: 0.9rem;
+        }
+
+        & .events__hero .events__hero-meta {
+            gap: 12px;
+            font-size: 0.7rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         & .events__hero .events__countdown-number {
-            font-size: 1rem;
+            font-size: 1.8rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 1.2rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 28px;
+        }
+
+        & .events__hero .events__countdown {
+            padding: 14px 10px;
+            border-radius: 10px;
         }
 
         & .events__hero .events__countdown-label {
             font-size: 0.35rem;
         }
 
-        & .events__hero .events__countdown-item {
-            min-width: 16px;
+        & .events__hero .events__hero-actions {
+            flex-direction: column;
+            align-items: center;
         }
 
-        & .events__hero .events__countdown-divider {
+        & .events__hero .events__hero-actions .btn {
+            width: 100%;
+            justify-content: center;
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.7rem;
+        }
+
+        & .events__hero .events__hero-badge {
+            font-size: 0.6rem;
+            padding: 4px 14px 4px 10px;
+        }
+
+        & .events__upcoming {
+            padding: 40px 0;
+        }
+
+        & .events__upcoming .events__upcoming-list {
+            max-width: 100%;
+        }
+
+        & .events__upcoming .events__upcoming-card {
+            padding: 16px 14px 14px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-name {
+            font-size: 0.95rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-desc {
+            font-size: 0.75rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-date {
+            min-width: 40px;
+            padding: 4px 8px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-day {
+            font-size: 1.2rem;
+        }
+
+        & .events__past .events__past-grid {
+            gap: 10px;
+        }
+
+        & .events__past .events__past-card {
+            padding: 10px 12px;
+        }
+
+        & .events__past .events__past-card .events__past-day {
+            font-size: 0.85rem;
+        }
+
+        & .events__invite {
+            padding: 40px 0;
+        }
+
+        & .events__invite .events__invite-title {
+            font-size: clamp(20px, 2.2vw, 28px);
+        }
+
+        & .events__invite .events__invite-text {
             font-size: 0.8rem;
+        }
+
+        & .events__invite .events__invite-features span {
+            font-size: 0.75rem;
+        }
+
+        & .events__invite .events__invite-btn {
+            min-height: 38px;
+            padding: 10px 18px;
+            font-size: 0.75rem;
+        }
+
+        & .events__invite .events__invite-placeholder {
+            padding: 24px 16px;
+        }
+
+        & .events__invite .events__invite-placeholder i {
+            font-size: 2.2rem;
+        }
+
+        & .events__community {
+            padding: 40px 0;
+        }
+
+        & .events__community .events__community-title {
+            font-size: clamp(20px, 2.2vw, 28px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 0.9rem;
+        }
+
+        & .events__community .events__community-btn {
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* ─── 480px ─── */
+    @media (max-width: 480px) {
+        & .events__hero .events__hero-title {
+            font-size: clamp(16px, 2vw, 24px);
         }
 
         & .events__hero .events__hero-text {
             font-size: 0.85rem;
         }
 
-        & .events__invite .events__invite-title {
-            font-size: 1.3rem;
-        }
-
-        & .events__invite .events__invite-features span {
-            font-size: 0.7rem;
-        }
-
-        & .events__community .events__community-title {
-            font-size: 1.4rem;
-        }
-
-        & .events__community .events__community-desc {
-            font-size: 0.8rem;
-        }
-
-        & .events__community .events__community-btn {
-            padding: 10px 20px;
-            font-size: 0.75rem;
-        }
-    }
-
-    @media (max-width: 300px) {
-        & .events__hero .events__hero-title {
-            font-size: 1.1rem;
-        }
-
         & .events__hero .events__countdown-number {
-            font-size: 0.85rem;
+            font-size: 1.6rem;
         }
 
         & .events__hero .events__countdown-divider {
-            font-size: 0.6rem;
+            font-size: 1rem;
         }
 
         & .events__hero .events__countdown-item {
-            min-width: 14px;
+            min-width: 24px;
+        }
+
+        & .events__hero .events__countdown {
+            padding: 12px 8px;
+            border-radius: 8px;
+        }
+
+        & .events__hero .events__countdown-label {
+            font-size: 0.3rem;
         }
 
         & .events__hero .events__hero-meta {
             flex-direction: column;
             gap: 6px;
             align-items: center;
+        }
+
+        & .events__upcoming .events__upcoming-card {
+            padding: 14px 12px 12px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-name {
+            font-size: 0.85rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-desc {
+            font-size: 0.7rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-actions .btn {
+            min-height: 30px;
+            padding: 4px 12px;
+            font-size: 0.6rem;
+        }
+
+        & .events__past .events__past-card {
+            padding: 8px 10px;
+        }
+
+        & .events__past .events__past-card .events__past-name {
+            font-size: 0.75rem;
+        }
+
+        & .events__invite .events__invite-title {
+            font-size: clamp(18px, 2vw, 24px);
+        }
+
+        & .events__invite .events__invite-text {
+            font-size: 0.75rem;
+        }
+
+        & .events__invite .events__invite-btn {
+            min-height: 34px;
+            padding: 8px 16px;
+            font-size: 0.7rem;
+        }
+
+        & .events__community .events__community-title {
+            font-size: clamp(18px, 2vw, 24px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 0.85rem;
+        }
+
+        & .events__community .events__community-btn {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* ─── 420px ─── */
+    @media (max-width: 420px) {
+        & .events__hero .events__hero-title {
+            font-size: clamp(14px, 1.8vw, 20px);
+        }
+
+        & .events__hero .events__hero-text {
+            font-size: 0.8rem;
+        }
+
+        & .events__hero .events__countdown-number {
+            font-size: 1.4rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 0.8rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 20px;
+        }
+
+        & .events__hero .events__countdown {
+            padding: 10px 6px;
+            border-radius: 6px;
+        }
+
+        & .events__hero .events__countdown-grid {
+            gap: 4px;
+        }
+
+        & .events__hero .events__hero-actions .btn {
+            min-height: 32px;
+            padding: 6px 14px;
+            font-size: 0.65rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-date {
+            min-width: 34px;
+            padding: 3px 6px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-day {
+            font-size: 1rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-meta {
+            gap: 3px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-meta span {
+            font-size: 0.65rem;
+        }
+
+        & .events__invite .events__invite-title {
+            font-size: clamp(16px, 1.5vw, 22px);
+        }
+
+        & .events__invite .events__invite-features span {
+            font-size: 0.7rem;
         }
 
         & .events__invite .events__invite-placeholder {
@@ -1627,17 +1896,172 @@
         }
 
         & .events__community .events__community-title {
-            font-size: 1.2rem;
+            font-size: clamp(16px, 1.5vw, 22px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 0.8rem;
         }
 
         & .events__community .events__community-btn {
-            padding: 8px 16px;
+            min-height: 32px;
+            padding: 6px 14px;
             font-size: 0.7rem;
+        }
+    }
+
+    /* ─── 350px ─── */
+    @media (max-width: 350px) {
+        & .events__hero .events__hero-title {
+            font-size: clamp(12px, 1.5vw, 18px);
+        }
+
+        & .events__hero .events__hero-text {
+            font-size: 0.75rem;
+        }
+
+        & .events__hero .events__countdown-number {
+            font-size: 1.2rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 0.6rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 16px;
+        }
+
+        & .events__hero .events__countdown-label {
+            font-size: 0.25rem;
+        }
+
+        & .events__hero .events__hero-actions .btn {
+            min-height: 28px;
+            padding: 4px 10px;
+            font-size: 0.6rem;
+        }
+
+        & .events__upcoming .events__upcoming-card {
+            padding: 12px 10px 10px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-name {
+            font-size: 0.8rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-desc {
+            font-size: 0.65rem;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-actions .btn {
+            font-size: 0.55rem;
+            padding: 2px 8px;
+            min-height: 24px;
+        }
+
+        & .events__past .events__past-card {
+            padding: 6px 8px;
+        }
+
+        & .events__past .events__past-card .events__past-day {
+            font-size: 0.7rem;
+        }
+
+        & .events__invite .events__invite-title {
+            font-size: clamp(14px, 1.2vw, 18px);
+        }
+
+        & .events__invite .events__invite-text {
+            font-size: 0.7rem;
+        }
+
+        & .events__invite .events__invite-btn {
+            min-height: 30px;
+            padding: 6px 14px;
+            font-size: 0.65rem;
+        }
+
+        & .events__community .events__community-title {
+            font-size: clamp(14px, 1.2vw, 18px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 0.75rem;
+        }
+
+        & .events__community .events__community-btn {
+            min-height: 28px;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+        }
+    }
+
+    /* ─── 300px ─── */
+    @media (max-width: 300px) {
+        & .events__hero .events__hero-title {
+            font-size: clamp(10px, 1.2vw, 16px);
+        }
+
+        & .events__hero .events__hero-text {
+            font-size: 0.7rem;
+        }
+
+        & .events__hero .events__countdown-number {
+            font-size: 1rem;
+        }
+
+        & .events__hero .events__countdown-divider {
+            font-size: 0.5rem;
+        }
+
+        & .events__hero .events__countdown-item {
+            min-width: 12px;
+        }
+
+        & .events__hero .events__hero-actions .btn {
+            font-size: 0.55rem;
+            padding: 4px 8px;
+            min-height: 24px;
+        }
+
+        & .events__upcoming .events__upcoming-card .events__upcoming-name {
+            font-size: 0.7rem;
+        }
+
+        & .events__invite .events__invite-title {
+            font-size: clamp(12px, 1vw, 16px);
+        }
+
+        & .events__invite .events__invite-text {
+            font-size: 0.65rem;
+        }
+
+        & .events__invite .events__invite-placeholder {
+            padding: 16px 12px;
+        }
+
+        & .events__invite .events__invite-placeholder i {
+            font-size: 1.6rem;
+        }
+
+        & .events__community .events__community-title {
+            font-size: clamp(12px, 1vw, 16px);
+        }
+
+        & .events__community .events__community-desc {
+            font-size: 0.7rem;
+        }
+
+        & .events__community .events__community-btn {
+            min-height: 24px;
+            padding: 4px 10px;
+            font-size: 0.6rem;
         }
     }
 }
 
-/* ─── ANIMATIONS ─── */
+/* ─── KEYFRAMES ─── */
 @keyframes eventsOrbFloat {
     0% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(20px, -15px) scale(1.02); }
@@ -1687,33 +2111,14 @@
     100% { transform: translate(-15px, 15px) scale(1.05); }
 }
 
-@keyframes eventsTitleFade {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes eventsTextFade {
-    0% { opacity: 0; transform: translateY(-15px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes eventsMetaFade {
-    0% { opacity: 0; transform: translateY(-10px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes eventsActionsFade {
-    0% { opacity: 0; transform: translateY(-10px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── EVENT DETAIL ─── */
+/* ─── EVENT DETAIL PAGE ─── */
 .event-detail {
+    /* ─── FLOATING ORBS ─── */
     & .event-detail__orbs {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: 99;
+        z-index: 0;
         overflow: hidden;
 
         & .event-detail__orb {
@@ -1779,6 +2184,180 @@
         }
     }
 
+    /* ─── PENDING REGISTRATION NOTICE ─── */
+    & .pending-registration-notice {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1px solid #e8a838;
+        box-shadow: 0 8px 30px rgba(232, 168, 56, 0.08);
+        padding: 32px 32px 28px;
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e8a838, #f5c842);
+        }
+
+        & .pending-registration-notice__icon {
+            font-size: 2.4rem;
+            color: #e8a838;
+            flex-shrink: 0;
+            background: rgba(232, 168, 56, 0.08);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        & .pending-registration-notice__content {
+            flex: 1;
+
+            & h4 {
+                font-family: var(--font-serif);
+                font-size: 1.2rem;
+                font-weight: 700;
+                margin-bottom: 4px;
+                color: #1a1a2e;
+            }
+
+            & > p {
+                color: var(--text-muted);
+                font-size: 0.9rem;
+                margin-bottom: 16px;
+            }
+        }
+
+        & .pending-registration-notice__user-details {
+            background: #f7f5f2;
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        & .pending-registration-notice__user-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(166, 124, 78, 0.06);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            & .pending-registration-notice__label {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+            }
+
+            & .pending-registration-notice__value {
+                font-size: 0.85rem;
+                font-weight: 500;
+                color: var(--text);
+
+                &.pending-registration-notice__value--highlight {
+                    font-weight: 700;
+                    color: var(--gold);
+                    font-family: monospace;
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        & .pending-registration-notice__banking {
+            background: #d4edda;
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid #b7dfb9;
+
+            & h5 {
+                font-family: var(--font-serif);
+                font-weight: 700;
+                font-size: 0.95rem;
+                color: #155724;
+                margin-bottom: 12px;
+            }
+        }
+
+        & .pending-registration-notice__banking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 16px;
+
+            & div {
+                display: flex;
+                flex-direction: column;
+                padding: 2px 0;
+            }
+        }
+
+        & .pending-registration-notice__banking-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: rgba(21, 87, 36, 0.5);
+        }
+
+        & .pending-registration-notice__banking-value {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #155724;
+        }
+
+        & .pending-registration-notice__note {
+            font-size: 0.8rem;
+            color: rgba(21, 87, 36, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(21, 87, 36, 0.1);
+        }
+
+        & .pending-registration-notice__actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+
+            & .btn {
+                font-size: 0.8rem;
+                padding: 8px 18px;
+                min-height: 36px;
+            }
+
+            & form {
+                display: inline;
+            }
+
+            & > form > .btn--outline,
+            & .btn--outline {
+                color: var(--text-muted);
+                border-color: var(--gold);
+
+                &:hover {
+                    background: var(--gold-dark);
+                    color: #fff;
+                    border-color: var(--gold-dark);
+                }
+            }
+        }
+    }
+
+    /* ─── HERO ─── */
     & .event-detail__hero {
         padding: 60px 0 80px;
         position: relative;
@@ -1932,7 +2511,7 @@
                 padding: 6px 18px 6px 14px;
                 border-radius: 50px;
                 border: 1px solid rgba(230, 126, 34, 0.12);
-                transition: all 0.3s ease;
+                transition: all var(--transition);
                 cursor: default;
 
                 &:hover {
@@ -1964,7 +2543,6 @@
                 letter-spacing: -0.02em;
                 color: var(--text);
                 margin-bottom: 12px;
-                animation: eventDetailTitleFade 1s ease-out;
             }
 
             & .event-detail__hero-text {
@@ -2100,6 +2678,7 @@
                 font-size: 0.9rem;
                 transition: all 0.3s ease;
                 background: #fff;
+                min-height: 44px;
 
                 &:focus {
                     outline: none;
@@ -2126,9 +2705,10 @@
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             position: relative;
             overflow: hidden;
+            min-height: 48px;
 
             &::before {
                 content: '';
@@ -2173,6 +2753,7 @@
         }
     }
 
+    /* ─── WHAT TO EXPECT ─── */
     & .event-detail__expect {
         padding: 80px 0;
         position: relative;
@@ -2285,6 +2866,7 @@
         }
     }
 
+    /* ─── COMMUNITY ─── */
     & .event-detail__community {
         padding: 60px 0;
         position: relative;
@@ -2340,7 +2922,7 @@
             margin-bottom: 12px;
             display: inline-block;
             animation: eventDetailCommunityPulse 3s ease-in-out infinite;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
 
             &:hover {
                 opacity: 0.5;
@@ -2386,6 +2968,7 @@
         }
 
         & .btn--lg {
+            min-height: 56px;
             padding: 16px 36px;
             font-size: 0.95rem;
             position: relative;
@@ -2418,7 +3001,54 @@
         }
     }
 
-    /* ─── EVENT DETAIL RESPONSIVE ─── */
+    /* ────────────────────────────────────────────────────────── */
+    /* ─── BREAKPOINTS ─── */
+    /* ────────────────────────────────────────────────────────── */
+
+    @media (max-width: 1700px) {
+        & .event-detail__hero .event-detail__hero-grid {
+            gap: 50px;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            max-width: 380px;
+            padding: 32px 28px;
+        }
+
+        & .event-detail__expect .event-detail__expect-grid {
+            gap: 20px;
+        }
+
+        & .pending-registration-notice {
+            padding: 28px 28px 24px;
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 1500px) {
+        & .event-detail__hero .event-detail__hero-grid {
+            gap: 40px;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            max-width: 360px;
+            padding: 28px 24px;
+        }
+
+        & .event-detail__hero .event-detail__hero-title {
+            font-size: clamp(30px, 3.8vw, 48px);
+        }
+
+        & .event-detail__expect .event-detail__expect-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 28px 20px 24px;
+        }
+    }
+
     @media (max-width: 1200px) {
         & .event-detail__hero .event-detail__hero-grid {
             grid-template-columns: 1fr;
@@ -2450,19 +3080,198 @@
         & .event-detail__expect .event-detail__expect-grid {
             grid-template-columns: 1fr 1fr;
         }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 28px 20px 24px;
+        }
+
+        & .pending-registration-notice {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 24px 20px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__icon {
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__user-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+
+            & div {
+                align-items: center;
+            }
+        }
+
+        & .pending-registration-notice .pending-registration-notice__actions {
+            justify-content: center;
+        }
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 1024px) {
+        & .event-detail__hero {
+            padding: 50px 0 70px;
+        }
+
         & .event-detail__hero .event-detail__hero-title {
-            font-size: 2.2rem;
+            font-size: clamp(28px, 3.5vw, 44px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.95rem;
         }
 
         & .event-detail__hero .event-detail__form-card {
-            padding: 28px 20px;
+            padding: 28px 24px;
+        }
+
+        & .event-detail__hero .event-detail__form-title {
+            font-size: 1.3rem;
+        }
+
+        & .event-detail__hero .event-detail__form-group input {
+            min-height: 40px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+
+        & .event-detail__hero .btn--block {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__expect {
+            padding: 60px 0;
         }
 
         & .event-detail__expect .event-detail__expect-grid {
             grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 24px 18px 20px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item h4 {
+            font-size: 1.1rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item p {
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__community {
+            padding: 50px 0;
+        }
+
+        & .event-detail__community .event-detail__community-title {
+            font-size: clamp(26px, 3vw, 38px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.95rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 48px;
+            padding: 14px 28px;
+            font-size: 0.9rem;
+        }
+
+        & .pending-registration-notice {
+            padding: 20px 16px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__icon {
+            width: 44px;
+            height: 44px;
+            font-size: 1.6rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking {
+            padding: 12px 14px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 820px) {
+        & .event-detail__hero .event-detail__hero-title {
+            font-size: clamp(24px, 3vw, 38px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.9rem;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            padding: 24px 20px;
+        }
+
+        & .event-detail__hero .event-detail__form-title {
+            font-size: 1.2rem;
+        }
+
+        & .event-detail__hero .event-detail__form-subtitle {
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__hero .event-detail__hero-meta {
+            gap: 14px;
+        }
+
+        & .event-detail__hero .event-detail__hero-meta-item {
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 22px 16px 18px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item h4 {
+            font-size: 1rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item p {
+            font-size: 0.78rem;
+        }
+
+        & .event-detail__community .event-detail__community-title {
+            font-size: clamp(24px, 2.8vw, 34px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.9rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.85rem;
         }
     }
 
@@ -2471,33 +3280,18 @@
             padding: 40px 0 60px;
         }
 
-        & .event-detail__expect .event-detail__expect-grid {
-            grid-template-columns: 1fr;
-            max-width: 380px;
-            margin: 0 auto;
+        & .event-detail__hero .event-detail__hero-title {
+            font-size: clamp(20px, 2.8vw, 32px);
         }
 
-        & .event-detail__hero .event-detail__hero-title {
-            font-size: 1.8rem;
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.85rem;
         }
 
         & .event-detail__hero .event-detail__hero-meta {
             flex-direction: column;
             align-items: center;
-        }
-    }
-
-    @media (max-width: 540px) {
-        & .event-detail__hero .event-detail__hero-title {
-            font-size: 1.5rem;
-        }
-
-        & .event-detail__hero .event-detail__form-card {
-            padding: 20px 16px;
-        }
-
-        & .event-detail__hero .event-detail__form-title {
-            font-size: 1.2rem;
+            gap: 8px;
         }
 
         & .event-detail__hero .event-detail__hero-features {
@@ -2505,27 +3299,122 @@
             align-items: center;
         }
 
-        & .event-detail__hero .event-detail__hero-text {
-            font-size: 0.9rem;
+        & .event-detail__hero .event-detail__form-card {
+            padding: 20px 16px;
+        }
+
+        & .event-detail__hero .event-detail__form-title {
+            font-size: 1.1rem;
+        }
+
+        & .event-detail__hero .event-detail__form-group input {
+            min-height: 36px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
         }
 
         & .event-detail__hero .btn--block {
-            font-size: 0.8rem;
-            padding: 12px;
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.75rem;
+        }
+
+        & .event-detail__expect {
+            padding: 50px 0;
+        }
+
+        & .event-detail__expect .event-detail__expect-grid {
+            grid-template-columns: 1fr;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 24px 18px 20px;
         }
 
         & .event-detail__community .event-detail__community-title {
-            font-size: 1.8rem;
+            font-size: clamp(22px, 2.5vw, 30px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.85rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+        }
+
+        & .pending-registration-notice {
+            padding: 16px 14px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__content h4 {
+            font-size: 1rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__user-details {
+            padding: 8px 10px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__user-row {
+            padding: 3px 0;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__user-row .pending-registration-notice__label {
+            font-size: 0.7rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__user-row .pending-registration-notice__value {
+            font-size: 0.75rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking {
+            padding: 10px 12px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking-grid {
+            grid-template-columns: 1fr;
+            gap: 2px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking-grid div {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking-label {
+            font-size: 0.55rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking-value {
+            font-size: 0.75rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__note {
+            font-size: 0.7rem;
         }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 540px) {
         & .event-detail__hero .event-detail__hero-title {
-            font-size: 1.3rem;
+            font-size: clamp(18px, 2.5vw, 28px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__hero .event-detail__hero-badge {
+            font-size: 0.55rem;
+            padding: 4px 12px 4px 10px;
         }
 
         & .event-detail__hero .event-detail__form-card {
-            padding: 16px 12px;
+            padding: 16px 14px;
         }
 
         & .event-detail__hero .event-detail__form-title {
@@ -2536,77 +3425,162 @@
             font-size: 0.75rem;
         }
 
-        & .event-detail__expect .event-detail__expect-item {
-            padding: 24px 16px;
+        & .event-detail__hero .event-detail__form-group input {
+            min-height: 32px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
         }
 
-        & .event-detail__community .event-detail__community-title {
-            font-size: 1.4rem;
-        }
-
-        & .event-detail__community .event-detail__community-desc {
-            font-size: 0.85rem;
-        }
-    }
-
-    @media (max-width: 420px) {
-        & .event-detail__hero .event-detail__hero-title {
-            font-size: 1.1rem;
-        }
-
-        & .event-detail__hero .event-detail__hero-actions .btn {
-            font-size: 0.65rem;
-            padding: 10px 14px;
+        & .event-detail__hero .btn--block {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.7rem;
         }
 
         & .event-detail__hero .event-detail__hero-meta-item {
             font-size: 0.75rem;
         }
 
+        & .event-detail__hero .event-detail__hero-features span {
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 20px 14px 16px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item .event-detail__expect-icon {
+            font-size: 2rem;
+        }
+
         & .event-detail__expect .event-detail__expect-item h4 {
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         & .event-detail__expect .event-detail__expect-item p {
-            font-size: 0.8rem;
-        }
-    }
-
-    @media (max-width: 350px) {
-        & .event-detail__hero .event-detail__hero-title {
-            font-size: 1rem;
-        }
-
-        & .event-detail__hero .event-detail__hero-text {
-            font-size: 0.8rem;
-        }
-
-        & .event-detail__hero .event-detail__form-card {
-            padding: 12px 8px;
-        }
-
-        & .event-detail__hero .btn--block {
-            font-size: 0.7rem;
-            padding: 10px;
+            font-size: 0.75rem;
         }
 
         & .event-detail__community .event-detail__community-title {
+            font-size: clamp(20px, 2.2vw, 28px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
+
+        & .pending-registration-notice {
+            padding: 14px 12px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__icon {
+            width: 36px;
+            height: 36px;
             font-size: 1.2rem;
         }
 
-        & .event-detail__community .event-detail__community-btn {
-            padding: 10px 18px;
-            font-size: 0.75rem;
+        & .pending-registration-notice .pending-registration-notice__actions .btn {
+            font-size: 0.7rem;
+            padding: 6px 12px;
+            min-height: 30px;
         }
     }
 
-    @media (max-width: 300px) {
+    @media (max-width: 480px) {
         & .event-detail__hero .event-detail__hero-title {
-            font-size: 0.9rem;
+            font-size: clamp(16px, 2vw, 24px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.75rem;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            padding: 14px 12px;
         }
 
         & .event-detail__hero .event-detail__form-title {
             font-size: 0.9rem;
+        }
+
+        & .event-detail__hero .event-detail__form-subtitle {
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__hero .event-detail__form-group input {
+            min-height: 28px;
+            padding: 4px 6px;
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__hero .btn--block {
+            min-height: 32px;
+            padding: 6px 14px;
+            font-size: 0.65rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 16px 12px 14px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item .event-detail__expect-icon {
+            font-size: 1.6rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item h4 {
+            font-size: 0.9rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item p {
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__community .event-detail__community-title {
+            font-size: clamp(18px, 2vw, 24px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.75rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 32px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+        }
+
+        & .pending-registration-notice {
+            padding: 12px 10px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__icon {
+            width: 32px;
+            height: 32px;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 420px) {
+        & .event-detail__hero .event-detail__hero-title {
+            font-size: clamp(14px, 1.8vw, 20px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            padding: 12px 10px;
+        }
+
+        & .event-detail__hero .event-detail__form-title {
+            font-size: 0.8rem;
         }
 
         & .event-detail__hero .event-detail__form-subtitle {
@@ -2614,74 +3588,194 @@
         }
 
         & .event-detail__hero .event-detail__form-group input {
-            font-size: 0.8rem;
-            padding: 8px 10px;
+            min-height: 24px;
+            padding: 2px 4px;
+            font-size: 0.65rem;
+        }
+
+        & .event-detail__hero .btn--block {
+            min-height: 28px;
+            padding: 4px 10px;
+            font-size: 0.6rem;
+        }
+
+        & .event-detail__hero .event-detail__hero-meta-item {
+            font-size: 0.65rem;
+        }
+
+        & .event-detail__hero .event-detail__hero-features span {
+            font-size: 0.65rem;
         }
 
         & .event-detail__expect .event-detail__expect-item {
-            padding: 16px 12px;
+            padding: 14px 10px 12px;
         }
 
         & .event-detail__expect .event-detail__expect-item h4 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         & .event-detail__expect .event-detail__expect-item p {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         & .event-detail__community .event-detail__community-title {
-            font-size: 1rem;
+            font-size: clamp(16px, 1.5vw, 22px);
         }
 
-        & .event-detail__community .event-detail__community-btn {
-            padding: 8px 14px;
+        & .event-detail__community .event-detail__community-desc {
             font-size: 0.7rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 28px;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__content h4 {
+            font-size: 0.9rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__banking h5 {
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (max-width: 350px) {
+        & .event-detail__hero .event-detail__hero-title {
+            font-size: clamp(12px, 1.5vw, 18px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.65rem;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            padding: 10px 8px;
+        }
+
+        & .event-detail__hero .event-detail__form-title {
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__hero .event-detail__form-subtitle {
+            font-size: 0.6rem;
+        }
+
+        & .event-detail__hero .event-detail__form-group input {
+            min-height: 20px;
+            padding: 2px 4px;
+            font-size: 0.6rem;
+        }
+
+        & .event-detail__hero .btn--block {
+            min-height: 24px;
+            padding: 2px 8px;
+            font-size: 0.55rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 12px 8px 10px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item h4 {
+            font-size: 0.8rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item p {
+            font-size: 0.6rem;
+        }
+
+        & .event-detail__community .event-detail__community-title {
+            font-size: clamp(14px, 1.2vw, 18px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.65rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 24px;
+            padding: 2px 10px;
+            font-size: 0.6rem;
+        }
+
+        & .pending-registration-notice {
+            padding: 8px 6px;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__icon {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+
+        & .pending-registration-notice .pending-registration-notice__actions .btn {
+            font-size: 0.6rem;
+            padding: 4px 8px;
+            min-height: 24px;
+        }
+    }
+
+    @media (max-width: 300px) {
+        & .event-detail__hero .event-detail__hero-title {
+            font-size: clamp(10px, 1.2vw, 16px);
+        }
+
+        & .event-detail__hero .event-detail__hero-text {
+            font-size: 0.6rem;
+        }
+
+        & .event-detail__hero .event-detail__form-card {
+            padding: 8px 6px;
+        }
+
+        & .event-detail__hero .event-detail__form-title {
+            font-size: 0.65rem;
+        }
+
+        & .event-detail__hero .event-detail__form-group input {
+            min-height: 18px;
+            padding: 1px 2px;
+            font-size: 0.55rem;
+        }
+
+        & .event-detail__hero .btn--block {
+            min-height: 20px;
+            padding: 1px 4px;
+            font-size: 0.5rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item {
+            padding: 10px 6px 8px;
+        }
+
+        & .event-detail__expect .event-detail__expect-item h4 {
+            font-size: 0.7rem;
+        }
+
+        & .event-detail__expect .event-detail__expect-item p {
+            font-size: 0.55rem;
+        }
+
+        & .event-detail__community .event-detail__community-title {
+            font-size: clamp(12px, 1vw, 16px);
+        }
+
+        & .event-detail__community .event-detail__community-desc {
+            font-size: 0.6rem;
+        }
+
+        & .event-detail__community .btn--lg {
+            min-height: 20px;
+            padding: 2px 8px;
+            font-size: 0.55rem;
         }
     }
 }
 
-/* ─── EVENT DETAIL ANIMATIONS ─── */
-@keyframes eventDetailOrbFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(20px, -15px) scale(1.02); }
-    66% { transform: translate(-15px, 20px) scale(0.98); }
-    100% { transform: translate(10px, -10px) scale(1.01); }
-}
-
-@keyframes eventDetailHeroOrb {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-30px, 20px) scale(1.05); }
-}
-
-@keyframes eventDetailParticleFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.04; }
-    25% { transform: translate(12px, -18px) scale(1.3); opacity: 0.07; }
-    50% { transform: translate(-8px, -30px) scale(0.7); opacity: 0.02; }
-    75% { transform: translate(18px, -12px) scale(1.1); opacity: 0.06; }
-}
-
-@keyframes eventDetailTitleFade {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes eventDetailCommunityPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-@keyframes eventDetailExpectShape {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-15px, 15px) scale(1.05); }
-}
-
-@keyframes eventDetailCommunityShape {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-20px, 15px) scale(1.05); }
-}
-
-/* ─── EVENT REGISTRATION SUCCESS ─── */
+/* ─── REGISTRATION SUCCESS ─── */
 .registration-success {
     background: #d4edda;
     color: #155724;
@@ -2736,6 +3830,7 @@
         & .btn {
             font-size: 0.8rem;
             padding: 8px 18px;
+            min-height: 36px;
 
             & i {
                 margin-right: 6px;
@@ -2818,7 +3913,41 @@
     }
 }
 
-/* ─── ANIMATIONS ─── */
+/* ─── KEYFRAMES ─── */
+@keyframes eventDetailOrbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -15px) scale(1.02); }
+    66% { transform: translate(-15px, 20px) scale(0.98); }
+    100% { transform: translate(10px, -10px) scale(1.01); }
+}
+
+@keyframes eventDetailHeroOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-30px, 20px) scale(1.05); }
+}
+
+@keyframes eventDetailParticleFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.04; }
+    25% { transform: translate(12px, -18px) scale(1.3); opacity: 0.07; }
+    50% { transform: translate(-8px, -30px) scale(0.7); opacity: 0.02; }
+    75% { transform: translate(18px, -12px) scale(1.1); opacity: 0.06; }
+}
+
+@keyframes eventDetailCommunityPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes eventDetailExpectShape {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-15px, 15px) scale(1.05); }
+}
+
+@keyframes eventDetailCommunityShape {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-20px, 15px) scale(1.05); }
+}
+
 @keyframes registrationSuccessIn {
     0% {
         opacity: 0;
@@ -2827,380 +3956,5 @@
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
-    }
-}
-
-/* ─── REGISTRATION SUCCESS RESPONSIVE ─── */
-@media (max-width: 540px) {
-    .registration-success {
-        padding: 18px 14px;
-
-        & .registration-success__banking-grid {
-            grid-template-columns: 1fr;
-            gap: 6px;
-
-            & div {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 4px 0;
-                border-bottom: 1px solid rgba(21, 87, 36, 0.05);
-
-                & .label {
-                    font-size: 0.6rem;
-                }
-
-                & .value {
-                    font-size: 0.8rem;
-                }
-            }
-        }
-
-        & .registration-success__actions {
-            flex-direction: column;
-            align-items: stretch;
-
-            & .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    }
-
-    .registration-success__banking-grid div:last-child {
-        border-bottom: none;
-    }
-}
-
-@media (max-width: 420px) {
-    .registration-success {
-        padding: 14px 10px;
-
-        & .registration-success__icon {
-            font-size: 1.8rem;
-        }
-
-        & .registration-success__title {
-            font-size: 1rem;
-        }
-
-        & .registration-success__message {
-            font-size: 0.8rem;
-        }
-
-        & .registration-success__id {
-            font-size: 0.75rem;
-        }
-    }
-}
-
-/* ─── PENDING REGISTRATION NOTICE ─── */
-.pending-registration-notice {
-    background: #fff;
-    border-radius: var(--radius);
-    border: 1px solid #e8a838;
-    box-shadow: 0 8px 30px rgba(232, 168, 56, 0.08);
-    padding: 32px 32px 28px;
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-    margin-bottom: 30px;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #e8a838, #f5c842);
-    }
-
-    & .pending-registration-notice__icon {
-        font-size: 2.4rem;
-        color: #e8a838;
-        flex-shrink: 0;
-        background: rgba(232, 168, 56, 0.08);
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    & .pending-registration-notice__content {
-        flex: 1;
-
-        & h4 {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: #1a1a2e;
-        }
-
-        & > p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-        }
-    }
-
-    & .pending-registration-notice__user-details {
-        background: #f7f5f2;
-        border-radius: var(--radius-sm);
-        padding: 12px 16px;
-        margin-bottom: 16px;
-    }
-
-    & .pending-registration-notice__user-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 4px 0;
-        border-bottom: 1px solid rgba(166, 124, 78, 0.06);
-
-        &:last-child {
-            border-bottom: none;
-        }
-
-        & .pending-registration-notice__label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        & .pending-registration-notice__value {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text);
-
-            &.pending-registration-notice__value--highlight {
-                font-weight: 700;
-                color: var(--gold);
-                font-family: monospace;
-                font-size: 0.9rem;
-            }
-        }
-    }
-
-    & .pending-registration-notice__banking {
-        background: #d4edda;
-        border-radius: var(--radius-sm);
-        padding: 16px 20px;
-        margin-bottom: 16px;
-        border: 1px solid #b7dfb9;
-
-        & h5 {
-            font-family: var(--font-serif);
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #155724;
-            margin-bottom: 12px;
-        }
-    }
-
-    & .pending-registration-notice__banking-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4px 16px;
-
-        & div {
-            display: flex;
-            flex-direction: column;
-            padding: 2px 0;
-        }
-    }
-
-    & .pending-registration-notice__banking-label {
-        font-size: 0.6rem;
-        text-transform: uppercase;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        color: rgba(21, 87, 36, 0.5);
-    }
-
-    & .pending-registration-notice__banking-value {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #155724;
-    }
-
-    & .pending-registration-notice__note {
-        font-size: 0.8rem;
-        color: rgba(21, 87, 36, 0.7);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 8px;
-        padding-top: 12px;
-        border-top: 1px solid rgba(21, 87, 36, 0.1);
-    }
-
-    & .pending-registration-notice__actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-
-        & .btn {
-            font-size: 0.8rem;
-            padding: 8px 18px;
-        }
-
-        & form {
-            display: inline;
-        }
-
-        & > form > .btn--outline,
-        & .btn--outline {
-            color: var(--text-muted);
-            border-color: var(--gold);
-
-            &:hover {
-                background: var(--gold-dark);
-                color: #fff;
-                border-color: var(--gold-dark);
-            }
-        }
-    }
-}
-
-/* ─── FORM STATUS ─── */
-.event-detail__form-status {
-    text-align: center;
-    padding: 10px 0;
-
-    & .event-detail__form-status-icon {
-        font-size: 3rem;
-        color: #28a745;
-        margin-bottom: 8px;
-    }
-
-    & h4 {
-        font-family: var(--font-serif);
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    & > p {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-    }
-
-    & .event-detail__form-status-details {
-        background: var(--bg);
-        border-radius: var(--radius-sm);
-        padding: 12px 16px;
-        margin: 12px 0;
-        text-align: left;
-
-        & div {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid var(--border);
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-
-        & .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        & .value {
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-    }
-
-    & .event-detail__form-status-note {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        background: #fff3cd;
-        padding: 10px 14px;
-        border-radius: var(--radius-sm);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-}
-
-/* ─── PENDING REGISTRATION RESPONSIVE ─── */
-@media (max-width: 820px) {
-    .pending-registration-notice {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 24px 20px;
-
-        & .pending-registration-notice__icon {
-            width: 50px;
-            height: 50px;
-            font-size: 2rem;
-        }
-
-        & .pending-registration-notice__user-row {
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        & .pending-registration-notice__banking-grid {
-            grid-template-columns: 1fr;
-            text-align: center;
-
-            & div {
-                align-items: center;
-            }
-        }
-
-        & .pending-registration-notice__actions {
-            justify-content: center;
-        }
-    }
-
-    .event-detail__form-status-details div {
-        flex-direction: column;
-        align-items: center;
-        gap: 2px;
-    }
-}
-
-@media (max-width: 540px) {
-    .pending-registration-notice {
-        padding: 20px 16px;
-
-        & .pending-registration-notice__icon {
-            width: 44px;
-            height: 44px;
-            font-size: 1.6rem;
-        }
-
-        & .pending-registration-notice__banking {
-            padding: 12px 14px;
-        }
-
-        & .pending-registration-notice__actions {
-            flex-direction: column;
-            align-items: stretch;
-
-            & .btn,
-            & form {
-                width: 100%;
-            }
-
-            & .btn {
-                justify-content: center;
-            }
-        }
-    }
-
-    .event-detail__form-status-icon {
-        font-size: 2.4rem;
     }
 }

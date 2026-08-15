@@ -37,26 +37,30 @@
             background: #28a745;
             color: #ffffff;
             margin-top: 6px;
-        }
 
-        & .email__header-badge--pending {
-            background: #e8a838;
-        }
+            &.email__header-badge--pending {
+                background: #e8a838;
+            }
 
-        & .email__header-badge--baptism {
-            background: #4A9E9E;
-        }
+            &.email__header-badge--baptism {
+                background: #4A9E9E;
+            }
 
-        & .email__header-badge--contact {
-            background: #a67c4e;
-        }
+            &.email__header-badge--contact {
+                background: #a67c4e;
+            }
 
-        & .email__header-badge--invite {
-            background: #a67c4e;
-        }
+            &.email__header-badge--invite {
+                background: #a67c4e;
+            }
 
-        & .email__header-badge--order {
-            background: #e8a838;
+            &.email__header-badge--order {
+                background: #e8a838;
+            }
+
+            &.email__header-badge--free {
+                background: #28a745;
+            }
         }
     }
 
@@ -129,19 +133,19 @@
             font-size: 13px;
             text-align: right;
             color: #1a1a2e;
-        }
 
-        & .email__details-value--gold {
-            color: #a67c4e;
-        }
+            &.email__details-value--gold {
+                color: #a67c4e;
+            }
 
-        & .email__details-value--mono {
-            font-family: monospace;
-            font-weight: 700;
-        }
+            &.email__details-value--mono {
+                font-family: monospace;
+                font-weight: 700;
+            }
 
-        & .email__details-value--right {
-            text-align: right;
+            &.email__details-value--right {
+                text-align: right;
+            }
         }
     }
 
@@ -361,36 +365,103 @@
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 540px) {
-    .email {
-        & .email__body {
-            padding: 20px;
-        }
+    .email .email__body {
+        padding: 20px;
+    }
 
-        & .email__header {
-            padding: 20px;
-        }
+    .email .email__header {
+        padding: 20px;
+    }
 
-        & .email__footer {
-            padding: 16px;
-        }
+    .email .email__footer {
+        padding: 16px;
+    }
 
-        & .email__details-row {
-            flex-direction: column;
-            padding: 4px 0;
-            gap: 2px;
-        }
+    .email .email__details-row {
+        flex-direction: column;
+        padding: 4px 0;
+        gap: 2px;
+    }
 
-        & .email__details-label {
-            padding-right: 0;
-            min-width: unset;
-        }
+    .email .email__details-label {
+        padding-right: 0;
+        min-width: unset;
+    }
 
-        & .email__details-value {
-            text-align: left;
-        }
+    .email .email__details-value {
+        text-align: left;
+    }
 
-        & .email__banking-grid {
-            grid-template-columns: 1fr;
-        }
+    .email .email__banking-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .email .email__download {
+        padding: 16px;
+    }
+
+    .email .email__download .email__download-btn {
+        padding: 10px 24px;
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .email .email__support {
+        padding: 12px 14px;
+    }
+
+    .email .email__support .email__support-text {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 420px) {
+    .email .email__header {
+        padding: 16px;
+    }
+
+    .email .email__header .email__header-title {
+        font-size: 17px;
+    }
+
+    .email .email__body {
+        padding: 14px 12px;
+    }
+
+    .email .email__body .email__title {
+        font-size: 18px;
+    }
+
+    .email .email__body .email__text {
+        font-size: 13px;
+    }
+
+    .email .email__details {
+        padding: 12px 14px;
+    }
+
+    .email .email__details .email__details-title {
+        font-size: 13px;
+    }
+
+    .email .email__details .email__details-label,
+    .email .email__details .email__details-value {
+        font-size: 11px;
+    }
+
+    .email .email__banking {
+        padding: 14px;
+    }
+
+    .email .email__banking .email__banking-title {
+        font-size: 14px;
+    }
+
+    .email .email__footer {
+        padding: 12px;
+    }
+
+    .email .email__footer .email__footer-text {
+        font-size: 10px;
     }
 }

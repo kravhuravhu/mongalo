@@ -11,6 +11,7 @@ use App\Services\PhoneService;
 class ContactController extends Controller
 {
     protected PhoneService $phoneService;
+
     protected AdminNotificationService $notificationService;
 
     public function __construct(
@@ -30,12 +31,13 @@ class ContactController extends Controller
     {
         $validated = $request->validated();
 
-        // Format phone if provided
         if (!empty($validated['phone'])) {
-            $validated['phone'] = $this->phoneService->formatE164($validated['phone']);
+            $validated['phone'] = $this->phoneService->formatE164(
+                $validated['phone']
+            );
         }
 
-        $message = ContactMessage::create([
+        $contactMessage = ContactMessage::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
@@ -44,12 +46,14 @@ class ContactController extends Controller
             'status' => 'unread',
         ]);
 
-        // ─── SEND ADMIN NOTIFICATION ───
-        $this->notificationService->notifyNewContact($message);
+        $this->notificationService->notifyNewContact($contactMessage);
 
-        // ─── SINGLE FLASH WITH CACHE-BUSTING ───
-        return redirect()->route('contact')
-            ->with('success', 'Your message has been sent. We will get back to you within 24 hours!')
+        return redirect()
+            ->route('contact')
+            ->with(
+                'success',
+                'Your message has been sent. We will get back to you within 24 hours!'
+            )
             ->with('_nocache', time());
     }
 }

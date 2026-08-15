@@ -13,17 +13,17 @@ class AdminContactNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public ContactMessage $message;
+    public ContactMessage $contactMessage;
 
-    public function __construct(ContactMessage $message)
+    public function __construct(ContactMessage $contactMessage)
     {
-        $this->message = $message;
+        $this->contactMessage = $contactMessage;
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Contact Message: ' . $this->message->subject,
+            subject: 'New Contact Message: ' . $this->contactMessage->subject,
         );
     }
 
@@ -32,9 +32,9 @@ class AdminContactNotification extends Mailable
         return new Content(
             view: 'emails.admin.contact-notification',
             with: [
-                'message' => $this->message,
+                'contactMessage' => $this->contactMessage,
                 'adminName' => config('app.admin_name', 'The Collective Admin'),
-            ]
+            ],
         );
     }
 }

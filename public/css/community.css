@@ -1,10 +1,10 @@
 .community {
-    /* ─── COMMUNITY FLOATING ORBS ─── */
+    /* ─── FLOATING ORBS ─── */
     & .community__orbs {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: 99;
+        z-index: 0;
         overflow: hidden;
 
         & .community__orb {
@@ -225,7 +225,7 @@
                 padding: 6px 18px 6px 14px;
                 border-radius: 50px;
                 border: 1px solid rgba(255, 215, 0, 0.12);
-                transition: all 0.3s ease;
+                transition: all var(--transition);
                 cursor: default;
 
                 &:hover {
@@ -233,7 +233,7 @@
                     color: #fff;
                     border-color: var(--gold-dark);
                     transform: translateY(-2px);
-                    box-shadow: 0 4px 15px var(--gold-dark);
+                    box-shadow: 0 4px 15px rgba(166, 124, 78, 0.3);
 
                     & i {
                         color: #fff;
@@ -255,7 +255,6 @@
                 font-size: clamp(38px, 5vw, 64px);
                 line-height: 1.05;
                 letter-spacing: -0.02em;
-                animation: communityTitleFade 1s ease-out;
 
                 & .community__hero-gradient {
                     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -271,7 +270,7 @@
                         left: 0;
                         width: 0;
                         height: 2px;
-                        background: var(gold);
+                        background: var(--gold);
                         transition: width 0.6s ease;
                     }
                 }
@@ -287,14 +286,12 @@
                 max-width: 44ch;
                 line-height: 1.8;
                 margin-bottom: 32px;
-                animation: communityTextFade 1.2s ease-out;
             }
 
             & .community__hero-stats {
                 display: flex;
                 gap: 32px;
                 margin-bottom: 32px;
-                animation: communityStatsFade 1.4s ease-out;
             }
 
             & .community__hero-stat {
@@ -320,6 +317,7 @@
             }
 
             & .btn--lg {
+                min-height: 56px;
                 padding: 16px 36px;
                 font-size: 0.95rem;
                 position: relative;
@@ -342,20 +340,20 @@
             }
 
             & .btn--primary {
-                background: var(gold);
+                background: var(--gold);
                 color: #fff;
                 box-shadow: 0 4px 15px rgba(37, 211, 102, 0.15);
                 &:hover {
                     background: var(--gold-dark);
                     transform: translateY(-3px);
-                    box-shadow: 0 12px 36px var(--gold-dark);
+                    box-shadow: 0 12px 36px rgba(166, 124, 78, 0.25);
                 }
             }
 
             & .btn--outline {
                 background: transparent;
                 color: var(--text);
-                border: 1.5px solid var(--border-hover);
+                border: 1.5px solid var(--border-strong);
                 &:hover {
                     border-color: var(--gold);
                     background: rgba(255, 215, 0, 0.06);
@@ -368,7 +366,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: communityMockupFade 1s ease-out;
         }
 
         & .community__hero-mockup-card {
@@ -522,7 +519,7 @@
         }
     }
 
-    /* ─── BENEFITS ─── (Default Gold Theme) */
+    /* ─── BENEFITS ─── */
     & .community__benefits {
         padding: 80px 0;
         position: relative;
@@ -642,7 +639,7 @@
         }
     }
 
-    /* ─── TESTIMONIALS ─── (Default Gold Theme) */
+    /* ─── TESTIMONIALS ─── */
     & .community__testimonials {
         padding: 80px 0;
         position: relative;
@@ -766,7 +763,7 @@
         }
     }
 
-    /* ─── COMMUNITY CTA ─── (Default Gold Theme) */
+    /* ─── COMMUNITY CTA ─── */
     & .community__cta {
         padding: 80px 0;
         position: relative;
@@ -830,7 +827,7 @@
             margin-bottom: 12px;
             display: inline-block;
             animation: communityCtaPulse 3s ease-in-out infinite;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
 
             &:hover {
                 opacity: 0.5;
@@ -876,6 +873,7 @@
         }
 
         & .btn--lg {
+            min-height: 56px;
             padding: 16px 36px;
             font-size: 0.95rem;
             position: relative;
@@ -908,7 +906,69 @@
         }
     }
 
-    /* ─── RESPONSIVE ─── */
+    /* ────────────────────────────────────────────────────────── */
+    /* ─── BREAKPOINTS ─── */
+    /* ────────────────────────────────────────────────────────── */
+
+    /* ─── 1700px ─── */
+    @media (max-width: 1700px) {
+        & .community__hero .community__hero-grid {
+            gap: 50px;
+        }
+
+        & .community__hero .community__hero-mockup-card {
+            max-width: 360px;
+        }
+
+        & .community__benefits .community__benefits-grid {
+            gap: 20px;
+        }
+
+        & .community__testimonials .community__testimonials-grid {
+            gap: 20px;
+        }
+    }
+
+    /* ─── 1500px ─── */
+    @media (max-width: 1500px) {
+        & .community__hero .community__hero-grid {
+            gap: 40px;
+        }
+
+        & .community__hero .community__hero-mockup-card {
+            max-width: 340px;
+            padding: 20px 16px 16px;
+        }
+
+        & .community__hero .community__hero-mockup-messages {
+            max-height: 220px;
+        }
+
+        & .community__hero .community__hero-mockup-message {
+            font-size: 0.75rem;
+            padding: 8px 12px;
+        }
+
+        & .community__benefits .community__benefits-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 28px 20px 24px;
+        }
+
+        & .community__testimonials .community__testimonials-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 28px 24px;
+        }
+    }
+
+    /* ─── 1200px ─── */
     @media (max-width: 1200px) {
         & .community__hero .community__hero-grid {
             grid-template-columns: 1fr;
@@ -928,9 +988,7 @@
         & .community__hero .community__hero-mockup-card {
             max-width: 100%;
         }
-    }
 
-    @media (max-width: 1024px) {
         & .community__benefits .community__benefits-grid {
             grid-template-columns: 1fr 1fr;
         }
@@ -940,62 +998,171 @@
         }
     }
 
-    @media (max-width: 820px) {
+    /* ─── 1024px ─── */
+    @media (max-width: 1024px) {
+        & .community__hero {
+            padding: 60px 0 80px;
+        }
+
+        & .community__hero .community__hero-content .community__hero-title {
+            font-size: clamp(34px, 4.5vw, 50px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 1rem;
+        }
+
+        & .community__hero .community__hero-stats {
+            gap: 24px;
+        }
+
+        & .community__hero .community__hero-stat-number {
+            font-size: 1.8rem;
+        }
+
         & .community__hero .community__hero-mockup-messages {
             max-height: 200px;
         }
 
         & .community__hero .community__hero-mockup-message {
             font-size: 0.7rem;
-            padding: 8px 12px;
+            padding: 6px 10px;
         }
 
-        & .community__hero .community__hero-stats {
-            gap: 20px;
+        & .community__hero .btn--lg {
+            min-height: 48px;
+            padding: 14px 28px;
+            font-size: 0.9rem;
+        }
+
+        & .community__benefits {
+            padding: 60px 0;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 24px 18px 20px;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-title {
+            font-size: 1rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-desc {
+            font-size: 0.8rem;
+        }
+
+        & .community__testimonials {
+            padding: 60px 0;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 24px 20px;
+        }
+
+        & .community__testimonials .community__testimonials-text {
+            font-size: 0.95rem;
+        }
+
+        & .community__cta {
+            padding: 60px 0;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(28px, 3.2vw, 40px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 1rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 48px;
+            padding: 14px 28px;
+            font-size: 0.9rem;
         }
     }
 
-    @media (max-width: 720px) {
+    /* ─── 820px ─── */
+    @media (max-width: 820px) {
         & .community__hero {
-            padding: 60px 0 80px;
+            padding: 50px 0 70px;
         }
 
         & .community__hero .community__hero-content .community__hero-title {
-            font-size: 2.6rem;
+            font-size: clamp(30px, 4vw, 42px);
         }
 
-        & .community__hero .community__hero-mockup-card {
-            max-width: 100%;
-        }
-
-        & .community__benefits .community__benefits-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        & .community__testimonials .community__testimonials-grid {
-            grid-template-columns: 1fr;
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.95rem;
         }
 
         & .community__hero .community__hero-stats {
             gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         & .community__hero .community__hero-stat-number {
             font-size: 1.6rem;
         }
 
-        & .community__cta .community__cta-desc {
-            font-size: 0.9rem;
+        & .community__hero .community__hero-stat-label {
+            font-size: 0.7rem;
         }
 
-        & .community__hero .community__hero-particle {
-            display: none;
+        & .community__hero .community__hero-mockup-messages {
+            max-height: 180px;
+        }
+
+        & .community__hero .community__hero-mockup-join {
+            font-size: 0.7rem;
+            padding: 10px;
+        }
+
+        & .community__benefits .community__benefits-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 20px 16px 18px;
+        }
+
+        & .community__testimonials .community__testimonials-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 20px 16px;
+        }
+
+        & .community__testimonials .community__testimonials-text {
+            font-size: 0.9rem;
         }
     }
 
-    @media (max-width: 540px) {
+    /* ─── 720px ─── */
+    @media (max-width: 720px) {
+        & .community__hero {
+            padding: 40px 0 60px;
+        }
+
         & .community__hero .community__hero-content .community__hero-title {
-            font-size: 2.2rem;
+            font-size: clamp(26px, 3.5vw, 36px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        & .community__hero .community__hero-stats {
+            gap: 12px;
+        }
+
+        & .community__hero .community__hero-stat-number {
+            font-size: 1.4rem;
         }
 
         & .community__hero .community__hero-actions .btn {
@@ -1003,35 +1170,10 @@
             justify-content: center;
         }
 
-        & .community__benefits .community__benefits-grid {
-            grid-template-columns: 1fr;
-        }
-
-        & .community__hero .community__hero-mockup-messages {
-            max-height: 180px;
-        }
-
-        & .community__hero .community__hero-stats {
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        & .community__cta .community__cta-title {
-            font-size: 2rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        & .community__hero .community__hero-content .community__hero-title {
-            font-size: 1.8rem;
-        }
-
-        & .community__hero .community__hero-text {
-            font-size: 0.95rem;
-        }
-
-        & .community__hero .community__hero-mockup-card {
-            padding: 16px 14px;
+        & .community__hero .community__hero-actions .btn--lg {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.85rem;
         }
 
         & .community__hero .community__hero-mockup-messages {
@@ -1040,30 +1182,97 @@
 
         & .community__hero .community__hero-mockup-message {
             font-size: 0.65rem;
-            padding: 6px 10px;
+            padding: 6px 8px;
         }
 
         & .community__hero .community__hero-mockup-join {
-            font-size: 0.7rem;
-            padding: 10px;
+            font-size: 0.65rem;
+            padding: 8px;
         }
 
-        & .community__hero .community__hero-stat-number {
-            font-size: 1.4rem;
+        & .community__hero .community__hero-particle {
+            display: none;
         }
 
-        & .community__testimonials .community__testimonials-card {
-            padding: 24px 20px;
+        & .community__benefits {
+            padding: 50px 0;
+        }
+
+        & .community__benefits .community__benefits-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
         }
 
         & .community__benefits .community__benefits-card {
-            padding: 24px 16px 20px;
+            padding: 18px 14px 16px;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-title {
+            font-size: 0.95rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-desc {
+            font-size: 0.75rem;
+        }
+
+        & .community__testimonials {
+            padding: 50px 0;
+        }
+
+        & .community__testimonials .community__testimonials-grid {
+            grid-template-columns: 1fr;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 20px 18px;
+        }
+
+        & .community__cta {
+            padding: 50px 0;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(24px, 2.8vw, 34px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 0.95rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 44px;
+            padding: 12px 24px;
+            font-size: 0.85rem;
         }
     }
 
-    @media (max-width: 420px) {
+    /* ─── 540px ─── */
+    @media (max-width: 540px) {
+        & .community__hero {
+            padding: 30px 0 50px;
+        }
+
         & .community__hero .community__hero-content .community__hero-title {
-            font-size: 1.5rem;
+            font-size: clamp(22px, 3vw, 30px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.85rem;
+        }
+
+        & .community__hero .community__hero-stats {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        & .community__hero .community__hero-stat-number {
+            font-size: 1.2rem;
+        }
+
+        & .community__hero .community__hero-stat-label {
+            font-size: 0.65rem;
         }
 
         & .community__hero .community__hero-mockup-messages {
@@ -1072,22 +1281,78 @@
 
         & .community__hero .community__hero-mockup-message {
             font-size: 0.6rem;
-            padding: 4px 8px;
+            padding: 4px 6px;
         }
 
         & .community__hero .community__hero-mockup-join {
-            font-size: 0.65rem;
-            padding: 8px;
+            font-size: 0.6rem;
+            padding: 6px;
+        }
+
+        & .community__hero .community__hero-badge {
+            font-size: 0.6rem;
+            padding: 4px 14px 4px 10px;
+        }
+
+        & .community__hero .btn--lg {
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+        }
+
+        & .community__benefits .community__benefits-grid {
+            grid-template-columns: 1fr;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 20px 16px 18px;
         }
 
         & .community__benefits .community__benefits-card .community__benefits-card-title {
             font-size: 1rem;
         }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-desc {
+            font-size: 0.8rem;
+        }
+
+        & .community__testimonials .community__testimonials-grid {
+            max-width: 100%;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 18px 16px;
+        }
+
+        & .community__testimonials .community__testimonials-text {
+            font-size: 0.85rem;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(20px, 2.5vw, 28px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 0.9rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 40px;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+        }
     }
 
-    @media (max-width: 350px) {
+    /* ─── 480px ─── */
+    @media (max-width: 480px) {
         & .community__hero .community__hero-content .community__hero-title {
-            font-size: 1.3rem;
+            font-size: clamp(18px, 2.5vw, 24px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.8rem;
         }
 
         & .community__hero .community__hero-mockup-messages {
@@ -1096,39 +1361,7 @@
 
         & .community__hero .community__hero-mockup-message {
             font-size: 0.55rem;
-            padding: 3px 6px;
-        }
-
-        & .community__hero .community__hero-mockup-join {
-            font-size: 0.6rem;
-            padding: 6px;
-        }
-
-        & .community__hero .community__hero-stat-number {
-            font-size: 1.2rem;
-        }
-
-        & .community__cta .community__cta-title {
-            font-size: 1.6rem;
-        }
-
-        & .community__cta .community__cta-desc {
-            font-size: 0.8rem;
-        }
-    }
-
-    @media (max-width: 300px) {
-        & .community__hero .community__hero-content .community__hero-title {
-            font-size: 1.1rem;
-        }
-
-        & .community__hero .community__hero-mockup-messages {
-            max-height: 80px;
-        }
-
-        & .community__hero .community__hero-mockup-message {
-            font-size: 0.5rem;
-            padding: 2px 4px;
+            padding: 3px 4px;
         }
 
         & .community__hero .community__hero-mockup-join {
@@ -1143,10 +1376,283 @@
         & .community__hero .community__hero-stat-label {
             font-size: 0.6rem;
         }
+
+        & .community__hero .btn--lg {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
+
+        & .community__hero .community__hero-mockup-card {
+            padding: 16px 12px 12px;
+        }
+
+        & .community__hero .community__hero-mockup-header {
+            gap: 10px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+
+        & .community__hero .community__hero-mockup-avatar {
+            width: 36px;
+            height: 36px;
+            font-size: 0.8rem;
+        }
+
+        & .community__hero .community__hero-mockup-name {
+            font-size: 0.8rem;
+        }
+
+        & .community__hero .community__hero-mockup-status {
+            font-size: 0.6rem;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 16px 14px 14px;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-icon {
+            font-size: 2rem;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 16px 14px;
+        }
+
+        & .community__testimonials .community__testimonials-stars {
+            font-size: 0.8rem;
+        }
+
+        & .community__testimonials .community__testimonials-text {
+            font-size: 0.8rem;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(18px, 2.2vw, 24px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 0.85rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 36px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* ─── 420px ─── */
+    @media (max-width: 420px) {
+        & .community__hero .community__hero-content .community__hero-title {
+            font-size: clamp(16px, 2vw, 20px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.75rem;
+        }
+
+        & .community__hero .community__hero-mockup-messages {
+            max-height: 80px;
+        }
+
+        & .community__hero .community__hero-mockup-message {
+            font-size: 0.5rem;
+            padding: 2px 4px;
+        }
+
+        & .community__hero .community__hero-mockup-join {
+            font-size: 0.5rem;
+            padding: 4px;
+        }
+
+        & .community__hero .community__hero-stat-number {
+            font-size: 0.9rem;
+        }
+
+        & .community__hero .btn--lg {
+            min-height: 32px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 14px 12px 12px;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-icon {
+            font-size: 1.8rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-title {
+            font-size: 0.9rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-desc {
+            font-size: 0.7rem;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 14px 12px;
+        }
+
+        & .community__testimonials .community__testimonials-text {
+            font-size: 0.75rem;
+        }
+
+        & .community__testimonials .community__testimonials-author .community__testimonials-name {
+            font-size: 0.75rem;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(16px, 1.5vw, 22px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 0.8rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 32px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+        }
+    }
+
+    /* ─── 350px ─── */
+    @media (max-width: 350px) {
+        & .community__hero .community__hero-content .community__hero-title {
+            font-size: clamp(14px, 1.5vw, 18px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.7rem;
+        }
+
+        & .community__hero .community__hero-mockup-messages {
+            max-height: 60px;
+        }
+
+        & .community__hero .community__hero-mockup-message {
+            font-size: 0.45rem;
+            padding: 1px 2px;
+        }
+
+        & .community__hero .community__hero-mockup-join {
+            font-size: 0.45rem;
+            padding: 2px;
+        }
+
+        & .community__hero .community__hero-stat-number {
+            font-size: 0.8rem;
+        }
+
+        & .community__hero .btn--lg {
+            min-height: 28px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 12px 10px 10px;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-icon {
+            font-size: 1.6rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-title {
+            font-size: 0.85rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-desc {
+            font-size: 0.65rem;
+        }
+
+        & .community__testimonials .community__testimonials-card {
+            padding: 12px 10px;
+        }
+
+        & .community__testimonials .community__testimonials-text {
+            font-size: 0.7rem;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(14px, 1.2vw, 18px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 0.75rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 28px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+        }
+    }
+
+    /* ─── 300px ─── */
+    @media (max-width: 300px) {
+        & .community__hero .community__hero-content .community__hero-title {
+            font-size: clamp(12px, 1.2vw, 16px);
+        }
+
+        & .community__hero .community__hero-content .community__hero-text {
+            font-size: 0.65rem;
+        }
+
+        & .community__hero .community__hero-mockup-messages {
+            max-height: 50px;
+        }
+
+        & .community__hero .community__hero-mockup-message {
+            font-size: 0.4rem;
+        }
+
+        & .community__hero .community__hero-stat-number {
+            font-size: 0.7rem;
+        }
+
+        & .community__hero .btn--lg {
+            min-height: 24px;
+            padding: 2px 8px;
+            font-size: 0.6rem;
+        }
+
+        & .community__benefits .community__benefits-card {
+            padding: 10px 8px 8px;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-icon {
+            font-size: 1.4rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-title {
+            font-size: 0.8rem;
+        }
+
+        & .community__benefits .community__benefits-card .community__benefits-card-desc {
+            font-size: 0.6rem;
+        }
+
+        & .community__cta .community__cta-title {
+            font-size: clamp(12px, 1vw, 16px);
+        }
+
+        & .community__cta .community__cta-desc {
+            font-size: 0.7rem;
+        }
+
+        & .community__cta .btn--lg {
+            min-height: 24px;
+            padding: 2px 8px;
+            font-size: 0.6rem;
+        }
     }
 }
 
-/* ─── ANIMATIONS ─── */
+/* ─── KEYFRAMES ─── */
 @keyframes communityOrbFloat {
     0% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(20px, -15px) scale(1.02); }
