@@ -11,6 +11,7 @@
     & .events-index__search {
         flex: 1;
         max-width: 500px;
+        min-width: 200px;
 
         & .events-index__search-form {
             display: flex;
@@ -41,14 +42,10 @@
                 font-size: 0.85rem;
                 background: transparent;
                 color: var(--text);
-                min-width: 100px;
+                min-width: 80px;
 
                 &:focus {
                     outline: none;
-                }
-
-                &::placeholder {
-                    color: var(--text-light);
                 }
             }
 
@@ -135,6 +132,11 @@
     & .events-index__title {
         & strong {
             display: block;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
         }
     }
 
@@ -146,17 +148,20 @@
         & .events-index__date-day {
             font-weight: 500;
             font-size: 0.85rem;
+            white-space: nowrap;
         }
 
         & .events-index__date-time {
             font-size: 0.75rem;
             color: var(--text-muted);
+            white-space: nowrap;
         }
     }
 
     & .events-index__location {
         font-size: 0.85rem;
         color: var(--text-muted);
+        white-space: nowrap;
 
         & i {
             margin-right: 4px;
@@ -167,15 +172,18 @@
         font-weight: 600;
         color: var(--gold);
         font-size: 0.9rem;
+        white-space: nowrap;
     }
 
     & .events-index__actions {
         display: flex;
         gap: 4px;
+        flex-wrap: wrap;
 
         & .btn {
             padding: 6px 10px;
             font-size: 0.75rem;
+            min-height: 34px;
         }
     }
 }
@@ -256,6 +264,7 @@
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
+        align-items: center;
 
         & .events-registrations__stat {
             font-size: 0.85rem;
@@ -263,6 +272,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
 
             & i {
                 color: var(--gold);
@@ -277,6 +287,7 @@
         margin-top: 16px;
         padding-top: 16px;
         border-top: 1px solid var(--border);
+        flex-wrap: wrap;
 
         & .events-registrations__export-label {
             font-size: 0.8rem;
@@ -301,6 +312,7 @@
         & .btn--sm {
             padding: 4px 10px;
             font-size: 0.65rem;
+            min-height: 28px;
             white-space: nowrap;
 
             & .btn-label {
@@ -320,18 +332,7 @@
 }
 
 /* ─── BREAKPOINTS ─── */
-@media (max-width: 1700px) {
-    .events-index__search {
-        max-width: 440px;
-    }
-
-    .events-form__card {
-        padding: 28px;
-        max-width: 680px;
-    }
-}
-
-@media (max-width: 1500px) {
+@media (max-width: 1200px) {
     .events-index__search {
         max-width: 400px;
     }
@@ -342,12 +343,12 @@
     }
 
     .events-form__card {
-        padding: 24px;
+        padding: 28px;
         max-width: 640px;
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
     .events-index__header {
         flex-direction: column;
         align-items: stretch !important;
@@ -366,34 +367,14 @@
         font-size: 0.7rem;
     }
 
-    .events-form__card {
-        padding: 24px;
-        max-width: 100%;
-    }
-
-    .events-form .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-
-    .events-form .form-actions {
-        flex-direction: column;
-    }
-
-    .events-form .form-actions .btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 1024px) {
     .events-index__filters .events-index__filter-count {
         font-size: 0.7rem;
         padding: 3px 10px;
     }
 
     .events-index__title strong {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        max-width: 140px;
     }
 
     .events-index__date .events-index__date-day {
@@ -415,10 +396,26 @@
     .events-index__actions .btn {
         padding: 4px 8px;
         font-size: 0.7rem;
+        min-height: 30px;
     }
 
     .events-form__card {
-        padding: 20px;
+        padding: 24px;
+        max-width: 100%;
+    }
+
+    .events-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .events-form .form-actions {
+        flex-direction: column;
+    }
+
+    .events-form .form-actions .btn {
+        width: 100%;
+        justify-content: center;
     }
 
     .events-registrations__header {
@@ -434,6 +431,7 @@
 @media (max-width: 820px) {
     .events-index__filters {
         gap: 2px;
+        margin-bottom: 14px;
     }
 
     .events-index__filters .events-index__filter {
@@ -456,10 +454,16 @@
         justify-content: center;
         padding: 4px 8px;
         font-size: 0.65rem;
+        min-height: 28px;
+    }
+
+    .events-index__title strong {
+        max-width: 120px;
+        font-size: 0.8rem;
     }
 
     .events-form__card {
-        padding: 16px;
+        padding: 20px;
     }
 
     .events-form .event-status {
@@ -485,6 +489,7 @@
     .events-registrations .registrations-actions .btn--sm {
         width: 100%;
         justify-content: center;
+        min-height: 30px;
     }
 
     .events-registrations .registrations-actions .btn--sm .btn-label {
@@ -492,15 +497,21 @@
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 540px) {
+    .events-index__header {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
     .events-index__search .events-index__search-form {
+        padding: 6px;
         flex-wrap: wrap;
-        padding: 8px;
     }
 
     .events-index__search .events-index__search-form input {
         flex-basis: 100%;
         padding: 6px 0;
+        font-size: 0.75rem;
     }
 
     .events-index__search .events-index__search-form .btn {
@@ -513,7 +524,7 @@
     }
 
     .events-index__filters .events-index__filter {
-        font-size: 0.6rem;
+        font-size: 0.55rem;
         padding: 2px 8px;
     }
 
@@ -522,8 +533,41 @@
         padding: 2px 6px;
     }
 
+    .events-index__title strong {
+        font-size: 0.75rem;
+        max-width: 100px;
+    }
+
+    .events-index__date .events-index__date-day {
+        font-size: 0.75rem;
+    }
+
+    .events-index__date .events-index__date-time {
+        font-size: 0.65rem;
+    }
+
+    .events-index__location {
+        font-size: 0.75rem;
+    }
+
+    .events-index__registrations {
+        font-size: 0.8rem;
+    }
+
+    .events-index__actions .btn {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+        min-height: 26px;
+    }
+
     .events-form__card {
-        padding: 14px;
+        padding: 16px;
+    }
+
+    .events-form .events-form__header .btn {
+        font-size: 0.7rem;
+        padding: 6px 14px;
+        min-height: 34px;
     }
 
     .events-form .form-group {
@@ -541,6 +585,15 @@
         font-size: 0.8rem;
     }
 
+    .events-form .event-status .status-badge {
+        font-size: 0.6rem;
+        padding: 3px 10px;
+    }
+
+    .events-form .event-status .form-help {
+        font-size: 0.65rem;
+    }
+
     .events-form .events-form__actions {
         flex-direction: column;
     }
@@ -550,75 +603,59 @@
         justify-content: center;
     }
 
+    .events-registrations__header {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .events-registrations__stats .events-registrations__stat {
+        font-size: 0.75rem;
+        white-space: normal;
+    }
+
     .events-registrations .registrations-actions .btn--sm {
-        padding: 3px 8px;
         font-size: 0.6rem;
+        padding: 3px 8px;
+        min-height: 26px;
+    }
+
+    .events-registrations .registrations-actions .btn--sm .btn-label {
+        display: none;
     }
 }
 
-@media (max-width: 540px) {
-    .events-index__header {
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-
-    .events-index__search .events-index__search-form {
-        padding: 6px;
-    }
-
-    .events-index__search .events-index__search-form input {
-        font-size: 0.75rem;
-        padding: 4px 0;
-    }
-
-    .events-index__filters {
-        gap: 1px;
-        margin-bottom: 14px;
-    }
-
+@media (max-width: 420px) {
     .events-index__filters .events-index__filter {
-        font-size: 0.55rem;
-        padding: 2px 6px;
-    }
-
-    .events-index__filters .events-index__filter-count {
         font-size: 0.5rem;
         padding: 1px 6px;
     }
 
+    .events-index__filters .events-index__filter-count {
+        font-size: 0.5rem;
+        padding: 1px 4px;
+    }
+
     .events-index__title strong {
-        font-size: 0.8rem;
-    }
-
-    .events-index__date .events-index__date-day {
-        font-size: 0.75rem;
-    }
-
-    .events-index__date .events-index__date-time {
-        font-size: 0.65rem;
-    }
-
-    .events-index__location {
-        font-size: 0.75rem;
-    }
-
-    .events-index__registrations {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
+        max-width: 80px;
     }
 
     .events-index__actions .btn {
-        font-size: 0.6rem;
-        padding: 3px 6px;
+        font-size: 0.55rem;
+        padding: 2px 4px;
+        min-height: 24px;
     }
 
     .events-form__card {
         padding: 12px;
-        border-radius: 8px;
     }
 
-    .events-form .events-form__header .btn {
+    .events-form .form-group {
+        margin-bottom: 10px;
+    }
+
+    .events-form .form-group label {
         font-size: 0.7rem;
-        padding: 6px 14px;
     }
 
     .events-form .form-group input,
@@ -629,80 +666,41 @@
     }
 
     .events-form .event-status .status-badge {
-        font-size: 0.6rem;
-        padding: 3px 10px;
-    }
-
-    .events-form .event-status .form-help {
-        font-size: 0.65rem;
-    }
-
-    .events-registrations__header {
-        gap: 10px;
-        margin-bottom: 16px;
-    }
-
-    .events-registrations__stats .events-registrations__stat {
-        font-size: 0.75rem;
+        font-size: 0.55rem;
+        padding: 2px 8px;
     }
 
     .events-registrations .registrations-actions .btn--sm {
         font-size: 0.55rem;
         padding: 2px 6px;
-    }
-
-    .events-registrations .registrations-actions .btn--sm .btn-label {
-        display: none;
+        min-height: 24px;
     }
 }
 
-@media (max-width: 480px) {
-    .events-index__header {
-        gap: 8px;
-        margin-bottom: 10px;
-    }
-
+@media (max-width: 350px) {
     .events-index__filters .events-index__filter {
-        font-size: 0.5rem;
-        padding: 1px 5px;
-    }
-
-    .events-index__filters .events-index__filter-count {
         font-size: 0.45rem;
         padding: 1px 4px;
     }
 
+    .events-index__filters .events-index__filter-count {
+        font-size: 0.45rem;
+        padding: 1px 3px;
+    }
+
     .events-index__title strong {
-        font-size: 0.75rem;
-    }
-
-    .events-index__date .events-index__date-day {
-        font-size: 0.7rem;
-    }
-
-    .events-index__date .events-index__date-time {
-        font-size: 0.6rem;
-    }
-
-    .events-index__location {
-        font-size: 0.7rem;
-    }
-
-    .events-index__registrations {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
+        max-width: 60px;
     }
 
     .events-index__actions .btn {
-        font-size: 0.55rem;
-        padding: 2px 4px;
+        font-size: 0.5rem;
+        padding: 1px 3px;
+        min-height: 22px;
     }
 
     .events-form__card {
         padding: 10px;
-    }
-
-    .events-form .form-group {
-        margin-bottom: 10px;
     }
 
     .events-form .form-group label {
@@ -716,33 +714,44 @@
         padding: 4px 8px;
     }
 
-    .events-registrations__stats .events-registrations__stat {
-        font-size: 0.7rem;
-    }
-
     .events-registrations .registrations-actions .btn--sm {
         font-size: 0.5rem;
-        padding: 2px 4px;
+        padding: 1px 4px;
+        min-height: 22px;
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 300px) {
     .events-index__filters .events-index__filter {
-        font-size: 0.45rem;
-        padding: 1px 4px;
+        font-size: 0.4rem;
+        padding: 1px 3px;
+    }
+
+    .events-index__filters .events-index__filter-count {
+        display: none;
     }
 
     .events-index__title strong {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
+        max-width: 50px;
     }
 
     .events-index__actions .btn {
-        font-size: 0.5rem;
-        padding: 2px 4px;
+        font-size: 0.45rem;
+        padding: 1px 2px;
+        min-height: 20px;
     }
 
     .events-form__card {
         padding: 8px;
+    }
+
+    .events-form .form-group {
+        margin-bottom: 6px;
+    }
+
+    .events-form .form-group label {
+        font-size: 0.6rem;
     }
 
     .events-form .form-group input,
@@ -752,93 +761,9 @@
         padding: 3px 6px;
     }
 
-    .events-form .event-status .status-badge {
-        font-size: 0.55rem;
-        padding: 2px 8px;
-    }
-
     .events-registrations .registrations-actions .btn--sm {
         font-size: 0.45rem;
-        padding: 1px 3px;
-    }
-}
-
-@media (max-width: 350px) {
-    .events-index__filters .events-index__filter {
-        font-size: 0.4rem;
-        padding: 1px 3px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        font-size: 0.4rem;
-        padding: 1px 3px;
-    }
-
-    .events-index__title strong {
-        font-size: 0.65rem;
-    }
-
-    .events-index__actions .btn {
-        font-size: 0.45rem;
-        padding: 1px 3px;
-    }
-
-    .events-form__card {
-        padding: 6px;
-    }
-
-    .events-form .form-group label {
-        font-size: 0.6rem;
-    }
-
-    .events-form .form-group input,
-    .events-form .form-group textarea,
-    .events-form .form-group select {
-        font-size: 0.6rem;
-        padding: 2px 4px;
-    }
-
-    .events-registrations .registrations-actions .btn--sm {
-        font-size: 0.4rem;
         padding: 1px 2px;
-    }
-}
-
-@media (max-width: 300px) {
-    .events-index__filters .events-index__filter {
-        font-size: 0.35rem;
-        padding: 1px 2px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        display: none;
-    }
-
-    .events-index__title strong {
-        font-size: 0.6rem;
-    }
-
-    .events-index__actions .btn {
-        font-size: 0.4rem;
-        padding: 1px 2px;
-    }
-
-    .events-form__card {
-        padding: 4px;
-    }
-
-    .events-form .form-group {
-        margin-bottom: 6px;
-    }
-
-    .events-form .form-group label {
-        font-size: 0.55rem;
-    }
-
-    .events-form .form-group input,
-    .events-form .form-group textarea,
-    .events-form .form-group select {
-        font-size: 0.55rem;
-        padding: 1px 3px;
+        min-height: 20px;
     }
 }

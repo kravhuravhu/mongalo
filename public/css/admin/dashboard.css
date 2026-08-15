@@ -39,6 +39,26 @@
         justify-content: center;
         flex-shrink: 0;
         font-size: 1.2rem;
+
+        &.dashboard__stat-icon--orders {
+            background: rgba(166, 124, 78, 0.12);
+            color: #a67c4e;
+        }
+
+        &.dashboard__stat-icon--revenue {
+            background: rgba(40, 167, 69, 0.12);
+            color: #28a745;
+        }
+
+        &.dashboard__stat-icon--pending {
+            background: rgba(232, 168, 56, 0.12);
+            color: #e8a838;
+        }
+
+        &.dashboard__stat-icon--registrations {
+            background: rgba(74, 158, 158, 0.12);
+            color: #4A9E9E;
+        }
     }
 
     & .dashboard__stat-content {
@@ -94,27 +114,6 @@
         }
     }
 
-    /* ─── CHART CARD COLORS ─── */
-    & .dashboard__stat-card--orders .dashboard__stat-icon {
-        background: rgba(166, 124, 78, 0.12);
-        color: #a67c4e;
-    }
-
-    & .dashboard__stat-card--revenue .dashboard__stat-icon {
-        background: rgba(40, 167, 69, 0.12);
-        color: #28a745;
-    }
-
-    & .dashboard__stat-card--pending .dashboard__stat-icon {
-        background: rgba(232, 168, 56, 0.12);
-        color: #e8a838;
-    }
-
-    & .dashboard__stat-card--registrations .dashboard__stat-icon {
-        background: rgba(74, 158, 158, 0.12);
-        color: #4A9E9E;
-    }
-
     /* ─── CHARTS ROW ─── */
     & .dashboard__charts-row {
         display: grid;
@@ -137,13 +136,31 @@
             border-color: var(--gold);
             box-shadow: var(--shadow-lg);
         }
+
+        &.dashboard__chart-card--revenue {
+            & .dashboard__chart-header h3 i {
+                color: #28a745;
+            }
+        }
+
+        &.dashboard__chart-card--events {
+            & .dashboard__chart-header h3 i {
+                color: #e67e22;
+            }
+        }
+
+        &.dashboard__chart-card--orders {
+            & .dashboard__chart-header h3 i {
+                color: #4A9E9E;
+            }
+        }
     }
 
     & .dashboard__chart-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 24px 12px;
+        padding: 16px 20px 12px;
         border-bottom: 1px solid var(--border);
         flex-wrap: wrap;
         gap: 8px;
@@ -155,7 +172,6 @@
             margin: 0;
 
             & i {
-                color: var(--gold);
                 margin-right: 8px;
             }
         }
@@ -210,7 +226,7 @@
         border: 1px solid var(--border);
         border-radius: var(--radius-sm);
         font-family: var(--font);
-        font-size: 0.65rem;
+        font-size: 0.7rem;
         background: var(--surface);
         color: var(--text);
         cursor: pointer;
@@ -233,7 +249,7 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             font-family: var(--font);
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             background: var(--surface);
             color: var(--text);
             cursor: pointer;
@@ -247,7 +263,7 @@
         }
 
         & span {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
         }
     }
@@ -346,7 +362,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 18px;
+        padding: 12px 16px;
         border-bottom: 1px solid var(--border);
 
         & h3 {
@@ -385,11 +401,11 @@
     }
 
     & .dashboard__card-body {
-        padding: 14px 18px 18px;
+        padding: 14px 16px 16px;
     }
 
     & .dashboard__card-body--activity {
-        padding: 8px 12px 12px;
+        padding: 8px 10px 10px;
     }
 
     /* ─── TOP BOOKS ─── */
@@ -664,13 +680,20 @@
     }
 
     /* ─── BREAKPOINTS ─── */
-    @media (max-width: 1700px) {
+    @media (max-width: 1500px) {
         & .dashboard__stats-grid {
             gap: 16px;
         }
 
         & .dashboard__stat-card {
-            padding: 16px 20px;
+            padding: 16px 18px;
+            gap: 14px;
+        }
+
+        & .dashboard__stat-icon {
+            width: 42px;
+            height: 42px;
+            font-size: 1rem;
         }
 
         & .dashboard__stat-number {
@@ -679,6 +702,7 @@
 
         & .dashboard__charts-row--three {
             grid-template-columns: 1fr 0.8fr 1fr;
+            gap: 16px;
         }
 
         & .dashboard__chart-body {
@@ -689,22 +713,26 @@
             max-height: 115px !important;
             max-width: 115px !important;
         }
+
+        & .dashboard__three-col {
+            gap: 14px;
+        }
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1200px) {
         & .dashboard__stats-grid {
+            grid-template-columns: repeat(2, 1fr);
             gap: 14px;
         }
 
         & .dashboard__stat-card {
             padding: 14px 16px;
-            gap: 12px;
         }
 
         & .dashboard__stat-icon {
-            width: 40px;
-            height: 40px;
-            font-size: 1rem;
+            width: 38px;
+            height: 38px;
+            font-size: 0.9rem;
         }
 
         & .dashboard__stat-number {
@@ -712,49 +740,8 @@
         }
 
         & .dashboard__charts-row--three {
-            grid-template-columns: 1fr 0.9fr 1fr;
-            gap: 16px;
-        }
-
-        & .dashboard__chart-header {
-            padding: 12px 18px 10px;
-        }
-
-        & .dashboard__chart-body {
-            height: 170px;
-            padding: 6px 10px 10px;
-        }
-
-        & .dashboard__chart-body--pie {
-            min-height: 170px;
-        }
-
-        & .dashboard__event-pie-wrapper canvas {
-            max-height: 105px !important;
-            max-width: 105px !important;
-        }
-
-        & .dashboard__three-col {
-            gap: 14px;
-        }
-
-        & .dashboard__card-header {
-            padding: 10px 14px;
-        }
-
-        & .dashboard__card-body {
-            padding: 12px 14px 14px;
-        }
-    }
-
-    @media (max-width: 1200px) {
-        & .dashboard__stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        & .dashboard__charts-row--three {
             grid-template-columns: 1fr 0.9fr;
+            gap: 14px;
         }
 
         & .dashboard__chart-card--events {
@@ -767,12 +754,20 @@
         }
 
         & .dashboard__chart-body {
-            height: 160px;
+            height: 170px;
         }
 
         & .dashboard__event-pie-wrapper canvas {
             max-height: 110px !important;
             max-width: 110px !important;
+        }
+
+        & .dashboard__chart-header {
+            padding: 12px 16px 10px;
+        }
+
+        & .dashboard__card-body {
+            padding: 12px 14px 14px;
         }
     }
 
@@ -787,13 +782,13 @@
         }
 
         & .dashboard__stat-icon {
-            width: 36px;
-            height: 36px;
-            font-size: 0.85rem;
+            width: 34px;
+            height: 34px;
+            font-size: 0.8rem;
         }
 
         & .dashboard__stat-number {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         & .dashboard__stat-label {
@@ -807,7 +802,7 @@
 
         & .dashboard__charts-row--three {
             grid-template-columns: 1fr 0.8fr;
-            gap: 14px;
+            gap: 12px;
         }
 
         & .dashboard__chart-body {
@@ -837,16 +832,16 @@
             gap: 10px;
         }
 
-        & .dashboard__card-body {
-            padding: 10px 12px 12px;
-        }
-
         & .dashboard__card-header {
-            padding: 8px 12px;
+            padding: 10px 12px;
 
             & h3 {
                 font-size: 0.8rem;
             }
+        }
+
+        & .dashboard__card-body {
+            padding: 10px 12px 12px;
         }
 
         & .dashboard__top-book-title {
@@ -871,17 +866,18 @@
         & .dashboard__stat-card {
             padding: 10px 12px;
             gap: 8px;
+            border-radius: 10px;
         }
 
         & .dashboard__stat-icon {
-            width: 32px;
-            height: 32px;
-            font-size: 0.75rem;
+            width: 30px;
+            height: 30px;
+            font-size: 0.7rem;
             border-radius: 8px;
         }
 
         & .dashboard__stat-number {
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         & .dashboard__stat-label {
@@ -890,7 +886,7 @@
 
         & .dashboard__charts-row--three {
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         & .dashboard__chart-card--events {
@@ -906,10 +902,10 @@
         }
 
         & .dashboard__event-pie-wrapper canvas {
-            max-height: 110px !important;
-            max-width: 110px !important;
-            min-height: 90px;
-            min-width: 90px;
+            max-height: 100px !important;
+            max-width: 100px !important;
+            min-height: 80px;
+            min-width: 80px;
         }
 
         & .dashboard__three-col {
@@ -941,8 +937,7 @@
         & .dashboard__chart-date-range input[type="date"] {
             font-size: 0.55rem;
             height: 24px;
-            width: 75px;
-            padding: 1px 4px;
+            width: 70px;
         }
 
         & .dashboard__activity-tab-compact {
@@ -966,7 +961,7 @@
         }
 
         & .dashboard__card-body--activity {
-            padding: 6px 10px 10px;
+            padding: 6px 8px 8px;
         }
 
         & .dashboard__top-book-rank {
@@ -980,7 +975,7 @@
         }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 540px) {
         & .dashboard__stats-grid {
             grid-template-columns: 1fr 1fr;
             gap: 6px;
@@ -989,18 +984,18 @@
         & .dashboard__stat-card {
             padding: 8px 10px;
             gap: 6px;
-            border-radius: 10px;
+            border-radius: 8px;
         }
 
         & .dashboard__stat-icon {
-            width: 28px;
-            height: 28px;
-            font-size: 0.65rem;
+            width: 26px;
+            height: 26px;
+            font-size: 0.6rem;
             border-radius: 6px;
         }
 
         & .dashboard__stat-number {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         & .dashboard__stat-label {
@@ -1012,10 +1007,6 @@
             padding: 1px 4px;
         }
 
-        & .dashboard__charts-row {
-            gap: 10px;
-        }
-
         & .dashboard__chart-body {
             height: 120px;
         }
@@ -1025,10 +1016,10 @@
         }
 
         & .dashboard__event-pie-wrapper canvas {
-            max-height: 90px !important;
-            max-width: 90px !important;
-            min-height: 70px;
-            min-width: 70px;
+            max-height: 85px !important;
+            max-width: 85px !important;
+            min-height: 65px;
+            min-width: 65px;
         }
 
         & .dashboard__event-pie-legend {
@@ -1041,10 +1032,6 @@
 
         & .dashboard__event-pie-legend-label {
             max-width: 50px;
-        }
-
-        & .dashboard__three-col {
-            gap: 8px;
         }
 
         & .dashboard__card-body {
@@ -1098,72 +1085,9 @@
         & .dashboard__activity-desc-compact {
             font-size: 0.55rem;
         }
-    }
-
-    @media (max-width: 540px) {
-        & .dashboard__stats-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-        }
-
-        & .dashboard__stat-card {
-            padding: 8px 8px;
-            gap: 6px;
-            border-radius: 8px;
-        }
-
-        & .dashboard__stat-icon {
-            width: 24px;
-            height: 24px;
-            font-size: 0.6rem;
-            border-radius: 4px;
-        }
-
-        & .dashboard__stat-number {
-            font-size: 0.8rem;
-        }
-
-        & .dashboard__stat-label {
-            font-size: 0.55rem;
-        }
-
-        & .dashboard__stat-change {
-            font-size: 0.5rem;
-            padding: 1px 3px;
-        }
-
-        & .dashboard__chart-body {
-            height: 100px;
-        }
-
-        & .dashboard__chart-body--pie {
-            min-height: 100px;
-        }
-
-        & .dashboard__event-pie-wrapper canvas {
-            max-height: 80px !important;
-            max-width: 80px !important;
-            min-height: 60px;
-            min-width: 60px;
-        }
-
-        & .dashboard__event-pie-legend-item {
-            font-size: 0.45rem;
-        }
-
-        & .dashboard__event-pie-legend-label {
-            max-width: 40px;
-        }
-
-        & .dashboard__chart-header {
-            padding: 6px 10px 6px;
-            flex-direction: column;
-            align-items: flex-start;
-        }
 
         & .dashboard__chart-controls {
             width: 100%;
-            flex-wrap: wrap;
         }
 
         & .dashboard__chart-form {
@@ -1191,6 +1115,52 @@
             }
         }
 
+        & .dashboard__chart-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @media (max-width: 420px) {
+        & .dashboard__stats-grid {
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        & .dashboard__stat-card {
+            padding: 10px 14px;
+            gap: 10px;
+        }
+
+        & .dashboard__stat-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 0.7rem;
+        }
+
+        & .dashboard__stat-number {
+            font-size: 0.9rem;
+        }
+
+        & .dashboard__chart-body {
+            height: 100px;
+        }
+
+        & .dashboard__event-pie-wrapper canvas {
+            max-height: 70px !important;
+            max-width: 70px !important;
+            min-height: 50px;
+            min-width: 50px;
+        }
+
+        & .dashboard__event-pie-legend-item {
+            font-size: 0.45rem;
+        }
+
+        & .dashboard__event-pie-legend-label {
+            max-width: 40px;
+        }
+
         & .dashboard__three-col {
             gap: 6px;
         }
@@ -1200,7 +1170,7 @@
         }
 
         & .dashboard__card-header {
-            padding: 6px 8px;
+            padding: 4px 8px;
 
             & h3 {
                 font-size: 0.65rem;
@@ -1208,9 +1178,9 @@
         }
 
         & .dashboard__top-book-rank {
-            width: 18px;
-            height: 18px;
-            font-size: 0.5rem;
+            width: 20px;
+            height: 20px;
+            font-size: 0.55rem;
         }
 
         & .dashboard__top-book-title {
@@ -1264,23 +1234,16 @@
         }
     }
 
-    @media (max-width: 480px) {
-        & .dashboard__stats-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
-        }
-
+    @media (max-width: 350px) {
         & .dashboard__stat-card {
-            padding: 6px 6px;
-            gap: 4px;
-            border-radius: 6px;
+            padding: 6px 10px;
+            gap: 6px;
         }
 
         & .dashboard__stat-icon {
-            width: 20px;
-            height: 20px;
-            font-size: 0.5rem;
-            border-radius: 4px;
+            width: 26px;
+            height: 26px;
+            font-size: 0.55rem;
         }
 
         & .dashboard__stat-number {
@@ -1288,63 +1251,7 @@
         }
 
         & .dashboard__stat-label {
-            font-size: 0.5rem;
-        }
-
-        & .dashboard__stat-change {
-            font-size: 0.45rem;
-            padding: 0px 2px;
-        }
-
-        & .dashboard__chart-body {
-            height: 90px;
-            padding: 4px 6px 6px;
-        }
-
-        & .dashboard__chart-body--pie {
-            min-height: 90px;
-            padding: 2px 4px 4px;
-        }
-
-        & .dashboard__event-pie-wrapper canvas {
-            max-height: 70px !important;
-            max-width: 70px !important;
-            min-height: 50px;
-            min-width: 50px;
-        }
-
-        & .dashboard__event-pie-legend {
-            gap: 2px 6px;
-        }
-
-        & .dashboard__event-pie-legend-item {
-            font-size: 0.4rem;
-        }
-
-        & .dashboard__event-pie-legend-label {
-            max-width: 30px;
-        }
-    }
-
-    @media (max-width: 420px) {
-        & .dashboard__stats-grid {
-            grid-template-columns: 1fr;
-            gap: 4px;
-        }
-
-        & .dashboard__stat-card {
-            padding: 8px 10px;
-            gap: 8px;
-        }
-
-        & .dashboard__stat-icon {
-            width: 28px;
-            height: 28px;
-            font-size: 0.7rem;
-        }
-
-        & .dashboard__stat-number {
-            font-size: 0.9rem;
+            font-size: 0.55rem;
         }
 
         & .dashboard__chart-body {
@@ -1358,93 +1265,16 @@
             min-width: 40px;
         }
 
-        & .dashboard__three-col {
-            gap: 4px;
+        & .dashboard__event-pie-legend-item {
+            font-size: 0.4rem;
         }
 
-        & .dashboard__card-body {
-            padding: 4px 6px 6px;
-        }
-
-        & .dashboard__card-header {
-            padding: 4px 6px;
-
-            & h3 {
-                font-size: 0.6rem;
-            }
-        }
-
-        & .dashboard__card-badge {
-            font-size: 0.5rem;
-            padding: 1px 6px;
-        }
-
-        & .dashboard__top-book {
-            gap: 6px;
+        & .dashboard__card-header h3 {
+            font-size: 0.6rem;
         }
 
         & .dashboard__top-book-title {
             font-size: 0.6rem;
-        }
-
-        & .dashboard__top-book-meta {
-            font-size: 0.5rem;
-        }
-
-        & .dashboard__order-status {
-            gap: 6px;
-        }
-
-        & .dashboard__order-status-label {
-            font-size: 0.65rem;
-        }
-
-        & .dashboard__order-status-number {
-            font-size: 0.65rem;
-        }
-    }
-
-    @media (max-width: 350px) {
-        & .dashboard__stat-card {
-            padding: 6px 8px;
-            gap: 6px;
-        }
-
-        & .dashboard__stat-icon {
-            width: 22px;
-            height: 22px;
-            font-size: 0.55rem;
-        }
-
-        & .dashboard__stat-number {
-            font-size: 0.7rem;
-        }
-
-        & .dashboard__stat-label {
-            font-size: 0.45rem;
-        }
-
-        & .dashboard__chart-body {
-            height: 70px;
-        }
-
-        & .dashboard__event-pie-wrapper canvas {
-            max-height: 50px !important;
-            max-width: 50px !important;
-            min-height: 35px;
-            min-width: 35px;
-        }
-
-        & .dashboard__event-pie-legend-item {
-            font-size: 0.35rem;
-        }
-
-        & .dashboard__card-header h3 {
-            font-size: 0.55rem;
-        }
-
-        & .dashboard__top-book-title {
-            font-size: 0.55rem;
         }
 
         & .dashboard__activity-tab-compact {
@@ -1468,13 +1298,13 @@
 
     @media (max-width: 300px) {
         & .dashboard__stat-card {
-            padding: 4px 6px;
+            padding: 4px 8px;
             gap: 4px;
         }
 
         & .dashboard__stat-icon {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             font-size: 0.45rem;
         }
 
@@ -1483,22 +1313,22 @@
         }
 
         & .dashboard__stat-label {
-            font-size: 0.4rem;
+            font-size: 0.5rem;
         }
 
         & .dashboard__chart-body {
-            height: 60px;
+            height: 70px;
         }
 
         & .dashboard__event-pie-wrapper canvas {
-            max-height: 40px !important;
-            max-width: 40px !important;
-            min-height: 30px;
-            min-width: 30px;
+            max-height: 50px !important;
+            max-width: 50px !important;
+            min-height: 35px;
+            min-width: 35px;
         }
 
         & .dashboard__card-header h3 {
-            font-size: 0.5rem;
+            font-size: 0.55rem;
         }
     }
 }

@@ -11,6 +11,7 @@
     & .invites-index__search {
         flex: 1;
         max-width: 500px;
+        min-width: 200px;
 
         & .invites-index__search-form {
             display: flex;
@@ -41,7 +42,7 @@
                 font-size: 0.85rem;
                 background: transparent;
                 color: var(--text);
-                min-width: 100px;
+                min-width: 80px;
 
                 &:focus {
                     outline: none;
@@ -118,22 +119,34 @@
     & .invites-index__requester {
         & strong {
             display: block;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
         }
     }
 
     & .invites-index__event {
         font-weight: 500;
         font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 140px;
+        display: block;
     }
 
     & .invites-index__date {
         font-size: 0.85rem;
+        white-space: nowrap;
     }
 
     & .invites-index__attendance {
         font-weight: 600;
         color: var(--gold);
         font-size: 0.9rem;
+        white-space: nowrap;
 
         & i {
             margin-right: 4px;
@@ -155,6 +168,7 @@
             background: var(--surface);
             cursor: pointer;
             transition: border-color var(--transition);
+            min-height: 34px;
 
             &:focus {
                 outline: none;
@@ -165,18 +179,13 @@
         & .btn {
             padding: 6px 10px;
             font-size: 0.75rem;
+            min-height: 34px;
         }
     }
 }
 
 /* ─── BREAKPOINTS ─── */
-@media (max-width: 1700px) {
-    .invites-index__search {
-        max-width: 440px;
-    }
-}
-
-@media (max-width: 1500px) {
+@media (max-width: 1200px) {
     .invites-index__search {
         max-width: 400px;
     }
@@ -187,7 +196,7 @@
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
     .invites-index__header {
         flex-direction: column;
         align-items: stretch !important;
@@ -205,23 +214,19 @@
         padding: 4px 12px;
         font-size: 0.7rem;
     }
-}
 
-@media (max-width: 1024px) {
     .invites-index__filters .invites-index__badge {
         font-size: 0.55rem;
         padding: 1px 6px;
     }
 
     .invites-index__requester strong {
-        font-size: 0.85rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.8rem !important;
+        max-width: 100px;
+        font-size: 0.8rem;
     }
 
     .invites-index__event {
+        max-width: 100px;
         font-size: 0.85rem;
     }
 
@@ -240,17 +245,20 @@
     .invites-index__actions .invites-index__status-select {
         font-size: 0.65rem;
         padding: 3px 6px;
+        min-height: 30px;
     }
 
     .invites-index__actions .btn {
         padding: 4px 8px;
         font-size: 0.7rem;
+        min-height: 30px;
     }
 }
 
 @media (max-width: 820px) {
     .invites-index__filters {
         gap: 2px;
+        margin-bottom: 14px;
     }
 
     .invites-index__filters .invites-index__filter {
@@ -263,14 +271,12 @@
     }
 
     .invites-index__requester strong {
-        font-size: 0.8rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.75rem !important;
+        max-width: 80px;
+        font-size: 0.75rem;
     }
 
     .invites-index__event {
+        max-width: 80px;
         font-size: 0.8rem;
     }
 
@@ -289,6 +295,7 @@
 
     .invites-index__actions .invites-index__status-select {
         width: 100%;
+        min-height: 32px;
     }
 
     .invites-index__actions .btn {
@@ -296,32 +303,7 @@
         justify-content: center;
         padding: 4px 8px;
         font-size: 0.65rem;
-    }
-}
-
-@media (max-width: 720px) {
-    .invites-index__search .invites-index__search-form {
-        flex-wrap: wrap;
-        padding: 8px;
-    }
-
-    .invites-index__search .invites-index__search-form input {
-        flex-basis: 100%;
-        padding: 6px 0;
-    }
-
-    .invites-index__search .invites-index__search-form .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .invites-index__filters .invites-index__filter {
-        font-size: 0.6rem;
-        padding: 2px 8px;
-    }
-
-    .invites-index__count {
-        font-size: 0.7rem;
+        min-height: 28px;
     }
 }
 
@@ -333,21 +315,23 @@
 
     .invites-index__search .invites-index__search-form {
         padding: 6px;
+        flex-wrap: wrap;
     }
 
     .invites-index__search .invites-index__search-form input {
+        flex-basis: 100%;
+        padding: 6px 0;
         font-size: 0.75rem;
-        padding: 4px 0;
     }
 
-    .invites-index__filters {
-        gap: 1px;
-        margin-bottom: 14px;
+    .invites-index__search .invites-index__search-form .btn {
+        width: 100%;
+        justify-content: center;
     }
 
     .invites-index__filters .invites-index__filter {
         font-size: 0.55rem;
-        padding: 2px 6px;
+        padding: 2px 8px;
     }
 
     .invites-index__filters .invites-index__badge {
@@ -356,18 +340,16 @@
     }
 
     .invites-index__count {
-        font-size: 0.65rem;
+        font-size: 0.7rem;
     }
 
     .invites-index__requester strong {
-        font-size: 0.75rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.65rem !important;
+        max-width: 60px;
+        font-size: 0.7rem;
     }
 
     .invites-index__event {
+        max-width: 60px;
         font-size: 0.75rem;
     }
 
@@ -382,105 +364,61 @@
     .invites-index__actions .invites-index__status-select {
         font-size: 0.6rem;
         padding: 2px 6px;
+        min-height: 28px;
     }
 
     .invites-index__actions .btn {
         font-size: 0.6rem;
         padding: 3px 6px;
-    }
-}
-
-@media (max-width: 480px) {
-    .invites-index__header {
-        gap: 8px;
-        margin-bottom: 10px;
-    }
-
-    .invites-index__filters .invites-index__filter {
-        font-size: 0.5rem;
-        padding: 1px 5px;
-    }
-
-    .invites-index__count {
-        font-size: 0.6rem;
-    }
-
-    .invites-index__requester strong {
-        font-size: 0.7rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.6rem !important;
-    }
-
-    .invites-index__event {
-        font-size: 0.7rem;
-    }
-
-    .invites-index__date {
-        font-size: 0.65rem;
-    }
-
-    .invites-index__attendance {
-        font-size: 0.7rem;
-    }
-
-    .invites-index__actions .invites-index__status-select {
-        font-size: 0.55rem;
-        padding: 2px 4px;
-    }
-
-    .invites-index__actions .btn {
-        font-size: 0.55rem;
-        padding: 2px 4px;
+        min-height: 26px;
     }
 }
 
 @media (max-width: 420px) {
     .invites-index__filters .invites-index__filter {
-        font-size: 0.45rem;
-        padding: 1px 4px;
+        font-size: 0.5rem;
+        padding: 1px 6px;
     }
 
     .invites-index__count {
-        font-size: 0.55rem;
+        font-size: 0.65rem;
     }
 
     .invites-index__requester strong {
+        max-width: 50px;
         font-size: 0.65rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.55rem !important;
     }
 
     .invites-index__event {
-        font-size: 0.65rem;
+        max-width: 50px;
+        font-size: 0.7rem;
     }
 
     .invites-index__date {
-        font-size: 0.6rem;
-    }
-
-    .invites-index__attendance {
         font-size: 0.65rem;
     }
 
+    .invites-index__attendance {
+        font-size: 0.7rem;
+    }
+
     .invites-index__actions .invites-index__status-select {
-        font-size: 0.5rem;
-        padding: 1px 4px;
+        font-size: 0.55rem;
+        padding: 2px 4px;
+        min-height: 24px;
     }
 
     .invites-index__actions .btn {
-        font-size: 0.5rem;
+        font-size: 0.55rem;
         padding: 2px 4px;
+        min-height: 24px;
     }
 }
 
 @media (max-width: 350px) {
     .invites-index__filters .invites-index__filter {
-        font-size: 0.4rem;
-        padding: 1px 3px;
+        font-size: 0.45rem;
+        padding: 1px 4px;
     }
 
     .invites-index__filters .invites-index__badge {
@@ -493,69 +431,69 @@
     }
 
     .invites-index__requester strong {
+        max-width: 40px;
         font-size: 0.6rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.5rem !important;
     }
 
     .invites-index__event {
-        font-size: 0.6rem;
+        max-width: 40px;
+        font-size: 0.65rem;
     }
 
     .invites-index__date {
-        font-size: 0.55rem;
-    }
-
-    .invites-index__attendance {
         font-size: 0.6rem;
     }
 
+    .invites-index__attendance {
+        font-size: 0.65rem;
+    }
+
     .invites-index__actions .invites-index__status-select {
-        font-size: 0.45rem;
+        font-size: 0.5rem;
         padding: 1px 3px;
+        min-height: 22px;
     }
 
     .invites-index__actions .btn {
-        font-size: 0.45rem;
+        font-size: 0.5rem;
         padding: 1px 3px;
+        min-height: 22px;
     }
 }
 
 @media (max-width: 300px) {
     .invites-index__filters .invites-index__filter {
-        font-size: 0.35rem;
-        padding: 1px 2px;
+        font-size: 0.4rem;
+        padding: 1px 3px;
     }
 
     .invites-index__requester strong {
+        max-width: 30px;
         font-size: 0.55rem;
-    }
-
-    .invites-index__requester a {
-        font-size: 0.45rem !important;
     }
 
     .invites-index__event {
-        font-size: 0.55rem;
+        max-width: 30px;
+        font-size: 0.6rem;
     }
 
     .invites-index__date {
-        font-size: 0.5rem;
-    }
-
-    .invites-index__attendance {
         font-size: 0.55rem;
     }
 
+    .invites-index__attendance {
+        font-size: 0.6rem;
+    }
+
     .invites-index__actions .invites-index__status-select {
-        font-size: 0.4rem;
+        font-size: 0.45rem;
         padding: 1px 2px;
+        min-height: 20px;
     }
 
     .invites-index__actions .btn {
-        font-size: 0.4rem;
+        font-size: 0.45rem;
         padding: 1px 2px;
+        min-height: 20px;
     }
 }
