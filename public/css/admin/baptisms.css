@@ -11,7 +11,6 @@
     & .baptisms-index__search {
         flex: 1;
         max-width: 500px;
-        min-width: 200px;
 
         & .baptisms-index__search-form {
             display: flex;
@@ -42,7 +41,8 @@
                 font-size: 0.85rem;
                 background: transparent;
                 color: var(--text);
-                min-width: 80px;
+                min-width: 100px;
+                min-height: 36px;
 
                 &:focus {
                     outline: none;
@@ -77,6 +77,7 @@
             text-decoration: none;
             transition: all var(--transition);
             border: 1px solid transparent;
+            min-height: 34px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -119,19 +120,12 @@
     & .baptisms-index__contact {
         & a {
             transition: color var(--transition);
-            display: block;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 160px;
         }
     }
 
     & .baptisms-index__location {
         font-size: 0.85rem;
         color: var(--text-muted);
-        white-space: nowrap;
 
         & i {
             margin-right: 4px;
@@ -153,7 +147,7 @@
             background: var(--surface);
             cursor: pointer;
             transition: border-color var(--transition);
-            min-height: 34px;
+            min-height: 30px;
 
             &:focus {
                 outline: none;
@@ -164,24 +158,13 @@
         & .btn {
             padding: 6px 10px;
             font-size: 0.75rem;
-            min-height: 34px;
+            min-height: 30px;
         }
     }
 }
 
-/* ─── BREAKPOINTS ─── */
+/* ─── RESPONSIVE ─── */
 @media (max-width: 1200px) {
-    .baptisms-index__search {
-        max-width: 400px;
-    }
-
-    .baptisms-index__filters .baptisms-index__filter {
-        padding: 5px 14px;
-        font-size: 0.75rem;
-    }
-}
-
-@media (max-width: 1024px) {
     .baptisms-index__header {
         flex-direction: column;
         align-items: stretch !important;
@@ -190,69 +173,17 @@
     .baptisms-index__search {
         max-width: 100% !important;
     }
-
-    .baptisms-index__filters {
-        gap: 3px;
-    }
-
-    .baptisms-index__filters .baptisms-index__filter {
-        padding: 4px 12px;
-        font-size: 0.7rem;
-    }
-
-    .baptisms-index__filters .baptisms-index__badge {
-        font-size: 0.55rem;
-        padding: 1px 6px;
-    }
-
-    .baptisms-index__contact a {
-        font-size: 0.8rem !important;
-        max-width: 120px;
-    }
-
-    .baptisms-index__location {
-        font-size: 0.8rem;
-    }
-
-    .baptisms-index__actions {
-        flex-wrap: wrap;
-    }
-
-    .baptisms-index__actions .baptisms-index__status-select {
-        font-size: 0.65rem;
-        padding: 3px 6px;
-        min-height: 30px;
-    }
-
-    .baptisms-index__actions .btn {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-        min-height: 30px;
-    }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 1024px) {
     .baptisms-index__filters {
         gap: 2px;
-        margin-bottom: 14px;
     }
 
     .baptisms-index__filters .baptisms-index__filter {
-        font-size: 0.65rem;
-        padding: 3px 10px;
-    }
-
-    .baptisms-index__count {
-        font-size: 0.75rem;
-    }
-
-    .baptisms-index__contact a {
-        max-width: 100px;
-        font-size: 0.75rem !important;
-    }
-
-    .baptisms-index__location {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        min-height: 28px;
     }
 
     .baptisms-index__actions {
@@ -262,169 +193,65 @@
 
     .baptisms-index__actions .baptisms-index__status-select {
         width: 100%;
-        min-height: 32px;
+        min-height: 28px;
     }
 
     .baptisms-index__actions .btn {
         width: 100%;
         justify-content: center;
-        padding: 4px 8px;
-        font-size: 0.65rem;
         min-height: 28px;
+        font-size: 0.7rem;
+    }
+
+    .table-wrap table {
+        min-width: 600px;
     }
 }
 
-@media (max-width: 540px) {
-    .baptisms-index__header {
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-
+@media (max-width: 820px) {
     .baptisms-index__search .baptisms-index__search-form {
-        padding: 6px;
         flex-wrap: wrap;
+        padding: 6px;
     }
 
     .baptisms-index__search .baptisms-index__search-form input {
         flex-basis: 100%;
         padding: 6px 0;
-        font-size: 0.75rem;
+        min-height: 32px;
     }
 
     .baptisms-index__search .baptisms-index__search-form .btn {
         width: 100%;
         justify-content: center;
+        min-height: 34px;
     }
+}
 
+@media (max-width: 540px) {
     .baptisms-index__filters .baptisms-index__filter {
-        font-size: 0.55rem;
+        font-size: 0.6rem;
         padding: 2px 8px;
+        min-height: 24px;
     }
 
-    .baptisms-index__filters .baptisms-index__badge {
-        font-size: 0.5rem;
-        padding: 1px 4px;
+    .baptisms-index__search .baptisms-index__search-form i {
+        display: none;
     }
 
-    .baptisms-index__count {
-        font-size: 0.7rem;
-    }
-
-    .baptisms-index__contact a {
-        max-width: 80px;
-        font-size: 0.7rem !important;
-    }
-
-    .baptisms-index__location {
-        font-size: 0.7rem;
-    }
-
-    .baptisms-index__actions .baptisms-index__status-select {
-        font-size: 0.6rem;
-        padding: 2px 6px;
+    .baptisms-index__search .baptisms-index__search-form input {
+        font-size: 0.75rem;
         min-height: 28px;
-    }
-
-    .baptisms-index__actions .btn {
-        font-size: 0.6rem;
-        padding: 3px 6px;
-        min-height: 26px;
     }
 }
 
 @media (max-width: 420px) {
+    .baptisms-index__filters {
+        gap: 0px;
+    }
+
     .baptisms-index__filters .baptisms-index__filter {
-        font-size: 0.5rem;
+        font-size: 0.55rem;
         padding: 1px 6px;
-    }
-
-    .baptisms-index__count {
-        font-size: 0.65rem;
-    }
-
-    .baptisms-index__contact a {
-        max-width: 60px;
-        font-size: 0.65rem !important;
-    }
-
-    .baptisms-index__location {
-        font-size: 0.65rem;
-    }
-
-    .baptisms-index__actions .baptisms-index__status-select {
-        font-size: 0.55rem;
-        padding: 2px 4px;
-        min-height: 24px;
-    }
-
-    .baptisms-index__actions .btn {
-        font-size: 0.55rem;
-        padding: 2px 4px;
-        min-height: 24px;
-    }
-}
-
-@media (max-width: 350px) {
-    .baptisms-index__filters .baptisms-index__filter {
-        font-size: 0.45rem;
-        padding: 1px 4px;
-    }
-
-    .baptisms-index__filters .baptisms-index__badge {
-        font-size: 0.4rem;
-        padding: 1px 3px;
-    }
-
-    .baptisms-index__count {
-        display: none;
-    }
-
-    .baptisms-index__contact a {
-        max-width: 50px;
-        font-size: 0.6rem !important;
-    }
-
-    .baptisms-index__location {
-        font-size: 0.6rem;
-    }
-
-    .baptisms-index__actions .baptisms-index__status-select {
-        font-size: 0.5rem;
-        padding: 1px 3px;
-        min-height: 22px;
-    }
-
-    .baptisms-index__actions .btn {
-        font-size: 0.5rem;
-        padding: 1px 3px;
-        min-height: 22px;
-    }
-}
-
-@media (max-width: 300px) {
-    .baptisms-index__filters .baptisms-index__filter {
-        font-size: 0.4rem;
-        padding: 1px 3px;
-    }
-
-    .baptisms-index__contact a {
-        max-width: 40px;
-        font-size: 0.55rem !important;
-    }
-
-    .baptisms-index__location {
-        font-size: 0.55rem;
-    }
-
-    .baptisms-index__actions .baptisms-index__status-select {
-        font-size: 0.45rem;
-        padding: 1px 2px;
-        min-height: 20px;
-    }
-
-    .baptisms-index__actions .btn {
-        font-size: 0.45rem;
-        padding: 1px 2px;
         min-height: 20px;
     }
 }

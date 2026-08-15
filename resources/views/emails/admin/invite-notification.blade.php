@@ -109,7 +109,7 @@
                     <tr>
                         <td align="center" style="padding: 4px 0;">
                             <a href="{{ route('admin.invites') }}" style="display: inline-block; padding: 10px 32px; border-radius: 50px; background: #a67c4e; color: #ffffff; font-weight: 600; font-size: 14px; text-decoration: none; border: none; cursor: pointer; text-align: center;">
-                                &#128065; View in Admin
+                                View in Admin
                             </a>
                         </td>
                     </tr>

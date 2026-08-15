@@ -11,7 +11,6 @@
     & .events-index__search {
         flex: 1;
         max-width: 500px;
-        min-width: 200px;
 
         & .events-index__search-form {
             display: flex;
@@ -42,10 +41,15 @@
                 font-size: 0.85rem;
                 background: transparent;
                 color: var(--text);
-                min-width: 80px;
+                min-width: 100px;
+                min-height: 36px;
 
                 &:focus {
                     outline: none;
+                }
+
+                &::placeholder {
+                    color: var(--text-light);
                 }
             }
 
@@ -91,6 +95,9 @@
             text-decoration: none;
             transition: all var(--transition);
             border: 1px solid transparent;
+            min-height: 34px;
+            display: flex;
+            align-items: center;
 
             &:hover {
                 background: var(--gold-dim);
@@ -126,17 +133,9 @@
             background: var(--bg);
             border-radius: 50px;
             white-space: nowrap;
-        }
-    }
-
-    & .events-index__title {
-        & strong {
-            display: block;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 180px;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -148,20 +147,17 @@
         & .events-index__date-day {
             font-weight: 500;
             font-size: 0.85rem;
-            white-space: nowrap;
         }
 
         & .events-index__date-time {
             font-size: 0.75rem;
             color: var(--text-muted);
-            white-space: nowrap;
         }
     }
 
     & .events-index__location {
         font-size: 0.85rem;
         color: var(--text-muted);
-        white-space: nowrap;
 
         & i {
             margin-right: 4px;
@@ -172,23 +168,131 @@
         font-weight: 600;
         color: var(--gold);
         font-size: 0.9rem;
-        white-space: nowrap;
     }
 
     & .events-index__actions {
         display: flex;
         gap: 4px;
-        flex-wrap: wrap;
 
         & .btn {
             padding: 6px 10px;
             font-size: 0.75rem;
-            min-height: 34px;
+            min-height: 32px;
         }
     }
 }
 
-/* ─── EVENTS FORM ─── */
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1200px) {
+    .events-index__header {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .events-index__search {
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .events-index__filters {
+        gap: 2px;
+    }
+
+    .events-index__filters .events-index__filter {
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        min-height: 28px;
+    }
+
+    .events-index__filters .events-index__filter-count {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        min-height: 26px;
+    }
+
+    .events-index__actions {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .events-index__actions .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 28px;
+        font-size: 0.7rem;
+    }
+
+    .table-wrap table {
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 820px) {
+    .events-index__search .events-index__search-form {
+        flex-wrap: wrap;
+        padding: 6px;
+    }
+
+    .events-index__search .events-index__search-form input {
+        flex-basis: 100%;
+        padding: 6px 0;
+        min-height: 32px;
+    }
+
+    .events-index__search .events-index__search-form .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 34px;
+    }
+
+    .events-index__search .events-index__search-hint {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .events-index__filters .events-index__filter {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+        min-height: 24px;
+    }
+
+    .events-index__filters .events-index__filter-count {
+        font-size: 0.55rem;
+        padding: 2px 6px;
+        min-height: 22px;
+    }
+
+    .events-index__search .events-index__search-form i {
+        display: none;
+    }
+
+    .events-index__search .events-index__search-form input {
+        font-size: 0.75rem;
+        min-height: 28px;
+    }
+}
+
+@media (max-width: 420px) {
+    .events-index__filters {
+        gap: 0px;
+    }
+
+    .events-index__filters .events-index__filter {
+        font-size: 0.55rem;
+        padding: 1px 6px;
+        min-height: 20px;
+    }
+
+    .events-index__filters .events-index__filter-count {
+        font-size: 0.5rem;
+        padding: 1px 4px;
+        min-height: 18px;
+    }
+}
+
+/* ─── ADMIN EVENTS FORM ─── */
 .events-form {
     & .events-form__header {
         margin-bottom: 20px;
@@ -224,6 +328,7 @@
         flex-wrap: wrap;
 
         & .status-badge {
+            display: inline-block;
             padding: 4px 14px;
             border-radius: 50px;
             font-size: 0.7rem;
@@ -231,25 +336,142 @@
             text-transform: uppercase;
             letter-spacing: 0.04em;
 
-            &.status-past {
-                background: #f8d7da;
-                color: #721c24;
-            }
-
             &.status-upcoming {
                 background: #d4edda;
                 color: #155724;
             }
-        }
 
-        & .form-help {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            &.status-past {
+                background: #e2e3e5;
+                color: #383d41;
+            }
         }
     }
 }
 
-/* ─── EVENTS REGISTRATIONS ─── */
+/* ─── RESPONSIVE EVENTS FORM ─── */
+@media (max-width: 1200px) {
+    .books-form__card,
+    .events-form__card {
+        padding: 28px 24px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .books-form__card,
+    .events-form__card {
+        padding: 24px 20px;
+    }
+
+    .books-form__actions,
+    .events-form__actions {
+        flex-direction: column;
+    }
+
+    .books-form__actions .btn,
+    .events-form__actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .books-form .current-file {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 820px) {
+    .books-form__card,
+    .events-form__card {
+        padding: 20px 16px;
+        border-radius: var(--radius-sm);
+    }
+
+    .books-form__card .admin-form .form-group input,
+    .books-form__card .admin-form .form-group textarea,
+    .books-form__card .admin-form .form-group select,
+    .events-form__card .admin-form .form-group input,
+    .events-form__card .admin-form .form-group textarea,
+    .events-form__card .admin-form .form-group select {
+        min-height: 36px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .books-form__card .admin-form .form-group label,
+    .events-form__card .admin-form .form-group label {
+        font-size: 0.75rem;
+    }
+
+    .books-form .file-preview img {
+        max-width: 100px;
+        max-height: 140px;
+    }
+
+    .events-form .event-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 540px) {
+    .books-form__card,
+    .events-form__card {
+        padding: 14px 12px;
+    }
+
+    .books-form__card .admin-form .form-group input,
+    .books-form__card .admin-form .form-group textarea,
+    .books-form__card .admin-form .form-group select,
+    .events-form__card .admin-form .form-group input,
+    .events-form__card .admin-form .form-group textarea,
+    .events-form__card .admin-form .form-group select {
+        min-height: 32px;
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    .books-form__card .admin-form .form-group input[type="color"],
+    .events-form__card .admin-form .form-group input[type="color"] {
+        min-height: 36px;
+        height: 36px;
+    }
+
+    .books-form__card .admin-form .form-group input[type="file"],
+    .events-form__card .admin-form .form-group input[type="file"] {
+        min-height: 32px;
+        padding: 4px 6px;
+    }
+
+    .books-form__card .admin-form .form-group input[type="file"]::-webkit-file-upload-button,
+    .events-form__card .admin-form .form-group input[type="file"]::-webkit-file-upload-button {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+    }
+
+    .books-form .file-preview img {
+        max-width: 80px;
+        max-height: 110px;
+    }
+}
+
+@media (max-width: 420px) {
+    .books-form__card,
+    .events-form__card {
+        padding: 10px 8px;
+    }
+
+    .books-form__card .admin-form .form-group {
+        margin-bottom: 10px;
+    }
+
+    .events-form__card .admin-form .form-group {
+        margin-bottom: 10px;
+    }
+}
+
+/* ─── ADMIN EVENT REGISTRATIONS ─── */
 .events-registrations {
     & .events-registrations__header {
         display: flex;
@@ -272,31 +494,37 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            white-space: nowrap;
 
             & i {
                 color: var(--gold);
             }
         }
+
+        & .btn--sm {
+            min-height: 32px;
+            padding: 4px 14px;
+            font-size: 0.7rem;
+        }
     }
 
-    & .events-registrations__export {
+    & .events-registrations__debug {
+        background: #e8f0fe;
+        color: #1a5a8c;
+        padding: 10px 16px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+        font-size: 0.85rem;
+        border-left: 3px solid #1a5a8c;
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: 16px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-        flex-wrap: wrap;
+        gap: 10px;
 
-        & .events-registrations__export-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-right: 4px;
+        & i {
+            font-size: 1.1rem;
+        }
 
-            & i {
-                margin-right: 4px;
-            }
+        & strong {
+            font-weight: 700;
         }
     }
 
@@ -312,8 +540,8 @@
         & .btn--sm {
             padding: 4px 10px;
             font-size: 0.65rem;
-            min-height: 28px;
             white-space: nowrap;
+            min-height: 28px;
 
             & .btn-label {
                 display: inline;
@@ -328,442 +556,143 @@
                 background: #218838;
             }
         }
+
+        & .btn--secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+
+            &:hover {
+                background: var(--gold-dim);
+                border-color: var(--gold);
+            }
+        }
+    }
+
+    & .events-registrations__export {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+
+        & .events-registrations__export-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-right: 4px;
+
+            & i {
+                margin-right: 4px;
+            }
+        }
     }
 }
 
-/* ─── BREAKPOINTS ─── */
+/* ─── RESPONSIVE EVENTS REGISTRATIONS ─── */
 @media (max-width: 1200px) {
-    .events-index__search {
-        max-width: 400px;
+    .events-registrations__header {
+        flex-direction: column;
+        align-items: stretch !important;
     }
 
-    .events-index__filters .events-index__filter {
-        padding: 5px 14px;
-        font-size: 0.75rem;
-    }
-
-    .events-form__card {
-        padding: 28px;
-        max-width: 640px;
+    .events-registrations__stats {
+        justify-content: flex-start;
+        gap: 12px;
     }
 }
 
 @media (max-width: 1024px) {
-    .events-index__header {
+    .table-wrap table {
+        min-width: 700px;
+    }
+
+    .registrations-actions {
         flex-direction: column;
-        align-items: stretch !important;
+        align-items: stretch;
     }
 
-    .events-index__search {
-        max-width: 100% !important;
-    }
-
-    .events-index__filters {
-        gap: 3px;
-    }
-
-    .events-index__filters .events-index__filter {
-        padding: 4px 12px;
-        font-size: 0.7rem;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        font-size: 0.7rem;
-        padding: 3px 10px;
-    }
-
-    .events-index__title strong {
-        font-size: 0.85rem;
-        max-width: 140px;
-    }
-
-    .events-index__date .events-index__date-day {
-        font-size: 0.8rem;
-    }
-
-    .events-index__date .events-index__date-time {
-        font-size: 0.7rem;
-    }
-
-    .events-index__location {
-        font-size: 0.8rem;
-    }
-
-    .events-index__registrations {
-        font-size: 0.85rem;
-    }
-
-    .events-index__actions .btn {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-        min-height: 30px;
-    }
-
-    .events-form__card {
-        padding: 24px;
-        max-width: 100%;
-    }
-
-    .events-form .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-
-    .events-form .form-actions {
-        flex-direction: column;
-    }
-
-    .events-form .form-actions .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .events-registrations__header {
-        flex-direction: column;
-        align-items: stretch !important;
-    }
-
-    .events-registrations__stats {
-        gap: 8px;
-    }
-}
-
-@media (max-width: 820px) {
-    .events-index__filters {
-        gap: 2px;
-        margin-bottom: 14px;
-    }
-
-    .events-index__filters .events-index__filter {
-        font-size: 0.65rem;
-        padding: 3px 10px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        font-size: 0.6rem;
-        padding: 2px 8px;
-    }
-
-    .events-index__actions {
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .events-index__actions .btn {
-        width: 100%;
-        justify-content: center;
-        padding: 4px 8px;
-        font-size: 0.65rem;
-        min-height: 28px;
-    }
-
-    .events-index__title strong {
-        max-width: 120px;
-        font-size: 0.8rem;
-    }
-
-    .events-form__card {
-        padding: 20px;
-    }
-
-    .events-form .event-status {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-    }
-
-    .events-registrations__stats {
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .events-registrations__export {
-        flex-wrap: wrap;
-    }
-
-    .events-registrations .registrations-actions {
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .events-registrations .registrations-actions .btn--sm {
+    .registrations-actions .btn--sm {
         width: 100%;
         justify-content: center;
         min-height: 30px;
     }
 
-    .events-registrations .registrations-actions .btn--sm .btn-label {
+    .registrations-actions .btn--sm .btn-label {
         display: inline;
     }
 }
 
-@media (max-width: 540px) {
-    .events-index__header {
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-
-    .events-index__search .events-index__search-form {
-        padding: 6px;
+@media (max-width: 820px) {
+    .events-registrations__stats {
         flex-wrap: wrap;
-    }
-
-    .events-index__search .events-index__search-form input {
-        flex-basis: 100%;
-        padding: 6px 0;
-        font-size: 0.75rem;
-    }
-
-    .events-index__search .events-index__search-form .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .events-index__search .events-index__search-hint {
-        font-size: 0.6rem;
-    }
-
-    .events-index__filters .events-index__filter {
-        font-size: 0.55rem;
-        padding: 2px 8px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        font-size: 0.55rem;
-        padding: 2px 6px;
-    }
-
-    .events-index__title strong {
-        font-size: 0.75rem;
-        max-width: 100px;
-    }
-
-    .events-index__date .events-index__date-day {
-        font-size: 0.75rem;
-    }
-
-    .events-index__date .events-index__date-time {
-        font-size: 0.65rem;
-    }
-
-    .events-index__location {
-        font-size: 0.75rem;
-    }
-
-    .events-index__registrations {
-        font-size: 0.8rem;
-    }
-
-    .events-index__actions .btn {
-        font-size: 0.6rem;
-        padding: 3px 6px;
-        min-height: 26px;
-    }
-
-    .events-form__card {
-        padding: 16px;
-    }
-
-    .events-form .events-form__header .btn {
-        font-size: 0.7rem;
-        padding: 6px 14px;
-        min-height: 34px;
-    }
-
-    .events-form .form-group {
-        margin-bottom: 14px;
-    }
-
-    .events-form .form-group label {
-        font-size: 0.75rem;
-    }
-
-    .events-form .form-group input,
-    .events-form .form-group textarea,
-    .events-form .form-group select {
-        padding: 8px 12px;
-        font-size: 0.8rem;
-    }
-
-    .events-form .event-status .status-badge {
-        font-size: 0.6rem;
-        padding: 3px 10px;
-    }
-
-    .events-form .event-status .form-help {
-        font-size: 0.65rem;
-    }
-
-    .events-form .events-form__actions {
-        flex-direction: column;
-    }
-
-    .events-form .events-form__actions .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .events-registrations__header {
-        gap: 10px;
-        margin-bottom: 16px;
+        gap: 8px;
     }
 
     .events-registrations__stats .events-registrations__stat {
         font-size: 0.75rem;
-        white-space: normal;
     }
 
-    .events-registrations .registrations-actions .btn--sm {
-        font-size: 0.6rem;
-        padding: 3px 8px;
+    .events-registrations__stats .btn--sm {
+        min-height: 28px;
+        font-size: 0.65rem;
+    }
+
+    .events-registrations__debug {
+        font-size: 0.75rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 540px) {
+    .events-registrations__header {
+        gap: 10px;
+    }
+
+    .events-registrations__stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .events-registrations__stats .events-registrations__stat {
+        font-size: 0.7rem;
+    }
+
+    .events-registrations__debug {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+        flex-wrap: wrap;
+    }
+
+    .registrations-actions .btn--sm {
         min-height: 26px;
+        font-size: 0.6rem;
+        padding: 2px 8px;
     }
 
-    .events-registrations .registrations-actions .btn--sm .btn-label {
+    .registrations-actions .btn--sm .btn-label {
         display: none;
+    }
+
+    .events-registrations__export {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .events-registrations__export .btn--sm {
+        min-height: 28px;
+        font-size: 0.65rem;
     }
 }
 
 @media (max-width: 420px) {
-    .events-index__filters .events-index__filter {
-        font-size: 0.5rem;
-        padding: 1px 6px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        font-size: 0.5rem;
-        padding: 1px 4px;
-    }
-
-    .events-index__title strong {
-        font-size: 0.7rem;
-        max-width: 80px;
-    }
-
-    .events-index__actions .btn {
-        font-size: 0.55rem;
-        padding: 2px 4px;
-        min-height: 24px;
-    }
-
-    .events-form__card {
-        padding: 12px;
-    }
-
-    .events-form .form-group {
-        margin-bottom: 10px;
-    }
-
-    .events-form .form-group label {
-        font-size: 0.7rem;
-    }
-
-    .events-form .form-group input,
-    .events-form .form-group textarea,
-    .events-form .form-group select {
-        font-size: 0.75rem;
-        padding: 6px 10px;
-    }
-
-    .events-form .event-status .status-badge {
-        font-size: 0.55rem;
-        padding: 2px 8px;
-    }
-
-    .events-registrations .registrations-actions .btn--sm {
-        font-size: 0.55rem;
-        padding: 2px 6px;
-        min-height: 24px;
-    }
-}
-
-@media (max-width: 350px) {
-    .events-index__filters .events-index__filter {
-        font-size: 0.45rem;
-        padding: 1px 4px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        font-size: 0.45rem;
-        padding: 1px 3px;
-    }
-
-    .events-index__title strong {
+    .events-registrations__stats .events-registrations__stat {
         font-size: 0.65rem;
-        max-width: 60px;
+        gap: 4px;
     }
 
-    .events-index__actions .btn {
-        font-size: 0.5rem;
-        padding: 1px 3px;
-        min-height: 22px;
-    }
-
-    .events-form__card {
-        padding: 10px;
-    }
-
-    .events-form .form-group label {
-        font-size: 0.65rem;
-    }
-
-    .events-form .form-group input,
-    .events-form .form-group textarea,
-    .events-form .form-group select {
+    .events-registrations__stats .events-registrations__stat i {
         font-size: 0.7rem;
-        padding: 4px 8px;
-    }
-
-    .events-registrations .registrations-actions .btn--sm {
-        font-size: 0.5rem;
-        padding: 1px 4px;
-        min-height: 22px;
-    }
-}
-
-@media (max-width: 300px) {
-    .events-index__filters .events-index__filter {
-        font-size: 0.4rem;
-        padding: 1px 3px;
-    }
-
-    .events-index__filters .events-index__filter-count {
-        display: none;
-    }
-
-    .events-index__title strong {
-        font-size: 0.6rem;
-        max-width: 50px;
-    }
-
-    .events-index__actions .btn {
-        font-size: 0.45rem;
-        padding: 1px 2px;
-        min-height: 20px;
-    }
-
-    .events-form__card {
-        padding: 8px;
-    }
-
-    .events-form .form-group {
-        margin-bottom: 6px;
-    }
-
-    .events-form .form-group label {
-        font-size: 0.6rem;
-    }
-
-    .events-form .form-group input,
-    .events-form .form-group textarea,
-    .events-form .form-group select {
-        font-size: 0.65rem;
-        padding: 3px 6px;
-    }
-
-    .events-registrations .registrations-actions .btn--sm {
-        font-size: 0.45rem;
-        padding: 1px 2px;
-        min-height: 20px;
     }
 }

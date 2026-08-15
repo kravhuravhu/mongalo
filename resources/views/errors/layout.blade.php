@@ -17,161 +17,289 @@
     <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
 
     <style>
+        /* ─── ERROR PAGES ─── */
         .error-page {
-
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
+            min-height: 60vh;
             background: var(--bg);
-        }
 
-        .error-page__card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 60px 48px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            max-width: 560px;
-            width: 100%;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+            & .error-page__card {
+                background: #fff;
+                border-radius: 20px;
+                padding: 60px 48px;
+                border: 1px solid var(--border);
+                box-shadow: var(--shadow);
+                max-width: 560px;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
 
-        .error-page__card:hover {
-            border-color: var(--gold);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .error-page__icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
-
-        .error-page__icon--danger {
-            background: #f8d7da;
-            color: #dc3545;
-        }
-
-        .error-page__icon--warning {
-            background: #fff3cd;
-            color: #e8a838;
-        }
-
-        .error-page__icon--info {
-            background: #cce5ff;
-            color: #004085;
-        }
-
-        .error-page__icon--success {
-            background: #d4edda;
-            color: #28a745;
-        }
-
-        .error-page__icon i {
-            font-size: 2.8rem;
-        }
-
-        .error-page__code {
-            font-family: var(--font-serif);
-            font-weight: 900;
-            font-size: 4rem;
-            color: var(--gold);
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .error-page__title {
-            font-family: var(--font-serif);
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--text);
-            margin-bottom: 8px;
-        }
-
-        .error-page__text {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 28px;
-        }
-
-        .error-page__actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .error-page__actions .btn {
-            min-width: 140px;
-            justify-content: center;
-        }
-
-        .error-page__help {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 20px;
-        }
-
-        .error-page__help i {
-            color: var(--gold);
-            margin-right: 4px;
-        }
-
-        @media (max-width: 540px) {
-            .error-page__card {
-                padding: 40px 24px;
+                &:hover {
+                    border-color: var(--gold);
+                    box-shadow: var(--shadow-lg);
+                }
             }
 
-            .error-page__code {
+            & .error-page__icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+
+                &.error-page__icon--danger {
+                    background: #f8d7da;
+                    color: #dc3545;
+                }
+
+                &.error-page__icon--warning {
+                    background: #fff3cd;
+                    color: #e8a838;
+                }
+
+                &.error-page__icon--info {
+                    background: #cce5ff;
+                    color: #004085;
+                }
+
+                &.error-page__icon--success {
+                    background: #d4edda;
+                    color: #28a745;
+                }
+
+                & i {
+                    font-size: 2.8rem;
+                }
+            }
+
+            & .error-page__code {
+                font-family: var(--font-serif);
+                font-weight: 900;
+                font-size: 4rem;
+                color: var(--gold);
+                line-height: 1;
+                margin-bottom: 4px;
+            }
+
+            & .error-page__title {
+                font-family: var(--font-serif);
+                font-weight: 700;
+                font-size: 1.8rem;
+                color: var(--text);
+                margin-bottom: 8px;
+            }
+
+            & .error-page__text {
+                color: var(--text-muted);
+                font-size: 1.05rem;
+                line-height: 1.7;
+                margin-bottom: 28px;
+            }
+
+            & .error-page__actions {
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                flex-wrap: wrap;
+
+                & .btn {
+                    min-width: 140px;
+                    justify-content: center;
+                    min-height: 44px;
+                }
+            }
+
+            & .error-page__help {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                margin-top: 20px;
+
+                & i {
+                    color: var(--gold);
+                    margin-right: 4px;
+                }
+            }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1200px) {
+            .error-page .error-page__card {
+                padding: 48px 40px;
+                max-width: 520px;
+            }
+
+            .error-page .error-page__code {
+                font-size: 3.6rem;
+            }
+
+            .error-page .error-page__title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .error-page .error-page__card {
+                padding: 40px 32px;
+                max-width: 480px;
+            }
+
+            .error-page .error-page__icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .error-page .error-page__icon i {
+                font-size: 2.4rem;
+            }
+
+            .error-page .error-page__text {
+                font-size: 1rem;
+            }
+
+            .error-page .error-page__actions .btn {
+                min-width: 120px;
+                min-height: 40px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .error-page .error-page__card {
+                padding: 32px 24px;
+                border-radius: 16px;
+            }
+
+            .error-page .error-page__code {
                 font-size: 3rem;
             }
 
-            .error-page__title {
+            .error-page .error-page__title {
                 font-size: 1.4rem;
             }
 
-            .error-page__text {
+            .error-page .error-page__text {
                 font-size: 0.95rem;
+                margin-bottom: 20px;
             }
 
-            .error-page__actions {
+            .error-page .error-page__actions {
                 flex-direction: column;
                 align-items: stretch;
             }
 
-            .error-page__actions .btn {
-                width: 100%;
+            .error-page .error-page__actions .btn {
                 min-width: unset;
+                width: 100%;
+                justify-content: center;
+                min-height: 38px;
             }
         }
 
-        @media (max-width: 400px) {
-            .error-page__card {
-                padding: 32px 16px;
+        @media (max-width: 540px) {
+            .error-page {
+                padding: 20px 12px;
             }
 
-            .error-page__code {
+            .error-page .error-page__card {
+                padding: 24px 16px;
+                border-radius: 12px;
+            }
+
+            .error-page .error-page__code {
                 font-size: 2.4rem;
             }
 
-            .error-page__title {
+            .error-page .error-page__title {
                 font-size: 1.2rem;
             }
 
-            .error-page__icon {
-                width: 60px;
-                height: 60px;
+            .error-page .error-page__text {
+                font-size: 0.85rem;
             }
 
-            .error-page__icon i {
+            .error-page .error-page__icon {
+                width: 56px;
+                height: 56px;
+            }
+
+            .error-page .error-page__icon i {
                 font-size: 2rem;
+            }
+
+            .error-page .error-page__actions .btn {
+                min-height: 34px;
+                font-size: 0.75rem;
+                padding: 8px 16px;
+            }
+
+            .error-page .error-page__help {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .error-page .error-page__card {
+                padding: 18px 12px;
+            }
+
+            .error-page .error-page__code {
+                font-size: 2rem;
+            }
+
+            .error-page .error-page__title {
+                font-size: 1rem;
+            }
+
+            .error-page .error-page__text {
+                font-size: 0.8rem;
+                margin-bottom: 16px;
+            }
+
+            .error-page .error-page__icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .error-page .error-page__icon i {
+                font-size: 1.6rem;
+            }
+
+            .error-page .error-page__actions .btn {
+                min-height: 30px;
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .error-page .error-page__card {
+                padding: 14px 10px;
+            }
+
+            .error-page .error-page__code {
+                font-size: 1.6rem;
+            }
+
+            .error-page .error-page__title {
+                font-size: 0.9rem;
+            }
+
+            .error-page .error-page__text {
+                font-size: 0.7rem;
+            }
+
+            .error-page .error-page__icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .error-page .error-page__icon i {
+                font-size: 1.2rem;
             }
         }
     </style>
