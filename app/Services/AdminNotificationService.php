@@ -62,18 +62,23 @@ class AdminNotificationService
     }
 
     /* ─── CONTACT MESSAGE NOTIFICATION ─── */
-    public function notifyNewContact(ContactMessage $message): void
+    public function notifyNewContact(ContactMessage $contactMessage): void
     {
         try {
-            Mail::to($this->adminEmail)->send(new AdminContactNotification($message));
-            
-            Log::info('Admin notified of new contact message', [
-                'message_id' => $message->id,
-                'admin_email' => $this->adminEmail,
-            ]);
-        } catch (Throwable $e) {
+            $adminEmail = config('app.admin_email');
+
+            if (empty($adminEmail)) {
+                throw new \RuntimeException(
+                    'Admin email is not configured.'
+                );
+            }
+
+            Mail::to($adminEmail)->send(
+                new AdminContactNotification($contactMessage)
+            );
+        } catch (\Throwable $e) {
             Log::error('Failed to send admin contact notification', [
-                'message_id' => $message->id,
+                'message_id' => $contactMessage->id,
                 'error' => $e->getMessage(),
             ]);
         }
