@@ -104,94 +104,103 @@
                 <p class="section-header__subtitle">Every believer moves through this journey. Believing, converting, baptism and commission.</p>
             </div>
 
-            <div class="home__pillars-grid">
-                {{-- Pillar 1: Prayer --}}
-                <div class="home__pillars-card home__pillars-card--1">
-                    {{-- Background Image with Overlay --}}
-                    <div class="home__pillars-bg">
-                        <img 
-                            src="{{ secure_asset('images/arthur-mongalo-mid.jpg') }}" 
-                            alt="Person praying"
-                            class="home__pillars-bg-img"
-                            loading="lazy"
-                            onerror="this.style.display='none'"
-                        >
-                        <div class="home__pillars-overlay"></div>
-                    </div>
-                    <div class="home__pillars-content">
-                        <span class="home__pillars-num">I</span>
-                        <div class="home__pillars-icon"><i class="fas fa-cross"></i></div>
-                        <h3 class="home__pillars-name">Believing</h3>
-                        <p class="home__pillars-desc">Encountering Jesus and choosing to believe. Every journey starts here.</p>
-                        <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="home__pillars-shape"></div>
+            <div class="home__pillars-layout">
+                {{-- Vertical List --}}
+                <div class="home__pillars-list">
+                    @php
+                        $pillars = [
+                            [
+                                'id' => 'believing',
+                                'num' => 'I',
+                                'icon' => 'fa-cross',
+                                'title' => 'Believing',
+                                'description' => 'Encountering Jesus and choosing to believe. Every journey starts here. Faith is the foundation upon which all else is built—the moment you say "yes" to Christ and begin to walk in His truth.',
+                                'link' => '#'
+                            ],
+                            [
+                                'id' => 'converting',
+                                'num' => 'II',
+                                'icon' => 'fa-hand-holding-heart',
+                                'title' => 'Converting',
+                                'description' => 'Surrendering the old ways. Repentance and forgiveness prepare the heart for what\'s next. True conversion is a turning point—leaving behind the past and embracing a new identity in Christ.',
+                                'link' => '#'
+                            ],
+                            [
+                                'id' => 'baptism',
+                                'num' => 'III',
+                                'icon' => 'fa-water',
+                                'title' => 'Baptisms',
+                                'description' => 'Water and Spirit. A clean heart, a forgiven past, a new creature (Acts 8:36-39; Acts 19:1-4). Baptism is the public declaration of your faith, symbolizing death to the old and resurrection to new life.',
+                                'link' => route('baptism')
+                            ],
+                            [
+                                'id' => 'commission',
+                                'num' => 'IV',
+                                'icon' => 'fa-seedling',
+                                'title' => 'Commission',
+                                'description' => 'Guided, supported and sent. Every believer discovers their own vision and is released into ministry. You were created for purpose—to go, to serve, and to make disciples of all nations.',
+                                'link' => '#'
+                            ]
+                        ];
+                    @endphp
+
+                    @foreach($pillars as $index => $pillar)
+                        <div class="home__pillars-item" data-pillar="{{ $pillar['id'] }}">
+                            <button class="home__pillars-trigger" aria-expanded="false">
+                                <span class="home__pillars-item-num">{{ $pillar['num'] }}</span>
+                                <span class="home__pillars-item-icon">
+                                    <i class="fas {{ $pillar['icon'] }}"></i>
+                                </span>
+                                <span class="home__pillars-item-title">{{ $pillar['title'] }}</span>
+                                <span class="home__pillars-item-arrow">
+                                    <i class="fas fa-chevron-down"></i>
+                                </span>
+                            </button>
+                            <div class="home__pillars-item-content">
+                                <p class="home__pillars-item-desc">{{ $pillar['description'] }}</p>
+                                <a href="{{ $pillar['link'] }}" class="home__pillars-item-link">
+                                    Learn More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            @if(!$loop->last)
+                                <div class="home__pillars-divider"></div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
 
-                {{-- Pillar 2: Salvation --}}
-                <div class="home__pillars-card home__pillars-card--2">
-                    <div class="home__pillars-bg">
+                {{-- Container 2: Image Display --}}
+                <div class="home__pillars-image">
+                    {{-- Default Image --}}
+                    <div class="home__pillars-image-default">
                         <img 
-                            src="{{ secure_asset('images/events-day.jpg') }}" 
-                            alt="Hands reaching up"
-                            class="home__pillars-bg-img"
+                            src="{{ secure_asset('images/all_in_one_wef916wef916wef9.png') }}" 
+                            alt="The Collective"
+                            class="home__pillars-image-img"
                             loading="lazy"
                             onerror="this.style.display='none'"
                         >
-                        <div class="home__pillars-overlay"></div>
+                        <div class="home__pillars-image-overlay">
+                            <div class="home__pillars-image-icon">
+                                <i class="fas fa-cross"></i>
+                            </div>
+                            <h3 class="home__pillars-image-title">The Journey of Faith</h3>
+                            <p class="home__pillars-image-desc">From believing to being sent—every step matters.</p>
+                        </div>
                     </div>
-                    <div class="home__pillars-content">
-                        <span class="home__pillars-num">II</span>
-                        <div class="home__pillars-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                        <h3 class="home__pillars-name">Converting</h3>
-                        <p class="home__pillars-desc">Surrendering the old ways. Repentance and forgiveness prepare the heart for what's next.</p>
-                        <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="home__pillars-shape"></div>
-                </div>
 
-                {{-- Pillar 3: Baptism --}}
-                <div class="home__pillars-card home__pillars-card--3">
-                    <div class="home__pillars-bg">
-                        <img 
-                            src="{{ secure_asset('images/arthur-mongalo-baptism-portait.jpg') }}" 
-                            alt="Water baptism ceremony"
-                            class="home__pillars-bg-img"
-                            loading="lazy"
-                            onerror="this.style.display='none'"
-                        >
-                        <div class="home__pillars-overlay"></div>
-                    </div>
-                    <div class="home__pillars-content">
-                        <span class="home__pillars-num">III</span>
-                        <div class="home__pillars-icon"><i class="fas fa-water"></i></div>
-                        <h3 class="home__pillars-name">Baptisms</h3>
-                        <p class="home__pillars-desc">Water and Spirit. A clean heart, a forgiven past, a new creature (Acts 8:36-39; Acts 19:1-4).</p>
-                        <a href="{{ route('baptism') }}" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="home__pillars-shape"></div>
-                </div>
-
-                {{-- Pillar 4: Growth --}}
-                <div class="home__pillars-card home__pillars-card--4">
-                    <div class="home__pillars-bg">
-                        <img 
-                            src="{{ secure_asset('images/arthur-mongalo-outdoor.jpg') }}" 
-                            alt="Bible study group"
-                            class="home__pillars-bg-img"
-                            loading="lazy"
-                            onerror="this.style.display='none'"
-                        >
-                        <div class="home__pillars-overlay"></div>
-                    </div>
-                    <div class="home__pillars-content">
-                        <span class="home__pillars-num">IV</span>
-                        <div class="home__pillars-icon"><i class="fas fa-seedling"></i></div>
-                        <h3 class="home__pillars-name">Commission</h3>
-                        <p class="home__pillars-desc">Guided, supported and sent. Every believer discovers their own vision and is released into ministry.</p>
-                        <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="home__pillars-shape"></div>
+                    {{-- Pillar Images (hidden by default, shown when corresponding pillar is expanded) --}}
+                    @foreach($pillars as $pillar)
+                        <div class="home__pillars-image-pillar" data-pillar="{{ $pillar['id'] }}">
+                            <img 
+                                src="{{ secure_asset('images/' . $pillar['id'] . '.jpg') }}" 
+                                alt="{{ $pillar['title'] }}"
+                                class="home__pillars-image-img"
+                                loading="lazy"
+                                onerror="this.style.display='none'"
+                            >
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
