@@ -25,17 +25,66 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
 
+    // ─── FOUR PILLARS TOGGLE ───
+    const pillarTriggers = document.querySelectorAll('.home__pillars-trigger');
+    const pillarItems = document.querySelectorAll('.home__pillars-item');
+    const pillarImages = document.querySelectorAll('.home__pillars-image-pillar');
+    const defaultImage = document.querySelector('.home__pillars-image-default');
+
+    if (pillarTriggers.length > 0) {
+        pillarTriggers.forEach((trigger, index) => {
+            trigger.addEventListener('click', function(e) {
+                const parentItem = this.closest('.home__pillars-item');
+                const pillarId = parentItem.dataset.pillar;
+                const isExpanded = parentItem.classList.contains('home__pillars-item--expanded');
+
+                // Close all pillars
+                pillarItems.forEach(item => {
+                    item.classList.remove('home__pillars-item--expanded');
+                    const btn = item.querySelector('.home__pillars-trigger');
+                    if (btn) {
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Hide all pillar images
+                pillarImages.forEach(img => {
+                    img.classList.remove('home__pillars-image-pillar--active');
+                });
+
+                // If the clicked pillar was not expanded, expand it
+                if (!isExpanded) {
+                    parentItem.classList.add('home__pillars-item--expanded');
+                    trigger.setAttribute('aria-expanded', 'true');
+
+                    // Show corresponding image
+                    const targetImage = document.querySelector(`.home__pillars-image-pillar[data-pillar="${pillarId}"]`);
+                    if (targetImage) {
+                        targetImage.classList.add('home__pillars-image-pillar--active');
+                    }
+
+                    // Hide default image
+                    if (defaultImage) {
+                        defaultImage.classList.add('home__pillars-image-default--hidden');
+                    }
+                } else {
+                    // If it was expanded, collapse it and show default
+                    if (defaultImage) {
+                        defaultImage.classList.remove('home__pillars-image-default--hidden');
+                    }
+                }
+            });
+        });
+    }
+
     // ─── SCROLL REVEAL FOR PILLARS ───
-    const pillarCards = document.querySelectorAll('.home__pillars-card');
+    const pillarsLayout = document.querySelector('.home__pillars-layout');
     
-    if (pillarCards.length > 0) {
+    if (pillarsLayout) {
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const delay = index * 100;
-                    setTimeout(() => {
-                        entry.target.classList.add('home__pillars-card--visible');
-                    }, delay);
+                    entry.target.classList.add('home__pillars-layout--visible');
                 }
             });
         }, {
@@ -43,25 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
             rootMargin: '0px 0px -30px 0px'
         });
         
-        pillarCards.forEach(card => observer.observe(card));
-    }
-
-    // ─── SCROLL REVEAL FOR COMMUNITY CTA ───
-    const communitySection = document.querySelector('.home__community-content');
-    
-    if (communitySection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('home__community-content--visible');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-        
-        observer.observe(communitySection);
+        observer.observe(pillarsLayout);
     }
 
     // ─── HERO BADGE INTERACTION ───
@@ -81,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ─── HERO ORBS PARALLAX (from app.css) ───
+    // ─── HERO ORBS PARALLAX ───
     const heroOrbs = document.querySelectorAll('.home__hero-orb');
     if (heroOrbs.length > 0 && window.innerWidth > 768) {
         let rafId2 = null;
