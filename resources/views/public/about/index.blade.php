@@ -112,9 +112,9 @@
                     <div class="about__mission-icon">
                         <i class="fas fa-bullseye" aria-hidden="true"></i>
                     </div>
-                    <h3 class="about__mission-title">Our Mission</h3>
+                    <h3 class="about__mission-title">Mission</h3>
                     <p class="about__mission-text">
-                        To share the Gospel through Christian literature, free resources, community gatherings and one-on-one discipleship. We distribute books, Bibles and pamphlets, host events and create spaces where believers can grow in faith, receive prayer and be baptised.
+                        My mission is to reach as many people as possible with the Gospel, walk with them from belief to baptism, and disciple them further through water baptism, Spirit baptism and community. The goal is not numbers. It is a growing, global family of believers who go on to lead others the same way.
                     </p>
                     <div class="about__mission-line"></div>
                 </div>
@@ -125,9 +125,9 @@
                     <div class="about__mission-icon">
                         <i class="fas fa-eye" aria-hidden="true"></i>
                     </div>
-                    <h3 class="about__mission-title">Our Vision</h3>
+                    <h3 class="about__mission-title">Vision</h3>
                     <p class="about__mission-text">
-                        To baptise at least a million people in water, pray for at least a million people and equip every believer for spiritual growth through water baptism, Spirit baptism and the renewal of the mind. "Where there is no vision, the people perish" (Proverbs 29:18).
+                        My vision is to baptise at least a million people in water, pray for at least a million people and equip every believer for spiritual growth through water baptism, Spirit baptism and the renewal of the mind. "Where there is no vision, the people perish" (Proverbs 29:18).
                     </p>
                     <div class="about__mission-line"></div>
                 </div>
@@ -336,15 +336,15 @@
                     <span class="about__arthur-eyebrow">Meet Arthur</span>
                     <h2 class="about__arthur-title">The Founder Behind <span>The Vision</span></h2>
                     <p class="about__arthur-text">
-                        Arthur Mongalo is a storyteller, author and speaker who has dedicated his life to sharing the Gospel and equipping believers. His journey with God has taken him through the streets of Gauteng and into the hearts of hundreds through books, events and personal conversations.
+                        Arthur Mongalo is an ICT specialist, project manager and pioneering leader with a deep passion for teaching and empowering others. His writing is inspired by a heartfelt desire to see every child of God maximise their potential and experience the fullness of the Holy Spirit.
                     </p>
                     <p class="about__arthur-text">
-                        His writing focuses on identity in Christ, water baptism and spiritual growth. Arthur believes that every believer has a unique story and that these stories, when shared, have the power to transform lives. His books—including Divine Identity and The Journey of Faith—have reached readers across South Africa and beyond.
+                        He is the founder and former pastor of Christ Tabernacle, where he now focuses on establishing a training institute and spiritual retreat committed to sound doctrine and the fullness of the Holy Spirit. He resides in Gauteng with his family.
                     </p>
                     <div class="about__arthur-quote">
                         <i class="fas fa-quote-left" aria-hidden="true"></i>
                         <blockquote>
-                            "Every story matters. Every believer has a role to play. We are not just saved to sit—we are saved to serve, to share and to build the Kingdom together."
+                            "I am just a servant. The vision belongs to God and the community belongs to the people who walk in it."
                         </blockquote>
                     </div>
                     <div class="about__arthur-actions">
