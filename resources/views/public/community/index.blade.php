@@ -40,7 +40,7 @@
                         You Belong <br />
                         <span class="community__hero-gradient">Here</span>
                     </h1>
-                    <p class="community__hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                    <p class="community__hero-text">A growing family of believers connected through WhatsApp. Daily encouragement, book updates, event announcements and prayer, wherever you are.</p>
 
                     <div class="community__hero-stats">
                         <div class="community__hero-stat">
@@ -67,7 +67,7 @@
                         <div class="community__hero-mockup-header">
                             <div class="community__hero-mockup-avatar">C</div>
                             <div>
-                                <div class="community__hero-mockup-name">The Collective Community</div>
+                                <div class="community__hero-mockup-name">{{ env('PROJECT_NAME', 'The Collective') }} Community</div>
                                 <div class="community__hero-mockup-status">
                                     <span class="community__hero-mockup-dot"></span>
                                     247 members · Active now
@@ -77,7 +77,7 @@
 
                         <div class="community__hero-mockup-messages">
                             <div class="community__hero-mockup-message community__hero-mockup-message--in">
-                                <p>Good morning, family. Today's word: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor. 🙏</p>
+                                <p>Good morning, family. Today's word: "But grow in the grace and knowledge of our Lord and Savior Jesus Christ" (2 Peter 3:18). Keep growing. 🙏</p>
                                 <span class="community__hero-mockup-time">Arthur Mongalo · 6:30 AM</span>
                             </div>
 
@@ -113,50 +113,51 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">What You Get</span>
                 <h2 class="section-header__title">Community <span>Benefits</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">More than a group chat. Real support for your everyday faith.</p>
             </div>
 
             <div class="community__benefits-grid">
                 <div class="community__benefits-card reveal" data-delay="0">
                     <div class="community__benefits-card-icon"><i class="fas fa-praying-hands"></i></div>
                     <h4 class="community__benefits-card-title">Daily Encouragement</h4>
-                    <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="community__benefits-card-desc">A word to start your day, shared with the whole community every morning.</p>
                 </div>
 
                 <div class="community__benefits-card reveal" data-delay="100">
                     <div class="community__benefits-card-icon"><i class="fas fa-book"></i></div>
                     <h4 class="community__benefits-card-title">Book Updates</h4>
-                    <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="community__benefits-card-desc">Be first to know when a new book or resource drops, before it's announced anywhere else.</p>
                 </div>
 
                 <div class="community__benefits-card reveal" data-delay="200">
                     <div class="community__benefits-card-icon"><i class="fas fa-water"></i></div>
                     <h4 class="community__benefits-card-title">Baptism Conversations</h4>
-                    <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="community__benefits-card-desc">A space to ask questions about baptism, water or Spirit, with no pressure attached.</p>
                 </div>
 
                 <div class="community__benefits-card reveal" data-delay="300">
                     <div class="community__benefits-card-icon"><i class="fas fa-download"></i></div>
                     <h4 class="community__benefits-card-title">Free Resources</h4>
-                    <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="community__benefits-card-desc">Free Bibles, pamphlets and downloads shared directly with the group first.</p>
                 </div>
 
                 <div class="community__benefits-card reveal" data-delay="400">
                     <div class="community__benefits-card-icon"><i class="fas fa-calendar-alt"></i></div>
                     <h4 class="community__benefits-card-title">Event Alerts</h4>
-                    <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="community__benefits-card-desc">Never miss an event. Announcements and reminders land straight in the group.</p>
                 </div>
 
                 <div class="community__benefits-card reveal" data-delay="500">
                     <div class="community__benefits-card-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h4 class="community__benefits-card-title">Prayer Support</h4>
-                    <p class="community__benefits-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                    <p class="community__benefits-card-desc">Share a need and the community prays with you. You are never carrying it alone.</p>
                 </div>
             </div>
         </div>
     </section>
 
     {{-- TESTIMONIALS --}}
+    <!--
     <section class="community__testimonials">
         <div class="community__testimonials-bg">
             <div class="community__testimonials-shape community__testimonials-shape--1"></div>
@@ -167,7 +168,7 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Real Stories</span>
                 <h2 class="section-header__title">What Members Are <span>Saying</span></h2>
-                <p class="section-header__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                <p class="section-header__subtitle">Real people, real community, real faith.</p>
             </div>
 
             <div class="community__testimonials-grid">
@@ -200,6 +201,7 @@
             </div>
         </div>
     </section>
+    -->
 
     {{-- COMMUNITY CTA --}}
     <!-- <section class="community__cta">
