@@ -35,13 +35,13 @@
             <div class="home__hero-grid">
                 <div class="home__hero-content">
                     <span class="home__hero-badge">
-                        <i class="fas fa-cross"></i> A Community of Faith · Growth · Purpose
+                        <i class="fas fa-cross"></i> A Response to the Call
                     </span>
                     <h1 class="home__hero-title">
                         Welcome to<br />
                         <span class="home__hero-gradient">{{ env('PROJECT_NAME', 'The Collective') }}</span>
                     </h1>
-                    <p class="home__hero-text">A faith community built on one vision: to baptise at least a million people in water, pray for at least a million people and equip every believer through water baptism, Spirit baptism and the renewal of the mind. Explore our books, download free faith resources and join a growing community of believers walking in purpose.</p>
+                    <p class="home__hero-text">"Go into all the world and preach the gospel" (Mark 16:15). "Baptizing them in the name of the Father, and of the Son, and of the Holy Spirit" (Matthew 28:19). This is the call Arthur Mongalo said yes to. The goal: reach at least a million people, baptise them in water and in the Spirit, and help every one of them walk in their own purpose.</p>
 
                     <div class="home__hero-actions">
                         <a href="{{ route('books.index') }}" class="btn btn--primary btn--lg">
@@ -101,7 +101,7 @@
             <div class="section-header">
                 <span class="section-header__eyebrow">Our Foundation</span>
                 <h2 class="section-header__title">Four Pillars of <span>Faith</span></h2>
-                <p class="section-header__subtitle">Everything we do is built on these four foundations. They shape our mission, our resources and our community.</p>
+                <p class="section-header__subtitle">Every believer moves through this journey. Believing, converting, baptism and commission.</p>
             </div>
 
             <div class="home__pillars-grid">
@@ -121,8 +121,8 @@
                     <div class="home__pillars-content">
                         <span class="home__pillars-num">I</span>
                         <div class="home__pillars-icon"><i class="fas fa-cross"></i></div>
-                        <h3 class="home__pillars-name">Prayer</h3>
-                        <p class="home__pillars-desc">Prayer is the foundation of everything we do. Through prayer we connect with God, intercede for others and invite His power into every situation. "Pray without ceasing" (1 Thessalonians 5:17). Our goal is to pray for at least a million people.</p>
+                        <h3 class="home__pillars-name">Believing</h3>
+                        <p class="home__pillars-desc">Encountering Jesus and choosing to believe. Every journey starts here.</p>
                         <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="home__pillars-shape"></div>
@@ -143,8 +143,8 @@
                     <div class="home__pillars-content">
                         <span class="home__pillars-num">II</span>
                         <div class="home__pillars-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                        <h3 class="home__pillars-name">Salvation</h3>
-                        <p class="home__pillars-desc">Salvation is the starting point of every faith journey. "If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved" (Romans 10:9). Free resources like My Salvation Companion are here to guide you through that first step.</p>
+                        <h3 class="home__pillars-name">Converting</h3>
+                        <p class="home__pillars-desc">Surrendering the old ways. Repentance and forgiveness prepare the heart for what's next.</p>
                         <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="home__pillars-shape"></div>
@@ -165,8 +165,8 @@
                     <div class="home__pillars-content">
                         <span class="home__pillars-num">III</span>
                         <div class="home__pillars-icon"><i class="fas fa-water"></i></div>
-                        <h3 class="home__pillars-name">Baptism</h3>
-                        <p class="home__pillars-desc">Water baptism is an act of obedience and a public declaration of faith. "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit" (Matthew 28:19). We believe in water baptism, Spirit baptism and the renewal of the mind.</p>
+                        <h3 class="home__pillars-name">Baptisms</h3>
+                        <p class="home__pillars-desc">Water and Spirit. A clean heart, a forgiven past, a new creature (Acts 8:36-39; Acts 19:1-4).</p>
                         <a href="{{ route('baptism') }}" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="home__pillars-shape"></div>
@@ -187,8 +187,8 @@
                     <div class="home__pillars-content">
                         <span class="home__pillars-num">IV</span>
                         <div class="home__pillars-icon"><i class="fas fa-seedling"></i></div>
-                        <h3 class="home__pillars-name">Growth</h3>
-                        <p class="home__pillars-desc">Growth does not stop at salvation. "But grow in the grace and knowledge of our Lord and Savior Jesus Christ" (2 Peter 3:18). Through Scripture, community and discipleship we continue to mature in faith. Our books and free resources support that journey every step of the way.</p>
+                        <h3 class="home__pillars-name">Commission</h3>
+                        <p class="home__pillars-desc">Guided, supported and sent. Every believer discovers their own vision and is released into ministry.</p>
                         <a href="#" class="home__pillars-link">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="home__pillars-shape"></div>
