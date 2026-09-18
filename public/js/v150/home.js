@@ -1,4 +1,3 @@
-// ─── HOME PAGE ───
 document.addEventListener('DOMContentLoaded', function() {
 
     // ─── HERO PARTICLES ───

@@ -9,7 +9,6 @@
         color: #fff;
         display: flex;
         flex-direction: column;
-        min-height: 90vh;
 
         & .home__hero-bg {
             position: absolute;
