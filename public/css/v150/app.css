@@ -112,6 +112,10 @@ img {
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border);
+        padding: 23px 0;
+        &.global-navbar--scrolled {
+            padding: 10px 0;
+        }
 
         & .global-navbar__link {
             color: var(--muted);
