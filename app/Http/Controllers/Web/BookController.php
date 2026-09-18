@@ -29,7 +29,7 @@ class BookController extends Controller
             ];
         });
 
-        return view('public.books.index', $data);
+        return view('public.books.v150.index', $data);
     }
 
     public function show($slug)
