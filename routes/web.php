@@ -28,6 +28,7 @@ Route::get('/books/preview/{slug}', [BookController::class, 'preview'])->name('b
 // ─── EVENTS ───
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/calendar', [EventCalendarController::class, 'index'])->name('events.calendar');
+Route::get('/events/calendar/data', [EventCalendarController::class, 'monthData'])->name('events.calendar.data');
 Route::get('/events/calendar/events', [EventCalendarController::class, 'getEventsByDate'])->name('events.calendar.events');
 Route::post('/events/clear-registration', [EventController::class, 'clearRegistration'])->name('events.clear.registration');
 Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');

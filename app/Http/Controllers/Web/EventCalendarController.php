@@ -17,27 +17,93 @@ class EventCalendarController extends Controller
         $this->cacheService = $cacheService;
     }
 
-    /**
-     * Display the event calendar
-     */
+    /* ─── CALENDAR PAGE ─── */
     public function index(Request $request)
     {
-        // ─── GET MONTH AND YEAR FROM REQUEST ───
         $month = $request->get('month', Carbon::now()->month);
         $year = $request->get('year', Carbon::now()->year);
 
-        // ─── CREATE CARBON DATE FOR THE SELECTED MONTH ───
         $currentDate = Carbon::create($year, $month, 1);
         $previousMonth = $currentDate->copy()->subMonth();
         $nextMonth = $currentDate->copy()->addMonth();
 
-        // ─── GET EVENTS FOR THE SELECTED MONTH ───
+        // ─── GET EVENTS FOR MONTH ───
+        $events = $this->getMonthEvents($currentDate);
+
+        // ─── GROUP BY DATE ───
+        $eventsByDate = $this->groupEventsByDate($events);
+
+        // ─── BUILD GRID (SUNDAY START) ───
+        $calendarData = $this->buildCalendarGrid($currentDate, $eventsByDate);
+
+        // ─── UPCOMING ───
+        $upcomingEvents = $this->getUpcomingEvents();
+
+        return view('public.events.v150.calendar', compact(
+            'calendarData',
+            'currentDate',
+            'previousMonth',
+            'nextMonth',
+            'month',
+            'year',
+            'eventsByDate',
+            'upcomingEvents'
+        ));
+    }
+
+    /* ─── JSON MONTH DATA (AJAX) ─── */
+    public function monthData(Request $request)
+    {
+        $month = $request->get('month', Carbon::now()->month);
+        $year = $request->get('year', Carbon::now()->year);
+
+        $currentDate = Carbon::create($year, $month, 1);
+        $previousMonth = $currentDate->copy()->subMonth();
+        $nextMonth = $currentDate->copy()->addMonth();
+
+        // ─── GET EVENTS FOR MONTH ───
+        $events = $this->getMonthEvents($currentDate);
+        $eventsByDate = $this->groupEventsByDate($events);
+        $calendarData = $this->buildCalendarGrid($currentDate, $eventsByDate);
+
+        // ─── HAS ANY EVENTS THIS MONTH ───
+        $hasAnyEvents = false;
+        foreach ($calendarData['weeks'] as $week) {
+            if (!is_array($week)) continue;
+            foreach ($week as $day) {
+                if (is_array($day) && !empty($day['has_events'])) {
+                    $hasAnyEvents = true;
+                    break 2;
+                }
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'weeks' => $calendarData['weeks'],
+            'month_label' => $currentDate->format('F Y'),
+            'month_short' => $currentDate->format('M Y'),
+            'has_events' => $hasAnyEvents,
+            'prev' => [
+                'month' => $previousMonth->month,
+                'year' => $previousMonth->year,
+            ],
+            'next' => [
+                'month' => $nextMonth->month,
+                'year' => $nextMonth->year,
+            ],
+        ]);
+    }
+
+    /* ─── GET EVENTS FOR MONTH (CACHED) ─── */
+    protected function getMonthEvents(Carbon $currentDate)
+    {
         $cacheKey = $this->cacheService->key('calendar_events', [
-            'month' => $month,
-            'year' => $year,
+            'month' => $currentDate->month,
+            'year' => $currentDate->year,
         ]);
 
-        $events = $this->cacheService->rememberClosure($cacheKey, function () use ($currentDate) {
+        return $this->cacheService->rememberClosure($cacheKey, function () use ($currentDate) {
             $startOfMonth = $currentDate->copy()->startOfMonth();
             $endOfMonth = $currentDate->copy()->endOfMonth();
 
@@ -55,7 +121,7 @@ class EventCalendarController extends Controller
                         'time' => $event->time ? Carbon::parse($event->time)->format('g:i A') : null,
                         'location' => $event->location,
                         'is_free' => $event->is_free,
-                        'price' => $event->price,
+                        'price' => (float) $event->price,
                         'registrations' => $event->registrations()->count(),
                         'capacity' => $event->capacity,
                         'type' => $this->getEventType($event->title),
@@ -65,31 +131,9 @@ class EventCalendarController extends Controller
                 })
                 ->toArray();
         });
-
-        // ─── GROUP EVENTS BY DATE ───
-        $eventsByDate = $this->groupEventsByDate($events);
-
-        // ─── BUILD CALENDAR GRID ───
-        $calendarData = $this->buildCalendarGrid($currentDate, $eventsByDate);
-
-        // ─── GET UPCOMING EVENTS ───
-        $upcomingEvents = $this->getUpcomingEvents();
-
-        return view('public.events.calendar', compact(
-            'calendarData',
-            'currentDate',
-            'previousMonth',
-            'nextMonth',
-            'month',
-            'year',
-            'eventsByDate',
-            'upcomingEvents'
-        ));
     }
 
-    /**
-     * Get events for a specific date (AJAX)
-     */
+    /* ─── GET EVENTS BY DATE (LEGACY ENDPOINT) ─── */
     public function getEventsByDate(Request $request)
     {
         $date = $request->get('date');
@@ -103,33 +147,25 @@ class EventCalendarController extends Controller
 
         $carbonDate = Carbon::parse($date);
 
-        $cacheKey = $this->cacheService->key('calendar_events_date', [
-            'date' => $date,
-        ]);
-
-        $events = $this->cacheService->rememberClosure($cacheKey, function () use ($carbonDate) {
-            return Event::where('is_past', false)
-                ->whereDate('date', $carbonDate->toDateString())
-                ->orderBy('time')
-                ->get()
-                ->map(function ($event) {
-                    return [
-                        'id' => $event->id,
-                        'title' => $event->title,
-                        'slug' => $event->slug,
-                        'time' => $event->time ? Carbon::parse($event->time)->format('g:i A') : null,
-                        'location' => $event->location,
-                        'is_free' => $event->is_free,
-                        'price' => $event->price,
-                        'registrations' => $event->registrations()->count(),
-                        'capacity' => $event->capacity,
-                        'type' => $this->getEventType($event->title),
-                        'color' => $this->getEventColor($event->title),
-                        'description' => $event->description,
-                    ];
-                })
-                ->toArray();
-        });
+        $events = Event::where('is_past', false)
+            ->whereDate('date', $carbonDate->toDateString())
+            ->orderBy('time')
+            ->get()
+            ->map(function ($event) {
+                return [
+                    'id' => $event->id,
+                    'title' => $event->title,
+                    'slug' => $event->slug,
+                    'time' => $event->time ? Carbon::parse($event->time)->format('g:i A') : null,
+                    'location' => $event->location,
+                    'is_free' => $event->is_free,
+                    'price' => (float) $event->price,
+                    'type' => $this->getEventType($event->title),
+                    'color' => $this->getEventColor($event->title),
+                    'description' => $event->description,
+                ];
+            })
+            ->toArray();
 
         return response()->json([
             'success' => true,
@@ -138,31 +174,28 @@ class EventCalendarController extends Controller
         ]);
     }
 
-    /**
-     * Build calendar grid
-     */
+    /* ─── BUILD CALENDAR GRID (SUNDAY START) ─── */
     protected function buildCalendarGrid(Carbon $currentDate, array $eventsByDate): array
     {
         $daysInMonth = $currentDate->daysInMonth;
-        $firstDayOfWeek = $currentDate->copy()->startOfMonth()->dayOfWeek;
 
-        // ─── ADJUST FOR MONDAY AS FIRST DAY ───
-        $firstDayOfWeek = $firstDayOfWeek === 0 ? 6 : $firstDayOfWeek - 1;
+        // ─── SUNDAY START (0 = Sunday in Carbon) ───
+        $firstDayOfWeek = $currentDate->copy()->startOfMonth()->dayOfWeek;
 
         $weeks = [];
         $currentWeek = [];
 
-        // ─── ADD EMPTY DAYS FOR START OF MONTH ───
+        // ─── PAD START OF MONTH ───
         for ($i = 0; $i < $firstDayOfWeek; $i++) {
             $currentWeek[] = null;
         }
 
-        // ─── ADD DAYS OF THE MONTH ───
+        // ─── ADD DAYS ───
         for ($day = 1; $day <= $daysInMonth; $day++) {
             $date = $currentDate->copy()->day($day);
             $dateKey = $date->toDateString();
 
-            $dayData = [
+            $currentWeek[] = [
                 'day' => $day,
                 'date' => $dateKey,
                 'is_today' => $date->isToday(),
@@ -172,16 +205,14 @@ class EventCalendarController extends Controller
                 'event_count' => isset($eventsByDate[$dateKey]) ? count($eventsByDate[$dateKey]) : 0,
             ];
 
-            $currentWeek[] = $dayData;
-
-            // ─── WHEN WEEK IS FULL, ADD TO WEEKS ───
+            // ─── WEEK FULL ───
             if (count($currentWeek) === 7) {
                 $weeks[] = $currentWeek;
                 $currentWeek = [];
             }
         }
 
-        // ─── ADD EMPTY DAYS FOR END OF MONTH ───
+        // ─── PAD END OF MONTH ───
         if (count($currentWeek) > 0) {
             while (count($currentWeek) < 7) {
                 $currentWeek[] = null;
@@ -196,9 +227,7 @@ class EventCalendarController extends Controller
         ];
     }
 
-    /**
-     * Group events by date
-     */
+    /* ─── GROUP EVENTS BY DATE ─── */
     protected function groupEventsByDate(array $events): array
     {
         $grouped = [];
@@ -216,9 +245,7 @@ class EventCalendarController extends Controller
         return $grouped;
     }
 
-    /**
-     * Get upcoming events for sidebar (returns array)
-     */
+    /* ─── UPCOMING EVENTS FOR SIDEBAR ─── */
     protected function getUpcomingEvents(): array
     {
         $cacheKey = $this->cacheService->key('calendar_upcoming', []);
@@ -244,51 +271,32 @@ class EventCalendarController extends Controller
                 ->toArray();
         });
 
-        // ─── ENSURE WE RETURN AN ARRAY ───
         if ($result instanceof \Illuminate\Support\Collection) {
             return $result->toArray();
         }
 
-        if (is_array($result)) {
-            return $result;
-        }
-
-        return [];
+        return is_array($result) ? $result : [];
     }
 
-    /**
-     * Get event type from title
-     */
+    /* ─── EVENT TYPE FROM TITLE ─── */
     protected function getEventType(string $title): string
     {
         $lower = strtolower($title);
 
-        if (str_contains($lower, 'conference')) {
-            return 'Conference';
-        } elseif (str_contains($lower, 'revival')) {
-            return 'Revival';
-        } elseif (str_contains($lower, 'baptism')) {
-            return 'Baptism';
-        } elseif (str_contains($lower, 'prayer')) {
-            return 'Prayer';
-        } elseif (str_contains($lower, 'worship')) {
-            return 'Worship';
-        } elseif (str_contains($lower, 'gathering')) {
-            return 'Gathering';
-        } elseif (str_contains($lower, 'service')) {
-            return 'Service';
-        } elseif (str_contains($lower, 'workshop')) {
-            return 'Workshop';
-        } elseif (str_contains($lower, 'retreat')) {
-            return 'Retreat';
-        }
+        if (str_contains($lower, 'conference')) return 'Conference';
+        if (str_contains($lower, 'revival')) return 'Revival';
+        if (str_contains($lower, 'baptism')) return 'Baptism';
+        if (str_contains($lower, 'prayer')) return 'Prayer';
+        if (str_contains($lower, 'worship')) return 'Worship';
+        if (str_contains($lower, 'gathering')) return 'Gathering';
+        if (str_contains($lower, 'service')) return 'Service';
+        if (str_contains($lower, 'workshop')) return 'Workshop';
+        if (str_contains($lower, 'retreat')) return 'Retreat';
 
         return 'Event';
     }
 
-    /**
-     * Get event color based on type
-     */
+    /* ─── EVENT COLOR FROM TYPE ─── */
     protected function getEventColor(string $title): string
     {
         $type = $this->getEventType($title);
