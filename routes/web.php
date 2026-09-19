@@ -58,7 +58,7 @@ Route::get('/community', [CommunityController::class, 'index'])->name('community
 
 // ─── RESOURCES ───
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
-
+Route::get('/resources/{slug}', [ResourceController::class, 'show'])->name('resources.show');
 // ─── CONTACT ───
 // GET route with rate limiting to prevent abuse
 Route::get('/contact', [ContactController::class, 'index'])

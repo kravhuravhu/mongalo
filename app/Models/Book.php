@@ -23,6 +23,7 @@ class Book extends Model
         'book_file',
         'file_type',
         'file_size',
+        'category',
         'download_count',
         'sort_order',
     ];
@@ -131,5 +132,18 @@ class Book extends Model
         return $instance->cachedQuery($key, function () {
             return self::where('is_free', true)->orderBy('sort_order')->get();
         });
+    }
+
+    /* ─── CATEGORY LABEL ─── */
+    public function getCategoryLabelAttribute()
+    {
+        return match ($this->category) {
+            'booklet' => 'Booklet',
+            'pamphlet' => 'Pamphlet',
+            'bible' => 'Bible',
+            'study_guide' => 'Study Guide',
+            'other' => 'Resource',
+            default => 'Resource',
+        };
     }
 }

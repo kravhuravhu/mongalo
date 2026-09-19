@@ -69,6 +69,7 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
             'book_file' => 'required_if:is_free,false|nullable|file|mimes:pdf,epub,mobi,docx|max:51200',
             'file_type' => 'nullable|in:pdf,epub,mobi,docx',
+            'category' => 'nullable|in:booklet,pamphlet,bible,study_guide,other',
         ], [
             'book_file.required_if' => 'The book file is required for paid books.',
             'book_file.max' => 'The book file must not be greater than 50MB.',
@@ -77,6 +78,8 @@ class BookController extends Controller
             'cover_image.mimes' => 'The cover image must be a JPEG, PNG, or WEBP file.',
         ]);
 
+        $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
+
         $bookData = [
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -84,6 +87,7 @@ class BookController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
+            'category' => $request->category ?? 'other',
             'is_featured' => $request->is_featured ?? false,
             'cover_color' => $request->cover_color ?? '#a67c4e',
             'sort_order' => Book::count() + 1,
@@ -139,8 +143,11 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
             'book_file' => 'nullable|file|mimes:pdf,epub,mobi,docx|max:51200',
             'file_type' => 'nullable|in:pdf,epub,mobi,docx',
+            'category' => 'nullable|in:booklet,pamphlet,bible,study_guide,other',
             'sort_order' => 'nullable|integer|min:1',
         ]);
+
+        $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
 
         $bookData = [
             'title' => $request->title,
@@ -151,6 +158,7 @@ class BookController extends Controller
             'is_free' => $request->is_free ?? false,
             'is_featured' => $request->is_featured ?? false,
             'cover_color' => $request->cover_color ?? '#a67c4e',
+            'category' => $request->category ?? $book->category,
             'sort_order' => $request->sort_order ?? $book->sort_order,
         ];
 
