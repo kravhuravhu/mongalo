@@ -330,4 +330,8 @@
     </script>
 @endpush
 
+@push('styles')
+    <link rel="stylesheet" href="{{ secure_asset('css/v150/books.css') }}">
+@endpush
+
 @endsection
