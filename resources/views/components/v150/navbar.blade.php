@@ -17,10 +17,10 @@
                     <a href="{{ route('about') }}" class="global-navbar__link {{ request()->routeIs('about') ? 'global-navbar__link--active' : '' }}" role="menuitem">My Story</a>
                 </li>
                 <li role="none">
-                    <a href="{{ route('books.index') }}" class="global-navbar__link {{ request()->routeIs('books.*') ? 'global-navbar__link--active' : '' }}" role="menuitem">Books</a>
+                    <a href="{{ route('books.index') }}" class="global-navbar__link {{ request()->routeIs('books') || request()->routeIs('books.*')  ? 'global-navbar__link--active' : '' }}" role="menuitem">Books</a>
                 </li>
                 <li role="none">
-                    <a href="{{ route('resources') }}" class="global-navbar__link {{ request()->routeIs('resources') ? 'global-navbar__link--active' : '' }}" role="menuitem">Free Resources</a>
+                    <a href="{{ route('resources') }}" class="global-navbar__link {{ request()->routeIs('resources') || request()->routeIs('resources.*') ? 'global-navbar__link--active' : '' }}" role="menuitem">Free Resources</a>
                 </li>
             </ul>
 
@@ -45,6 +45,12 @@
                 </li>
                 <li role="none">
                     <a href="{{ route('contact') }}" class="global-navbar__link {{ request()->routeIs('contact') ? 'global-navbar__link--active' : '' }}" role="menuitem">Contact</a>
+                </li>
+                <li role="none">
+                    <a href="{{ route('invite') }}" class="global-navbar__link global-navbar__link--cta {{ request()->routeIs('invite') ? 'global-navbar__link--cta-active' : '' }}" role="menuitem">
+                        <i class="fas fa-handshake" aria-hidden="true"></i>
+                        <span>Invite Arthur</span>
+                    </a>
                 </li>
             </ul>
 

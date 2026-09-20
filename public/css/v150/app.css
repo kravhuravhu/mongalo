@@ -288,6 +288,74 @@ img {
             transition: all 0.3s ease;
         }
     }
+    /* ─── INVITE ARTHUR ─── */
+    & .global-navbar__link--cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        margin-left: 8px;
+        background: var(--gold);
+        color: #fff;
+        border: 1px solid var(--gold);
+        border-radius: 50px;
+        font-weight: 600;
+        white-space: nowrap;
+        box-shadow: 0 4px 15px rgba(184, 146, 106, 0.25);
+        transition: all var(--transition-smooth);
+
+        & span {
+            white-space: nowrap;
+        }
+
+        & i {
+            font-size: 0.7rem;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        &::after {
+            display: none;
+        }
+
+        &:hover {
+            background: var(--gold-light);
+            border-color: var(--gold-light);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(184, 146, 106, 0.35);
+
+            & i {
+                transform: scale(1.15) rotate(-5deg);
+            }
+        }
+
+        &.global-navbar__link--cta-active {
+            background: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+    }
+
+    /* ─── CTA LINK ON SOLID NAVBAR ─── */
+    &.global-navbar--solid {
+        & .global-navbar__link--cta {
+            color: #fff;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    /* ─── CTA LINK ON SCROLLED NAVBAR ─── */
+    &.global-navbar--scrolled {
+        & .global-navbar__link--cta {
+            color: #fff;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
 }
 
 /* ─── SECTION HEADER ─── */
