@@ -23,7 +23,7 @@ class BaptismController extends Controller
 
     public function index()
     {
-        return view('public.baptism.index');
+        return view('public.baptism.v150.index');
     }
 
     public function request(BaptismRequest $request)

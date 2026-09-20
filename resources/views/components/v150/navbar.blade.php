@@ -1,6 +1,6 @@
 @php
     // ─── DETERMINE IF HERO PAGE OR SOLID PAGE ───
-    $isHeroPage = request()->routeIs('home') || request()->routeIs('books.*') || request()->routeIs('resources') || request()->routeIs('events.*');
+    $isHeroPage = request()->routeIs('home') || request()->routeIs('books.*') || request()->routeIs('resources') || request()->routeIs('events.*') || request()->routeIs('baptism');
     $navbarClass = $isHeroPage ? 'global-navbar' : 'global-navbar global-navbar--solid';
 @endphp
 
