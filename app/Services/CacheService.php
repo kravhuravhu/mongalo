@@ -96,27 +96,36 @@ class CacheService
             return true;
         }
 
-        // ─── ELOQUENT COLLECTIONS AND MODELS ARE SERIALIZABLE ───
-        if ($value instanceof \Illuminate\Database\Eloquent\Collection) {
-            return true;
-        }
-
+        // ─── ELOQUENT MODELS/COLLECTIONS ARE NOT SAFE — REJECT ───
         if ($value instanceof \Illuminate\Database\Eloquent\Model) {
-            return true;
+            Log::warning('Cache: Refusing to cache Eloquent Model', [
+                'class' => get_class($value),
+            ]);
+            return false;
         }
 
-        // ─── STANDARD COLLECTIONS ARE SERIALIZABLE ───
+        if ($value instanceof \Illuminate\Database\Eloquent\Collection) {
+            Log::warning('Cache: Refusing to cache Eloquent Collection', [
+                'class' => get_class($value),
+                'count' => $value->count(),
+            ]);
+            return false;
+        }
+
+        // ─── STANDARD SUPPORT COLLECTIONS — ALSO REJECT (may contain models) ───
         if ($value instanceof \Illuminate\Support\Collection) {
-            return true;
+            Log::warning('Cache: Refusing to cache Support Collection', [
+                'class' => get_class($value),
+            ]);
+            return false;
         }
 
-        // ─── CUSTOM OBJECTS MIGHT NOT BE SERIALIZABLE ───
+        // ─── OTHER OBJECTS — CHECK FOR SERIALIZE METHOD ───
         if (is_object($value)) {
-            // ─── CHECK IF IT HAS A __SERIALIZE METHOD ───
             if (method_exists($value, '__serialize') || method_exists($value, 'serialize')) {
                 return true;
             }
-            
+
             Log::warning('Cache: Object may not be serializable', [
                 'class' => get_class($value),
             ]);

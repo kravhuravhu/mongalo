@@ -1270,3 +1270,143 @@ img {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 1; }
 }
+
+/* ─── APP OVERLAY ─── */
+.app-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(247, 244, 238, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 999998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+
+    &.app-overlay--visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+    }
+
+    & .app-overlay__spinner {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .app-overlay__ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            animation: appOverlaySpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+            &.app-overlay__ring--1 {
+                width: 80px;
+                height: 80px;
+                border-top-color: var(--gold);
+                animation-duration: 0.9s;
+            }
+
+            &.app-overlay__ring--2 {
+                width: 60px;
+                height: 60px;
+                border-top-color: var(--teal);
+                animation-duration: 0.7s;
+                animation-direction: reverse;
+            }
+
+            &.app-overlay__ring--3 {
+                width: 40px;
+                height: 40px;
+                border-top-color: var(--sage);
+                animation-duration: 0.5s;
+            }
+        }
+
+        & .app-overlay__text {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+            animation: appOverlayPulse 1.5s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes appOverlaySpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes appOverlayPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+@media (max-width: 540px) {
+    .app-overlay .app-overlay__spinner {
+        width: 68px;
+        height: 68px;
+
+        & .app-overlay__ring--1 {
+            width: 68px;
+            height: 68px;
+        }
+
+        & .app-overlay__ring--2 {
+            width: 51px;
+            height: 51px;
+        }
+
+        & .app-overlay__ring--3 {
+            width: 34px;
+            height: 34px;
+        }
+
+        & .app-overlay__text {
+            bottom: -34px;
+            font-size: 0.7rem;
+        }
+    }
+}
+
+@media (max-width: 300px) {
+    .app-overlay .app-overlay__spinner {
+        width: 52px;
+        height: 52px;
+
+        & .app-overlay__ring--1 {
+            width: 52px;
+            height: 52px;
+        }
+
+        & .app-overlay__ring--2 {
+            width: 39px;
+            height: 39px;
+        }
+
+        & .app-overlay__ring--3 {
+            width: 26px;
+            height: 26px;
+        }
+
+        & .app-overlay__text {
+            bottom: -28px;
+            font-size: 0.6rem;
+        }
+    }
+}

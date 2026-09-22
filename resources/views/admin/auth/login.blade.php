@@ -20,16 +20,6 @@
 </head>
 <body class="auth-login">
 
-{{-- ─── LOADING SPINNER ─── --}}
-<div class="admin-loader" id="adminLoader">
-    <div class="admin-loader__spinner">
-        <div class="admin-loader__ring admin-loader__ring--1"></div>
-        <div class="admin-loader__ring admin-loader__ring--2"></div>
-        <div class="admin-loader__ring admin-loader__ring--3"></div>
-        <span class="admin-loader__text">{{ env('PROJECT_NAME', 'IN.iN') }}</span>
-    </div>
-</div>
-
 <div class="login-container" id="loginContainer" style="display: none;">
     <div class="login-logo">
         <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
