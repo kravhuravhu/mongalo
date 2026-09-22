@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.v150.app')
 
-@section('title', 'Redirecting to Payment · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Redirecting to Payment · ' . env('PROJECT_NAME', 'IN.iN'))
 
 @section('content')
 <div class="payment-checkout">

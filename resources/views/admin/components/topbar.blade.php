@@ -5,11 +5,15 @@
     </div>
 
     <div class="admin-topbar-right">
+        {{-- Theme Toggle --}}
+        <button class="admin-theme-toggle" id="adminThemeToggle" aria-label="Toggle theme">
+            <i class="fas fa-sun admin-theme-toggle__sun"></i>
+            <i class="fas fa-moon admin-theme-toggle__moon"></i>
+        </button>
+
+        {{-- User --}}
         <div class="admin-user">
             <span class="admin-user-name">{{ session('admin_name') ?? 'Admin' }}</span>
-            <!-- <span class="admin-user-avatar">
-                {{ strtoupper(substr(session('admin_name') ?? 'A', 0, 1)) }}
-            </span> -->
         </div>
     </div>
 </div>
