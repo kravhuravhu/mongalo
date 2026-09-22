@@ -7,64 +7,77 @@
 @section('content')
 
 <div class="cache-status">
+    {{-- ─── HEADER ─── --}}
     <div class="cache-status__header">
         <a href="{{ route('admin.cache.index') }}" class="btn btn--secondary">
             <i class="fas fa-arrow-left"></i> Back to Cache
         </a>
     </div>
 
-    <div class="cache-status__card" style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 32px; margin-top: 20px;">
-        <h3 style="font-family: var(--font-serif); font-weight: 700; margin-bottom: 20px;">
-            <i class="fas fa-info-circle" style="color: var(--gold);"></i> Cache Status
-        </h3>
+    {{-- ─── STATUS CARD ─── --}}
+    <div class="cache-status__card">
+        <h3><i class="fas fa-info-circle"></i> Cache Status</h3>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div style="background: var(--bg); padding: 16px 20px; border-radius: var(--radius-sm);">
-                <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">Cache Driver</span>
-                <span style="font-weight: 600; font-size: 1.1rem;">{{ $status['driver'] }}</span>
+        <div class="cache-status__grid">
+            {{-- ─── CACHE DRIVER ─── --}}
+            <div class="cache-status__item">
+                <span class="cache-status__label">Cache Driver</span>
+                <span class="cache-status__value">{{ $status['driver'] }}</span>
             </div>
 
-            <div style="background: var(--bg); padding: 16px 20px; border-radius: var(--radius-sm);">
-                <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">Cache Enabled</span>
-                <span style="font-weight: 600; font-size: 1.1rem;">
+            {{-- ─── CACHE ENABLED ─── --}}
+            <div class="cache-status__item">
+                <span class="cache-status__label">Cache Enabled</span>
+                <span class="cache-status__value {{ $status['enabled'] ? 'cache-status__value--yes' : 'cache-status__value--no' }}">
                     @if($status['enabled'])
-                        <span style="color: #28a745;"><i class="fas fa-check-circle"></i> Yes</span>
+                        <i class="fas fa-check-circle"></i> Yes
                     @else
-                        <span style="color: #dc3545;"><i class="fas fa-times-circle"></i> No</span>
+                        <i class="fas fa-times-circle"></i> No
                     @endif
                 </span>
             </div>
 
-            <div style="background: var(--bg); padding: 16px 20px; border-radius: var(--radius-sm);">
-                <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">Page Cache</span>
-                <span style="font-weight: 600; font-size: 1.1rem;">
+            {{-- ─── PAGE CACHE ─── --}}
+            <div class="cache-status__item">
+                <span class="cache-status__label">Page Cache</span>
+                <span class="cache-status__value {{ $status['page_cache'] ? 'cache-status__value--yes' : 'cache-status__value--no' }}">
                     @if($status['page_cache'])
-                        <span style="color: #28a745;"><i class="fas fa-check-circle"></i> Enabled</span>
-                        <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">TTL: {{ $status['page_cache_ttl'] }}s</span>
+                        <i class="fas fa-check-circle"></i> Enabled
                     @else
-                        <span style="color: #dc3545;"><i class="fas fa-times-circle"></i> Disabled</span>
+                        <i class="fas fa-times-circle"></i> Disabled
                     @endif
                 </span>
+                @if($status['page_cache'])
+                    <span class="cache-status__sub">TTL: {{ $status['page_cache_ttl'] }}s</span>
+                @endif
             </div>
 
-            <div style="background: var(--bg); padding: 16px 20px; border-radius: var(--radius-sm);">
-                <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">Query Cache</span>
-                <span style="font-weight: 600; font-size: 1.1rem;">
+            {{-- ─── QUERY CACHE ─── --}}
+            <div class="cache-status__item">
+                <span class="cache-status__label">Query Cache</span>
+                <span class="cache-status__value {{ $status['query_cache'] ? 'cache-status__value--yes' : 'cache-status__value--no' }}">
                     @if($status['query_cache'])
-                        <span style="color: #28a745;"><i class="fas fa-check-circle"></i> Enabled</span>
-                        <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">TTL: {{ $status['query_cache_ttl'] }}s</span>
+                        <i class="fas fa-check-circle"></i> Enabled
                     @else
-                        <span style="color: #dc3545;"><i class="fas fa-times-circle"></i> Disabled</span>
+                        <i class="fas fa-times-circle"></i> Disabled
                     @endif
                 </span>
+                @if($status['query_cache'])
+                    <span class="cache-status__sub">TTL: {{ $status['query_cache_ttl'] }}s</span>
+                @endif
             </div>
 
-            <div style="background: var(--bg); padding: 16px 20px; border-radius: var(--radius-sm); grid-column: 1 / -1;">
-                <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">Cache Size</span>
-                <span style="font-weight: 600; font-size: 1.1rem;">{{ $status['cache_size'] }}</span>
+            {{-- ─── CACHE SIZE ─── --}}
+            <div class="cache-status__item cache-status__item--wide">
+                <span class="cache-status__label">Cache Size</span>
+                <span class="cache-status__value">{{ $status['cache_size'] }}</span>
             </div>
         </div>
     </div>
 </div>
 
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/cache.css') }}">
+@endpush

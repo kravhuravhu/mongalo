@@ -2,21 +2,21 @@
     <tr>
         <td>{{ $loop->iteration }}</td>
         <td>
-            <span style="font-family: monospace; font-weight: 600; font-size: 0.85rem;">
+            <span style="font-family: monospace; font-weight: 600; font-size: 0.85rem; color: var(--ink);">
                 {{ $order->order_number }}
             </span>
         </td>
         <td>
-            <strong>{{ $order->book->title ?? 'N/A' }}</strong>
+            <strong style="color: var(--ink);">{{ $order->book->title ?? 'N/A' }}</strong>
         </td>
         <td>
             <div class="orders-index__buyer">
                 <strong>{{ $order->buyer_name }}</strong>
-                <a href="mailto:{{ $order->buyer_email }}" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; display: block;">
+                <a href="mailto:{{ $order->buyer_email }}" style="color: var(--muted); text-decoration: none; font-size: 0.8rem; display: block;">
                     {{ $order->buyer_email }}
                 </a>
                 @if($order->buyer_phone)
-                    <a href="tel:{{ $order->buyer_phone }}" style="color: var(--text-muted); text-decoration: none; font-size: 0.75rem;">
+                    <a href="tel:{{ $order->buyer_phone }}" style="color: var(--muted); text-decoration: none; font-size: 0.75rem;">
                         <i class="fas fa-phone"></i> {{ $order->buyer_phone }}
                     </a>
                 @endif
@@ -33,12 +33,12 @@
             </span>
         </td>
         <td>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">
+            <span style="font-size: 0.8rem; color: var(--muted);">
                 {{ $order->created_at->format('M d, Y g:i A') }}
             </span>
         </td>
         <td>
-            <div class="orders-index__actions">
+            <div class="orders-index__actions-cell">
                 <a href="{{ route('admin.orders.show', $order) }}" class="btn btn--primary btn--sm" title="View">
                     <i class="fas fa-eye"></i>
                 </a>
@@ -47,8 +47,8 @@
     </tr>
 @empty
     <tr>
-        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">
-            <i class="fas fa-shopping-cart" style="font-size: 2rem; display: block; margin-bottom: 12px; opacity: 0.3;"></i>
+        <td colspan="8" style="text-align: center; color: var(--muted); padding: 48px;">
+            <i class="fas fa-shopping-cart" style="font-size: 2rem; display: block; margin-bottom: 16px; opacity: 0.3;"></i>
             No orders found.
         </td>
     </tr>

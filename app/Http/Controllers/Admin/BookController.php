@@ -78,6 +78,7 @@ class BookController extends Controller
             'cover_image.mimes' => 'The cover image must be a JPEG, PNG, or WEBP file.',
         ]);
 
+        /* ─── Category only applies to free resources ─── */
         $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
 
         $bookData = [
@@ -87,9 +88,9 @@ class BookController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
-            'category' => $request->category ?? 'other',
+            'category' => $category,
             'is_featured' => $request->is_featured ?? false,
-            'cover_color' => $request->cover_color ?? '#a67c4e',
+            'cover_color' => $request->cover_color ?? '#B8926A',
             'sort_order' => Book::count() + 1,
         ];
 
@@ -147,6 +148,7 @@ class BookController extends Controller
             'sort_order' => 'nullable|integer|min:1',
         ]);
 
+        /* ─── Category only applies to free resources ─── */
         $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
 
         $bookData = [
@@ -157,8 +159,8 @@ class BookController extends Controller
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
             'is_featured' => $request->is_featured ?? false,
-            'cover_color' => $request->cover_color ?? '#a67c4e',
-            'category' => $request->category ?? $book->category,
+            'cover_color' => $request->cover_color ?? '#B8926A',
+            'category' => $category,
             'sort_order' => $request->sort_order ?? $book->sort_order,
         ];
 
@@ -226,7 +228,7 @@ class BookController extends Controller
         return redirect()->route('admin.books.index')->with('success', 'Book deleted successfully!');
     }
 
-    /* ─── HELPER: Format File Size ─── */
+    /* ─── HELPER ─── */
     private function formatFileSize($bytes): string
     {
         if ($bytes >= 1048576) {

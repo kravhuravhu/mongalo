@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.v150.app')
 
-@section('title', 'Payment Failed · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Payment Failed · ' . env('PROJECT_NAME', 'IN.iN'))
 
 @section('content')
 

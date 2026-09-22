@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Create Book · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Create Book · ' . env('PROJECT_NAME', 'IN.iN'))
 @section('page-title', 'Create Book')
 @section('breadcrumb', 'Books / Create')
 
@@ -62,15 +62,15 @@
                 @error('cover_image')
                     <span class="form-error">{{ $message }}</span>
                 @enderror
-                <div class="file-preview" id="coverPreview" style="display: none; margin-top: 12px;">
-                    <img src="" alt="Cover preview" style="max-width: 150px; max-height: 200px; border-radius: 8px; border: 1px solid var(--border);">
+                <div class="file-preview" id="coverPreview" style="display: none;">
+                    <img src="" alt="Cover preview">
                 </div>
             </div>
 
             {{-- ─── COVER COLOR (FALLBACK) ─── --}}
             <div class="form-group">
                 <label for="cover_color">Cover Color (Fallback) <span class="required">*</span></label>
-                <input type="color" name="cover_color" id="cover_color" value="{{ old('cover_color', '#a67c4e') }}">
+                <input type="color" name="cover_color" id="cover_color" value="{{ old('cover_color', '#B8926A') }}">
                 @error('cover_color')
                     <span class="form-error">{{ $message }}</span>
                 @enderror
@@ -102,22 +102,39 @@
             </div>
 
             {{-- ─── CHECKBOXES ─── --}}
-            <div class="form-row">
+            <div class="books-form__checkboxes">
                 <div class="form-group">
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="checkbox" name="is_free" value="1" {{ old('is_free') ? 'checked' : '' }}>
+                    <label>
+                        <input type="checkbox" name="is_free" value="1" id="bookIsFree" {{ old('is_free') ? 'checked' : '' }}>
                         Free Resource
                     </label>
                     <span class="form-help">Check if this is a free resource</span>
                 </div>
 
                 <div class="form-group">
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <label>
                         <input type="checkbox" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
                         Featured Book
                     </label>
                     <span class="form-help">Check to highlight on the homepage</span>
                 </div>
+            </div>
+
+            {{-- ─── CATEGORY (shown when Free Resource is checked) ─── --}}
+            <div class="form-group books-form__category-group {{ old('is_free') ? 'books-form__category-group--visible' : '' }}" id="categoryGroup">
+                <label for="category">Resource Category</label>
+                <select name="category" id="category">
+                    <option value="">Select category...</option>
+                    <option value="booklet" {{ old('category') === 'booklet' ? 'selected' : '' }}>Booklet</option>
+                    <option value="pamphlet" {{ old('category') === 'pamphlet' ? 'selected' : '' }}>Pamphlet</option>
+                    <option value="bible" {{ old('category') === 'bible' ? 'selected' : '' }}>Bible</option>
+                    <option value="study_guide" {{ old('category') === 'study_guide' ? 'selected' : '' }}>Study Guide</option>
+                    <option value="other" {{ old('category') === 'other' ? 'selected' : '' }}>Other</option>
+                </select>
+                @error('category')
+                    <span class="form-error">{{ $message }}</span>
+                @enderror
+                <span class="form-help">Used to filter resources on the public Free Resources page</span>
             </div>
 
             {{-- ─── SUBMIT ─── --}}
@@ -138,7 +155,7 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ secure_asset('css/admin/books.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/books.css') }}">
 @endpush
 
 @push('scripts')
@@ -163,9 +180,9 @@
         /* ─── COVER IMAGE PREVIEW ─── */
         const coverInput = document.getElementById('cover_image');
         const preview = document.getElementById('coverPreview');
-        const previewImg = preview.querySelector('img');
+        const previewImg = preview ? preview.querySelector('img') : null;
 
-        if (coverInput && preview) {
+        if (coverInput && preview && previewImg) {
             coverInput.addEventListener('change', function() {
                 if (this.files && this.files[0]) {
                     const reader = new FileReader();
@@ -176,6 +193,20 @@
                     reader.readAsDataURL(this.files[0]);
                 } else {
                     preview.style.display = 'none';
+                }
+            });
+        }
+
+        /* ─── CATEGORY TOGGLE ─── */
+        const isFreeCheckbox = document.getElementById('bookIsFree');
+        const categoryGroup = document.getElementById('categoryGroup');
+
+        if (isFreeCheckbox && categoryGroup) {
+            isFreeCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    categoryGroup.classList.add('books-form__category-group--visible');
+                } else {
+                    categoryGroup.classList.remove('books-form__category-group--visible');
                 }
             });
         }

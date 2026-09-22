@@ -7,34 +7,38 @@
 
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
-        <span>Admin</span>
-        <br>
-        {{ env('PROJECT_NAME', 'The Collective') }}
+        <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
+        <span class="logo-admin">Admin Panel</span>
     </a>
 
     <nav class="admin-nav">
-        {{-- Dashboard --}}
+        {{-- ─── OVERVIEW ─── --}}
+        <span class="nav-label">Overview</span>
+
         <a href="{{ route('admin.dashboard') }}" 
            class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <i class="fas fa-th-large"></i>
             <span>Dashboard</span>
         </a>
 
-        {{-- Books --}}
+        {{-- ─── CONTENT ─── --}}
+        <span class="nav-label">Content</span>
+
         <a href="{{ route('admin.books.index') }}" 
            class="nav-item {{ request()->routeIs('admin.books.*') ? 'active' : '' }}">
             <i class="fas fa-book"></i>
             <span>Books</span>
         </a>
 
-        {{-- Events --}}
         <a href="{{ route('admin.events.index') }}" 
            class="nav-item {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
             <i class="fas fa-calendar-alt"></i>
             <span>Events</span>
         </a>
 
-        {{-- Orders --}}
+        {{-- ─── ENGAGEMENT ─── --}}
+        <span class="nav-label">Engagement</span>
+
         <a href="{{ route('admin.orders.index') }}" 
            class="nav-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
             <i class="fas fa-shopping-cart"></i>
@@ -44,17 +48,15 @@
             @endif
         </a>
 
-        {{-- Baptism Requests --}}
         <a href="{{ route('admin.baptisms') }}" 
            class="nav-item {{ request()->routeIs('admin.baptisms') ? 'active' : '' }}">
             <i class="fas fa-water"></i>
-            <span>Baptism</span>
+            <span>Baptisms</span>
             @if($pendingBaptisms > 0)
                 <span class="nav-badge">{{ $pendingBaptisms }}</span>
             @endif
         </a>
 
-        {{-- Contact Messages --}}
         <a href="{{ route('admin.messages') }}" 
            class="nav-item {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
             <i class="fas fa-envelope"></i>
@@ -64,7 +66,6 @@
             @endif
         </a>
 
-        {{-- Invite Requests --}}
         <a href="{{ route('admin.invites') }}" 
            class="nav-item {{ request()->routeIs('admin.invites') ? 'active' : '' }}">
             <i class="fas fa-handshake"></i>
@@ -74,18 +75,14 @@
             @endif
         </a>
 
-        {{-- Divider --}}
-        <div class="nav-divider"></div>
-
         {{-- ─── SYSTEM ─── --}}
+        <span class="nav-label">System</span>
+
         <a href="{{ route('admin.cache.index') }}" 
            class="nav-item {{ request()->routeIs('admin.cache.*') ? 'active' : '' }}">
             <i class="fas fa-database"></i>
             <span>Cache</span>
         </a>
-
-        {{-- Divider --}}
-        <div class="nav-divider"></div>
 
         {{-- ─── EXPORTS (Collapsible) ─── --}}
         <div class="nav-item nav-item--toggle" id="exportsToggle">
@@ -97,45 +94,35 @@
         <div class="nav-submenu" id="exportsSubmenu">
             <a href="{{ route('admin.export.orders') }}" class="nav-item nav-item--sub">
                 <i class="fas fa-file-csv"></i>
-                <span>Export Orders</span>
+                <span>Orders</span>
             </a>
             <a href="{{ route('admin.export.registrations') }}" class="nav-item nav-item--sub">
                 <i class="fas fa-file-csv"></i>
-                <span>Export Registrations</span>
+                <span>Registrations</span>
             </a>
             <a href="{{ route('admin.export.baptisms') }}" class="nav-item nav-item--sub">
                 <i class="fas fa-file-csv"></i>
-                <span>Export Baptisms</span>
+                <span>Baptisms</span>
             </a>
             <a href="{{ route('admin.export.messages') }}" class="nav-item nav-item--sub">
                 <i class="fas fa-file-csv"></i>
-                <span>Export Messages</span>
+                <span>Messages</span>
             </a>
         </div>
 
-        {{-- Divider --}}
-        <div class="nav-divider"></div>
+        {{-- ─── ACTIONS ─── --}}
+        <span class="nav-label">Actions</span>
 
-        {{-- ─── VIEW SITE  ─── --}}
         <a href="{{ route('home') }}" target="_blank" class="nav-item nav-item--view-site">
             <i class="fas fa-external-link-alt"></i>
             <span>View Site</span>
-            <i class="fas fa-external-link-alt nav-item__external" style="font-size: 0.6rem; opacity: 0.4; margin-left: auto;"></i>
         </a>
 
-        {{-- Divider --}}
-        <div class="nav-divider"></div>
-
-        {{-- ─── CHANGE PASSWORD ─── --}}
         <a href="#" class="nav-item" id="changePasswordLink">
             <i class="fas fa-key"></i>
             <span>Change Password</span>
         </a>
 
-        {{-- Divider --}}
-        <div class="nav-divider"></div>
-
-        {{-- Logout --}}
         <form method="POST" action="{{ route('admin.logout') }}" class="nav-logout-form">
             @csrf
             <button type="submit" class="nav-item nav-item--logout">
@@ -154,15 +141,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const submenu = document.getElementById('exportsSubmenu');
 
     if (toggle && submenu) {
-        // ─── CHECK SESSION STATE ───
         const isOpen = sessionStorage.getItem('exports_open') === 'true';
         if (isOpen) {
             toggle.classList.add('nav-item--toggle--open');
             submenu.classList.add('nav-submenu--open');
-            const chevron = toggle.querySelector('.nav-item__chevron');
-            if (chevron) {
-                chevron.style.transform = 'rotate(180deg)';
-            }
         }
 
         toggle.addEventListener('click', function(e) {
@@ -170,34 +152,22 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
 
             const isCurrentlyOpen = submenu.classList.contains('nav-submenu--open');
-            const chevron = this.querySelector('.nav-item__chevron');
 
             if (isCurrentlyOpen) {
                 submenu.classList.remove('nav-submenu--open');
                 this.classList.remove('nav-item--toggle--open');
-                if (chevron) {
-                    chevron.style.transform = 'rotate(0deg)';
-                }
                 sessionStorage.setItem('exports_open', 'false');
             } else {
                 submenu.classList.add('nav-submenu--open');
                 this.classList.add('nav-item--toggle--open');
-                if (chevron) {
-                    chevron.style.transform = 'rotate(180deg)';
-                }
                 sessionStorage.setItem('exports_open', 'true');
             }
         });
 
-        // ─── CLOSE ON CLICK OUTSIDE ───
         document.addEventListener('click', function(e) {
             if (!toggle.contains(e.target) && !submenu.contains(e.target)) {
                 submenu.classList.remove('nav-submenu--open');
                 toggle.classList.remove('nav-item--toggle--open');
-                const chevron = toggle.querySelector('.nav-item__chevron');
-                if (chevron) {
-                    chevron.style.transform = 'rotate(0deg)';
-                }
                 sessionStorage.setItem('exports_open', 'false');
             }
         });

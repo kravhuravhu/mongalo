@@ -7,13 +7,13 @@
 @section('content')
 
 <div class="orders-detail">
-    {{-- ─── BACK BUTTON ─── --}}
+    {{-- ─── HEADER ─── --}}
     <div class="orders-detail__header">
         <a href="{{ route('admin.orders.index') }}" class="btn btn--secondary">
             <i class="fas fa-arrow-left"></i> Back to Orders
         </a>
-        <div class="orders-detail__status">
-            <span class="badge badge-{{ $order->payment_status }}" style="font-size: 0.9rem; padding: 6px 16px;">
+        <div>
+            <span class="badge badge-{{ $order->payment_status }}" style="font-size: 0.9rem; padding: 8px 18px;">
                 <i class="fas {{ $order->payment_status === 'paid' ? 'fa-check-circle' : ($order->payment_status === 'pending' ? 'fa-clock' : 'fa-times-circle') }}"></i>
                 {{ ucfirst($order->payment_status) }}
             </span>
@@ -24,11 +24,9 @@
     <div class="orders-detail__card">
         <div class="orders-detail__card-header">
             <div>
-                <h3 style="font-family: var(--font-serif); font-weight: 700; font-size: 1.2rem;">
-                    Order #{{ $order->order_number }}
-                </h3>
-                <span style="font-size: 0.8rem; color: var(--text-muted);">
-                    <i class="fas fa-calendar-alt"></i> 
+                <h3>Order #{{ $order->order_number }}</h3>
+                <span class="orders-detail__created-at">
+                    <i class="fas fa-calendar-alt"></i>
                     {{ $order->created_at->format('F d, Y g:i A') }}
                 </span>
             </div>
@@ -45,7 +43,7 @@
         </div>
 
         <div class="orders-detail__body">
-            {{-- ─── LEFT: Order Info ─── --}}
+            {{-- ─── BUYER DETAILS ─── --}}
             <div class="orders-detail__info">
                 <h4><i class="fas fa-user"></i> Buyer Details</h4>
                 <div class="orders-detail__info-row">
@@ -55,7 +53,7 @@
                 <div class="orders-detail__info-row">
                     <span class="orders-detail__info-label">Email</span>
                     <span class="orders-detail__info-value">
-                        <a href="mailto:{{ $order->buyer_email }}" style="color: var(--gold); text-decoration: none;">
+                        <a href="mailto:{{ $order->buyer_email }}">
                             {{ $order->buyer_email }}
                         </a>
                     </span>
@@ -64,7 +62,7 @@
                     <div class="orders-detail__info-row">
                         <span class="orders-detail__info-label">Phone</span>
                         <span class="orders-detail__info-value">
-                            <a href="tel:{{ $order->buyer_phone }}" style="color: var(--text-muted); text-decoration: none;">
+                            <a href="tel:{{ $order->buyer_phone }}" style="color: var(--muted);">
                                 {{ $order->buyer_phone }}
                             </a>
                         </span>
@@ -72,7 +70,7 @@
                 @endif
             </div>
 
-            {{-- ─── RIGHT: Book Details ─── --}}
+            {{-- ─── BOOK DETAILS ─── --}}
             <div class="orders-detail__book">
                 <h4><i class="fas fa-book"></i> Book Details</h4>
                 <div class="orders-detail__info-row">
@@ -83,7 +81,7 @@
                 </div>
                 <div class="orders-detail__info-row">
                     <span class="orders-detail__info-label">Price</span>
-                    <span class="orders-detail__info-value" style="color: var(--gold); font-weight: 700;">
+                    <span class="orders-detail__info-value orders-detail__info-value--gold">
                         R{{ number_format($order->amount, 2) }}
                     </span>
                 </div>
@@ -95,7 +93,7 @@
                 </div>
                 <div class="orders-detail__info-row">
                     <span class="orders-detail__info-label">Transaction ID</span>
-                    <span class="orders-detail__info-value" style="font-family: monospace; font-size: 0.8rem;">
+                    <span class="orders-detail__info-value orders-detail__info-value--mono">
                         {{ $order->transaction_id ?? 'N/A' }}
                     </span>
                 </div>
@@ -106,9 +104,7 @@
         <div class="orders-detail__download">
             <h4><i class="fas fa-link"></i> Download Token</h4>
             <div class="orders-detail__token">
-                <code style="background: var(--bg); padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; word-break: break-all;">
-                    {{ $order->download_token }}
-                </code>
+                <code>{{ $order->download_token }}</code>
                 <button class="btn btn--secondary btn--sm" onclick="copyToClipboard('{{ $order->download_token }}')" title="Copy token">
                     <i class="fas fa-copy"></i> Copy
                 </button>
@@ -116,8 +112,8 @@
                     <i class="fas fa-download"></i> Test
                 </a>
             </div>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">
-                <i class="fas fa-info-circle"></i> 
+            <span class="orders-detail__download-meta">
+                <i class="fas fa-info-circle"></i>
                 Downloads: {{ $order->download_count }}
                 @if($order->expires_at)
                     · Expires: {{ $order->expires_at->format('M d, Y g:i A') }}
@@ -132,7 +128,7 @@
             <a href="mailto:{{ $order->buyer_email }}" class="btn btn--primary">
                 <i class="fas fa-envelope"></i> Email Buyer
             </a>
-            <a href="{{ route('payment.download', $order->download_token) }}" target="_blank" class="btn btn--success" style="background: #25D366; color: #fff;">
+            <a href="{{ route('payment.download', $order->download_token) }}" target="_blank" class="btn btn--success" style="background: #28A745; color: #fff;">
                 <i class="fas fa-download"></i> Download Book
             </a>
         </div>
@@ -142,29 +138,7 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ secure_asset('css/admin/orders.css') }}">
-    <style>
-        .orders-detail__token {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .orders-detail__token code {
-            flex: 1;
-            min-width: 200px;
-        }
-        @media (max-width: 540px) {
-            .orders-detail__token {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .orders-detail__token code {
-                min-width: unset;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/orders.css') }}">
 @endpush
 
 @push('scripts')
@@ -173,7 +147,6 @@
         navigator.clipboard.writeText(text).then(function() {
             showFlashMessage('Token copied to clipboard!', 'success');
         }).catch(function() {
-            // Fallback
             const input = document.createElement('input');
             input.value = text;
             document.body.appendChild(input);
