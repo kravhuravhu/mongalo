@@ -54,7 +54,7 @@
                     @enderror
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <div class="event-status">
                     <span class="status-badge {{ Carbon\Carbon::parse($event->date)->isPast() ? 'status-past' : 'status-upcoming' }}">
@@ -74,7 +74,7 @@
             </div>
 
             {{-- ─── CAPACITY ─── --}}
-            <div class="form-group" style="max-width: 200px;">
+            <div class="form-group" style="max-width: 220px;">
                 <label for="capacity">Capacity</label>
                 <input type="number" name="capacity" id="capacity" placeholder="100" value="{{ old('capacity', $event->capacity) }}" min="1">
                 @error('capacity')
@@ -106,9 +106,9 @@
             {{-- ─── SUBMIT ─── --}}
             <div class="events-form__actions">
                 <button type="submit" class="btn btn--primary btn--lg" id="submitBtn">
-                    <i class="fas fa-save"></i> 
+                    <i class="fas fa-save"></i>
                     <span class="btn-text">Update Event</span>
-                    <span class="btn-loader" style="display: none;">
+                    <span class="btn-loader">
                         <i class="fas fa-spinner fa-spin"></i> Updating...
                     </span>
                 </button>
@@ -121,7 +121,7 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ secure_asset('css/admin/events.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/events.css') }}">
 @endpush
 
 @push('scripts')
@@ -129,13 +129,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('eventEditForm');
         const submitBtn = document.getElementById('submitBtn');
-        
+
         if (form && submitBtn) {
             form.addEventListener('submit', function() {
                 const btnText = submitBtn.querySelector('.btn-text');
                 const btnLoader = submitBtn.querySelector('.btn-loader');
                 const icon = submitBtn.querySelector('i');
-                
+
                 submitBtn.disabled = true;
                 if (btnText) btnText.style.display = 'none';
                 if (btnLoader) btnLoader.style.display = 'inline';
@@ -145,14 +145,10 @@
 
         const isFreeCheckbox = document.getElementById('eventIsFree');
         const priceGroup = document.getElementById('priceGroup');
-        
+
         if (isFreeCheckbox && priceGroup) {
             isFreeCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    priceGroup.style.display = 'none';
-                } else {
-                    priceGroup.style.display = 'block';
-                }
+                priceGroup.style.display = this.checked ? 'none' : 'block';
             });
         }
     });

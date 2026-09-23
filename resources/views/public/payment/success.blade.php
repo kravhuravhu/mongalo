@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v150.app')
 
 @section('title', 'Payment Successful · ' . env('PROJECT_NAME', 'The Collective'))
 

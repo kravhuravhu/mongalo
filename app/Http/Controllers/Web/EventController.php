@@ -27,6 +27,7 @@ class EventController extends Controller
 
         $upcomingEvents = Event::where('date', '>=', $today)
             ->orderBy('date')
+            ->orderBy('time')
             ->get();
             
         $pastEvents = Event::where('date', '<', $today)
@@ -34,14 +35,14 @@ class EventController extends Controller
             ->limit(5)
             ->get();
 
-        return view('public.events.index', compact('upcomingEvents', 'pastEvents'));
+        return view('public.events.v150.index', compact('upcomingEvents', 'pastEvents'));
     }
 
     public function show($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
         
-        return view('public.events.show', compact('event'));
+        return view('public.events.v150.show', compact('event'));
     }
 
     public function register(Request $request)

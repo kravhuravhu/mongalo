@@ -69,6 +69,7 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
             'book_file' => 'required_if:is_free,false|nullable|file|mimes:pdf,epub,mobi,docx|max:51200',
             'file_type' => 'nullable|in:pdf,epub,mobi,docx',
+            'category' => 'nullable|in:booklet,pamphlet,bible,study_guide,other',
         ], [
             'book_file.required_if' => 'The book file is required for paid books.',
             'book_file.max' => 'The book file must not be greater than 50MB.',
@@ -77,6 +78,9 @@ class BookController extends Controller
             'cover_image.mimes' => 'The cover image must be a JPEG, PNG, or WEBP file.',
         ]);
 
+        /* ─── Category only applies to free resources ─── */
+        $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
+
         $bookData = [
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -84,8 +88,9 @@ class BookController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
+            'category' => $category,
             'is_featured' => $request->is_featured ?? false,
-            'cover_color' => $request->cover_color ?? '#a67c4e',
+            'cover_color' => $request->cover_color ?? '#B8926A',
             'sort_order' => Book::count() + 1,
         ];
 
@@ -139,8 +144,12 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
             'book_file' => 'nullable|file|mimes:pdf,epub,mobi,docx|max:51200',
             'file_type' => 'nullable|in:pdf,epub,mobi,docx',
+            'category' => 'nullable|in:booklet,pamphlet,bible,study_guide,other',
             'sort_order' => 'nullable|integer|min:1',
         ]);
+
+        /* ─── Category only applies to free resources ─── */
+        $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
 
         $bookData = [
             'title' => $request->title,
@@ -150,7 +159,8 @@ class BookController extends Controller
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
             'is_featured' => $request->is_featured ?? false,
-            'cover_color' => $request->cover_color ?? '#a67c4e',
+            'cover_color' => $request->cover_color ?? '#B8926A',
+            'category' => $category,
             'sort_order' => $request->sort_order ?? $book->sort_order,
         ];
 
@@ -218,7 +228,7 @@ class BookController extends Controller
         return redirect()->route('admin.books.index')->with('success', 'Book deleted successfully!');
     }
 
-    /* ─── HELPER: Format File Size ─── */
+    /* ─── HELPER ─── */
     private function formatFileSize($bytes): string
     {
         if ($bytes >= 1048576) {

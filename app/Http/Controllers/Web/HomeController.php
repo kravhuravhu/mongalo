@@ -31,6 +31,6 @@ class HomeController extends Controller
             ];
         });
 
-        return view('public.home.index', $data);
+        return view('public.home.v150.index', $data);
     }
 }

@@ -23,7 +23,7 @@ class InviteController extends Controller
 
     public function index()
     {
-        return view('public.invite.index');
+        return view('public.invite.v150.index');
     }
 
     public function send(InviteRequest $request)

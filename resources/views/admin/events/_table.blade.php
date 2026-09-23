@@ -5,9 +5,7 @@
             <div class="events-index__title">
                 <strong>{{ $event->title }}</strong>
                 @if($event->description)
-                    <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">
-                        {{ Str::limit($event->description, 60) }}
-                    </span>
+                    <span>{{ Str::limit($event->description, 60) }}</span>
                 @endif
             </div>
         </td>
@@ -19,7 +17,7 @@
         </td>
         <td>
             <span class="events-index__location">
-                <i class="fas fa-map-marker-alt" style="color: var(--gold); font-size: 0.7rem;"></i>
+                <i class="fas fa-map-marker-alt"></i>
                 {{ $event->location }}
             </span>
         </td>
@@ -56,8 +54,8 @@
                 <form method="POST" action="{{ route('admin.events.destroy', $event) }}" class="delete-confirm">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn--danger btn--sm" title="Delete" 
-                            data-title="{{ $event->title }}" 
+                    <button type="submit" class="btn btn--danger btn--sm" title="Delete"
+                            data-title="{{ $event->title }}"
                             data-type="Event">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -67,8 +65,8 @@
     </tr>
 @empty
     <tr>
-        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">
-            <i class="fas fa-calendar-alt" style="font-size: 2rem; display: block; margin-bottom: 12px; opacity: 0.3;"></i>
+        <td colspan="8" style="text-align: center; color: var(--muted); padding: 48px;">
+            <i class="fas fa-calendar-alt" style="font-size: 2rem; display: block; margin-bottom: 16px; opacity: 0.3;"></i>
             No events found.
         </td>
     </tr>

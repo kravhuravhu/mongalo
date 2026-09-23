@@ -19,17 +19,15 @@ class BookController extends Controller
 
     public function index()
     {
-        // ─── GET CACHED DATA ───
-        $cacheKey = $this->cacheService->key('books', ['list' => 'all']);
+        $cacheKey = $this->cacheService->key('books', ['list' => 'paid']);
         
         $data = $this->cacheService->rememberClosure($cacheKey, function () {
             return [
                 'paidBooks' => Book::where('is_free', false)->orderBy('sort_order')->get(),
-                'freeBooks' => Book::where('is_free', true)->orderBy('sort_order')->get(),
             ];
         });
 
-        return view('public.books.index', $data);
+        return view('public.books.v150.index', $data);
     }
 
     public function show($slug)
@@ -43,7 +41,7 @@ class BookController extends Controller
             ->limit(3)
             ->get();
 
-        return view('public.books.show', compact('book', 'relatedBooks'));
+        return view('public.books.v150.show', compact('book', 'relatedBooks'));
     }
 
     /* ─── FREE BOOK DOWNLOAD WITH VALIDATION ─── */

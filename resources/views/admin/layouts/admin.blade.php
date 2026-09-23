@@ -4,40 +4,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin · ' . env('PROJECT_NAME', 'The Collective'))</title>
+    <title>@yield('title', 'Admin · ' . env('PROJECT_NAME', 'IN.iN'))</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital@0;1&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <!-- Admin CSS -->
-    <link rel="stylesheet" href="{{ secure_asset('css/admin/admin.css') }}">
+    <!-- Admin CSS v1.5.0 -->
+    <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/app.css') }}">
     @stack('styles')
 
     <!-- Chart.js -->
     @if(request()->routeIs('admin.dashboard'))
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     @endif
+
+    <!-- Dark Mode (prevents flash) -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('admin_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 <body>
 
-{{-- ─── LOADING SPINNER ─── --}}
-<div class="admin-loader" id="adminLoader">
-    <div class="admin-loader__spinner">
-        <div class="admin-loader__ring admin-loader__ring--1"></div>
-        <div class="admin-loader__ring admin-loader__ring--2"></div>
-        <div class="admin-loader__ring admin-loader__ring--3"></div>
-        <span class="admin-loader__text">Loading...</span>
-    </div>
-</div>
-
 {{-- ─── MAIN CONTENT ─── --}}
-<div class="admin-wrapper" id="adminWrapper" style="display: none; opacity: 0;">
+<div class="admin-wrapper" id="adminWrapper">
     {{-- Sidebar --}}
     @include('admin.components.sidebar')
+
+    {{-- Sidebar Mobile Toggle --}}
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    {{-- Sidebar Overlay --}}
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     {{-- Main Content --}}
     <div class="admin-content">
@@ -52,20 +59,27 @@
 </div>
 
 {{-- ─── SCRIPTS ─── --}}
-<script src="{{ secure_asset('js/admin.js') }}" defer></script>
+<script src="{{ secure_asset('js/v150/admin.js') }}" defer></script>
 @stack('scripts')
 
 {{-- ─── FLASH MESSAGES ─── --}}
 @if(session('success'))
     <div class="flash-message flash-message--success" id="flashMessage">
-        <i class="fas fa-check-circle"></i> {{ session('success') }}
+        <span><i class="fas fa-check-circle"></i> {{ session('success') }}</span>
         <button class="flash-message__close" onclick="this.parentElement.remove()">&times;</button>
     </div>
 @endif
 
 @if(session('error'))
     <div class="flash-message flash-message--error" id="flashMessage">
-        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+        <span><i class="fas fa-exclamation-circle"></i> {{ session('error') }}</span>
+        <button class="flash-message__close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+@endif
+
+@if(session('warning'))
+    <div class="flash-message flash-message--warning" id="flashMessage">
+        <span><i class="fas fa-exclamation-triangle"></i> {{ session('warning') }}</span>
         <button class="flash-message__close" onclick="this.parentElement.remove()">&times;</button>
     </div>
 @endif
@@ -75,7 +89,7 @@
     <div class="password-modal">
         <div class="password-modal__header">
             <h3 class="password-modal__title">
-                <i class="fas fa-key" style="color: var(--gold);"></i>
+                <i class="fas fa-key"></i>
                 Change Password
             </h3>
             <button class="password-modal__close" id="passwordModalClose">&times;</button>
@@ -125,7 +139,7 @@
     .password-modal-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(10, 31, 51, 0.5);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         z-index: 999999;
@@ -135,7 +149,6 @@
         padding: 24px;
         opacity: 0;
         transition: opacity 0.35s ease;
-        animation: modalFadeIn 0.35s ease forwards;
     }
 
     .password-modal-overlay--visible {
@@ -144,14 +157,17 @@
 
     .password-modal {
         background: var(--surface);
-        border-radius: 20px;
+        border-radius: var(--radius-lg);
         max-width: 480px;
         width: 100%;
         box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
         transform: scale(0.92) translateY(20px);
         transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        animation: modalSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         overflow: hidden;
+    }
+
+    .password-modal--visible {
+        transform: scale(1) translateY(0);
     }
 
     .password-modal__header {
@@ -160,25 +176,29 @@
         align-items: center;
         padding: 20px 28px;
         border-bottom: 1px solid var(--border);
-        background: var(--bg);
+        background: var(--paper);
     }
 
     .password-modal__title {
-        font-family: var(--font-serif);
+        font-family: var(--font-display);
         font-weight: 700;
         font-size: 1.2rem;
         margin: 0;
-        color: var(--text);
+        color: var(--ink);
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+
+    .password-modal__title i {
+        color: var(--gold);
     }
 
     .password-modal__close {
         background: none;
         border: none;
         font-size: 1.4rem;
-        color: var(--text-muted);
+        color: var(--muted);
         cursor: pointer;
         padding: 4px 8px;
         transition: all 0.3s ease;
@@ -186,7 +206,7 @@
     }
 
     .password-modal__close:hover {
-        color: var(--text);
+        color: var(--ink);
         transform: rotate(90deg);
     }
 
@@ -200,10 +220,13 @@
 
     .password-modal__group label {
         display: block;
-        font-weight: 600;
-        font-size: 0.85rem;
-        color: var(--text);
-        margin-bottom: 4px;
+        font-family: var(--font-sans);
+        font-weight: 500;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 6px;
     }
 
     .password-modal__group label .required {
@@ -213,20 +236,21 @@
 
     .password-modal__group input {
         width: 100%;
-        padding: 10px 14px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
+        padding: 12px 16px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
         font-family: var(--font);
         font-size: 0.9rem;
         transition: all 0.3s ease;
         background: var(--surface);
-        color: var(--text);
+        color: var(--ink);
+        min-height: 48px;
     }
 
     .password-modal__group input:focus {
         outline: none;
         border-color: var(--gold);
-        box-shadow: 0 0 0 3px var(--gold-dim);
+        box-shadow: 0 0 0 4px var(--gold-dim);
     }
 
     .password-modal__group input.error {
@@ -234,21 +258,21 @@
     }
 
     .password-modal__group input.error:focus {
-        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+        box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15);
     }
 
     .password-modal__error {
         display: block;
         font-size: 0.75rem;
         color: #dc3545;
-        margin-top: 4px;
-        min-height: 20px;
+        margin-top: 6px;
+        min-height: 18px;
     }
 
     .password-modal__help {
         display: block;
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--muted);
         margin-top: 4px;
     }
 
@@ -257,15 +281,13 @@
         gap: 12px;
         padding: 16px 28px 28px;
         border-top: 1px solid var(--border);
-        background: var(--bg);
+        background: var(--paper);
     }
 
     .password-modal__footer .btn {
         flex: 1;
         justify-content: center;
-        padding: 12px 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
+        min-height: 46px;
     }
 
     #passwordModalMessage {
@@ -280,7 +302,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         border-left: 4px solid #28a745;
     }
 
@@ -292,13 +314,13 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         border-left: 4px solid #dc3545;
     }
 
     @media (max-width: 540px) {
         .password-modal {
-            border-radius: 16px;
+            border-radius: var(--radius);
         }
 
         .password-modal__header {
@@ -340,8 +362,12 @@
                 passwordModal.style.display = 'flex';
                 setTimeout(function() {
                     passwordModal.classList.add('password-modal-overlay--visible');
+                    const modal = document.querySelector('.password-modal');
+                    if (modal) {
+                        modal.classList.add('password-modal--visible');
+                    }
                 }, 10);
-                // ─── CLEAR FORM ───
+
                 passwordForm.reset();
                 passwordMessage.innerHTML = '';
                 document.querySelectorAll('.password-modal__group input').forEach(function(input) {
@@ -359,6 +385,10 @@
         // ─── CLOSE MODAL ───
         function closePasswordModal() {
             passwordModal.classList.remove('password-modal-overlay--visible');
+            const modal = document.querySelector('.password-modal');
+            if (modal) {
+                modal.classList.remove('password-modal--visible');
+            }
             setTimeout(function() {
                 passwordModal.style.display = 'none';
             }, 400);
@@ -389,7 +419,6 @@
             passwordForm.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                // ─── CLEAR PREVIOUS ERRORS ───
                 document.querySelectorAll('.password-modal__group input').forEach(function(input) {
                     input.classList.remove('error');
                 });
@@ -398,7 +427,6 @@
                 });
                 passwordMessage.innerHTML = '';
 
-                // ─── SHOW LOADING ───
                 passwordSubmit.disabled = true;
                 passwordBtnText.style.display = 'none';
                 passwordBtnLoader.style.display = 'inline';
@@ -418,7 +446,6 @@
                 })
                 .then(function(data) {
                     if (data.success) {
-                        // ─── SHOW SUCCESS ───
                         passwordMessage.innerHTML = `
                             <div class="password-modal__success">
                                 <i class="fas fa-check-circle"></i>
@@ -426,10 +453,8 @@
                             </div>
                         `;
 
-                        // ─── RESET FORM ───
                         passwordForm.reset();
 
-                        // ─── REDIRECT TO LOGIN IF LOGOUT REQUIRED ───
                         if (data.logout) {
                             setTimeout(function() {
                                 window.location.href = '{{ route("admin.login") }}';
@@ -440,7 +465,6 @@
                             }, 2000);
                         }
                     } else {
-                        // ─── SHOW ERROR ───
                         if (data.errors) {
                             for (const [field, messages] of Object.entries(data.errors)) {
                                 const errorEl = document.getElementById(field + '_error');
@@ -461,7 +485,6 @@
                             `;
                         }
 
-                        // ─── RESET BUTTON ───
                         passwordSubmit.disabled = false;
                         passwordBtnText.style.display = 'inline';
                         passwordBtnLoader.style.display = 'none';
@@ -492,46 +515,6 @@
                 }
             });
         });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // ─── HIDE LOADER ───
-        const loader = document.getElementById('adminLoader');
-        const wrapper = document.getElementById('adminWrapper');
-
-        if (loader && wrapper) {
-            // Show wrapper with fade in
-            wrapper.style.display = 'flex';
-            
-            // Wait for all resources to load (images, fonts, etc)
-            window.addEventListener('load', function() {
-                // Fade in wrapper
-                wrapper.style.transition = 'opacity 0.4s ease';
-                wrapper.style.opacity = '1';
-                
-                // Hide loader with animation
-                setTimeout(function() {
-                    loader.classList.add('admin-loader--hidden');
-                    setTimeout(function() {
-                        loader.style.display = 'none';
-                    }, 500);
-                }, 400);
-            });
-
-            // Fallback
-            setTimeout(function() {
-                if (!loader.classList.contains('admin-loader--hidden')) {
-                    wrapper.style.transition = 'opacity 0.4s ease';
-                    wrapper.style.opacity = '1';
-                    loader.classList.add('admin-loader--hidden');
-                    setTimeout(function() {
-                        loader.style.display = 'none';
-                    }, 500);
-                }
-            }, 3000);
-        }
 
         // ─── FLASH MESSAGES ───
         const flash = document.getElementById('flashMessage');
@@ -544,143 +527,35 @@
             }, 5000);
         }
 
-        // ─── REAL-TIME SEARCH ───
-        const searchInput = document.getElementById('adminSearchInput');
-        const searchResults = document.getElementById('adminSearchResults');
-        const searchSpinner = document.getElementById('adminSearchSpinner');
-        const clearBtn = document.getElementById('adminSearchClear');
+        // ─── SIDEBAR TOGGLE ───
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.admin-sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-        if (searchInput && searchResults) {
-            let searchTimeout = null;
-            let currentQuery = searchInput.value.trim();
-
-            // ─── PERFORM SEARCH ───
-            function performSearch(query) {
-                const url = new URL(window.location.href);
-                const filter = url.searchParams.get('filter') || '';
-
-                let searchUrl = window.location.pathname + '?';
-                if (filter) {
-                    searchUrl += 'filter=' + filter + '&';
-                }
-                if (query) {
-                    searchUrl += 'search=' + encodeURIComponent(query);
-                }
-
-                // Show spinner
-                if (searchSpinner) {
-                    searchSpinner.style.display = 'inline-block';
-                }
-
-                fetch(searchUrl, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(function(response) {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(function(data) {
-                    if (data.html) {
-                        searchResults.innerHTML = data.html;
-                    }
-
-                    if (data.total !== undefined) {
-                        const countEl = document.querySelector('.books-index__filter-count');
-                        if (countEl) {
-                            countEl.textContent = data.total + ' books';
-                        }
-                    }
-
-                    // Show/hide clear button
-                    if (clearBtn) {
-                        if (query.length > 0) {
-                            clearBtn.style.display = 'inline-flex';
-                        } else {
-                            clearBtn.style.display = 'none';
-                        }
-                    }
-
-                    if (searchSpinner) {
-                        searchSpinner.style.display = 'none';
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Search error:', error);
-                    if (searchSpinner) {
-                        searchSpinner.style.display = 'none';
-                    }
-                });
-            }
-
-            // ─── SEARCH INPUT HANDLER ───
-            searchInput.addEventListener('input', function() {
-                const query = this.value.trim();
-
-                if (searchTimeout) {
-                    clearTimeout(searchTimeout);
-                }
-
-                searchTimeout = setTimeout(function() {
-                    performSearch(query);
-                }, 400);
+        if (sidebarToggle && sidebar && sidebarOverlay) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('admin-sidebar--open');
+                sidebarOverlay.classList.toggle('sidebar-overlay--active');
+                this.classList.toggle('sidebar-toggle--active');
             });
 
-            // ─── CLEAR SEARCH ───
-            if (clearBtn) {
-                clearBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    searchInput.value = '';
-                    searchInput.focus();
-                    performSearch('');
-                });
-            }
-
-            // ─── KEYBOARD SHORTCUTS ───
-            document.addEventListener('keydown', function(e) {
-                // Ctrl + / to focus search
-                if ((e.ctrlKey || e.metaKey) && e.key === '/') {
-                    e.preventDefault();
-                    searchInput.focus();
-                    searchInput.select();
-                }
-
-                // Escape to clear search
-                if (e.key === 'Escape') {
-                    if (document.activeElement === searchInput) {
-                        searchInput.value = '';
-                        searchInput.blur();
-                        performSearch('');
-                    }
-                }
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('admin-sidebar--open');
+                sidebarOverlay.classList.remove('sidebar-overlay--active');
+                sidebarToggle.classList.remove('sidebar-toggle--active');
             });
-
-            // ─── INITIAL STATE ───
-            if (searchInput.value.trim().length > 0 && clearBtn) {
-                clearBtn.style.display = 'inline-flex';
-            }
         }
 
-        // ─── FORM SUBMIT WITH LOADING ───
-        document.querySelectorAll('.form-loading').forEach(function(form) {
-            form.addEventListener('submit', function() {
-                const submitBtn = this.querySelector('button[type="submit"]');
-                if (submitBtn) {
-                    const originalText = submitBtn.innerHTML;
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-
-                    setTimeout(function() {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = originalText;
-                    }, 30000);
-                }
+        // ─── THEME TOGGLE ───
+        const themeToggle = document.getElementById('adminThemeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('admin_theme', next);
             });
-        });
+        }
     });
 </script>
 
