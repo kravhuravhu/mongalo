@@ -25,29 +25,30 @@
         <div class="home__hero-content-wrap">
             <div class="wrap">
                 <div class="home__hero-content">
-                    <span class="home__hero-badge">
+                                        <span class="home__hero-badge">
                         <i class="fas fa-cross" aria-hidden="true"></i>
-                        Faith · Identity · Mission
+                        I am IN Him, He is IN me
                     </span>
 
                     <h1 class="home__hero-title">
-                        I am <span class="home__hero-title-em">IN</span> Him,
-                        <span class="home__hero-title-divider">//</span>
-                        He is <span class="home__hero-title-em">iN</span> me.
+                        A ministry of water baptism, Spirit baptism, and equipping believers to serve.
                     </h1>
 
                     <p class="home__hero-subtitle">
-                        A deeper walk. A greater impact.
+                        For believers seeking assurance or baptism, those ready to start their own mission, and anyone exploring faith for the first time.
                     </p>
 
                     <p class="home__hero-subtext">
-                        I am Arthur Mongalo. This is my response to the call.
+                        Led by Arthur Mongalo, an ordained pastor based in Gauteng, South Africa.
                     </p>
 
                     <div class="home__hero-actions">
-                        <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
-                            <span>Read More</span>
+                        <a href="{{ route('baptism') }}" class="btn btn--primary btn--lg">
+                            <span>Register Your Interest</span>
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a href="{{ route('about') }}" class="btn btn--outline btn--lg">
+                            <span>Read My Story</span>
                         </a>
                     </div>
                 </div>
@@ -61,7 +62,7 @@
         </div>
     </section>
 
-    {{-- ─── SECTION 2: VISION ─── --}}
+        {{-- ─── SECTION 2: VISION ─── --}}
     <section class="home__vision">
         <div class="home__vision-bg">
             <div class="home__vision-shape home__vision-shape--1"></div>
@@ -77,37 +78,80 @@
                         pray for at least a million people,<br>
                         and equip every believer for spiritual growth."
                     </p>
-                    <cite>— Arthur Mongalo</cite>
+                    - Arthur Mongalo
                 </blockquote>
-
-                <div class="home__vision-pillars">
-                    <div class="home__vision-pillar">
-                        <div class="home__vision-pillar-icon">
-                            <i class="fas fa-water"></i>
-                        </div>
-                        <h4>Water Baptism</h4>
-                        <p>The first step of obedience</p>
-                    </div>
-                    <div class="home__vision-pillar">
-                        <div class="home__vision-pillar-icon">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <h4>Spirit Baptism</h4>
-                        <p>Empowered for service</p>
-                    </div>
-                    <div class="home__vision-pillar">
-                        <div class="home__vision-pillar-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h4>Renewal of Mind</h4>
-                        <p>Transformed by truth</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    {{-- ─── SECTION 3: FOUR PILLARS ─── --}}
+        {{-- ─── SECTION 3: THE WEEKEND CAMP ─── --}}
+    <section class="home__pillars home__pillars--camp">
+        <div class="home__pillars-bg">
+            <div class="home__pillars-shape home__pillars-shape--1"></div>
+            <div class="home__pillars-shape home__pillars-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">How It Works</span>
+                <h2 class="section-header__title">The Weekend <span>Camp</span></h2>
+                <p class="section-header__subtitle">
+                    Teaching, water baptism and Spirit baptism, brought together over one weekend.
+                </p>
+            </div>
+
+            {{-- ─── DAY STRIP ─── --}}
+            <div class="home__pillars-strip">
+                <div class="home__pillars-strip-item">
+                    <span class="home__pillars-strip-num">Fri</span>
+                    <span class="home__pillars-strip-label">Teaching</span>
+                </div>
+                <div class="home__pillars-strip-item">
+                    <span class="home__pillars-strip-num">Sat</span>
+                    <span class="home__pillars-strip-label">Water Baptism</span>
+                </div>
+                <div class="home__pillars-strip-item">
+                    <span class="home__pillars-strip-num">Sun</span>
+                    <span class="home__pillars-strip-label">Spirit Baptism</span>
+                </div>
+            </div>
+
+            {{-- ─── CARDS GRID ─── --}}
+            @php
+                $camp = [
+                    [
+                        'icon' => 'fa-book-open',
+                        'title' => 'Friday: Teaching',
+                        'description' => 'The weekend opens with teaching on faith, identity and what it means to be baptised in water and in the Spirit.'
+                    ],
+                    [
+                        'icon' => 'fa-water',
+                        'title' => 'Saturday: Water Baptism',
+                        'description' => 'A day centred on water baptism, an act of obedience and a public step in faith.'
+                    ],
+                    [
+                        'icon' => 'fa-fire',
+                        'title' => 'Sunday: Spirit Baptism',
+                        'description' => 'The weekend closes with Spirit baptism, equipping believers to serve.'
+                    ]
+                ];
+            @endphp
+
+            <div class="home__pillars-grid">
+                @foreach($camp as $day)
+                    <div class="home__pillars-card">
+                        <div class="home__pillars-card-icon">
+                            <i class="fas {{ $day['icon'] }}"></i>
+                        </div>
+                        <h4 class="home__pillars-card-title">{{ $day['title'] }}</h4>
+                        <p class="home__pillars-card-desc">{{ $day['description'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 4: FOUR PILLARS ─── --}}
     <section class="home__pillars">
         <div class="home__pillars-bg">
             <div class="home__pillars-shape home__pillars-shape--1"></div>
