@@ -29,7 +29,7 @@
                     </h1>
 
                     <p class="community__hero-text">
-                        A WhatsApp community for daily encouragement, prayer, book updates and conversations about baptism. No pressure — just a family walking in faith.
+                        A community taking shape around faith, water baptism, Spirit baptism and equipping believers to serve. Be among the first to join as we launch.
                     </p>
 
                     <div class="community__hero-actions">
