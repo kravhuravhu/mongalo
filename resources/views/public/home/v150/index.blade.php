@@ -27,27 +27,28 @@
                 <div class="home__hero-content">
                     <span class="home__hero-badge">
                         <i class="fas fa-cross" aria-hidden="true"></i>
-                        Faith · Identity · Mission
+                        I am IN Him, He is IN me
                     </span>
 
                     <h1 class="home__hero-title">
-                        I am <span class="home__hero-title-em">IN</span> Him,
-                        <span class="home__hero-title-divider">//</span>
-                        He is <span class="home__hero-title-em">iN</span> me.
+                        A ministry of water baptism, Spirit baptism, and equipping believers to serve.
                     </h1>
 
                     <p class="home__hero-subtitle">
-                        A deeper walk. A greater impact.
+                        For believers seeking assurance or baptism, people who want to serve but do not know where to begin, and anyone exploring Christianity or outside a church community.
                     </p>
 
                     <p class="home__hero-subtext">
-                        I am Arthur Mongalo. This is my response to the call.
+                        Led by Arthur Mongalo, an ordained pastor based in Gauteng, South Africa.
                     </p>
 
                     <div class="home__hero-actions">
-                        <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
-                            <span>Read More</span>
+                        <a href="{{ route('baptism') }}" class="btn btn--primary btn--lg">
+                            <span>Register Your Interest</span>
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a href="{{ route('about') }}" class="btn btn--outline btn--lg">
+                            <span>Read My Story</span>
                         </a>
                     </div>
                 </div>
@@ -77,37 +78,64 @@
                         pray for at least a million people,<br>
                         and equip every believer for spiritual growth."
                     </p>
-                    <cite>— Arthur Mongalo</cite>
+                    - Arthur Mongalo
                 </blockquote>
-
-                <div class="home__vision-pillars">
-                    <div class="home__vision-pillar">
-                        <div class="home__vision-pillar-icon">
-                            <i class="fas fa-water"></i>
-                        </div>
-                        <h4>Water Baptism</h4>
-                        <p>The first step of obedience</p>
-                    </div>
-                    <div class="home__vision-pillar">
-                        <div class="home__vision-pillar-icon">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <h4>Spirit Baptism</h4>
-                        <p>Empowered for service</p>
-                    </div>
-                    <div class="home__vision-pillar">
-                        <div class="home__vision-pillar-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h4>Renewal of Mind</h4>
-                        <p>Transformed by truth</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    {{-- ─── SECTION 3: FOUR PILLARS ─── --}}
+    {{-- ─── SECTION 3: THE CAMP ─── --}}
+    <section class="home__pillars home__pillars--camp">
+        <div class="home__pillars-bg">
+            <div class="home__pillars-shape home__pillars-shape--1"></div>
+            <div class="home__pillars-shape home__pillars-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">How It Works</span>
+                <h2 class="section-header__title">The <span>Camp</span></h2>
+                <p class="section-header__subtitle">
+                    Teaching, water baptism and Spirit baptism, brought together across three days.
+                </p>
+            </div>
+
+            {{-- ─── CARDS GRID ─── --}}
+            @php
+                $camp = [
+                    [
+                        'icon' => 'fa-book-open',
+                        'title' => 'Day 1: Teaching (Induction)',
+                        'description' => 'The camp opens with teaching on faith, identity and what it means to be baptised in water and in the Spirit.'
+                    ],
+                    [
+                        'icon' => 'fa-water',
+                        'title' => 'Day 2: Water Baptism (Immersion)',
+                        'description' => 'A day centred on water baptism, an act of obedience and a public step in faith.'
+                    ],
+                    [
+                        'icon' => 'fa-fire',
+                        'title' => 'Day 3: Spirit Baptism (Activation)',
+                        'description' => 'The final day is centred on Spirit baptism, equipping believers to serve.'
+                    ]
+                ];
+            @endphp
+
+            <div class="home__pillars-grid">
+                @foreach($camp as $day)
+                    <div class="home__pillars-card">
+                        <div class="home__pillars-card-icon">
+                            <i class="fas {{ $day['icon'] }}"></i>
+                        </div>
+                        <h4 class="home__pillars-card-title">{{ $day['title'] }}</h4>
+                        <p class="home__pillars-card-desc">{{ $day['description'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 4: FOUR PILLARS ─── --}}
     <section class="home__pillars">
         <div class="home__pillars-bg">
             <div class="home__pillars-shape home__pillars-shape--1"></div>
@@ -116,7 +144,7 @@
 
         <div class="wrap">
             <div class="section-header">
-                <span class="section-header__eyebrow">The Journey</span>
+                <span class="section-header__eyebrow">The Teaching</span>
                 <h2 class="section-header__title">Four Pillars of <span>Faith</span></h2>
                 <p class="section-header__subtitle">
                     Every believer moves through this journey. Believing, converting, baptism and commission.
@@ -164,7 +192,7 @@
                     [
                         'icon' => 'fa-seedling',
                         'title' => 'Commission',
-                        'description' => 'Guided, supported and sent. Every believer discovers their vision and purpose.'
+                        'description' => 'Guided, supported and sent. Every believer is equipped to begin their own personal mission.'
                     ]
                 ];
             @endphp
@@ -183,7 +211,7 @@
         </div>
     </section>
 
-    {{-- ─── SECTION 4: ARTHUR CTA ─── --}}
+    {{-- ─── SECTION 5: ARTHUR CTA ─── --}}
     <section class="home__arthur">
         <div class="home__arthur-bg">
             <div class="home__arthur-shape home__arthur-shape--1"></div>
@@ -192,24 +220,87 @@
 
         <div class="wrap">
             <div class="home__arthur-content">
-                <span class="home__arthur-eyebrow">Meet the Visionary</span>
+                <span class="home__arthur-eyebrow">Meet Arthur Mongalo</span>
                 <h2 class="home__arthur-title">
-                    The story behind <span>IN.iN</span>
+                    Why Arthur is starting this <span>ministry</span>
                 </h2>
                 <p class="home__arthur-subtitle">
-                    Every vision has a voice. Every movement has a beginning.
+                    Arthur kept responding to the call to accept Christ, and kept seeking baptism, until he found the assurance so many still search for. That search shapes everything this ministry offers.
                 </p>
 
                 <div class="home__arthur-actions">
                     <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
                         <i class="fas fa-user" aria-hidden="true"></i>
-                        <span>Read My Story</span>
-                    </a>
-                    <a href="{{ route('invite') }}" class="btn btn--outline btn--lg">
-                        <i class="fas fa-handshake" aria-hidden="true"></i>
-                        <span>Invite Arthur</span>
+                        <span>Read Arthur's Story</span>
                     </a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 6: WAYS TO GET INVOLVED ─── --}}
+    <section class="home__pillars home__pillars--involve">
+        <div class="home__pillars-bg">
+            <div class="home__pillars-shape home__pillars-shape--1"></div>
+            <div class="home__pillars-shape home__pillars-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">Get Involved</span>
+                <h2 class="section-header__title">Ways to <span>Take Part</span></h2>
+                <p class="section-header__subtitle">
+                    Whether you lead a church, are ready to be baptised, want to belong to a community, or need free literature for your group, there is a way in.
+                </p>
+            </div>
+
+            {{-- ─── CARDS GRID ─── --}}
+            @php
+                $involve = [
+                    [
+                        'icon' => 'fa-handshake',
+                        'title' => 'Invite Arthur',
+                        'description' => 'Invite Arthur to personally teach on Baptisms, Divine Identity, the New Covenant, Jesus Revealed and more, depending on your setting.',
+                        'route' => route('invite'),
+                        'label' => 'Send an Invite'
+                    ],
+                    [
+                        'icon' => 'fa-water',
+                        'title' => 'Request Baptism',
+                        'description' => 'Request to be taught about water and Spirit baptism, and take that step yourself when you are ready.',
+                        'route' => route('baptism'),
+                        'label' => 'Register Interest'
+                    ],
+                    [
+                        'icon' => 'fa-people-group',
+                        'title' => 'Join the Community',
+                        'description' => 'Be among the first to join a community connecting people across church backgrounds around this mission.',
+                        'route' => route('community'),
+                        'label' => 'Join the Community'
+                    ],
+                    [
+                        'icon' => 'fa-box-open',
+                        'title' => 'Free Christian Literature',
+                        'description' => 'Request free copies of My Salvation Companion, small Bibles and other Christian literature for your church or group. Delivered, couriered, or collected, all costs covered by Arthur.',
+                        'route' => route('contact'),
+                        'label' => 'Request Literature'
+                    ]
+                ];
+            @endphp
+
+            <div class="home__pillars-grid">
+                @foreach($involve as $way)
+                    <div class="home__pillars-card">
+                        <div class="home__pillars-card-icon">
+                            <i class="fas {{ $way['icon'] }}"></i>
+                        </div>
+                        <h4 class="home__pillars-card-title">{{ $way['title'] }}</h4>
+                        <p class="home__pillars-card-desc">{{ $way['description'] }}</p>
+                        <a href="{{ $way['route'] }}" class="btn btn--outline">
+                            <span>{{ $way['label'] }}</span>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
