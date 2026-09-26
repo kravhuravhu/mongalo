@@ -70,7 +70,7 @@
                     </span>
 
                     <h1 class="invite__hero-title">
-                        Invite Arthur Mongalo<br>
+                        Invite <span>Arthur Mongalo</span><br>
                         to <span>teach</span> at your event.
                     </h1>
 

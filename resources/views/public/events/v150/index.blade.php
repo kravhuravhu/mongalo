@@ -148,7 +148,7 @@
                 </div>
 
                 <p class="events__hero-empty-text">
-                    Nothing on the calendar yet. Sit tight — and be the first to know by joining our WhatsApp community.
+                    Nothing on the calendar yet. Sit tight and be the first to know by joining our WhatsApp community.
                 </p>
 
                 <div class="events__hero-actions">

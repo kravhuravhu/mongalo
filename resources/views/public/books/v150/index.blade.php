@@ -1,6 +1,6 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Books & Resources')
+@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Books Library')
 
 @section('content')
 
@@ -27,11 +27,11 @@
         <div class="wrap">
             <div class="books__hero-content">
                 <h1 class="books__hero-title">
-                    Books &amp; <span>Resources</span>
+                    Books <span>Library</span>
                 </h1>
 
                 <p class="books__hero-subtitle">
-                    Tools for spiritual growth — for the walk ahead.
+                    Tools for spiritual growth, for the walk ahead.
                 </p>
             </div>
         </div>
@@ -74,7 +74,7 @@
                         @if($featuredBook->is_featured)
                             <span class="books__featured-badge">
                                 <i class="fas fa-star" aria-hidden="true"></i>
-                                Bestseller
+                                Featured
                             </span>
                         @endif
                     </div>
@@ -221,7 +221,7 @@
                         Looking for free resources?
                     </h3>
                     <p class="books__free-strip-desc">
-                        Booklets, pamphlets, free Bibles and study guides — all available at no cost.
+                        Booklets, pamphlets, free Bibles and study guides, all available at no cost.
                     </p>
                 </div>
 
