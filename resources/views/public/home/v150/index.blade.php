@@ -29,10 +29,11 @@
                         <i class="fas fa-cross" aria-hidden="true"></i>
                         I am IN Him, He is IN me
                     </span>
-
-                    <h1 class="home__hero-title">
-                        A ministry of water baptism, Spirit baptism, and equipping believers to serve.
-                    </h1>
+                        <h1 class="home__hero-title">
+                                    A <span class="home__hero-title-em">ministry</span> of baptisms,
+                                            <span class="home__hero-title-divider">&</span>
+                                                equipping <span class="home__hero-title-em">believers</span>.
+                        </h1>
 
                     <p class="home__hero-subtitle">
                         For believers seeking assurance or baptism, people who want to serve but do not know where to begin, and anyone exploring Christianity or outside a church community.
