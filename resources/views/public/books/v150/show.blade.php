@@ -41,10 +41,10 @@
                         <div class="book-detail__cover-shine"></div>
                     </div>
 
-                    @if($book->is_featured)
+                                        @if($book->is_featured)
                         <span class="book-detail__badge">
                             <i class="fas fa-star" aria-hidden="true"></i>
-                            Bestseller
+                            Featured
                         </span>
                     @endif
                 </div>
