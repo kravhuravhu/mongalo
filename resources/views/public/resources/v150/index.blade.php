@@ -25,7 +25,7 @@
                 </h1>
 
                 <p class="resources__hero-subtitle">
-                    Booklets, pamphlets, free Bibles and study guides — free forever.
+                    Booklets, pamphlets, free Bibles and study guides, free forever.
                 </p>
             </div>
         </div>
@@ -185,7 +185,7 @@
                     </div>
                     <h3 class="resources__empty-title">No resources yet</h3>
                     <p class="resources__empty-desc">
-                        Check back soon — free resources are on the way.
+                        Check back soon, free resources are on the way.
                     </p>
                 </div>
             @endif
@@ -213,7 +213,7 @@
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h4 class="resources__how-title">Instant Download</h4>
-                    <p class="resources__how-desc">Click, download, read — on any device.</p>
+                    <p class="resources__how-desc">Click, download, read, on any device.</p>
                 </div>
 
                 <div class="resources__how-item">
@@ -245,7 +245,7 @@
                 </h2>
 
                 <p class="resources__books-cta-desc">
-                    Deep-dive teachings like Divine Identity and My Salvation Companion are available in our bookstore.
+                    Deep-dive teaching like Divine Identity is available in our books library.
                 </p>
 
                 <a href="{{ route('books.index') }}" class="btn btn--primary btn--lg">

@@ -8,44 +8,42 @@
     // ─── TIMELINE DATA 
     $timeline = [
         [
-            'year' => '20XX',
-            'title' => '[PLACEHOLDER — Milestone Title]',
-            'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'year' => '',
+            'title' => 'Leading in Ministry',
+            'text' => 'Led a cell group at Emmanuel Christian Church under Apostle Vincent Loate for several years, before relocating for work.'
         ],
         [
-            'year' => '20XX',
-            'title' => '[PLACEHOLDER — Milestone Title]',
-            'text' => 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            'year' => '',
+            'title' => 'A New City, A New Fellowship',
+            'text' => 'Relocated to Polokwane, Limpopo. Fellowshipped at God\'s Tabernacle under Dr David Molutsi.'
         ],
         [
-            'year' => '20XX',
-            'title' => '[PLACEHOLDER — Milestone Title]',
-            'text' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+            'year' => '2016',
+            'title' => 'Remnants Gathering Fellowship',
+            'text' => 'Launched the church. Its name proved difficult for elderly people in the village to pronounce, and its eagle and dove logo was hard for members to interpret.'
         ],
         [
-            'year' => '20XX',
-            'title' => '[PLACEHOLDER — Milestone Title]',
-            'text' => 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+            'year' => '2021',
+            'title' => 'Becoming Christ Tabernacle-Pneuma',
+            'text' => 'Changed the name and logo to something clearer for the congregation.'
         ],
         [
-            'year' => '20XX',
-            'title' => '[PLACEHOLDER — Milestone Title]',
-            'text' => 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
+            'year' => '2025',
+            'title' => 'Handover to God\'s Presence Ministries',
+            'text' => 'Handed the church to God\'s Presence Ministries under Reverend Cornelius Maphoto, due to relocation and collaboration.'
         ]
     ];
 
-    // ─── TOP 10 THINGS ───
+    // ─── A FEW THINGS ───
     $topTen = [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-        'Duis aute irure dolor in reprehenderit in voluptate velit.',
-        'Excepteur sint occaecat cupidatat non proident, sunt in culpa.',
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur.',
-        'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.',
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam.',
-        'Quis autem vel eum iure reprehenderit qui in ea voluptate velit.'
+        'Studied Electrical Engineering, specialising in Process Instrumentation.',
+        'Completed a Postgraduate Diploma in Business Management, and has a background in Project Management.',
+        'Founder of two companies, MENG and Monono Holdings.',
+        'Married for over 19 years, with three children.',
+        'Based in Gauteng, South Africa.',
+        'An ordained pastor and published author.',
+        'Led a church in Limpopo for nine years.',
+        'Has travelled to Lesotho, Zimbabwe, Zambia, Botswana, Ghana and the United Kingdom.'
     ];
 
     // ─── VALUES ───
@@ -53,32 +51,32 @@
         [
             'icon' => 'fa-heart',
             'title' => 'Love',
-            'description' => 'We love God and love people. Every action is rooted in genuine love for others.'
+            'description' => 'The invitation extends to everyone, believers seeking assurance, those exploring faith, and people outside a church community altogether.'
         ],
         [
             'icon' => 'fa-handshake',
             'title' => 'Community',
-            'description' => 'We believe we are better together. Community is a family walking through life and faith side by side.'
+            'description' => 'A community connecting people across church backgrounds is being built around this mission, so no one has to walk it alone.'
         ],
         [
             'icon' => 'fa-book-open',
             'title' => 'Truth',
-            'description' => 'We stand on the Word of God. Scripture is our foundation, our guide and our authority.'
+            'description' => 'The teaching stands on Scripture, John 3:5 on being born of water and the Spirit, and the Great Commission passages that shape the ministry\'s instruction.'
         ],
         [
             'icon' => 'fa-seedling',
             'title' => 'Growth',
-            'description' => 'We are committed to spiritual growth. From salvation to renewal, we walk the journey together.'
+            'description' => 'From teaching, to water baptism, to Spirit baptism, every step is designed to prepare believers to serve.'
         ],
         [
             'icon' => 'fa-hand-holding-heart',
             'title' => 'Service',
-            'description' => 'Everything we give is offered freely, just as we have freely received.'
+            'description' => 'Free Christian literature, including My Salvation Companion and small Bibles, is available for churches and groups who request it.'
         ],
         [
             'icon' => 'fa-pray',
             'title' => 'Faith',
-            'description' => 'We walk by faith, not by sight. Faith is our response to God\'s grace.'
+            'description' => 'Assurance does not always come easily. This ministry exists for believers still seeking that certainty, the same search that shaped Arthur\'s own journey.'
         ]
     ];
 @endphp
@@ -125,11 +123,11 @@
                 {{-- ─── RIGHT: SMALL INTRO ─── --}}
                 <div class="about__hero-right">
                     <p class="about__hero-text">
-                        I didn't grow up with a perfect faith. I grew up getting born again over and over. Getting baptised over and over. Something I now help others avoid.
+                        I responded to the call to accept Christ more than once before it finally took root, and I was baptised in water twice before I found real assurance. Helping others find that assurance sooner is part of why this ministry exists.
                     </p>
 
                     <p class="about__hero-text-secondary">
-                        I am Arthur Mongalo, a speaker, & author.
+                        I am Arthur Mongalo, an ordained pastor and author, based in Gauteng, South Africa.
                     </p>
 
                     <div class="about__hero-actions">
@@ -171,22 +169,22 @@
                 <div class="about__story-content">
                     <span class="about__story-eyebrow">The Beginning</span>
                     <h2 class="about__story-title">
-                        A Walk That Started<br>
-                        <span>Over and Over</span>
+                        The First Calls<br>
+                        <span>to Faith</span>
                     </h2>
 
                     <p class="about__story-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        A travelling evangelist came to my village in the 1990s, before I was even a teenager. He made an altar call at every service, and I went forward four days in a row. I felt compelled to. I caught myself crying, feeling the need to accept Christ.
                     </p>
 
                     <p class="about__story-text">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        In 1997 or 1998, I stood up again, this time at Bethesda Christian Church, visiting under Pastor Clement Ibe. I was born again, again. Both times, I felt that same need to be born again, and both times it oddly felt like God was calling me into His service too. I never doubted it was beyond just getting saved.
                     </p>
 
                     <blockquote class="about__story-quote">
                         <i class="fas fa-quote-left" aria-hidden="true"></i>
-                        <p>"I deliberately highlighted a somewhat chaotic footing in my formative stages — getting born again over and over, getting baptised over and over again. Something I wish to help solve for others."</p>
-                        <cite>— Arthur Mongalo</cite>
+                        <p>"I deliberately highlighted a somewhat chaotic footing in my formative stages, getting born again over and over, getting baptised over and over again. Something I wish to help solve for others."</p>
+                        - Arthur Mongalo
                     </blockquote>
                 </div>
             </div>
@@ -211,9 +209,11 @@
             <div class="about__timeline-list">
                 @foreach($timeline as $index => $item)
                     <div class="about__timeline-item">
-                        <div class="about__timeline-year">
-                            <span>{{ $item['year'] }}</span>
-                        </div>
+                        
+                            <div class="about__timeline-year">
+                                <span>{{ $item['year'] }}</span>
+                            </div>
+                        
 
                         <div class="about__timeline-dot">
                             <span></span>
@@ -229,31 +229,7 @@
         </div>
     </section>
 
-    {{-- ─── SECTION 4: TOP 10 THINGS ─── --}}
-    <section class="about__top10">
-        <div class="about__top10-bg">
-            <div class="about__top10-shape about__top10-shape--1"></div>
-            <div class="about__top10-shape about__top10-shape--2"></div>
-        </div>
-
-        <div class="wrap">
-            <div class="section-header">
-                <span class="section-header__eyebrow">Quick Facts</span>
-                <h2 class="section-header__title">Top 10 Things <span>About Me</span></h2>
-            </div>
-
-            <div class="about__top10-grid">
-                @foreach($topTen as $index => $item)
-                    <div class="about__top10-item">
-                        <span class="about__top10-num">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                        <p class="about__top10-text">{{ $item }}</p>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- ─── SECTION 5: MISSION & VISION ─── --}}
+    {{-- ─── SECTION 4: MISSION & VISION ─── --}}
     <section class="about__mv">
         <div class="about__mv-bg">
             <div class="about__mv-shape about__mv-shape--1"></div>
@@ -279,7 +255,7 @@
                     <div class="about__mv-card-content">
                         <h3 class="about__mv-card-title">Mission</h3>
                         <p class="about__mv-card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                            My mission is to teach water and Spirit baptism, and to equip believers to serve. It is for born-again Christians who lack assurance of salvation or baptism, believers who want to start their own mission but do not know where to begin, and anyone exploring faith or living outside a church community.
                         </p>
                     </div>
                 </div>
@@ -297,10 +273,34 @@
                     <div class="about__mv-card-content">
                         <h3 class="about__mv-card-title">Vision</h3>
                         <p class="about__mv-card-text">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            I have a vision to baptise at least a million people in water, pray for at least a million people, and equip every believer for spiritual growth.
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 5: A FEW THINGS ─── --}}
+    <section class="about__top10">
+        <div class="about__top10-bg">
+            <div class="about__top10-shape about__top10-shape--1"></div>
+            <div class="about__top10-shape about__top10-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">Quick Facts</span>
+                <h2 class="section-header__title">A Few Things <span>About Me</span></h2>
+            </div>
+
+            <div class="about__top10-grid">
+                @foreach($topTen as $index => $item)
+                    <div class="about__top10-item">
+                        <span class="about__top10-num">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                        <p class="about__top10-text">{{ $item }}</p>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -314,10 +314,10 @@
 
         <div class="wrap">
             <div class="section-header">
-                <span class="section-header__eyebrow">What I Believe</span>
-                <h2 class="section-header__title">Core <span>Values</span></h2>
+                <span class="section-header__eyebrow">The Foundations</span>
+                <h2 class="section-header__title">What Shapes <span>This Ministry</span></h2>
                 <p class="section-header__subtitle">
-                    These six values shape everything I do — the mission, the resources, and how I serve the community.
+                    A few themes that run through the teaching, the camp and the community being built around it.
                 </p>
             </div>
 
@@ -350,13 +350,13 @@
                     to <span>Speak</span>
                 </h2>
                 <p class="about__cta-subtitle">
-                    Bring a message of hope, transformation and practical faith to your church, event or organisation.
+                    Arthur speaks on Baptisms, Divine Identity, the New Covenant and Jesus Revealed, depending on your church or event's setting.
                 </p>
 
                 <div class="about__cta-actions">
                     <a href="{{ route('invite') }}" class="btn btn--primary btn--lg">
                         <i class="fas fa-handshake" aria-hidden="true"></i>
-                        <span>Request an Invitation</span>
+                        <span>Invite Arthur</span>
                     </a>
                 </div>
             </div>

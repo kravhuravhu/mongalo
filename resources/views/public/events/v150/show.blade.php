@@ -312,7 +312,7 @@
                     </div>
                     <h4 class="event-detail__expect-title">Prayer</h4>
                     <p class="event-detail__expect-desc">
-                        Dedicated time for prayer — for breakthrough, healing and intercession.
+                        Dedicated time for prayer for breakthrough, healing and intercession.
                     </p>
                 </div>
             </div>

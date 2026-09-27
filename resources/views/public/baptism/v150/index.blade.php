@@ -9,8 +9,8 @@
     $meanings = [
         [
             'icon' => 'fa-cross',
-            'title' => 'A Declaration of Faith',
-            'text' => 'Baptism is your public confession that Jesus Christ is Lord and that you have chosen to follow Him.'
+            'title' => 'A Public Declaration of Faith',
+            'text' => 'Baptism is your public confession that Jesus Christ is Lord, done in front of others as a testimony that your old life is behind you and a new one has begun.'
         ],
         [
             'icon' => 'fa-hand-holding-heart',
@@ -18,34 +18,34 @@
             'text' => 'Jesus Himself was baptised and commanded His followers to do the same. It is a direct act of obedience to His Word.'
         ],
         [
-            'icon' => 'fa-users',
-            'title' => 'A Public Testimony',
-            'text' => 'Baptism is done in front of others as a testimony. It tells your community that your old life is behind you and a new one has begun.'
+            'icon' => 'fa-fire',
+            'title' => 'Empowered for Service',
+            'text' => 'Spirit baptism fills and empowers you for service, equipping every believer to walk in what Arthur calls a life of supernatural power, wisdom and boldness.'
         ],
         [
             'icon' => 'fa-seedling',
             'title' => 'A New Beginning',
-            'text' => 'Just as Christ rose from the dead, baptism represents rising into a new life — walking in the renewal of the mind.'
+            'text' => 'Just as Christ rose from the dead, baptism represents rising into a new life, walking in the renewal of the mind.'
         ]
     ];
 
     // ─── SCRIPTURES ───
     $scriptures = [
         [
-            'reference' => 'Romans 6:4',
-            'text' => '"Therefore we were buried with Him through baptism into death, that just as Christ was raised from the dead by the glory of the Father, even so we also should walk in newness of life."'
-        ],
-        [
-            'reference' => 'Acts 2:38',
+            'reference' => 'Acts 2:38-39',
             'text' => '"Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit."'
         ],
         [
-            'reference' => 'Mark 16:16',
-            'text' => '"He who believes and is baptized will be saved; but he who does not believe will be condemned."'
+            'reference' => 'Acts 19:1-6',
+            'text' => '"And when Paul had laid hands on them, the Holy Spirit came upon them, and they spoke with tongues and prophesied."'
         ],
         [
-            'reference' => 'Colossians 2:12',
-            'text' => '"Buried with Him in baptism, in which you also were raised with Him through faith in the working of God, who raised Him from the dead."'
+            'reference' => 'Matthew 3:13-17',
+            'text' => '"Permit it to be so now, for thus it is fitting for us to fulfill all righteousness."'
+        ],
+        [
+            'reference' => 'Acts 8:36-39',
+            'text' => '"Both Philip and the eunuch went down into the water, and he baptized him."'
         ]
     ];
 
@@ -61,14 +61,14 @@
         ],
         [
             'question' => 'Where does the baptism take place?',
-            'answer' => 'Baptisms are arranged at a location that works best for you, anywhere in Gauteng — a river, a pool, or another suitable venue.'
+            'answer' => 'Baptism happens as part of the planned three-day camp. Reach out to express interest or ask a question, dates and location will be confirmed directly with you, nothing is booked until then.'
         ]
     ];
 @endphp
 
 <div class="baptism">
 
-    {{-- ─── SECTION 1: HERO — ARTHUR'S STORY ─── --}}
+    {{-- ─── SECTION 1: HERO - ARTHUR'S STORY ─── --}}
     <section class="baptism__hero">
         <div class="baptism__hero-bg">
             <div class="baptism__hero-gradient"></div>
@@ -95,27 +95,27 @@
                 </span>
 
                 <h1 class="baptism__hero-title">
-                    I <span>walked</span> it confused.<br>
-                    you don't <span>have to!</span>
+                    I <span>walked</span> it looking for assurance.<br>
+                    You don't <span>have to walk it alone.</span>
                 </h1>
 
                 <div class="baptism__hero-story">
                     <p class="baptism__hero-text">
-                        I got born again over and over. Baptised over and over. Hoping each time would finally be the one that stuck.
+                        I responded to the call to accept Christ more than once. I was baptised in water in 1999, and again sometime between 2002 and 2004. My experience of Holy Spirit baptism also deeply shaped my life.
                     </p>
                     <p class="baptism__hero-text">
-                        Nobody told me the truth — that water baptism is obedience, not performance, and Spirit baptism is a gift, not a test.
+                        This ministry is for people like me, Christians seeking assurance or baptism, and believers who want to serve but do not know where to begin.
                     </p>
                 </div>
 
                 <div class="baptism__hero-actions">
                     <a href="#contact" class="btn btn--primary btn--lg">
                         <i class="fas fa-water" aria-hidden="true"></i>
-                        <span>Request Baptism</span>
+                        <span>Register Your Interest</span>
                     </a>
                     <a href="tel:+27714611401" class="baptism__hero-call">
                         <i class="fas fa-phone" aria-hidden="true"></i>
-                        <span>Call Us — +27 71 461 1401</span>
+                        <span>Call Us: +27 71 461 1401</span>
                     </a>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                 <span class="section-header__eyebrow">Two Baptisms. One Transformation.</span>
                 <h2 class="section-header__title">Water <span>and</span> Spirit</h2>
                 <p class="section-header__subtitle">
-                    Scripture speaks of two baptisms — water and Spirit. Both matter. Both transform.
+                    "No one can enter God's kingdom unless they are born of water and the Spirit." - John 3:5
                 </p>
             </div>
 
@@ -161,17 +161,16 @@
                             <i class="fas fa-water" aria-hidden="true"></i>
                         </div>
 
-                        <span class="baptism__two-card-label">Baptism I</span>
                         <h3 class="baptism__two-card-title">Water Baptism</h3>
 
                         <p class="baptism__two-card-desc">
-                            You are immersed into something external to you. The water represents death to the old life and resurrection into the new — a public declaration that Jesus is Lord.
+                            Water baptism is a physical act, full immersion in water. It represents death to the old life and resurrection into the new, a public declaration that Jesus is Lord.
                         </p>
 
                         <blockquote class="baptism__two-card-quote">
                             <i class="fas fa-quote-left" aria-hidden="true"></i>
-                            "Repent, and let every one of you be baptized in the name of Jesus Christ."
-                            <cite>— Acts 2:38</cite>
+                            "See, here is water. What hinders me from being baptised?"
+                            - Acts 8:36
                         </blockquote>
                     </div>
                 </div>
@@ -189,17 +188,16 @@
                             <i class="fas fa-fire" aria-hidden="true"></i>
                         </div>
 
-                        <span class="baptism__two-card-label">Baptism II</span>
                         <h3 class="baptism__two-card-title">Spirit Baptism</h3>
 
                         <p class="baptism__two-card-desc">
-                            The Holy Spirit comes to dwell within you. He fills, empowers, and equips every believer for service — the indwelling presence of God in the life of His child.
+                            The Holy Spirit fills and empowers you for service, equipping every believer to walk in what Arthur calls a life of supernatural power, wisdom and boldness.
                         </p>
 
                         <blockquote class="baptism__two-card-quote">
                             <i class="fas fa-quote-left" aria-hidden="true"></i>
-                            "You shall receive the gift of the Holy Spirit."
-                            <cite>— Acts 2:38</cite>
+                            "Paul had laid hands on them, the Holy Spirit came upon them, and they spoke with tongues and prophesied."
+                            - Acts 19:6
                         </blockquote>
                     </div>
                 </div>
@@ -234,63 +232,7 @@
         </div>
     </section>
 
-    {{-- ─── SECTION 4: STEPS ─── --}}
-    <section class="baptism__steps">
-        <div class="baptism__steps-bg">
-            <div class="baptism__steps-shape baptism__steps-shape--1"></div>
-            <div class="baptism__steps-shape baptism__steps-shape--2"></div>
-        </div>
-
-        <div class="wrap">
-            <div class="section-header">
-                <span class="section-header__eyebrow">Your Journey</span>
-                <h2 class="section-header__title">Three Simple <span>Steps</span></h2>
-                <p class="section-header__subtitle">
-                    Getting baptised does not need to be complicated.
-                </p>
-            </div>
-
-            <div class="baptism__steps-grid">
-                <div class="baptism__steps-card">
-                    <span class="baptism__steps-num">01</span>
-                    <div class="baptism__steps-icon">
-                        <i class="fas fa-comments" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="baptism__steps-title">Let's Talk</h4>
-                    <p class="baptism__steps-desc">
-                        Reach out through the form or a call. We'll have an honest, no-pressure conversation about your faith and readiness.
-                    </p>
-                    <div class="baptism__steps-line"></div>
-                </div>
-
-                <div class="baptism__steps-card">
-                    <span class="baptism__steps-num">02</span>
-                    <div class="baptism__steps-icon">
-                        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="baptism__steps-title">Prepare</h4>
-                    <p class="baptism__steps-desc">
-                        We'll confirm a date, time and location that works for you, and walk you through what to expect on the day.
-                    </p>
-                    <div class="baptism__steps-line"></div>
-                </div>
-
-                <div class="baptism__steps-card">
-                    <span class="baptism__steps-num">03</span>
-                    <div class="baptism__steps-icon">
-                        <i class="fas fa-water" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="baptism__steps-title">Celebrate</h4>
-                    <p class="baptism__steps-desc">
-                        Your baptism day is a celebration. Invite friends and family to witness this step and celebrate with you.
-                    </p>
-                    <div class="baptism__steps-line"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- ─── SECTION 5: SCRIPTURES ─── --}}
+    {{-- ─── SECTION 4: SCRIPTURES ─── --}}
     <section class="baptism__scriptures">
         <div class="baptism__scriptures-bg">
             <div class="baptism__scriptures-shape baptism__scriptures-shape--1"></div>
@@ -315,6 +257,62 @@
         </div>
     </section>
 
+    {{-- ─── SECTION 5: STEPS ─── --}}
+    <section class="baptism__steps">
+        <div class="baptism__steps-bg">
+            <div class="baptism__steps-shape baptism__steps-shape--1"></div>
+            <div class="baptism__steps-shape baptism__steps-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">Your Journey</span>
+                <h2 class="section-header__title">Three Simple <span>Steps</span></h2>
+                <p class="section-header__subtitle">
+                    Getting started begins with a conversation. Baptism itself happens as part of the planned three-day camp, teaching, water baptism and Spirit baptism together.
+                </p>
+            </div>
+
+            <div class="baptism__steps-grid">
+                <div class="baptism__steps-card">
+                    <span class="baptism__steps-num">01</span>
+                    <div class="baptism__steps-icon">
+                        <i class="fas fa-comments" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="baptism__steps-title">Let's Talk</h4>
+                    <p class="baptism__steps-desc">
+                        Reach out through the form or a call. We'll have an honest, no-pressure conversation about your faith and readiness.
+                    </p>
+                    <div class="baptism__steps-line"></div>
+                </div>
+
+                <div class="baptism__steps-card">
+                    <span class="baptism__steps-num">02</span>
+                    <div class="baptism__steps-icon">
+                        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="baptism__steps-title">Prepare</h4>
+                    <p class="baptism__steps-desc">
+                        We'll talk through what taking part looks like, including the planned camp, and what happens next.
+                    </p>
+                    <div class="baptism__steps-line"></div>
+                </div>
+
+                <div class="baptism__steps-card">
+                    <span class="baptism__steps-num">03</span>
+                    <div class="baptism__steps-icon">
+                        <i class="fas fa-water" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="baptism__steps-title">Celebrate</h4>
+                    <p class="baptism__steps-desc">
+                        Being baptised is worth celebrating. It marks a real, public step in your faith.
+                    </p>
+                    <div class="baptism__steps-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ─── SECTION 6: CALL US OR FILL THE FORM ─── --}}
     <section class="baptism__contact" id="contact">
         <div class="baptism__contact-bg">
@@ -327,7 +325,7 @@
                 <span class="section-header__eyebrow">Reach Out</span>
                 <h2 class="section-header__title">Call Us <span>or</span> Fill the Form</h2>
                 <p class="section-header__subtitle">
-                    Whichever feels right — a call or a form. Both work.
+                    Whichever feels right, a call or a form. Both work.
                 </p>
             </div>
 
@@ -361,7 +359,7 @@
                             </div>
                             <div class="baptism__contact-call-btn-text">
                                 <span class="baptism__contact-call-btn-label">WhatsApp</span>
-                                <span class="baptism__contact-call-btn-value">Message us on WhatsApp</span>
+                                <span class="baptism__contact-call-btn-value">Reach us on WhatsApp</span>
                             </div>
                         </a>
                     </div>
@@ -370,7 +368,7 @@
                 {{-- ─── FORM ─── --}}
                 <div class="baptism__contact-form-wrap">
                     <div class="baptism__contact-form-header">
-                        <h3 class="baptism__contact-form-title">Request Baptism</h3>
+                        <h3 class="baptism__contact-form-title">Register Your Interest</h3>
                         <p class="baptism__contact-form-subtitle">
                             Fill in your details and we'll reach out soon.
                         </p>
@@ -416,14 +414,6 @@
                         </div>
 
                         <div class="baptism__form-group">
-                            <label for="preferred_date">Preferred Date (Optional)</label>
-                            <input type="date" name="preferred_date" id="preferred_date" value="{{ old('preferred_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}">
-                            @error('preferred_date')
-                                <span class="baptism__form-error">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="baptism__form-group">
                             <label for="message">Message (Optional)</label>
                             <textarea name="message" id="message" rows="4" placeholder="Tell us a bit about your journey...">{{ old('message') }}</textarea>
                             @error('message')
@@ -433,7 +423,7 @@
 
                         <button type="submit" class="btn btn--primary btn--block">
                             <i class="fas fa-water" aria-hidden="true"></i>
-                            <span>Request Baptism</span>
+                            <span>Register Your Interest</span>
                         </button>
                     </form>
                 </div>
@@ -490,7 +480,7 @@
                 </h2>
 
                 <p class="baptism__community-desc">
-                    Connect with believers walking through the same journey. Ask questions, share your story, and grow together.
+                    Be among the first to connect with believers walking through the same journey.
                 </p>
 
                 <a href="{{ config('app.whatsapp_invite_url', '#') }}" target="_blank" class="btn btn--primary btn--lg">

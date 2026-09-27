@@ -29,7 +29,7 @@
                     </h1>
 
                     <p class="contact__hero-text">
-                        Questions, prayer requests, book orders, or just want to say hello — we would love to hear from you.
+                        Questions, prayer requests, book orders, or just want to say hello, we would love to hear from you.
                     </p>
 
                     <div class="contact__hero-items">
@@ -81,7 +81,7 @@
                 <div class="contact__hero-form-wrap">
                     <div class="contact__hero-form-header">
                         <h2 class="contact__hero-form-title">Send a Message</h2>
-                        <p class="contact__hero-form-subtitle">We reply within 24 hours</p>
+                        <p class="contact__hero-form-subtitle">We'll be in touch soon</p>
                     </div>
 
                     <form method="POST" action="{{ route('contact.send') }}" class="contact__hero-form form-loading">
