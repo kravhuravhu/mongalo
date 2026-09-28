@@ -232,31 +232,6 @@
         </div>
     </section>
 
-    {{-- ─── SECTION 4: SCRIPTURES ─── --}}
-    <section class="baptism__scriptures">
-        <div class="baptism__scriptures-bg">
-            <div class="baptism__scriptures-shape baptism__scriptures-shape--1"></div>
-        </div>
-
-        <div class="wrap">
-            <div class="section-header">
-                <span class="section-header__eyebrow">What the Word Says</span>
-                <h2 class="section-header__title">Scripture on <span>Baptism</span></h2>
-            </div>
-
-            <div class="baptism__scriptures-grid">
-                @foreach($scriptures as $scripture)
-                    <div class="baptism__scriptures-card">
-                        <span class="baptism__scriptures-ref">{{ $scripture['reference'] }}</span>
-                        <blockquote class="baptism__scriptures-text">
-                            {{ $scripture['text'] }}
-                        </blockquote>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     {{-- ─── SECTION 5: STEPS ─── --}}
     <section class="baptism__steps">
         <div class="baptism__steps-bg">
@@ -309,6 +284,31 @@
                     </p>
                     <div class="baptism__steps-line"></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 4: SCRIPTURES ─── --}}
+    <section class="baptism__scriptures">
+        <div class="baptism__scriptures-bg">
+            <div class="baptism__scriptures-shape baptism__scriptures-shape--1"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">What the Word Says</span>
+                <h2 class="section-header__title">Scripture on <span>Baptism</span></h2>
+            </div>
+
+            <div class="baptism__scriptures-grid">
+                @foreach($scriptures as $scripture)
+                    <div class="baptism__scriptures-card">
+                        <span class="baptism__scriptures-ref">{{ $scripture['reference'] }}</span>
+                        <blockquote class="baptism__scriptures-text">
+                            {{ $scripture['text'] }}
+                        </blockquote>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
