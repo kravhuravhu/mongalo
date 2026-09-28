@@ -246,7 +246,7 @@
                 <div class="about__mv-card">
                     <div class="about__mv-card-image">
                         <div class="about__mv-card-image-placeholder">
-                            <img src=" {{ secure_asset('images/arthur-mongalo-events-day-landscape-room.jpg') }} " alt="Arthur Mongalo Teaching" />
+                            <img src=" {{ secure_asset('images/Arthur-mongalo_invite-mic.jpg') }} " alt="Arthur Mongalo Teaching" />
                         </div>
                         <div class="about__mv-card-icon">
                             <i class="fas fa-bullseye"></i>

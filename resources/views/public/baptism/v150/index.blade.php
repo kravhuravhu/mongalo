@@ -33,19 +33,19 @@
     $scriptures = [
         [
             'reference' => 'Acts 2:38-39',
-            'text' => '"Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit."'
+            'text' => 'Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit.'
         ],
         [
             'reference' => 'Acts 19:1-6',
-            'text' => '"And when Paul had laid hands on them, the Holy Spirit came upon them, and they spoke with tongues and prophesied."'
+            'text' => 'And when Paul had laid hands on them, the Holy Spirit came upon them, and they spoke with tongues and prophesied.'
         ],
         [
             'reference' => 'Matthew 3:13-17',
-            'text' => '"Permit it to be so now, for thus it is fitting for us to fulfill all righteousness."'
+            'text' => 'Permit it to be so now, for thus it is fitting for us to fulfill all righteousness.'
         ],
         [
             'reference' => 'Acts 8:36-39',
-            'text' => '"Both Philip and the eunuch went down into the water, and he baptized him."'
+            'text' => 'Both Philip and the eunuch went down into the water, and he baptized him.'
         ]
     ];
 
@@ -96,7 +96,7 @@
 
                 <h1 class="baptism__hero-title">
                     I <span>walked</span> it looking for assurance.<br>
-                    You don't <span>have to walk it alone.</span>
+                    You don't <span>have to walk it alone</span>.
                 </h1>
 
                 <div class="baptism__hero-story">

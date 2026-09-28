@@ -731,9 +731,17 @@
                 font-family: var(--font-display);
                 font-weight: 700;
                 font-size: 1.5rem;
-                color: var(--navy);
+                color: var(--gold-dark);
                 margin-bottom: 16px;
                 letter-spacing: -0.01em;
+                &::after {
+                    content: '';
+                    display: block;
+                    width: 40px;
+                    height: 2px;
+                    background: var(--gold-light);
+                    margin-top: 8px;
+                }
             }
 
             & .about__mv-card-text {
