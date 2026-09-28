@@ -116,8 +116,8 @@
                 {{-- ─── RIGHT: VISUAL ─── --}}
                 <div class="invite__hero-visual">
                     <div class="invite__hero-image">
-                        <div class="invite__hero-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — ARTHUR SPEAKING]</span>
+                        <div class="invite__hero-image-placeholder">
+                            <img src="{{ secure_asset('images/Arthur-mongalo_invite.jpg') }}" alt="Arthur Mongalo Speaking" />
                         </div>
                     </div>
 

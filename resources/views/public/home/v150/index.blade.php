@@ -30,9 +30,7 @@
                         I am IN Him, He is IN me
                     </span>
                         <h1 class="home__hero-title">
-                                    A <span class="home__hero-title-em">ministry</span> of baptisms,
-                                            <span class="home__hero-title-divider">&</span>
-                                                equipping <span class="home__hero-title-em">believers</span>.
+                            A <span class="home__hero-title-em">ministry</span> of baptisms,<span class="home__hero-title-divider">&</span>equipping <span class="home__hero-title-em">believers</span>.
                         </h1>
 
                     <p class="home__hero-subtitle">
@@ -50,6 +48,7 @@
                         </a>
                         <a href="{{ route('about') }}" class="btn btn--outline btn--lg">
                             <span>Read My Story</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
@@ -79,8 +78,35 @@
                         pray for at least a million people,<br>
                         and equip every believer for spiritual growth."
                     </p>
-                    - Arthur Mongalo
+                    <cite>Arthur Mongalo</cite>
                 </blockquote>
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 5: ARTHUR CTA ─── --}}
+    <section class="home__arthur">
+        <div class="home__arthur-bg">
+            <div class="home__arthur-shape home__arthur-shape--1"></div>
+            <div class="home__arthur-shape home__arthur-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="home__arthur-content">
+                <span class="home__arthur-eyebrow">Meet Arthur Mongalo</span>
+                <h2 class="home__arthur-title">
+                    Why Arthur is starting this <span>ministry</span>
+                </h2>
+                <p class="home__arthur-subtitle">
+                    Arthur kept responding to the call to accept Christ, and kept seeking baptism, until he found the assurance so many still search for. That search shapes everything this ministry offers.
+                </p>
+
+                <div class="home__arthur-actions">
+                    <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <span>Read Arthur's Story</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -208,33 +234,6 @@
                         <p class="home__pillars-card-desc">{{ $pillar['description'] }}</p>
                     </div>
                 @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- ─── SECTION 5: ARTHUR CTA ─── --}}
-    <section class="home__arthur">
-        <div class="home__arthur-bg">
-            <div class="home__arthur-shape home__arthur-shape--1"></div>
-            <div class="home__arthur-shape home__arthur-shape--2"></div>
-        </div>
-
-        <div class="wrap">
-            <div class="home__arthur-content">
-                <span class="home__arthur-eyebrow">Meet Arthur Mongalo</span>
-                <h2 class="home__arthur-title">
-                    Why Arthur is starting this <span>ministry</span>
-                </h2>
-                <p class="home__arthur-subtitle">
-                    Arthur kept responding to the call to accept Christ, and kept seeking baptism, until he found the assurance so many still search for. That search shapes everything this ministry offers.
-                </p>
-
-                <div class="home__arthur-actions">
-                    <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
-                        <i class="fas fa-user" aria-hidden="true"></i>
-                        <span>Read Arthur's Story</span>
-                    </a>
-                </div>
             </div>
         </div>
     </section>

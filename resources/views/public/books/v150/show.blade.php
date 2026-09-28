@@ -41,7 +41,7 @@
                         <div class="book-detail__cover-shine"></div>
                     </div>
 
-                                        @if($book->is_featured)
+                    @if($book->is_featured)
                         <span class="book-detail__badge">
                             <i class="fas fa-star" aria-hidden="true"></i>
                             Featured
@@ -85,12 +85,17 @@
                             <span>Buy Now</span>
                         </button>
 
-                        @if($book->book_file)
+                        <a class="btn btn--outline btn--lg disabled" aria-disabled="true">
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                            <span>No Preview Available</span>
+                        </a>
+
+                        {{---@if($book->book_file)
                             <a href="{{ route('books.preview', $book->slug) }}" target="_blank" class="btn btn--outline btn--lg">
                                 <i class="fas fa-book-open" aria-hidden="true"></i>
                                 <span>Preview</span>
                             </a>
-                        @endif
+                        @endif --- }}
                     </div>
 
                     {{-- ─── BUY FORM (HIDDEN BY DEFAULT) ─── --}}

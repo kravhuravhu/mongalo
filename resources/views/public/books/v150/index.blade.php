@@ -63,7 +63,7 @@
                                 >
                             @else
                                 <div class="books__featured-cover-placeholder" style="background: #00ff00;">
-                                    <span>[PLACEHOLDER — BOOK COVER]</span>
+                                    <span>[BOOK COVER LOADING..]</span>
                                 </div>
                             @endif
 
@@ -123,9 +123,9 @@
                                 <span>Buy Now</span>
                             </a>
 
-                            <a href="{{ route('books.show', $featuredBook->slug) }}#preview" class="btn btn--outline btn--lg">
+                            <a class="btn btn--outline btn--lg disabled" aria-disabled="true">
                                 <i class="fas fa-book-open" aria-hidden="true"></i>
-                                <span>Preview</span>
+                                <span>No Preview Available</span>
                             </a>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                                 >
                             @else
                                 <div class="books__secondary-cover-placeholder" style="background: #00ff00;">
-                                    <span>[PLACEHOLDER]</span>
+                                    <span>[COVER COMING UP]</span>
                                 </div>
                             @endif
 
@@ -191,9 +191,9 @@
                                     <span>Buy Now</span>
                                 </a>
 
-                                <a href="{{ route('books.show', $secondaryBook->slug) }}#preview" class="btn btn--outline">
+                                <a class="btn btn--outline disabled" aria-disabled="true">
                                     <i class="fas fa-book-open" aria-hidden="true"></i>
-                                    <span>Preview</span>
+                                    <span>No Preview Available</span>
                                 </a>
                             </div>
                         </div>

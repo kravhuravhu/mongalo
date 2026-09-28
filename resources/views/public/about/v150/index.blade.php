@@ -159,8 +159,8 @@
                 {{-- ─── IMAGE LEFT ─── --}}
                 <div class="about__story-visual">
                     <div class="about__story-image">
-                        <div class="about__story-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — IMAGE]</span>
+                        <div class="about__story-image-placeholder">
+                            <img src=" {{ secure_asset('images/arthur-mongalo-landscape.jpg') }} " alt="Arthur Mongalo" />
                         </div>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
                     <blockquote class="about__story-quote">
                         <i class="fas fa-quote-left" aria-hidden="true"></i>
                         <p>"I deliberately highlighted a somewhat chaotic footing in my formative stages, getting born again over and over, getting baptised over and over again. Something I wish to help solve for others."</p>
-                        - Arthur Mongalo
+                        <cite>Arthur Mongalo</cite>
                     </blockquote>
                 </div>
             </div>
@@ -245,8 +245,8 @@
                 {{-- ─── MISSION ─── --}}
                 <div class="about__mv-card">
                     <div class="about__mv-card-image">
-                        <div class="about__mv-card-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — IMAGE]</span>
+                        <div class="about__mv-card-image-placeholder">
+                            <img src=" {{ secure_asset('images/arthur-mongalo-events-day-landscape-room.jpg') }} " alt="Arthur Mongalo Teaching" />
                         </div>
                         <div class="about__mv-card-icon">
                             <i class="fas fa-bullseye"></i>
@@ -263,8 +263,8 @@
                 {{-- ─── VISION ─── --}}
                 <div class="about__mv-card">
                     <div class="about__mv-card-image">
-                        <div class="about__mv-card-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — IMAGE]</span>
+                        <div class="about__mv-card-image-placeholder">
+                            <img src=" {{ secure_asset('images/arthur-mongalo-baptism.jpg') }} " alt="Arthur Mongalo Teaching" />
                         </div>
                         <div class="about__mv-card-icon">
                             <i class="fas fa-eye"></i>

@@ -180,6 +180,9 @@
                     &:last-child {
                         margin-bottom: 0;
                     }
+                    &:first-child {
+                        font-style: normal;
+                    }
                 }
 
                 & .baptism__hero-text--emphasis {
