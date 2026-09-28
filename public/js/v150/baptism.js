@@ -104,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // ─── SCROLL REVEAL ───
+    // ─── SCROLL REVEAL (GENERIC) ───
     const revealElements = document.querySelectorAll(
-        '.baptism__two-grid, .baptism__meaning-grid, .baptism__steps-grid, .baptism__scriptures-grid, .baptism__contact-grid, .baptism__faq-list, .baptism__community-content'
+        '.baptism__two-grid, .baptism__meaning-grid, .baptism__steps-grid, .baptism__contact-grid, .baptism__faq-list, .baptism__community-content'
     );
 
     if (revealElements.length > 0) {
@@ -128,5 +128,199 @@ document.addEventListener('DOMContentLoaded', function() {
             el.style.transition = 'opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
             observer.observe(el);
         });
+    }
+
+    // ─── SCRIPTURES FLIP CAROUSEL ───
+    const scripturesGrid = document.querySelector('.baptism__scriptures-grid');
+    const scripturesCards = scripturesGrid ? scripturesGrid.querySelectorAll('.baptism__scriptures-card') : [];
+
+    if (scripturesGrid && scripturesCards.length > 0) {
+        let currentIndex = 0;
+        let carouselInterval = null;
+        let carouselStarted = false;
+        let isAnimating = false;
+        const CYCLE_TIME = 5500;
+        const FLIP_DURATION = 1100;
+
+        // ─── INJECT CONTROLS ───
+        const controls = document.createElement('div');
+        controls.className = 'baptism__scriptures-controls';
+
+        let controlsHTML = '<button type="button" class="baptism__scriptures-arrow baptism__scriptures-arrow--prev" aria-label="Previous scripture">';
+        controlsHTML += '<i class="fas fa-chevron-left"></i>';
+        controlsHTML += '</button>';
+
+        controlsHTML += '<div class="baptism__scriptures-dots">';
+        scripturesCards.forEach(function(_, i) {
+            controlsHTML += '<button type="button" class="baptism__scriptures-dot' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" aria-label="Go to scripture ' + (i + 1) + '"></button>';
+        });
+        controlsHTML += '</div>';
+
+        controlsHTML += '<button type="button" class="baptism__scriptures-arrow baptism__scriptures-arrow--next" aria-label="Next scripture">';
+        controlsHTML += '<i class="fas fa-chevron-right"></i>';
+        controlsHTML += '</button>';
+
+        controls.innerHTML = controlsHTML;
+
+        // ─── INSERT CONTROLS AFTER GRID ───
+        scripturesGrid.parentNode.insertBefore(controls, scripturesGrid.nextSibling);
+
+        const dots = controls.querySelectorAll('.baptism__scriptures-dot');
+        const prevBtn = controls.querySelector('.baptism__scriptures-arrow--prev');
+        const nextBtn = controls.querySelector('.baptism__scriptures-arrow--next');
+
+        // ─── UPDATE DOTS ───
+        function updateDots() {
+            dots.forEach(function(dot, i) {
+                dot.classList.toggle('is-active', i === currentIndex);
+            });
+        }
+
+        // ─── SHOW CARD BY INDEX ───
+        function showCard(index, direction) {
+            scripturesCards.forEach(function(card, i) {
+                card.classList.remove('is-active', 'is-leaving', 'is-entering');
+                if (i === index) {
+                    card.classList.add(direction === 'back' ? 'is-entering-back' : 'is-entering');
+                }
+            });
+
+            // ─── FORCE REFLOW SO THE TRANSITION RUNS ───
+            void scripturesCards[index].offsetWidth;
+
+            scripturesCards[index].classList.remove('is-entering', 'is-entering-back');
+            scripturesCards[index].classList.add('is-active');
+
+            currentIndex = index;
+            updateDots();
+        }
+
+        // ─── NEXT ───
+        function nextCard() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const nextIndex = (currentIndex + 1) % scripturesCards.length;
+            const currentCard = scripturesCards[currentIndex];
+
+            currentCard.classList.remove('is-active');
+            currentCard.classList.add('is-leaving');
+
+            showCard(nextIndex, 'forward');
+
+            setTimeout(function() {
+                currentCard.classList.remove('is-leaving');
+                isAnimating = false;
+            }, FLIP_DURATION);
+        }
+
+        // ─── PREV ───
+        function prevCard() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const prevIndex = (currentIndex - 1 + scripturesCards.length) % scripturesCards.length;
+            const currentCard = scripturesCards[currentIndex];
+
+            currentCard.classList.remove('is-active');
+            currentCard.classList.add('is-leaving-back');
+
+            showCard(prevIndex, 'back');
+
+            setTimeout(function() {
+                currentCard.classList.remove('is-leaving-back');
+                isAnimating = false;
+            }, FLIP_DURATION);
+        }
+
+        // ─── GO TO SPECIFIC ───
+        function goToCard(index) {
+            if (index === currentIndex) return;
+            if (isAnimating) return;
+
+            const direction = index > currentIndex ? 'forward' : 'back';
+            isAnimating = true;
+
+            const currentCard = scripturesCards[currentIndex];
+            currentCard.classList.remove('is-active');
+            currentCard.classList.add(direction === 'back' ? 'is-leaving-back' : 'is-leaving');
+
+            showCard(index, direction);
+
+            setTimeout(function() {
+                currentCard.classList.remove('is-leaving', 'is-leaving-back');
+                isAnimating = false;
+            }, FLIP_DURATION);
+        }
+
+        // ─── START CAROUSEL ───
+        function startCarousel() {
+            if (carouselStarted) return;
+            carouselStarted = true;
+
+            showCard(0, 'forward');
+
+            carouselInterval = setInterval(nextCard, CYCLE_TIME);
+        }
+
+        // ─── PAUSE / RESUME ───
+        function pauseCarousel() {
+            if (carouselInterval) {
+                clearInterval(carouselInterval);
+                carouselInterval = null;
+            }
+        }
+
+        function resumeCarousel() {
+            if (carouselStarted && !carouselInterval) {
+                carouselInterval = setInterval(nextCard, CYCLE_TIME);
+            }
+        }
+
+        // ─── CONTROLS: ARROWS ───
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                pauseCarousel();
+                prevCard();
+                resumeCarousel();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                pauseCarousel();
+                nextCard();
+                resumeCarousel();
+            });
+        }
+
+        // ─── CONTROLS: DOTS ───
+        dots.forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index, 10);
+                pauseCarousel();
+                goToCard(index);
+                resumeCarousel();
+            });
+        });
+
+        // ─── OBSERVER — START WHEN IN VIEW ───
+        const flipObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    startCarousel();
+                } else {
+                    pauseCarousel();
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        flipObserver.observe(scripturesGrid);
+
+        // ─── PAUSE ON HOVER ───
+        scripturesGrid.addEventListener('mouseenter', pauseCarousel);
+        scripturesGrid.addEventListener('mouseleave', resumeCarousel);
     }
 });
