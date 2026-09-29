@@ -29,9 +29,9 @@
                         <i class="fas fa-cross" aria-hidden="true"></i>
                         I am IN Him, He is IN me
                     </span>
-                        <h1 class="home__hero-title">
-                            A <span class="home__hero-title-em">ministry</span> of baptisms,<span class="home__hero-title-divider">&</span>equipping <span class="home__hero-title-em">believers</span>.
-                        </h1>
+                    <h1 class="home__hero-title">
+                        A <span class="home__hero-title-em">ministry</span> of baptisms,<span class="home__hero-title-divider">&</span>equipping <span class="home__hero-title-em">believers</span>.
+                    </h1>
 
                     <p class="home__hero-subtitle">
                         For believers seeking assurance or baptism, people who want to serve but do not know where to begin, and anyone exploring Christianity or outside a church community.
@@ -163,7 +163,7 @@
     </section>
 
     {{-- ─── SECTION 4: FOUR PILLARS ─── --}}
-    <section class="home__pillars">
+    <section class="home__pillars" id="fourPillarsSection">
         <div class="home__pillars-bg">
             <div class="home__pillars-shape home__pillars-shape--1"></div>
             <div class="home__pillars-shape home__pillars-shape--2"></div>
@@ -178,7 +178,66 @@
                 </p>
             </div>
 
-            {{-- ─── ROMAN NUMERAL STRIP ─── --}}
+            @php
+                $pillars = [
+                    [
+                        'icon' => 'fa-cross',
+                        'numeral' => 'I',
+                        'title' => 'Believing',
+                        'description' => 'Encountering Jesus and choosing to believe. Faith is the foundation upon which all else is built.'
+                    ],
+                    [
+                        'icon' => 'fa-hand-holding-heart',
+                        'numeral' => 'II',
+                        'title' => 'Converting',
+                        'description' => 'Surrendering the old ways. Repentance prepares the heart for what comes next.'
+                    ],
+                    [
+                        'icon' => 'fa-water',
+                        'numeral' => 'III',
+                        'title' => 'Baptisms',
+                        'description' => 'Water and Spirit together. A clean heart, a forgiven past, a new creature.'
+                    ],
+                    [
+                        'icon' => 'fa-seedling',
+                        'numeral' => 'IV',
+                        'title' => 'Commission',
+                        'description' => 'Guided, supported and sent. Every believer is equipped to begin their own personal mission.'
+                    ]
+                ];
+            @endphp
+
+            {{-- ─── VERTICAL ACCORDION (mobile only) ─── --}}
+            <div class="home__pillars-accordion" id="pillarsAccordion">
+                @foreach($pillars as $index => $pillar)
+                    <div class="home__pillars-accordion-item{{ $index === 0 ? ' is-open' : '' }}" data-pillar-item="{{ $index }}">
+                        <button
+                            type="button"
+                            class="home__pillars-accordion-trigger"
+                            data-pillar="{{ $index }}"
+                            aria-expanded="{{ $index === 0 ? 'true' : 'false' }}"
+                            aria-controls="pillarPanel{{ $index }}"
+                        >
+                            <span class="home__pillars-accordion-num">{{ $pillar['numeral'] }}</span>
+                            <span class="home__pillars-accordion-label">{{ $pillar['title'] }}</span>
+                            <span class="home__pillars-accordion-chevron" aria-hidden="true">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="home__pillars-accordion-panel" id="pillarPanel{{ $index }}" role="region">
+                            <div class="home__pillars-accordion-panel-inner">
+                                <div class="home__pillars-accordion-panel-icon">
+                                    <i class="fas {{ $pillar['icon'] }}"></i>
+                                </div>
+                                <p class="home__pillars-accordion-panel-desc">{{ $pillar['description'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- ─── DESKTOP STRIP (hidden on mobile) ─── --}}
             <div class="home__pillars-strip">
                 <div class="home__pillars-strip-item">
                     <span class="home__pillars-strip-num">I</span>
@@ -198,32 +257,7 @@
                 </div>
             </div>
 
-            {{-- ─── CARDS GRID ─── --}}
-            @php
-                $pillars = [
-                    [
-                        'icon' => 'fa-cross',
-                        'title' => 'Believing',
-                        'description' => 'Encountering Jesus and choosing to believe. Faith is the foundation upon which all else is built.'
-                    ],
-                    [
-                        'icon' => 'fa-hand-holding-heart',
-                        'title' => 'Converting',
-                        'description' => 'Surrendering the old ways. Repentance prepares the heart for what comes next.'
-                    ],
-                    [
-                        'icon' => 'fa-water',
-                        'title' => 'Baptisms',
-                        'description' => 'Water and Spirit together. A clean heart, a forgiven past, a new creature.'
-                    ],
-                    [
-                        'icon' => 'fa-seedling',
-                        'title' => 'Commission',
-                        'description' => 'Guided, supported and sent. Every believer is equipped to begin their own personal mission.'
-                    ]
-                ];
-            @endphp
-
+            {{-- ─── DESKTOP CARDS GRID (hidden on mobile) ─── --}}
             <div class="home__pillars-grid">
                 @foreach($pillars as $pillar)
                     <div class="home__pillars-card">
@@ -254,7 +288,6 @@
                 </p>
             </div>
 
-            {{-- ─── CARDS GRID ─── --}}
             @php
                 $involve = [
                     [
