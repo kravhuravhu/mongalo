@@ -187,6 +187,175 @@
                 color: rgba(255, 255, 255, 0.5);
             }
         }
+
+        /* ─── HERO RESPONSIVE ─── */
+        @media screen and (max-width: 1500px) {
+            padding: 120px 0 80px;
+        }
+
+        @media screen and (max-width: 1200px) {
+            padding: 110px 0 70px;
+
+            & .home__hero-title { font-size: clamp(2.2rem, 5vw, 3.8rem) !important; }
+
+            & .home__hero-actions .btn { min-height: 44px; padding: 10px 24px; font-size: 0.78rem !important; }
+        }
+
+        @media screen and (max-width: 1024px) {
+            padding: 100px 0 60px;
+
+            & .home__hero-content { max-width: 720px; }
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.6rem !important; padding: 6px 18px;
+                margin-bottom: 22px; letter-spacing: 0.25em;
+            }
+
+            & .home__hero-content .home__hero-title {
+                font-size: clamp(2rem, 5vw, 3.2rem) !important; margin-bottom: 20px;
+            }
+
+            & .home__hero-content .home__hero-subtitle {
+                font-size: clamp(0.95rem, 1.4vw, 1.15rem) !important; margin-bottom: 12px;
+            }
+
+            & .home__hero-content .home__hero-subtext {
+                font-size: 0.95rem !important; margin-bottom: 32px;
+            }
+
+            & .home__hero-actions .btn { min-height: 42px; padding: 10px 22px; font-size: 0.76rem !important; }
+
+            & .home__hero-scroll { display: none; }
+        }
+
+        @media screen and (max-width: 820px) {
+            padding: 88px 0 52px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.55rem !important; padding: 5px 16px;
+                margin-bottom: 18px; letter-spacing: 0.22em;
+            }
+
+            & .home__hero-content .home__hero-title { font-size: clamp(1.8rem, 5.5vw, 2.6rem) !important; }
+            & .home__hero-content .home__hero-subtitle { font-size: 0.98rem !important; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.9rem !important; margin-bottom: 28px; }
+
+            & .home__hero-actions { gap: 10px; }
+            & .home__hero-actions .btn { min-height: 40px; padding: 9px 20px; font-size: 0.74rem !important; }
+        }
+
+        @media screen and (max-width: 720px) {
+            padding: 76px 0 44px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.5rem !important; padding: 5px 14px;
+                margin-bottom: 16px; letter-spacing: 0.2em; gap: 6px;
+            }
+
+            & .home__hero-content .home__hero-title {
+                font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important; margin-bottom: 16px;
+
+                & .home__hero-title-divider {
+                    font-size: 0.5em !important; letter-spacing: 0.35em; margin: 6px 0;
+                }
+            }
+
+            & .home__hero-content .home__hero-subtitle { font-size: 0.9rem !important; margin-bottom: 10px; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.85rem !important; margin-bottom: 24px; }
+
+            & .home__hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+
+            & .home__hero-actions .btn {
+                width: 100%; min-height: 38px; padding: 8px 16px; font-size: 0.7rem !important;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 540px) {
+            padding: 68px 0 38px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.46rem !important; padding: 4px 12px;
+                margin-bottom: 14px; letter-spacing: 0.18em; gap: 5px;
+            }
+
+            & .home__hero-content .home__hero-title {
+                font-size: clamp(1.45rem, 7vw, 1.95rem) !important; letter-spacing: -0.02em;
+            }
+
+            & .home__hero-content .home__hero-subtitle { font-size: 0.85rem !important; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.8rem !important; margin-bottom: 22px; }
+
+            & .home__hero-actions .btn { min-height: 36px; padding: 8px 14px; font-size: 0.68rem !important; }
+        }
+
+        @media screen and (max-width: 480px) {
+            padding: 62px 0 34px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.44rem !important; padding: 4px 10px;
+                margin-bottom: 12px; letter-spacing: 0.15em; gap: 4px;
+            }
+
+            & .home__hero-content .home__hero-title {
+                font-size: clamp(1.35rem, 7.5vw, 1.75rem) !important; margin-bottom: 14px;
+
+                & .home__hero-title-divider {
+                    font-size: 0.55em !important; letter-spacing: 0.3em; margin: 5px 0;
+                }
+            }
+
+            & .home__hero-content .home__hero-subtitle { font-size: 0.82rem !important; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.78rem !important; margin-bottom: 20px; }
+
+            & .home__hero-actions .btn { min-height: 34px; padding: 7px 12px; font-size: 0.66rem !important; }
+        }
+
+        @media screen and (max-width: 420px) {
+            padding: 56px 0 30px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.4rem !important; padding: 3px 8px;
+                margin-bottom: 10px; letter-spacing: 0.12em;
+            }
+
+            & .home__hero-content .home__hero-title { font-size: clamp(1.25rem, 8vw, 1.6rem) !important; }
+            & .home__hero-content .home__hero-subtitle { font-size: 0.78rem !important; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.74rem !important; margin-bottom: 18px; }
+
+            & .home__hero-actions .btn { min-height: 32px; padding: 7px 12px; font-size: 0.64rem !important; }
+        }
+
+        @media screen and (max-width: 350px) {
+            padding: 50px 0 26px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.38rem !important; padding: 3px 7px; margin-bottom: 9px;
+            }
+
+            & .home__hero-content .home__hero-title {
+                font-size: 1.2rem !important; letter-spacing: -0.01em; line-height: 1.15;
+            }
+
+            & .home__hero-content .home__hero-subtitle { font-size: 0.72rem !important; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.68rem !important; margin-bottom: 16px; }
+
+            & .home__hero-actions .btn { min-height: 30px; padding: 6px 10px; font-size: 0.6rem !important; }
+        }
+
+        @media screen and (max-width: 300px) {
+            padding: 44px 0 22px;
+
+            & .home__hero-content .home__hero-badge {
+                font-size: 0.34rem !important; padding: 2px 6px; margin-bottom: 8px;
+            }
+
+            & .home__hero-content .home__hero-title { font-size: 1.05rem !important; }
+            & .home__hero-content .home__hero-subtitle { font-size: 0.66rem !important; }
+            & .home__hero-content .home__hero-subtext { font-size: 0.62rem !important; margin-bottom: 14px; }
+
+            & .home__hero-actions .btn { min-height: 28px; padding: 5px 8px; font-size: 0.56rem !important; }
+        }
     }
 
     /* ─── SECTION HEADERS ─── */
@@ -210,6 +379,61 @@
             line-height: 1.65;
             max-width: 60ch;
             margin: 0 auto;
+        }
+
+        /* ─── SECTION HEADER RESPONSIVE ─── */
+        @media screen and (max-width: 1200px) {
+            margin-bottom: 40px;
+
+            & .section-header__title { font-size: clamp(1.5rem, 2.8vw, 2.2rem) !important; }
+        }
+
+        @media screen and (max-width: 1024px) {
+            margin-bottom: 36px;
+
+            & .section-header__eyebrow { font-size: 0.62rem !important; margin-bottom: 10px; }
+            & .section-header__title { font-size: clamp(1.4rem, 2.6vw, 2rem) !important; margin-bottom: 12px; }
+            & .section-header__subtitle { font-size: 0.88rem !important; }
+        }
+
+        @media screen and (max-width: 820px) {
+            margin-bottom: 30px;
+
+            & .section-header__eyebrow { font-size: 0.58rem !important; letter-spacing: 0.25em; margin-bottom: 8px; }
+            & .section-header__title { font-size: clamp(1.3rem, 4vw, 1.8rem) !important; margin-bottom: 10px; }
+            & .section-header__subtitle { font-size: 0.84rem !important; line-height: 1.6; }
+        }
+
+        @media screen and (max-width: 720px) {
+            margin-bottom: 26px;
+
+            & .section-header__title { font-size: clamp(1.2rem, 4.5vw, 1.6rem) !important; }
+            & .section-header__subtitle { font-size: 0.82rem !important; }
+        }
+
+        @media screen and (max-width: 540px) {
+            margin-bottom: 22px;
+
+            & .section-header__eyebrow { font-size: 0.54rem !important; letter-spacing: 0.22em; }
+            & .section-header__title { font-size: clamp(1.1rem, 5vw, 1.4rem) !important; }
+            & .section-header__subtitle { font-size: 0.78rem !important; }
+        }
+
+        @media screen and (max-width: 480px) {
+            margin-bottom: 20px;
+
+            & .section-header__title { font-size: 1.05rem !important; }
+            & .section-header__subtitle { font-size: 0.74rem !important; }
+        }
+
+        @media screen and (max-width: 420px) {
+            & .section-header__title { font-size: 1rem !important; }
+            & .section-header__subtitle { font-size: 0.72rem !important; }
+        }
+
+        @media screen and (max-width: 350px) {
+            & .section-header__title { font-size: 0.95rem !important; }
+            & .section-header__subtitle { font-size: 0.68rem !important; }
         }
     }
 
@@ -261,7 +485,7 @@
             margin-bottom: 0;
 
             & i {
-                font-size: 2.5rem;
+                font-size: 2.5rem ;
                 color: var(--gold);
                 opacity: 0.25;
                 display: block;
@@ -288,6 +512,76 @@
                 letter-spacing: 0.3em;
                 text-transform: uppercase;
             }
+        }
+
+        /* ─── VISION RESPONSIVE ─── */
+        @media screen and (max-width: 1500px) {
+            padding: 96px 0;
+        }
+
+        @media screen and (max-width: 1200px) {
+            padding: 80px 0;
+
+            & .home__vision-quote p { font-size: clamp(1.35rem, 2.4vw, 1.85rem) !important; }
+        }
+
+        @media screen and (max-width: 1024px) {
+            padding: 72px 0;
+
+            & .home__vision-quote i { font-size: 2rem !important; margin-bottom: 16px; }
+            & .home__vision-quote p { font-size: clamp(1.2rem, 2.4vw, 1.6rem) !important; line-height: 1.45; }
+            & .home__vision-quote cite { font-size: 0.7rem !important; }
+        }
+
+        @media screen and (max-width: 820px) {
+            padding: 60px 0;
+
+            & .home__vision-quote i { font-size: 1.7rem !important; margin-bottom: 14px; }
+            & .home__vision-quote p { font-size: 1.2rem !important; line-height: 1.5; }
+            & .home__vision-quote cite { font-size: 0.65rem !important; }
+        }
+
+        @media screen and (max-width: 720px) {
+            padding: 52px 0;
+
+            & .home__vision-quote i { font-size: 1.5rem !important; margin-bottom: 12px; }
+            & .home__vision-quote p { font-size: 1.05rem !important; line-height: 1.5; }
+            & .home__vision-quote cite { font-size: 0.62rem !important; letter-spacing: 0.25em; }
+        }
+
+        @media screen and (max-width: 540px) {
+            padding: 44px 0;
+
+            & .home__vision-quote i { font-size: 1.35rem !important; margin-bottom: 10px; }
+            & .home__vision-quote p { font-size: 0.98rem !important; line-height: 1.5; }
+            & .home__vision-quote cite { font-size: 0.58rem !important; letter-spacing: 0.22em; }
+        }
+
+        @media screen and (max-width: 480px) {
+            padding: 38px 0;
+
+            & .home__vision-quote p { font-size: 0.92rem !important; }
+            & .home__vision-quote cite { font-size: 0.55rem !important; }
+        }
+
+        @media screen and (max-width: 420px) {
+            padding: 34px 0;
+
+            & .home__vision-quote p { font-size: 0.86rem !important; }
+        }
+
+        @media screen and (max-width: 350px) {
+            padding: 30px 0;
+
+            & .home__vision-quote i { font-size: 1.2rem !important; }
+            & .home__vision-quote p { font-size: 0.8rem !important; }
+            & .home__vision-quote cite { font-size: 0.5rem !important; }
+        }
+
+        @media screen and (max-width: 300px) {
+            padding: 26px 0;
+
+            & .home__vision-quote p { font-size: 0.72rem !important; }
         }
     }
 
@@ -607,6 +901,266 @@
                 font-weight: 300;
             }
         }
+
+        /* ─── PILLARS RESPONSIVE ─── */
+        @media screen and (max-width: 1500px) {
+            padding: 96px 0;
+        }
+
+        @media screen and (max-width: 1200px) {
+            padding: 80px 0;
+
+            & .home__pillars-strip { margin-bottom: 56px; }
+            & .home__pillars-strip-item { padding: 22px 14px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.5rem !important; }
+
+            & .home__pillars-grid { gap: 18px; }
+            & .home__pillars-card { padding: 32px 20px 28px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 2rem !important; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1.05rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.82rem !important; }
+        }
+
+        @media screen and (max-width: 1024px) {
+            padding: 72px 0;
+
+            & .home__pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-grid {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            & .home__pillars-strip { grid-template-columns: repeat(4, 1fr); margin-bottom: 48px; }
+            & .home__pillars-strip-item { padding: 20px 12px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.35rem !important; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.6rem !important; letter-spacing: 0.2em; }
+
+            & .home__pillars-card { padding: 30px 20px 26px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.8rem !important; margin-bottom: 18px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1.05rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.8rem !important; }
+        }
+
+        @media screen and (max-width: 820px) {
+            padding: 60px 0;
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                max-width: 460px;
+                margin: 0 auto;
+            }
+
+            & .home__pillars-strip {
+                grid-template-columns: repeat(2, 1fr);
+                margin-bottom: 38px;
+            }
+
+            & .home__pillars-strip-item {
+                padding: 20px 14px;
+                border-right: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+            }
+
+            & .home__pillars-strip-item:nth-child(2n) { border-right: none; }
+            & .home__pillars-strip-item:nth-child(3),
+            & .home__pillars-strip-item:nth-child(4) { border-bottom: none; }
+
+            & .home__pillars-card { padding: 26px 22px 24px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.6rem !important; margin-bottom: 14px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1.02rem !important; margin-bottom: 10px; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.82rem !important; }
+        }
+
+        @media screen and (max-width: 720px) {
+            padding: 52px 0;
+
+            & .home__pillars-strip { grid-template-columns: repeat(2, 1fr); margin-bottom: 32px; }
+            & .home__pillars-strip-item { padding: 18px 12px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.25rem !important; margin-bottom: 6px; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.55rem !important; letter-spacing: 0.18em; }
+
+            & .home__pillars-grid { gap: 12px; }
+            & .home__pillars-card { padding: 24px 20px 22px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.5rem !important; margin-bottom: 14px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.8rem !important; line-height: 1.7; }
+        }
+
+        /* ─── MOBILE ACCORDION — ACTIVATED AT ≤ 564px ─── */
+        @media screen and (max-width: 564px) {
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-strip {
+                display: none;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-grid {
+                display: none;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion {
+                display: block;
+                max-width: 520px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
+                padding: 20px 4px;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
+                font-size: 1.5rem !important;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
+                font-size: 0.8rem !important;
+                letter-spacing: 0.24em;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-inner {
+                padding: 0 4px 22px;
+                gap: 16px;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 1.05rem !important;
+            }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
+                font-size: 0.86rem !important;
+                line-height: 1.7;
+            }
+        }
+
+        @media screen and (max-width: 540px) {
+            padding: 44px 0;
+
+            & .home__pillars-strip { margin-bottom: 28px; }
+            & .home__pillars-strip-item { padding: 16px 10px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.15rem !important; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.5rem !important; letter-spacing: 0.15em; }
+
+            & .home__pillars-card { padding: 22px 18px 20px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.4rem !important; margin-bottom: 12px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.95rem !important; margin-bottom: 8px; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.76rem !important; line-height: 1.65; }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
+                padding: 18px 4px;
+                column-gap: 14px;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
+                font-size: 1.35rem !important;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
+                font-size: 0.72rem !important;
+                letter-spacing: 0.2em;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-icon {
+                width: 36px; height: 36px; font-size: 0.95rem !important;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
+                font-size: 0.78rem !important;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            padding: 38px 0;
+
+            & .home__pillars-strip { margin-bottom: 24px; }
+            & .home__pillars-strip-item { padding: 14px 8px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.05rem !important; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.46rem !important; }
+
+            & .home__pillars-card { padding: 20px 16px 18px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.3rem !important; margin-bottom: 10px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.9rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.74rem !important; }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
+                padding: 16px 4px;
+                column-gap: 12px;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
+                font-size: 1.2rem !important;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
+                font-size: 0.68rem !important;
+                letter-spacing: 0.18em;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-icon {
+                width: 32px; height: 32px; font-size: 0.85rem !important;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
+                font-size: 0.74rem !important;
+            }
+        }
+
+        @media screen and (max-width: 420px) {
+            padding: 34px 0;
+
+            & .home__pillars-strip-item { padding: 12px 6px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 1rem !important; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.42rem !important; }
+
+            & .home__pillars-card { padding: 18px 14px 16px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.2rem !important; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.86rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.7rem !important; }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            padding: 30px 0;
+
+            & .home__pillars-strip-item { padding: 10px 5px; }
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 0.9rem !important; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.4rem !important; }
+
+            & .home__pillars-card { padding: 16px 12px 14px; }
+            & .home__pillars-card .home__pillars-card-icon { font-size: 1.1rem !important; margin-bottom: 8px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.82rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.66rem !important; }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
+                padding: 14px 4px;
+                column-gap: 10px;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
+                font-size: 1.05rem !important;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
+                font-size: 0.62rem !important;
+                letter-spacing: 0.16em;
+            }
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
+                font-size: 0.66rem !important;
+            }
+        }
+
+        @media screen and (max-width: 300px) {
+            padding: 26px 0;
+
+            & .home__pillars-strip-item .home__pillars-strip-num { font-size: 0.8rem !important; }
+            & .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.36rem !important; }
+
+            & .home__pillars-card { padding: 14px 10px 12px; }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.76rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.6rem !important; }
+
+            &:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
+                font-size: 0.6rem !important;
+            }
+        }
     }
 
     /* ─── SECTION 3b: THE CAMP VARIANT ─── */
@@ -701,6 +1255,82 @@
             & .home__pillars-card-desc {
                 max-width: 32ch;
                 margin: 0 auto;
+            }
+        }
+
+        /* ─── CAMP RESPONSIVE ─── */
+        @media screen and (max-width: 1200px) {
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 76px; height: 76px; font-size: 1.75rem !important;
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            & .home__pillars-grid {
+                grid-template-columns: repeat(3, 1fr); gap: 0;
+                max-width: 1100px; margin: 0 auto;
+            }
+
+            & .home__pillars-grid::before { top: 38px; left: 16.66%; right: 16.66%; }
+            & .home__pillars-card { padding: 0 14px; }
+
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 68px; height: 68px; font-size: 1.5rem !important; margin-bottom: 20px;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.78rem !important; }
+        }
+
+        @media screen and (max-width: 820px) {
+            & .home__pillars-grid {
+                grid-template-columns: 1fr; gap: 26px;
+                max-width: 400px; margin: 0 auto;
+            }
+
+            & .home__pillars-grid::before { display: none; }
+            & .home__pillars-card { padding: 0; }
+
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 68px; height: 68px; font-size: 1.5rem !important; margin-bottom: 18px;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1.05rem !important; }
+            & .home__pillars-card .home__pillars-card-desc {
+                font-size: 0.85rem !important; max-width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 720px) {
+            & .home__pillars-grid { gap: 22px; }
+
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 62px; height: 62px; font-size: 1.4rem !important; margin-bottom: 16px;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.82rem !important; }
+        }
+
+        @media screen and (max-width: 540px) {
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 56px; height: 56px; font-size: 1.3rem !important; margin-bottom: 14px;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.95rem !important; }
+        }
+
+        @media screen and (max-width: 480px) {
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 52px; height: 52px; font-size: 1.2rem !important; margin-bottom: 12px;
+            }
+        }
+
+        @media screen and (max-width: 420px) {
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 48px; height: 48px; font-size: 1.1rem !important;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 44px; height: 44px; font-size: 1rem !important;
             }
         }
     }
@@ -801,6 +1431,105 @@
                     font-size: 0.8rem;
                     line-height: 1;
                 }
+            }
+        }
+
+        /* ─── ARTHUR RESPONSIVE ─── */
+        @media screen and (max-width: 1500px) {
+            padding: 96px 0;
+        }
+
+        @media screen and (max-width: 1200px) {
+            padding: 80px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: clamp(1.8rem, 3.2vw, 2.6rem) !important; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 44px; padding: 10px 24px; font-size: 0.78rem !important;
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            padding: 72px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: clamp(1.7rem, 3.2vw, 2.4rem) !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 1rem !important; margin-bottom: 32px; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 42px; padding: 10px 22px; font-size: 0.76rem !important;
+            }
+        }
+
+        @media screen and (max-width: 820px) {
+            padding: 60px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: 1.6rem !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.95rem !important; margin-bottom: 28px; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 40px; padding: 9px 20px; font-size: 0.74rem !important;
+            }
+        }
+
+        @media screen and (max-width: 720px) {
+            padding: 52px 0;
+
+            & .home__arthur-content .home__arthur-eyebrow {
+                font-size: 0.6rem !important; letter-spacing: 0.25em; margin-bottom: 14px;
+            }
+            & .home__arthur-content .home__arthur-title { font-size: 1.4rem !important; margin-bottom: 18px; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.9rem !important; margin-bottom: 24px; }
+            & .home__arthur-content .home__arthur-actions { flex-direction: column; align-items: stretch; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                width: 100%; min-height: 38px; padding: 8px 16px; font-size: 0.7rem !important;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 540px) {
+            padding: 44px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: 1.25rem !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.85rem !important; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 36px; padding: 8px 14px; font-size: 0.68rem !important;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            padding: 38px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: 1.15rem !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.8rem !important; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 34px; padding: 7px 12px; font-size: 0.66rem !important;
+            }
+        }
+
+        @media screen and (max-width: 420px) {
+            padding: 34px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: 1.05rem !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.76rem !important; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 32px; padding: 7px 12px; font-size: 0.64rem !important;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            padding: 30px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: 0.95rem !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.7rem !important; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 30px; padding: 6px 10px; font-size: 0.6rem !important;
+            }
+        }
+
+        @media screen and (max-width: 300px) {
+            padding: 26px 0;
+
+            & .home__arthur-content .home__arthur-title { font-size: 0.85rem !important; }
+            & .home__arthur-content .home__arthur-subtitle { font-size: 0.64rem !important; }
+            & .home__arthur-content .home__arthur-actions .btn {
+                min-height: 28px; padding: 5px 8px; font-size: 0.56rem !important;
             }
         }
     }
@@ -932,6 +1661,117 @@
                 line-height: 1;
             }
         }
+
+        /* ─── INVOLVE RESPONSIVE ─── */
+        @media screen and (max-width: 1200px) {
+            & .home__pillars-card { padding: 24px 28px; column-gap: 22px; }
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 56px; height: 56px; font-size: 1.3rem !important;
+            }
+            & .home__pillars-card .btn {
+                padding: 9px 18px; font-size: 0.68rem !important; min-height: 38px;
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            & .home__pillars-grid {
+                grid-template-columns: 1fr; max-width: 900px; margin: 0 auto;
+            }
+
+            & .home__pillars-card { padding: 22px 24px; column-gap: 20px; }
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 52px; height: 52px; font-size: 1.25rem !important;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 1.02rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.78rem !important; }
+            & .home__pillars-card .btn {
+                padding: 8px 16px; font-size: 0.66rem !important; min-height: 36px;
+            }
+        }
+
+        @media screen and (max-width: 820px) {
+            & .home__pillars-grid { max-width: 100%; }
+
+            & .home__pillars-card {
+                grid-template-columns: 56px 1fr;
+                grid-template-rows: auto auto auto;
+                column-gap: 18px;
+                row-gap: 4px;
+                padding: 22px 20px;
+            }
+
+            & .home__pillars-card .home__pillars-card-icon {
+                grid-column: 1; grid-row: 1 / span 2;
+                width: 52px; height: 52px; font-size: 1.2rem !important;
+                margin: 0; align-self: start;
+            }
+            & .home__pillars-card .home__pillars-card-title {
+                grid-column: 2; grid-row: 1; font-size: 1rem !important;
+            }
+            & .home__pillars-card .home__pillars-card-desc {
+                grid-column: 2; grid-row: 2; font-size: 0.78rem !important; max-width: 100%;
+            }
+            & .home__pillars-card .btn {
+                grid-column: 1 / -1; grid-row: 3;
+                justify-self: start;
+                margin-top: 14px;
+                padding: 8px 16px; font-size: 0.66rem !important; min-height: 36px;
+            }
+        }
+
+        @media screen and (max-width: 720px) {
+            & .home__pillars-card {
+                grid-template-columns: 48px 1fr; column-gap: 16px; padding: 20px 18px;
+            }
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 44px; height: 44px; font-size: 1.1rem !important;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.95rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.75rem !important; }
+            & .home__pillars-card .btn {
+                padding: 7px 14px; font-size: 0.62rem !important; min-height: 34px; margin-top: 12px;
+            }
+        }
+
+        @media screen and (max-width: 540px) {
+            & .home__pillars-card {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+                row-gap: 8px;
+                padding: 22px 18px;
+                text-align: center;
+            }
+            & .home__pillars-card .home__pillars-card-icon {
+                grid-column: 1; grid-row: 1;
+                justify-self: center; align-self: center;
+                width: 48px; height: 48px; font-size: 1.15rem !important;
+                margin: 0 auto 4px;
+            }
+            & .home__pillars-card .home__pillars-card-title {
+                grid-column: 1; grid-row: 2; text-align: center;
+            }
+            & .home__pillars-card .home__pillars-card-desc {
+                grid-column: 1; grid-row: 3; text-align: center;
+            }
+            & .home__pillars-card .btn {
+                grid-column: 1; grid-row: 4;
+                justify-self: center;
+                margin-top: 8px;
+                padding: 8px 18px; font-size: 0.66rem !important; min-height: 36px;
+            }
+        }
+
+        @media screen and (max-width: 420px) {
+            & .home__pillars-card { padding: 18px 14px; }
+            & .home__pillars-card .home__pillars-card-icon {
+                width: 42px; height: 42px; font-size: 1rem !important;
+            }
+            & .home__pillars-card .home__pillars-card-title { font-size: 0.88rem !important; }
+            & .home__pillars-card .home__pillars-card-desc { font-size: 0.7rem !important; }
+            & .home__pillars-card .btn {
+                padding: 7px 14px; font-size: 0.62rem !important; min-height: 34px;
+            }
+        }
     }
 }
 
@@ -951,655 +1791,4 @@
     25% { transform: translateY(-30px) translateX(15px); opacity: 0.6; }
     50% { transform: translateY(-15px) translateX(-20px); opacity: 0.4; }
     75% { transform: translateY(-40px) translateX(10px); opacity: 0.7; }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — FLAT, NO NESTING
-   ═══════════════════════════════════════════════════════════ */
-
-@media screen and (max-width: 1500px) {
-    .home .home__hero { padding: 120px 0 80px; }
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 96px 0; }
-}
-
-@media screen and (max-width: 1200px) {
-    .home .home__hero { padding: 110px 0 70px; }
-    .home .home__hero-title { font-size: clamp(2.2rem, 5vw, 3.8rem) !important; }
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 80px 0; }
-    .home .home__vision-quote p { font-size: clamp(1.35rem, 2.4vw, 1.85rem) !important; }
-    .home .section-header { margin-bottom: 40px; }
-    .home .section-header .section-header__title { font-size: clamp(1.5rem, 2.8vw, 2.2rem) !important; }
-
-    .home .home__pillars-strip { margin-bottom: 56px; }
-    .home .home__pillars-strip-item { padding: 22px 14px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.5rem !important; }
-
-    .home .home__pillars-grid { gap: 18px; }
-    .home .home__pillars-card { padding: 32px 20px 28px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 2rem !important; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 1.05rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.82rem !important; }
-
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 76px; height: 76px; font-size: 1.75rem !important;
-    }
-
-    .home .home__pillars--involve .home__pillars-card { padding: 24px 28px; column-gap: 22px; }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-icon {
-        width: 56px; height: 56px; font-size: 1.3rem !important;
-    }
-    .home .home__pillars--involve .home__pillars-card .btn {
-        padding: 9px 18px; font-size: 0.68rem !important; min-height: 38px;
-    }
-
-    .home .home__arthur-title { font-size: clamp(1.8rem, 3.2vw, 2.6rem) !important; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 44px; padding: 10px 24px; font-size: 0.78rem !important;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .home .home__hero { padding: 100px 0 60px; }
-    .home .home__hero-content { max-width: 720px; }
-    .home .home__hero-badge {
-        font-size: 0.6rem !important; padding: 6px 18px;
-        margin-bottom: 22px; letter-spacing: 0.25em;
-    }
-    .home .home__hero-title { font-size: clamp(2rem, 5vw, 3.2rem) !important; margin-bottom: 20px; }
-    .home .home__hero-subtitle { font-size: clamp(0.95rem, 1.4vw, 1.15rem) !important; margin-bottom: 12px; }
-    .home .home__hero-subtext { font-size: 0.95rem !important; margin-bottom: 32px; }
-    .home .home__hero-scroll { display: none; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 42px; padding: 10px 22px; font-size: 0.76rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 72px 0; }
-
-    .home .section-header { margin-bottom: 36px; }
-    .home .section-header .section-header__eyebrow { font-size: 0.62rem !important; margin-bottom: 10px; }
-    .home .section-header .section-header__title { font-size: clamp(1.4rem, 2.6vw, 2rem) !important; margin-bottom: 12px; }
-    .home .section-header .section-header__subtitle { font-size: 0.88rem !important; }
-
-    .home .home__vision-quote i { font-size: 2rem !important; margin-bottom: 16px; }
-    .home .home__vision-quote p { font-size: clamp(1.2rem, 2.4vw, 1.6rem) !important; line-height: 1.45; }
-    .home .home__vision-quote cite { font-size: 0.7rem !important; }
-
-    .home .home__pillars-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-grid {
-        max-width: 100%;
-        margin: 0;
-    }
-
-    .home .home__pillars-strip { grid-template-columns: repeat(4, 1fr); margin-bottom: 48px; }
-    .home .home__pillars-strip-item { padding: 20px 12px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.35rem !important; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.6rem !important; letter-spacing: 0.2em; }
-
-    .home .home__pillars-card { padding: 30px 20px 26px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.8rem !important; margin-bottom: 18px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 1.05rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.8rem !important; }
-
-    .home .home__pillars--camp .home__pillars-grid {
-        grid-template-columns: repeat(3, 1fr); gap: 0;
-        max-width: 1100px; margin: 0 auto;
-    }
-    .home .home__pillars--camp .home__pillars-grid::before { top: 38px; left: 16.66%; right: 16.66%; }
-    .home .home__pillars--camp .home__pillars-card { padding: 0 14px; }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 68px; height: 68px; font-size: 1.5rem !important; margin-bottom: 20px;
-    }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-title { font-size: 1rem !important; }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-desc { font-size: 0.78rem !important; }
-
-    .home .home__pillars--involve .home__pillars-grid {
-        grid-template-columns: 1fr; max-width: 900px; margin: 0 auto;
-    }
-    .home .home__pillars--involve .home__pillars-card { padding: 22px 24px; column-gap: 20px; }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-icon {
-        width: 52px; height: 52px; font-size: 1.25rem !important;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-title { font-size: 1.02rem !important; }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-desc { font-size: 0.78rem !important; }
-    .home .home__pillars--involve .home__pillars-card .btn {
-        padding: 8px 16px; font-size: 0.66rem !important; min-height: 36px;
-    }
-
-    .home .home__arthur-title { font-size: clamp(1.7rem, 3.2vw, 2.4rem) !important; }
-    .home .home__arthur-subtitle { font-size: 1rem !important; margin-bottom: 32px; }
-}
-
-@media screen and (max-width: 820px) {
-    .home .home__hero { padding: 88px 0 52px; }
-    .home .home__hero-badge {
-        font-size: 0.55rem !important; padding: 5px 16px;
-        margin-bottom: 18px; letter-spacing: 0.22em;
-    }
-    .home .home__hero-title { font-size: clamp(1.8rem, 5.5vw, 2.6rem) !important; }
-    .home .home__hero-subtitle { font-size: 0.98rem !important; }
-    .home .home__hero-subtext { font-size: 0.9rem !important; margin-bottom: 28px; }
-    .home .home__hero-actions { gap: 10px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 40px; padding: 9px 20px; font-size: 0.74rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 60px 0; }
-
-    .home .section-header { margin-bottom: 30px; }
-    .home .section-header .section-header__eyebrow { font-size: 0.58rem !important; letter-spacing: 0.25em; margin-bottom: 8px; }
-    .home .section-header .section-header__title { font-size: clamp(1.3rem, 4vw, 1.8rem) !important; margin-bottom: 10px; }
-    .home .section-header .section-header__subtitle { font-size: 0.84rem !important; line-height: 1.6; }
-
-    .home .home__vision-quote i { font-size: 1.7rem !important; margin-bottom: 14px; }
-    .home .home__vision-quote p { font-size: 1.2rem !important; line-height: 1.5; }
-    .home .home__vision-quote cite { font-size: 0.65rem !important; }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        max-width: 460px;
-        margin: 0 auto;
-    }
-
-    .home .home__pillars-strip {
-        grid-template-columns: repeat(2, 1fr);
-        margin-bottom: 38px;
-    }
-    .home .home__pillars-strip-item {
-        padding: 20px 14px;
-        border-right: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-    }
-    .home .home__pillars-strip-item:nth-child(2n) { border-right: none; }
-    .home .home__pillars-strip-item:nth-child(3),
-    .home .home__pillars-strip-item:nth-child(4) { border-bottom: none; }
-
-    .home .home__pillars-card { padding: 26px 22px 24px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.6rem !important; margin-bottom: 14px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 1.02rem !important; margin-bottom: 10px; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.82rem !important; }
-
-    .home .home__pillars--camp .home__pillars-grid {
-        grid-template-columns: 1fr; gap: 26px;
-        max-width: 400px; margin: 0 auto;
-    }
-    .home .home__pillars--camp .home__pillars-grid::before { display: none; }
-    .home .home__pillars--camp .home__pillars-card { padding: 0; }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 68px; height: 68px; font-size: 1.5rem !important; margin-bottom: 18px;
-    }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-title { font-size: 1.05rem !important; }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-desc {
-        font-size: 0.85rem !important; max-width: 100%;
-    }
-
-    .home .home__pillars--involve .home__pillars-grid { max-width: 100%; }
-    .home .home__pillars--involve .home__pillars-card {
-        grid-template-columns: 56px 1fr;
-        grid-template-rows: auto auto auto;
-        column-gap: 18px;
-        row-gap: 4px;
-        padding: 22px 20px;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-icon {
-        grid-column: 1; grid-row: 1 / span 2;
-        width: 52px; height: 52px; font-size: 1.2rem !important;
-        margin: 0; align-self: start;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-title {
-        grid-column: 2; grid-row: 1; font-size: 1rem !important;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-desc {
-        grid-column: 2; grid-row: 2; font-size: 0.78rem !important; max-width: 100%;
-    }
-    .home .home__pillars--involve .home__pillars-card .btn {
-        grid-column: 1 / -1; grid-row: 3;
-        justify-self: start;
-        margin-top: 14px;
-        padding: 8px 16px; font-size: 0.66rem !important; min-height: 36px;
-    }
-
-    .home .home__arthur-title { font-size: 1.6rem !important; }
-    .home .home__arthur-subtitle { font-size: 0.95rem !important; margin-bottom: 28px; }
-}
-
-@media screen and (max-width: 720px) {
-    .home .home__hero { padding: 76px 0 44px; }
-    .home .home__hero-badge {
-        font-size: 0.5rem !important; padding: 5px 14px;
-        margin-bottom: 16px; letter-spacing: 0.2em; gap: 6px;
-    }
-    .home .home__hero-title { font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important; margin-bottom: 16px; }
-    .home .home__hero-title .home__hero-title-divider {
-        font-size: 0.5em !important; letter-spacing: 0.35em; margin: 6px 0;
-    }
-    .home .home__hero-subtitle { font-size: 0.9rem !important; margin-bottom: 10px; }
-    .home .home__hero-subtext { font-size: 0.85rem !important; margin-bottom: 24px; }
-    .home .home__hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        width: 100%;
-        min-height: 38px; padding: 8px 16px; font-size: 0.7rem !important;
-        justify-content: center;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 52px 0; }
-
-    .home .section-header { margin-bottom: 26px; }
-    .home .section-header .section-header__title { font-size: clamp(1.2rem, 4.5vw, 1.6rem) !important; }
-    .home .section-header .section-header__subtitle { font-size: 0.82rem !important; }
-
-    .home .home__vision-quote i { font-size: 1.5rem !important; margin-bottom: 12px; }
-    .home .home__vision-quote p { font-size: 1.05rem !important; line-height: 1.5; }
-    .home .home__vision-quote cite { font-size: 0.62rem !important; letter-spacing: 0.25em; }
-
-    .home .home__pillars-strip { grid-template-columns: repeat(2, 1fr); margin-bottom: 32px; }
-    .home .home__pillars-strip-item { padding: 18px 12px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.25rem !important; margin-bottom: 6px; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.55rem !important; letter-spacing: 0.18em; }
-
-    .home .home__pillars-grid { gap: 12px; }
-    .home .home__pillars-card { padding: 24px 20px 22px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.5rem !important; margin-bottom: 14px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 1rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.8rem !important; line-height: 1.7; }
-
-    .home .home__pillars--camp .home__pillars-grid { gap: 22px; }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 62px; height: 62px; font-size: 1.4rem !important; margin-bottom: 16px;
-    }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-title { font-size: 1rem !important; }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-desc { font-size: 0.82rem !important; }
-
-    .home .home__pillars--involve .home__pillars-card {
-        grid-template-columns: 48px 1fr; column-gap: 16px; padding: 20px 18px;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-icon {
-        width: 44px; height: 44px; font-size: 1.1rem !important;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-title { font-size: 0.95rem !important; }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-desc { font-size: 0.75rem !important; }
-    .home .home__pillars--involve .home__pillars-card .btn {
-        padding: 7px 14px; font-size: 0.62rem !important; min-height: 34px; margin-top: 12px;
-    }
-
-    .home .home__arthur-eyebrow { font-size: 0.6rem !important; letter-spacing: 0.25em; margin-bottom: 14px; }
-    .home .home__arthur-title { font-size: 1.4rem !important; margin-bottom: 18px; }
-    .home .home__arthur-subtitle { font-size: 0.9rem !important; margin-bottom: 24px; }
-    .home .home__arthur-actions { flex-direction: column; align-items: stretch; }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   MOBILE ACCORDION - ACTIVATED AT ≤ 564px - PILLARS COLLAPSE
-   Vertical stack: numeral + label on top, description below.
-   ═══════════════════════════════════════════════════════════ */
-@media screen and (max-width: 564px) {
-
-    /* Hide the desktop strip + grid */
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-strip {
-        display: none;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-grid {
-        display: none;
-    }
-
-    /* Show the vertical accordion */
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion {
-        display: block;
-        max-width: 520px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-    /* Trigger row: numeral + label + chevron */
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
-        padding: 20px 4px;
-    }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
-        font-size: 1.5rem !important;
-    }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
-        font-size: 0.8rem !important;
-        letter-spacing: 0.24em;
-    }
-
-    /* Panel description */
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-inner {
-        padding: 0 4px 22px;
-        gap: 16px;
-    }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 1.05rem !important;
-    }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
-        font-size: 0.86rem !important;
-        line-height: 1.7;
-    }
-}
-
-@media screen and (max-width: 540px) {
-    .home .home__hero { padding: 68px 0 38px; }
-    .home .home__hero-badge {
-        font-size: 0.46rem !important; padding: 4px 12px;
-        margin-bottom: 14px; letter-spacing: 0.18em; gap: 5px;
-    }
-    .home .home__hero-title { font-size: clamp(1.45rem, 7vw, 1.95rem) !important; letter-spacing: -0.02em; }
-    .home .home__hero-subtitle { font-size: 0.85rem !important; }
-    .home .home__hero-subtext { font-size: 0.8rem !important; margin-bottom: 22px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 36px; padding: 8px 14px; font-size: 0.68rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 44px 0; }
-
-    .home .section-header { margin-bottom: 22px; }
-    .home .section-header .section-header__eyebrow { font-size: 0.54rem !important; letter-spacing: 0.22em; }
-    .home .section-header .section-header__title { font-size: clamp(1.1rem, 5vw, 1.4rem) !important; }
-    .home .section-header .section-header__subtitle { font-size: 0.78rem !important; }
-
-    .home .home__vision-quote i { font-size: 1.35rem !important; margin-bottom: 10px; }
-    .home .home__vision-quote p { font-size: 0.98rem !important; line-height: 1.5; }
-    .home .home__vision-quote cite { font-size: 0.58rem !important; letter-spacing: 0.22em; }
-
-    .home .home__pillars-strip { margin-bottom: 28px; }
-    .home .home__pillars-strip-item { padding: 16px 10px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.15rem !important; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.5rem !important; letter-spacing: 0.15em; }
-
-    .home .home__pillars-card { padding: 22px 18px 20px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.4rem !important; margin-bottom: 12px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 0.95rem !important; margin-bottom: 8px; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.76rem !important; line-height: 1.65; }
-
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 56px; height: 56px; font-size: 1.3rem !important; margin-bottom: 14px;
-    }
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-title { font-size: 0.95rem !important; }
-
-    .home .home__pillars--involve .home__pillars-card {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto;
-        row-gap: 8px;
-        padding: 22px 18px;
-        text-align: center;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-icon {
-        grid-column: 1; grid-row: 1;
-        justify-self: center; align-self: center;
-        width: 48px; height: 48px; font-size: 1.15rem !important;
-        margin: 0 auto 4px;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-title {
-        grid-column: 1; grid-row: 2; text-align: center;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-desc {
-        grid-column: 1; grid-row: 3; text-align: center;
-    }
-    .home .home__pillars--involve .home__pillars-card .btn {
-        grid-column: 1; grid-row: 4;
-        justify-self: center;
-        margin-top: 8px;
-        padding: 8px 18px; font-size: 0.66rem !important; min-height: 36px;
-    }
-
-    .home .home__arthur-title { font-size: 1.25rem !important; }
-    .home .home__arthur-subtitle { font-size: 0.85rem !important; }
-
-    /* Accordion: tighter on small screens */
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
-        padding: 18px 4px;
-        column-gap: 14px;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
-        font-size: 1.35rem !important;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
-        font-size: 0.72rem !important;
-        letter-spacing: 0.2em;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-icon {
-        width: 36px; height: 36px; font-size: 0.95rem !important;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
-        font-size: 0.78rem !important;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .home .home__hero { padding: 62px 0 34px; }
-    .home .home__hero-badge {
-        font-size: 0.44rem !important; padding: 4px 10px;
-        margin-bottom: 12px; letter-spacing: 0.15em; gap: 4px;
-    }
-    .home .home__hero-title { font-size: clamp(1.35rem, 7.5vw, 1.75rem) !important; margin-bottom: 14px; }
-    .home .home__hero-title .home__hero-title-divider {
-        font-size: 0.55em !important; letter-spacing: 0.3em; margin: 5px 0;
-    }
-    .home .home__hero-subtitle { font-size: 0.82rem !important; }
-    .home .home__hero-subtext { font-size: 0.78rem !important; margin-bottom: 20px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 34px; padding: 7px 12px; font-size: 0.66rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 38px 0; }
-
-    .home .section-header { margin-bottom: 20px; }
-    .home .section-header .section-header__title { font-size: 1.05rem !important; }
-    .home .section-header .section-header__subtitle { font-size: 0.74rem !important; }
-
-    .home .home__vision-quote p { font-size: 0.92rem !important; }
-    .home .home__vision-quote cite { font-size: 0.55rem !important; }
-
-    .home .home__pillars-strip { margin-bottom: 24px; }
-    .home .home__pillars-strip-item { padding: 14px 8px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 1.05rem !important; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.46rem !important; }
-
-    .home .home__pillars-card { padding: 20px 16px 18px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.3rem !important; margin-bottom: 10px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 0.9rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.74rem !important; }
-
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 52px; height: 52px; font-size: 1.2rem !important; margin-bottom: 12px;
-    }
-
-    .home .home__arthur-title { font-size: 1.15rem !important; }
-    .home .home__arthur-subtitle { font-size: 0.8rem !important; }
-
-    /* Accordion: tighter still */
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
-        padding: 16px 4px;
-        column-gap: 12px;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
-        font-size: 1.2rem !important;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
-        font-size: 0.68rem !important;
-        letter-spacing: 0.18em;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-icon {
-        width: 32px; height: 32px; font-size: 0.85rem !important;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
-        font-size: 0.74rem !important;
-    }
-}
-
-@media screen and (max-width: 420px) {
-    .home .home__hero { padding: 56px 0 30px; }
-    .home .home__hero-badge {
-        font-size: 0.4rem !important; padding: 3px 8px;
-        margin-bottom: 10px; letter-spacing: 0.12em;
-    }
-    .home .home__hero-title { font-size: clamp(1.25rem, 8vw, 1.6rem) !important; }
-    .home .home__hero-subtitle { font-size: 0.78rem !important; }
-    .home .home__hero-subtext { font-size: 0.74rem !important; margin-bottom: 18px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 32px; padding: 7px 12px; font-size: 0.64rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 34px 0; }
-
-    .home .section-header .section-header__title { font-size: 1rem !important; }
-    .home .section-header .section-header__subtitle { font-size: 0.72rem !important; }
-
-    .home .home__vision-quote p { font-size: 0.86rem !important; }
-
-    .home .home__pillars-strip-item { padding: 12px 6px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 1rem !important; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.42rem !important; }
-
-    .home .home__pillars-card { padding: 18px 14px 16px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.2rem !important; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 0.86rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.7rem !important; }
-
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 48px; height: 48px; font-size: 1.1rem !important;
-    }
-
-    .home .home__pillars--involve .home__pillars-card { padding: 18px 14px; }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-icon {
-        width: 42px; height: 42px; font-size: 1rem !important;
-    }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-title { font-size: 0.88rem !important; }
-    .home .home__pillars--involve .home__pillars-card .home__pillars-card-desc { font-size: 0.7rem !important; }
-    .home .home__pillars--involve .home__pillars-card .btn {
-        padding: 7px 14px; font-size: 0.62rem !important; min-height: 34px;
-    }
-
-    .home .home__arthur-title { font-size: 1.05rem !important; }
-    .home .home__arthur-subtitle { font-size: 0.76rem !important; }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
-        font-size: 0.7rem !important;
-    }
-}
-
-@media screen and (max-width: 350px) {
-    .home .home__hero { padding: 50px 0 26px; }
-    .home .home__hero-badge { font-size: 0.38rem !important; padding: 3px 7px; margin-bottom: 9px; }
-    .home .home__hero-title { font-size: 1.2rem !important; letter-spacing: -0.01em; line-height: 1.15; }
-    .home .home__hero-subtitle { font-size: 0.72rem !important; }
-    .home .home__hero-subtext { font-size: 0.68rem !important; margin-bottom: 16px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 30px; padding: 6px 10px; font-size: 0.6rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 30px 0; }
-
-    .home .section-header .section-header__title { font-size: 0.95rem !important; }
-    .home .section-header .section-header__subtitle { font-size: 0.68rem !important; }
-
-    .home .home__vision-quote i { font-size: 1.2rem !important; }
-    .home .home__vision-quote p { font-size: 0.8rem !important; }
-    .home .home__vision-quote cite { font-size: 0.5rem !important; }
-
-    .home .home__pillars-strip-item { padding: 10px 5px; }
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 0.9rem !important; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.4rem !important; }
-
-    .home .home__pillars-card { padding: 16px 12px 14px; }
-    .home .home__pillars-card .home__pillars-card-icon { font-size: 1.1rem !important; margin-bottom: 8px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 0.82rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.66rem !important; }
-
-    .home .home__pillars--camp .home__pillars-card .home__pillars-card-icon {
-        width: 44px; height: 44px; font-size: 1rem !important;
-    }
-
-    .home .home__arthur-title { font-size: 0.95rem !important; }
-    .home .home__arthur-subtitle { font-size: 0.7rem !important; }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-trigger {
-        padding: 14px 4px;
-        column-gap: 10px;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-num {
-        font-size: 1.05rem !important;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-label {
-        font-size: 0.62rem !important;
-        letter-spacing: 0.16em;
-    }
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
-        font-size: 0.66rem !important;
-    }
-}
-
-@media screen and (max-width: 300px) {
-    .home .home__hero { padding: 44px 0 22px; }
-    .home .home__hero-badge { font-size: 0.34rem !important; padding: 2px 6px; margin-bottom: 8px; }
-    .home .home__hero-title { font-size: 1.05rem !important; }
-    .home .home__hero-subtitle { font-size: 0.66rem !important; }
-    .home .home__hero-subtext { font-size: 0.62rem !important; margin-bottom: 14px; }
-
-    .home .home__hero-actions .btn,
-    .home .home__arthur-actions .btn {
-        min-height: 28px; padding: 5px 8px; font-size: 0.56rem !important;
-    }
-
-    .home .home__vision,
-    .home .home__pillars,
-    .home .home__arthur { padding: 26px 0; }
-
-    .home .home__vision-quote p { font-size: 0.72rem !important; }
-
-    .home .home__pillars-strip-item .home__pillars-strip-num { font-size: 0.8rem !important; }
-    .home .home__pillars-strip-item .home__pillars-strip-label { font-size: 0.36rem !important; }
-
-    .home .home__pillars-card { padding: 14px 10px 12px; }
-    .home .home__pillars-card .home__pillars-card-title { font-size: 0.76rem !important; }
-    .home .home__pillars-card .home__pillars-card-desc { font-size: 0.6rem !important; }
-
-    .home .home__arthur-title { font-size: 0.85rem !important; }
-    .home .home__arthur-subtitle { font-size: 0.64rem !important; }
-
-    .home .home__pillars:not(.home__pillars--camp):not(.home__pillars--involve) .home__pillars-accordion-panel-desc {
-        font-size: 0.6rem !important;
-    }
 }
