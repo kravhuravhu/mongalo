@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
             '</div>' +
         '</div>';
 
-    // Inject overlay into body (hidden by default)
     if (!document.getElementById('appOverlay')) {
         document.body.insertAdjacentHTML('beforeend', overlayHTML);
     }
@@ -33,16 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Expose globally so inline handlers and forms can call it
     window.showAppOverlay = showAppOverlay;
     window.hideAppOverlay = hideAppOverlay;
 
     // ─── INITIAL PAGE LOAD OVERLAY ───
-    // Show overlay immediately on every page load, then fade it out once
-    // the page is ready. The very first load is already covered by the
-    // branded `.app-loader` (from the layout) — this overlay only becomes
-    // visible on subsequent internal navigations, and hides cleanly after
-    // the current page finishes loading.
     showAppOverlay();
 
     window.addEventListener('load', function() {
@@ -51,21 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     });
 
-    // Safety — never leave overlay stuck
     setTimeout(function() {
         if (appOverlay && appOverlay.classList.contains('app-overlay--visible')) {
             hideAppOverlay();
         }
     }, 3000);
 
-    // If user comes back via bfcache (browser back/forward), hide overlay
     window.addEventListener('pageshow', function(e) {
         if (e.persisted) hideAppOverlay();
     });
 
     // ─── GLOBAL NAVIGATION OVERLAY ───
-    // Intercept any internal link click and show the overlay while the
-    // next page loads.
     document.addEventListener('click', function(e) {
         const link = e.target.closest('a[href]');
         if (!link) return;
@@ -73,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const href = link.getAttribute('href');
         const target = link.getAttribute('target');
 
-        // Skip conditions
         if (!href ||
             href.startsWith('#') ||
             href.startsWith('javascript:') ||
@@ -86,20 +74,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Only show overlay for same-origin navigation
         if (href.startsWith('/') || href.startsWith(window.location.origin)) {
             showAppOverlay();
         }
     });
 
-    // ─── BACK/FORWARD NAVIGATION ───
     window.addEventListener('beforeunload', function() {
         showAppOverlay();
     });
 
     // ─── GLOBAL NAVBAR SCROLL ───
     const navbar = document.getElementById('globalNavbar');
-    const isHeroPage = document.querySelector('.home__hero');
 
     if (navbar) {
         window.addEventListener('scroll', function() {
@@ -112,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, { passive: true });
 
-        // ─── INITIAL STATE ───
         if (window.scrollY > 100) {
             navbar.classList.add('global-navbar--scrolled');
         }
@@ -132,5 +116,82 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollBtn.addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    }
+
+    // ─── MOBILE NAV TOGGLE ───
+    const navToggle = document.getElementById('globalNavToggle');
+    const navLeft   = document.querySelector('.global-navbar__links--left');
+    const navRight  = document.querySelector('.global-navbar__links--right');
+
+    // ─── INJECT OVERLAY (only once, only if navbar exists) ───
+    let navOverlay = document.querySelector('.global-navbar__overlay');
+    if (!navOverlay && navToggle && navLeft && navRight) {
+        navOverlay = document.createElement('div');
+        navOverlay.className = 'global-navbar__overlay';
+        document.body.appendChild(navOverlay);
+    }
+
+    if (navToggle && navLeft && navRight && navOverlay) {
+
+        function openNav() {
+            navToggle.classList.add('global-navbar__toggle--open');
+            navLeft.classList.add('global-navbar__links--open');
+            navRight.classList.add('global-navbar__links--open');
+            navOverlay.classList.add('global-navbar__overlay--visible');
+
+            const navEl = document.querySelector('.global-navbar');
+            if (navEl) navEl.classList.add('global-navbar--drawer-open');
+
+            document.body.style.overflow = 'hidden';
+            navToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeNav() {
+            navToggle.classList.remove('global-navbar__toggle--open');
+            navLeft.classList.remove('global-navbar__links--open');
+            navRight.classList.remove('global-navbar__links--open');
+            navOverlay.classList.remove('global-navbar__overlay--visible');
+
+            const navEl = document.querySelector('.global-navbar');
+            if (navEl) navEl.classList.remove('global-navbar--drawer-open');
+
+            document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        navToggle.addEventListener('click', function() {
+            const isOpen = navToggle.classList.contains('global-navbar__toggle--open');
+            if (isOpen) {
+                closeNav();
+            } else {
+                openNav();
+            }
+        });
+
+        // ─── OVERLAY CLICK CLOSES ───
+        navOverlay.addEventListener('click', closeNav);
+
+        // ─── LINK CLICK CLOSES ───
+        document.querySelectorAll('.global-navbar__link').forEach(function(link) {
+            link.addEventListener('click', closeNav);
+        });
+
+        // ─── ESC CLOSES ───
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navToggle.classList.contains('global-navbar__toggle--open')) {
+                closeNav();
+            }
+        });
+
+        // ─── RESIZE BACK TO DESKTOP CLOSES ───
+        let navResizeTimer = null;
+        window.addEventListener('resize', function() {
+            if (navResizeTimer) clearTimeout(navResizeTimer);
+            navResizeTimer = setTimeout(function() {
+                if (window.innerWidth > 1024 && navToggle.classList.contains('global-navbar__toggle--open')) {
+                    closeNav();
+                }
+            }, 120);
+        }, { passive: true });
     }
 });
