@@ -202,7 +202,8 @@
                 gap: 14px;
                 flex-wrap: wrap;
                 margin-bottom: 24px;
-
+                width: fit-content;
+                justify-self: center;
                 & .btn {
                     min-height: 56px;
                     padding: 16px 40px;
@@ -1694,6 +1695,1317 @@
                 min-height: 56px;
                 padding: 16px 40px;
                 font-size: 0.95rem;
+                width: fit-content !important;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 1700PX ─── */
+    @media (max-width: 1700px) {
+        & .baptism__hero {
+            padding: 132px 0 172px;
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 112px 0;
+        }
+    }
+
+    /* ─── RESPONSIVE: 1500PX ─── */
+    @media (max-width: 1500px) {
+        & .baptism__hero {
+            padding: 124px 0 164px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-title {
+                    font-size: clamp(1.75rem, 3.6vw, 2.8rem) !important;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 104px 0;
+        }
+    }
+
+    /* ─── RESPONSIVE: 1200PX ─── */
+    @media (max-width: 1200px) {
+        & .baptism__hero {
+            padding: 118px 0 156px;
+
+            & .baptism__hero-bg {
+                & .baptism__hero-image {
+                    width: 60%;
+                    opacity: 0.24;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 96px 0;
+        }
+
+        & .baptism__two {
+            & .baptism__two-grid {
+                gap: 24px;
+            }
+            & .baptism__two-card-content {
+                padding: 44px 34px 40px;
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-grid {
+                gap: 48px;
+            }
+            & .baptism__contact-form-wrap {
+                padding: 40px 32px 32px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 1024PX ─── */
+    @media (max-width: 1024px) {
+        & .baptism__hero {
+            padding: 110px 0 140px;
+            min-height: auto;
+
+            & .baptism__hero-bg {
+                & .baptism__hero-image {
+                    width: 100%;
+                    opacity: 0.18;
+                    -webkit-mask-image: radial-gradient(
+                        ellipse 100% 80% at 50% 40%,
+                        #000 0%,
+                        #000 30%,
+                        transparent 80%
+                    );
+                    mask-image: radial-gradient(
+                        ellipse 100% 80% at 50% 40%,
+                        #000 0%,
+                        #000 30%,
+                        transparent 80%
+                    );
+
+                    &::after {
+                        background: linear-gradient(
+                            180deg,
+                            var(--water-deep) 0%,
+                            transparent 30%,
+                            transparent 70%,
+                            var(--water-deep) 100%
+                        );
+                    }
+                }
+            }
+
+            & .baptism__hero-content {
+                padding: 0 12px;
+
+                &::before {
+                    inset: -40px -40px;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 88px 0;
+        }
+
+        & .baptism__two {
+            & .baptism__two-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 620px;
+            }
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-grid {
+                max-width: 100%;
+            }
+            & .baptism__meaning-card {
+                column-gap: 24px;
+                padding: 30px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.4rem;
+            }
+            & .baptism__meaning-card {
+                grid-template-columns: 60px 1fr;
+            }
+        }
+
+        & .baptism__steps {
+            & .baptism__steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                max-width: 780px;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-text {
+                font-size: clamp(1.15rem, 2.6vw, 1.6rem) !important;
+                padding: 0 28px;
+            }
+            & .baptism__scriptures-text::before {
+                font-size: 3.2rem !important;
+                top: -22px;
+            }
+            & .baptism__scriptures-text::after {
+                font-size: 3.2rem !important;
+                bottom: -32px;
+            }
+            & .baptism__scriptures-controls {
+                margin-top: 44px;
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                max-width: 680px;
+            }
+            & .baptism__contact-call {
+                text-align: center;
+                padding-top: 0;
+
+                & .baptism__contact-call-desc {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & .baptism__contact-call-actions {
+                    max-width: 420px;
+                    margin: 0 auto;
+                }
+            }
+            & .baptism__contact-form-wrap {
+                padding: 36px 28px 32px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 820PX ─── */
+    @media (max-width: 820px) {
+        & .baptism__hero {
+            padding: 100px 0 120px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-eyebrow {
+                    font-size: 0.6rem !important;
+                    letter-spacing: 0.24em;
+                    margin-bottom: 20px;
+
+                    & .baptism__hero-eyebrow-line {
+                        width: 30px;
+                    }
+                }
+                & .baptism__hero-title {
+                    font-size: clamp(1.6rem, 5.2vw, 2.2rem) !important;
+                    margin-bottom: 32px;
+                }
+                & .baptism__hero-story {
+                    margin-bottom: 32px;
+
+                    & .baptism__hero-text {
+                        font-size: 1rem !important;
+                        line-height: 1.75;
+                    }
+                }
+                & .baptism__hero-actions {
+                    gap: 12px;
+                    flex-direction: column;
+                    align-items: stretch;
+                    max-width: 360px;
+                    margin: 0 auto 20px;
+
+                    & .btn {
+                        width: 100%;
+                        min-height: 52px;
+                        padding: 14px 32px;
+                        font-size: 0.9rem !important;
+                    }
+                }
+                & .baptism__hero-call {
+                    min-height: 52px;
+                    padding: 14px 24px;
+                    font-size: 0.8rem !important;
+                    width: 100%;
+                    max-width: 360px;
+                    justify-content: center;
+                    margin: 0 auto;
+                    display: flex;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 80px 0;
+        }
+
+        & .baptism__two {
+            & .baptism__two-card-content {
+                padding: 40px 28px 36px;
+            }
+            & .baptism__two-card-icon {
+                width: 68px;
+                height: 68px;
+                font-size: 1.75rem !important;
+                margin-bottom: 20px;
+            }
+            & .baptism__two-card-title {
+                font-size: 1.4rem !important;
+            }
+            & .baptism__two-card-desc {
+                font-size: 0.9rem !important;
+            }
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 54px 1fr;
+                column-gap: 20px;
+                row-gap: 6px;
+                padding: 26px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 54px;
+                height: 54px;
+                font-size: 1.25rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 1.15rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.9rem !important;
+            }
+        }
+
+        & .baptism__steps {
+            & .baptism__steps-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-width: 480px;
+            }
+            & .baptism__steps-card {
+                padding: 32px 24px 28px;
+            }
+            & .baptism__steps-num {
+                font-size: 2rem !important;
+                top: 16px;
+                right: 20px;
+            }
+            & .baptism__steps-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 1.25rem !important;
+            }
+            & .baptism__steps-title {
+                font-size: 1.15rem !important;
+            }
+            & .baptism__steps-desc {
+                font-size: 0.85rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 260px;
+            }
+            & .baptism__scriptures-card {
+                padding: 14px 20px;
+            }
+            & .baptism__scriptures-ref {
+                font-size: 0.65rem !important;
+                letter-spacing: 0.24em;
+                margin-bottom: 16px;
+            }
+            & .baptism__scriptures-text {
+                font-size: 1.1rem !important;
+                padding: 0 20px;
+                line-height: 1.65;
+            }
+            & .baptism__scriptures-text::before {
+                font-size: 2.6rem !important;
+                top: -18px;
+                left: -4px;
+            }
+            & .baptism__scriptures-text::after {
+                font-size: 2.6rem !important;
+                bottom: -26px;
+                right: -4px;
+            }
+            & .baptism__scriptures-controls {
+                gap: 18px;
+                margin-top: 36px;
+            }
+            & .baptism__scriptures-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem !important;
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-call {
+                & .baptism__contact-call-title {
+                    font-size: clamp(1.6rem, 4.6vw, 2rem) !important;
+                }
+                & .baptism__contact-call-desc {
+                    font-size: 0.95rem !important;
+                }
+            }
+            & .baptism__contact-form-wrap {
+                padding: 32px 22px 28px;
+            }
+            & .baptism__contact-form-header {
+                & .baptism__contact-form-title {
+                    font-size: 1.3rem !important;
+                }
+            }
+        }
+
+        & .baptism__faq {
+            & .baptism__faq-question {
+                padding: 18px 22px;
+                font-size: 0.98rem !important;
+            }
+            & .baptism__faq-answer {
+                padding: 0 22px 20px;
+
+                & p {
+                    font-size: 0.9rem !important;
+                    padding-top: 16px;
+                }
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-content {
+                & .baptism__community-icon {
+                    font-size: 2.8rem !important;
+                }
+                & .baptism__community-title {
+                    font-size: clamp(1.6rem, 4.6vw, 2.1rem) !important;
+                }
+                & .baptism__community-desc {
+                    font-size: 1rem !important;
+                }
+                & .btn {
+                    min-height: 52px;
+                    padding: 14px 32px;
+                    font-size: 0.9rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 720PX ─── */
+    @media (max-width: 720px) {
+        & .baptism__hero {
+            padding: 92px 0 108px;
+
+            & .baptism__hero-wave {
+                & svg {
+                    height: 60px;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 72px 0;
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 48px 1fr;
+                column-gap: 16px;
+                padding: 24px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.1rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 1.1rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.88rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 240px;
+            }
+            & .baptism__scriptures-text {
+                font-size: 1rem !important;
+                padding: 0 16px;
+            }
+            & .baptism__scriptures-text::before {
+                font-size: 2.2rem !important;
+                top: -14px;
+            }
+            & .baptism__scriptures-text::after {
+                font-size: 2.2rem !important;
+                bottom: -22px;
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-call-btn {
+                padding: 16px 20px;
+                gap: 14px;
+            }
+            & .baptism__contact-call-btn-icon {
+                width: 46px;
+                height: 46px;
+                font-size: 1.1rem !important;
+            }
+            & .baptism__contact-call-btn-value {
+                font-size: 0.95rem !important;
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-icon {
+                font-size: 2.4rem !important;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 540PX ─── */
+    @media (max-width: 540px) {
+        & .baptism__hero {
+            padding: 80px 0 92px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-title {
+                    font-size: clamp(1.5rem, 6.5vw, 1.9rem) !important;
+                    line-height: 1.18;
+                }
+                & .baptism__hero-story {
+                    & .baptism__hero-text {
+                        font-size: 0.95rem !important;
+                    }
+                }
+                & .baptism__hero-actions {
+                    & .btn {
+                        min-height: 48px;
+                        font-size: 0.85rem !important;
+                        padding: 12px 26px;
+                    }
+                }
+                & .baptism__hero-call {
+                    min-height: 48px;
+                    padding: 12px 20px;
+                    font-size: 0.76rem !important;
+                }
+            }
+
+            & .baptism__hero-wave {
+                & svg {
+                    height: 48px;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 60px 0;
+        }
+
+        & .baptism__two {
+            & .baptism__two-card-content {
+                padding: 34px 22px 30px;
+            }
+            & .baptism__two-card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem !important;
+            }
+            & .baptism__two-card-title {
+                font-size: 1.25rem !important;
+            }
+            & .baptism__two-card-desc {
+                font-size: 0.85rem !important;
+            }
+            & .baptism__two-card-quote {
+                padding: 16px 18px;
+                font-size: 0.88rem !important;
+            }
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 42px 1fr;
+                column-gap: 14px;
+                padding: 22px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 1.05rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.85rem !important;
+                line-height: 1.7;
+            }
+        }
+
+        & .baptism__steps {
+            & .baptism__steps-card {
+                padding: 28px 20px 24px;
+            }
+            & .baptism__steps-num {
+                font-size: 1.8rem !important;
+                top: 14px;
+                right: 18px;
+            }
+            & .baptism__steps-icon {
+                width: 52px;
+                height: 52px;
+                font-size: 1.15rem !important;
+                margin-bottom: 16px;
+            }
+            & .baptism__steps-title {
+                font-size: 1.05rem !important;
+            }
+            & .baptism__steps-desc {
+                font-size: 0.82rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 220px;
+            }
+            & .baptism__scriptures-ref {
+                font-size: 0.6rem !important;
+                margin-bottom: 14px;
+            }
+            & .baptism__scriptures-text {
+                font-size: 0.95rem !important;
+                padding: 0 14px;
+                line-height: 1.65;
+            }
+            & .baptism__scriptures-text::before {
+                font-size: 1.9rem !important;
+                top: -12px;
+            }
+            & .baptism__scriptures-text::after {
+                font-size: 1.9rem !important;
+                bottom: -18px;
+            }
+            & .baptism__scriptures-controls {
+                gap: 14px;
+                margin-top: 28px;
+            }
+            & .baptism__scriptures-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 0.75rem !important;
+            }
+            & .baptism__scriptures-dot {
+                width: 7px;
+                height: 7px;
+
+                &.is-active {
+                    width: 22px;
+                }
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-form-wrap {
+                padding: 28px 18px 24px;
+                border-radius: var(--radius);
+            }
+            & .baptism__contact-form-header {
+                margin-bottom: 22px;
+
+                & .baptism__contact-form-title {
+                    font-size: 1.15rem !important;
+                }
+                & .baptism__contact-form-subtitle {
+                    font-size: 0.8rem !important;
+                }
+            }
+            & .baptism__form-row {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            & .baptism__form-group {
+                & label {
+                    font-size: 0.7rem !important;
+                }
+                & input,
+                & textarea {
+                    font-size: 0.9rem !important;
+                    padding: 12px 14px;
+                    min-height: 46px;
+                }
+                & textarea {
+                    min-height: 100px;
+                }
+            }
+        }
+
+        & .baptism__faq {
+            & .baptism__faq-question {
+                padding: 16px 18px;
+                font-size: 0.92rem !important;
+                gap: 14px;
+            }
+            & .baptism__faq-question-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 0.7rem !important;
+            }
+            & .baptism__faq-answer {
+                padding: 0 18px 18px;
+
+                & p {
+                    font-size: 0.85rem !important;
+                    padding-top: 14px;
+                }
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-icon {
+                font-size: 2.1rem !important;
+                margin-bottom: 16px;
+            }
+            & .baptism__community-title {
+                font-size: clamp(1.5rem, 6vw, 1.85rem) !important;
+            }
+            & .baptism__community-desc {
+                font-size: 0.92rem !important;
+                margin-bottom: 28px;
+            }
+            & .btn {
+                min-height: 48px;
+                padding: 12px 28px;
+                font-size: 0.85rem !important;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 480PX ─── */
+    @media (max-width: 480px) {
+        & .baptism__hero {
+            padding: 72px 0 84px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-eyebrow {
+                    font-size: 0.55rem !important;
+                    letter-spacing: 0.2em;
+                    margin-bottom: 16px;
+
+                    & .baptism__hero-eyebrow-line {
+                        width: 22px;
+                    }
+                }
+                & .baptism__hero-title {
+                    font-size: 1.4rem !important;
+                }
+                & .baptism__hero-story {
+                    & .baptism__hero-text {
+                        font-size: 0.9rem !important;
+                        line-height: 1.7;
+                    }
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 52px 0;
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 38px 1fr;
+                column-gap: 12px;
+                padding: 20px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 0.92rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 1rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.82rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 200px;
+            }
+            & .baptism__scriptures-card {
+                padding: 10px 12px;
+            }
+            & .baptism__scriptures-text {
+                font-size: 0.9rem !important;
+                padding: 0 12px;
+                line-height: 1.6;
+            }
+            & .baptism__scriptures-text::before {
+                font-size: 1.6rem !important;
+                top: -10px;
+            }
+            & .baptism__scriptures-text::after {
+                font-size: 1.6rem !important;
+                bottom: -14px;
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-call {
+                & .baptism__contact-call-eyebrow {
+                    font-size: 0.62rem !important;
+                }
+                & .baptism__contact-call-title {
+                    font-size: 1.4rem !important;
+                }
+                & .baptism__contact-call-desc {
+                    font-size: 0.88rem !important;
+                }
+            }
+            & .baptism__contact-call-btn {
+                padding: 14px 16px;
+                gap: 12px;
+            }
+            & .baptism__contact-call-btn-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem !important;
+            }
+            & .baptism__contact-call-btn-label {
+                font-size: 0.6rem !important;
+            }
+            & .baptism__contact-call-btn-value {
+                font-size: 0.88rem !important;
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-title {
+                font-size: 1.4rem !important;
+            }
+            & .baptism__community-desc {
+                font-size: 0.86rem !important;
+            }
+            & .btn {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 420PX ─── */
+    @media (max-width: 420px) {
+        & .baptism__hero {
+            & .baptism__hero-content {
+                & .baptism__hero-title {
+                    font-size: 1.28rem !important;
+                }
+                & .baptism__hero-actions {
+                    & .btn {
+                        font-size: 0.8rem !important;
+                    }
+                }
+                & .baptism__hero-call {
+                    font-size: 0.72rem !important;
+                }
+            }
+        }
+
+        & .baptism__two {
+            & .baptism__two-card-content {
+                padding: 28px 18px 24px;
+            }
+            & .baptism__two-card-icon {
+                width: 54px;
+                height: 54px;
+                font-size: 1.35rem !important;
+            }
+            & .baptism__two-card-title {
+                font-size: 1.15rem !important;
+            }
+            & .baptism__two-card-desc {
+                font-size: 0.82rem !important;
+            }
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 34px 1fr;
+                column-gap: 12px;
+                padding: 18px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 0.85rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 0.95rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.8rem !important;
+            }
+        }
+
+        & .baptism__faq {
+            & .baptism__faq-question {
+                font-size: 0.88rem !important;
+                padding: 14px 16px;
+            }
+            & .baptism__faq-answer {
+                padding: 0 16px 16px;
+
+                & p {
+                    font-size: 0.82rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 350PX ─── */
+    @media (max-width: 350px) {
+        & .baptism__hero {
+            padding: 56px 0 68px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-title {
+                    font-size: 1.15rem !important;
+                }
+                & .baptism__hero-story {
+                    & .baptism__hero-text {
+                        font-size: 0.82rem !important;
+                    }
+                }
+                & .baptism__hero-actions {
+                    & .btn {
+                        font-size: 0.75rem !important;
+                        padding: 11px 20px;
+                        min-height: 44px;
+                    }
+                }
+                & .baptism__hero-call {
+                    font-size: 0.68rem !important;
+                    padding: 11px 16px;
+                    min-height: 44px;
+                }
+            }
+            & .baptism__hero-wave {
+                & svg {
+                    height: 38px;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 42px 0;
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 30px 1fr;
+                column-gap: 10px;
+                padding: 16px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 0.9rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.76rem !important;
+                line-height: 1.65;
+            }
+        }
+
+        & .baptism__steps {
+            & .baptism__steps-card {
+                padding: 24px 16px 20px;
+            }
+            & .baptism__steps-num {
+                font-size: 1.5rem !important;
+                top: 12px;
+                right: 14px;
+            }
+            & .baptism__steps-icon {
+                width: 46px;
+                height: 46px;
+                font-size: 1rem !important;
+            }
+            & .baptism__steps-title {
+                font-size: 0.95rem !important;
+            }
+            & .baptism__steps-desc {
+                font-size: 0.78rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 180px;
+            }
+            & .baptism__scriptures-ref {
+                font-size: 0.55rem !important;
+                letter-spacing: 0.2em;
+            }
+            & .baptism__scriptures-text {
+                font-size: 0.82rem !important;
+                padding: 0 10px;
+            }
+            & .baptism__scriptures-text::before,
+            & .baptism__scriptures-text::after {
+                font-size: 1.35rem !important;
+            }
+            & .baptism__scriptures-controls {
+                gap: 12px;
+                margin-top: 22px;
+            }
+            & .baptism__scriptures-arrow {
+                width: 32px;
+                height: 32px;
+                font-size: 0.7rem !important;
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-form-wrap {
+                padding: 22px 14px 20px;
+            }
+            & .baptism__form-group {
+                & label {
+                    font-size: 0.62rem !important;
+                }
+                & input,
+                & textarea {
+                    font-size: 0.85rem !important;
+                    padding: 10px 12px;
+                    min-height: 42px;
+                }
+            }
+        }
+
+        & .baptism__faq {
+            & .baptism__faq-question {
+                padding: 12px 14px;
+                font-size: 0.82rem !important;
+            }
+            & .baptism__faq-question-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 0.6rem !important;
+            }
+            & .baptism__faq-answer {
+                padding: 0 14px 14px;
+
+                & p {
+                    font-size: 0.78rem !important;
+                }
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-icon {
+                font-size: 1.85rem !important;
+            }
+            & .baptism__community-title {
+                font-size: 1.25rem !important;
+            }
+            & .baptism__community-desc {
+                font-size: 0.8rem !important;
+            }
+            & .btn {
+                font-size: 0.78rem !important;
+                min-height: 44px;
+                padding: 11px 22px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 300PX ─── */
+    @media (max-width: 300px) {
+        & .baptism__hero {
+            padding: 48px 0 60px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-title {
+                    font-size: 1.05rem !important;
+                }
+                & .baptism__hero-story {
+                    & .baptism__hero-text {
+                        font-size: 0.78rem !important;
+                    }
+                }
+                & .baptism__hero-actions {
+                    & .btn {
+                        font-size: 0.7rem !important;
+                        min-height: 40px;
+                        padding: 10px 16px;
+                    }
+                }
+                & .baptism__hero-call {
+                    font-size: 0.64rem !important;
+                    min-height: 40px;
+                    padding: 10px 14px;
+                }
+            }
+            & .baptism__hero-wave {
+                & svg {
+                    height: 32px;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 38px 0;
+        }
+
+        & .baptism__two {
+            & .baptism__two-card-content {
+                padding: 24px 14px 20px;
+            }
+            & .baptism__two-card-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem !important;
+            }
+            & .baptism__two-card-title {
+                font-size: 1.05rem !important;
+            }
+            & .baptism__two-card-desc {
+                font-size: 0.78rem !important;
+            }
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 26px 1fr;
+                column-gap: 10px;
+                padding: 14px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 26px;
+                height: 26px;
+                font-size: 0.68rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 0.85rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.72rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 160px;
+            }
+            & .baptism__scriptures-text {
+                font-size: 0.76rem !important;
+            }
+            & .baptism__scriptures-text::before,
+            & .baptism__scriptures-text::after {
+                font-size: 1.15rem !important;
+            }
+            & .baptism__scriptures-controls {
+                gap: 10px;
+                margin-top: 20px;
+            }
+            & .baptism__scriptures-arrow {
+                width: 28px;
+                height: 28px;
+                font-size: 0.6rem !important;
+            }
+            & .baptism__scriptures-dot {
+                width: 6px;
+                height: 6px;
+
+                &.is-active {
+                    width: 18px;
+                }
+            }
+        }
+
+        & .baptism__contact {
+            & .baptism__contact-form-wrap {
+                padding: 20px 12px 18px;
+            }
+        }
+
+        & .baptism__faq {
+            & .baptism__faq-question {
+                font-size: 0.78rem !important;
+                padding: 11px 12px;
+            }
+            & .baptism__faq-answer {
+                & p {
+                    font-size: 0.74rem !important;
+                }
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-title {
+                font-size: 1.15rem !important;
+            }
+            & .baptism__community-desc {
+                font-size: 0.76rem !important;
+            }
+            & .btn {
+                font-size: 0.72rem !important;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 250PX ─── */
+    @media (max-width: 250px) {
+        & .baptism__hero {
+            padding: 42px 0 52px;
+
+            & .baptism__hero-content {
+                & .baptism__hero-title {
+                    font-size: 0.95rem !important;
+                }
+            }
+        }
+
+        & .baptism__two,
+        & .baptism__meaning,
+        & .baptism__steps,
+        & .baptism__scriptures,
+        & .baptism__contact,
+        & .baptism__faq,
+        & .baptism__community {
+            padding: 32px 0;
+        }
+
+        & .baptism__meaning {
+            & .baptism__meaning-card {
+                grid-template-columns: 22px 1fr;
+                column-gap: 8px;
+                padding: 12px 0;
+            }
+            & .baptism__meaning-icon {
+                width: 22px;
+                height: 22px;
+                font-size: 0.6rem !important;
+            }
+            & .baptism__meaning-title {
+                font-size: 0.78rem !important;
+            }
+            & .baptism__meaning-text {
+                font-size: 0.68rem !important;
+            }
+        }
+
+        & .baptism__scriptures {
+            & .baptism__scriptures-grid {
+                min-height: 140px;
+            }
+            & .baptism__scriptures-text {
+                font-size: 0.72rem !important;
+                padding: 0 8px;
+            }
+            & .baptism__scriptures-text::before,
+            & .baptism__scriptures-text::after {
+                display: none;
+            }
+        }
+
+        & .baptism__community {
+            & .baptism__community-title {
+                font-size: 1.05rem !important;
+            }
+            & .baptism__community-desc {
+                font-size: 0.7rem !important;
+            }
+            & .btn {
+                width: 100%;
+                font-size: 0.66rem !important;
+                padding: 10px 14px;
+                min-height: 38px;
             }
         }
     }
