@@ -323,7 +323,7 @@
 
             <div class="about__values-grid">
                 @foreach($values as $value)
-                    <div class="about__values-card">
+                    <div class="about__values-card" data-about-value>
                         <div class="about__values-card-icon">
                             <i class="fas {{ $value['icon'] }}"></i>
                         </div>
