@@ -98,9 +98,9 @@ img {
     background: transparent;
 
     &.global-navbar--scrolled {
-        background: rgba(10, 31, 51, 0.85);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
+        background: rgba(10, 31, 51, 0.67);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         padding: 10px 0;
@@ -489,7 +489,7 @@ img {
     }
 
     &.btn--block {
-        width: 100%;
+        width: fit-content;
         justify-content: center;
         padding: 14px;
     }
