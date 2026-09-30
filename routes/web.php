@@ -12,6 +12,8 @@ use App\Http\Controllers\Web\ResourceController;
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\InviteController;
 use App\Http\Controllers\Web\PaymentController;
+use App\Http\Controllers\Web\PrivacyController;
+use App\Http\Controllers\Web\TermsController;
 
 // ─── HOME ───
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -98,3 +100,7 @@ Route::prefix('payment')->name('payment.')->group(function () {
     // ─── DOWNLOAD ───
     Route::get('/download/{token}', [PaymentController::class, 'download'])->name('download');
 });
+
+// ─── LEGAL PAGES ───
+Route::get('/terms', [TermsController::class, 'index'])->name('terms');
+Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
