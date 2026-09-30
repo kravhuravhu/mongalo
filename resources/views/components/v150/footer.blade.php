@@ -56,10 +56,10 @@
                 </div>
 
                 <div class="footer__social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href=" {{ env('FACEBOOK_INVITE_URL') }}" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ env('INSTAGRAM_INVITE_URL') }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href=" {{ env('YOUTUBE_INVITE_URL') }} " aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="{{ env('WHATSAPP_INVITE_URL') }}" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
@@ -68,9 +68,9 @@
         <div class="footer__bottom">
             <span>&copy; {{ date('Y') }} {{ env('PROJECT_NAME', 'IN.iN') }}. All rights reserved.</span>
             <span>
-                <a href="#">Privacy Policy</a>
+                <a href="{{ route('privacy') }}">Privacy Policy</a>
                 <span class="footer__bottom-divider">·</span>
-                <a href="#">Terms of Service</a>
+                <a href="{{ route('terms') }}">Terms of Service</a>
             </span>
         </div>
     </div>
