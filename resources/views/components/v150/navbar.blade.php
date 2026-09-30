@@ -40,9 +40,9 @@
                 <li role="none">
                     <a href="{{ route('baptism') }}" class="global-navbar__link {{ request()->routeIs('baptism') ? 'global-navbar__link--active' : '' }}" role="menuitem">Baptism</a>
                 </li>
-                <li role="none">
+                <!-- <li role="none">
                     <a href="{{ route('community') }}" class="global-navbar__link {{ request()->routeIs('community') ? 'global-navbar__link--active' : '' }}" role="menuitem">Community</a>
-                </li>
+                </li> -->
                 <li role="none">
                     <a href="{{ route('contact') }}" class="global-navbar__link {{ request()->routeIs('contact') ? 'global-navbar__link--active' : '' }}" role="menuitem">Contact</a>
                 </li>
