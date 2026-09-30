@@ -175,4 +175,77 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+        // ─── REASONS CAROUSEL DOTS (MOBILE ONLY) ───
+    const reasonsList = document.querySelector('.invite__reasons-list');
+    const reasonItems = reasonsList ? reasonsList.querySelectorAll('.invite__reasons-item') : [];
+
+    if (reasonsList && reasonItems.length > 0) {
+
+        // ─── INJECT DOTS CONTAINER AFTER THE LIST ───
+        const reasonsDots = document.createElement('div');
+        reasonsDots.className = 'invite__reasons-dots';
+
+        let dotsHTML = '';
+        reasonItems.forEach(function(_, i) {
+            dotsHTML += '<button type="button" class="invite__reasons-dot' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" aria-label="Go to reason ' + (i + 1) + '"></button>';
+        });
+        reasonsDots.innerHTML = dotsHTML;
+
+        reasonsList.parentNode.insertBefore(reasonsDots, reasonsList.nextSibling);
+
+        const reasonDots = reasonsDots.querySelectorAll('.invite__reasons-dot');
+
+        // ─── SCROLL EVENT: UPDATE ACTIVE DOT ───
+        let scrollTimer = null;
+        reasonsList.addEventListener('scroll', function() {
+            if (scrollTimer) clearTimeout(scrollTimer);
+
+            scrollTimer = setTimeout(function() {
+                const listCenter = reasonsList.scrollLeft + (reasonsList.offsetWidth / 2);
+                let closestIndex = 0;
+                let closestDistance = Infinity;
+
+                reasonItems.forEach(function(item, i) {
+                    const itemCenter = item.offsetLeft + (item.offsetWidth / 2);
+                    const distance = Math.abs(itemCenter - listCenter);
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestIndex = i;
+                    }
+                });
+
+                reasonDots.forEach(function(dot, i) {
+                    dot.classList.toggle('is-active', i === closestIndex);
+                });
+            }, 60);
+        }, { passive: true });
+
+        // ─── DOT CLICK: SCROLL TO ITEM ───
+        reasonDots.forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index, 10);
+                const target = reasonItems[index];
+                if (target) {
+                    reasonsList.scrollTo({
+                        left: target.offsetLeft - ((reasonsList.offsetWidth - target.offsetWidth) / 2),
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ─── KEYBOARD SUPPORT ───
+        reasonsList.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                const current = Array.from(reasonDots).findIndex(function(d) { return d.classList.contains('is-active'); });
+                const next = Math.min(current + 1, reasonItems.length - 1);
+                reasonDots[next].click();
+            } else if (e.key === 'ArrowLeft') {
+                const current = Array.from(reasonDots).findIndex(function(d) { return d.classList.contains('is-active'); });
+                const prev = Math.max(current - 1, 0);
+                reasonDots[prev].click();
+            }
+        });
+    }
 });

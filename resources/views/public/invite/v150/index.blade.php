@@ -83,13 +83,13 @@
                             <i class="fas fa-paper-plane" aria-hidden="true"></i>
                             <span>Invite Arthur</span>
                         </a>
-                        <a href="tel:+27714611401" class="invite__hero-call">
-                            <i class="fas fa-phone" aria-hidden="true"></i>
-                            <span>Call Us</span>
-                        </a>
                         <a href="{{ route('about') }}" class="invite__hero-call">
                             <i class="fas fa-user" aria-hidden="true"></i>
                             <span>Read Arthur's Story</span>
+                        </a>
+                        <a href="tel:+27714611401" class="invite__hero-call">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <span>Call Us</span>
                         </a>
                     </div>
 
