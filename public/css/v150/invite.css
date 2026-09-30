@@ -114,6 +114,7 @@
                     min-height: 56px;
                     padding: 16px 40px;
                     font-size: 0.95rem;
+                    width: fit-content;
                 }
             }
 
@@ -133,6 +134,7 @@
                 text-decoration: none;
                 transition: all var(--transition-smooth);
                 min-height: 56px;
+                width: fit-content;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
 
@@ -855,6 +857,1499 @@
                 min-height: 56px;
                 padding: 16px 40px;
                 font-size: 0.95rem;
+                width: fit-content;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 1700PX ─── */
+    @media (max-width: 1700px) {
+        & .invite__hero {
+            padding: 132px 0 96px;
+
+            & .invite__hero-grid {
+                gap: 56px;
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 112px 0;
+        }
+    }
+
+    /* ─── RESPONSIVE: 1500PX ─── */
+    @media (max-width: 1500px) {
+        & .invite__hero {
+            padding: 124px 0 92px;
+
+            & .invite__hero-grid {
+                gap: 48px;
+            }
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: clamp(1.9rem, 3.6vw, 2.9rem) !important;
+                }
+            }
+
+            & .invite__hero-image {
+                max-width: 340px;
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 104px 0;
+        }
+
+        & .invite__form {
+            & .invite__form-grid {
+                gap: 56px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 1200PX ─── */
+    @media (max-width: 1200px) {
+        & .invite__hero {
+            min-height: 85vh;
+            padding: 118px 0 88px;
+
+            & .invite__hero-grid {
+                gap: 40px;
+            }
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: clamp(1.85rem, 3.4vw, 2.7rem) !important;
+                }
+                & .invite__hero-text {
+                    font-size: 1rem !important;
+                }
+                & .invite__hero-actions {
+                    & .btn {
+                        min-height: 52px;
+                        padding: 14px 34px;
+                        font-size: 0.9rem !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 52px;
+                    padding: 14px 26px;
+                    font-size: 0.8rem !important;
+                }
+            }
+
+            & .invite__hero-image {
+                max-width: 320px;
+            }
+
+            & .invite__hero-float {
+                padding: 8px 14px;
+                font-size: 0.65rem !important;
+
+                & i {
+                    font-size: 0.75rem !important;
+                }
+
+                &.invite__hero-float--1 {
+                    top: 10%;
+                    left: 0%;
+                }
+                &.invite__hero-float--2 {
+                    top: 45%;
+                    right: 0%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 10%;
+                    left: 4%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 96px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item {
+                padding: 28px 28px 28px 36px;
+            }
+            & .invite__reasons-item-title {
+                font-size: 1.1rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.86rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-grid {
+                gap: 20px;
+            }
+            & .invite__topics-card {
+                padding: 32px 26px 28px;
+            }
+            & .invite__topics-icon {
+                width: 54px;
+                height: 54px;
+                font-size: 1.25rem !important;
+                margin-bottom: 18px;
+            }
+            & .invite__topics-title {
+                font-size: 1.15rem !important;
+            }
+            & .invite__topics-desc {
+                font-size: 0.85rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-grid {
+                gap: 44px;
+            }
+            & .invite__form-wrapper {
+                padding: 40px 32px 32px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 1024PX ─── */
+    @media (max-width: 1024px) {
+        & .invite__hero {
+            min-height: auto;
+            padding: 110px 0 80px;
+
+            & .invite__hero-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+
+            & .invite__hero-content {
+                max-width: 640px;
+                margin: 0 auto;
+
+                & .invite__hero-eyebrow {
+                    justify-content: center;
+                }
+                & .invite__hero-text {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & .invite__hero-actions {
+                    justify-content: center;
+                }
+                & .invite__hero-call {
+                    display: inline-flex;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & .invite__hero-features {
+                    justify-items: center;
+                    text-align: left;
+                    max-width: 420px;
+                    margin: 0 auto;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 380px;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            & .invite__hero-image {
+                max-width: 100%;
+                aspect-ratio: 4/5;
+            }
+
+            & .invite__hero-float {
+                padding: 9px 15px;
+                font-size: 0.66rem !important;
+
+                & i {
+                    font-size: 0.78rem !important;
+                }
+
+                &.invite__hero-float--1 {
+                    top: 8%;
+                    left: 3%;
+                }
+                &.invite__hero-float--2 {
+                    top: 46%;
+                    right: 3%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 8%;
+                    left: 6%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 88px 0;
+        }
+
+        & .invite__form {
+            & .invite__form-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                max-width: 640px;
+            }
+            & .invite__form-info {
+                padding-top: 0;
+                text-align: center;
+
+                & .invite__form-desc {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & .invite__form-details {
+                    max-width: 420px;
+                    margin: 0 auto;
+                    text-align: left;
+                }
+            }
+            & .invite__form-wrapper {
+                padding: 36px 28px 32px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 820PX ─── */
+    @media (max-width: 820px) {
+        & .invite__hero {
+            padding: 100px 0 72px;
+
+            & .invite__hero-grid {
+                gap: 44px;
+            }
+
+            & .invite__hero-content {
+                & .invite__hero-eyebrow {
+                    font-size: 0.6rem !important;
+                    letter-spacing: 0.24em;
+                    margin-bottom: 20px;
+
+                    & .invite__hero-eyebrow-line {
+                        width: 30px;
+                    }
+                }
+                & .invite__hero-title {
+                    font-size: clamp(1.7rem, 5vw, 2.4rem) !important;
+                    margin-bottom: 20px;
+                }
+                & .invite__hero-text {
+                    font-size: 0.96rem !important;
+                    margin-bottom: 28px;
+                }
+                & .invite__hero-actions {
+                    gap: 12px;
+
+                    & .btn {
+                        min-height: 50px;
+                        padding: 14px 30px;
+                        font-size: 0.88rem !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 50px;
+                    padding: 14px 24px;
+                    font-size: 0.78rem !important;
+                }
+                & .invite__hero-features {
+                    gap: 10px;
+                    padding-top: 20px;
+                }
+                & .invite__hero-feature {
+                    font-size: 0.76rem !important;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 340px;
+            }
+
+            & .invite__hero-float {
+                &.invite__hero-float--1 {
+                    top: 6%;
+                    left: 2%;
+                }
+                &.invite__hero-float--2 {
+                    top: 47%;
+                    right: 2%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 6%;
+                    left: 5%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 80px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item {
+                padding: 24px 22px 24px 28px;
+            }
+            & .invite__reasons-item-title {
+                font-size: 1.05rem !important;
+                margin-bottom: 8px;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.84rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-grid {
+                gap: 16px;
+            }
+            & .invite__topics-card {
+                padding: 28px 22px 24px;
+            }
+            & .invite__topics-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.15rem !important;
+                margin-bottom: 16px;
+            }
+            & .invite__topics-title {
+                font-size: 1.08rem !important;
+                margin-bottom: 10px;
+            }
+            & .invite__topics-desc {
+                font-size: 0.82rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-wrapper {
+                padding: 32px 22px 28px;
+            }
+            & .invite__form-header {
+                & .invite__form-header-title {
+                    font-size: 1.3rem !important;
+                }
+            }
+            & .invite__form-info {
+                & .invite__form-title {
+                    font-size: clamp(1.6rem, 4.5vw, 2rem) !important;
+                }
+                & .invite__form-desc {
+                    font-size: 0.95rem !important;
+                }
+            }
+        }
+
+        & .invite__cta {
+            & .invite__cta-content {
+                & .invite__cta-icon {
+                    font-size: 2.8rem !important;
+                }
+                & .invite__cta-title {
+                    font-size: clamp(1.6rem, 4.6vw, 2.2rem) !important;
+                }
+                & .invite__cta-desc {
+                    font-size: 1rem !important;
+                }
+                & .btn {
+                    min-height: 52px;
+                    padding: 14px 32px;
+                    font-size: 0.9rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 720PX — MOBILE RETHINK ─── */
+    @media (max-width: 720px) {
+        & .invite__hero {
+            padding: 92px 0 96px;
+
+            & .invite__hero-grid {
+                gap: 36px;
+            }
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: clamp(1.55rem, 5.6vw, 2rem) !important;
+                }
+                /* ─── HERO ACTIONS: PRIMARY PAIR ROW + TERTIARY LINK BELOW ─── */
+                & .invite__hero-actions {
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    width: 100%;
+                    margin-bottom: 14px;
+
+                    & .btn {
+                        width: fit-content;
+                        justify-content: center;
+                    }
+
+                    /* ─── DEMOTE "READ ARTHUR'S STORY" TO TEXT LINK ─── */
+                    & .btn.btn--outline,
+                    & .btn:not(.btn--primary):not(.invite__hero-call) {
+                        flex-basis: 100%;
+                        justify-content: center;
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        color: var(--gold) !important;
+                        padding: 6px 12px !important;
+                        min-height: auto !important;
+                        font-family: var(--font-sans);
+                        font-size: 0.78rem !important;
+                        letter-spacing: 0.06em;
+                        font-weight: 500;
+                        opacity: 0.85;
+
+                        &::after {
+                            content: ' →';
+                            display: inline-block;
+                            margin-left: 6px;
+                            transition: transform 0.3s ease;
+                        }
+
+                        &:hover {
+                            background: transparent !important;
+                            color: var(--gold-light) !important;
+                            opacity: 1;
+                            transform: none;
+
+                            &::after {
+                                transform: translateX(4px);
+                            }
+                        }
+
+                        & i {
+                            display: none;
+                        }
+                    }
+                }
+
+                & .invite__hero-call {
+                    justify-content: center;
+                    width: fit-content;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & .invite__hero-features {
+                    grid-template-columns: 1fr;
+                    gap: 8px;
+                    justify-items: center;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 300px;
+            }
+
+            & .invite__hero-float {
+                &.invite__hero-float--1 {
+                    top: 6%;
+                    left: 2%;
+                }
+                &.invite__hero-float--2 {
+                    top: 48%;
+                    right: 2%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 6%;
+                    left: 4%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 72px 0;
+        }
+
+        /* ─── REASONS: HORIZONTAL SWIPE CAROUSEL ─── */
+        & .invite__reasons {
+            & .invite__reasons-list {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 14px;
+                max-width: 100%;
+                margin: 0;
+                padding: 8px 20px 24px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                -webkit-overflow-scrolling: touch;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+
+            & .invite__reasons-item {
+                flex: 0 0 82%;
+                max-width: 340px;
+                padding: 24px 22px 24px 26px;
+                scroll-snap-align: center;
+                text-align: left;
+
+                &::before {
+                    display: block;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    width: 3px;
+                    height: 100%;
+                    transform: scaleY(1);
+                    background: linear-gradient(180deg, var(--gold), var(--teal));
+                    border-radius: 3px 0 0 3px;
+                }
+
+                &:hover {
+                    transform: none;
+                    box-shadow: 0 12px 40px rgba(10, 31, 51, 0.08);
+                }
+            }
+
+            & .invite__reasons-item-title {
+                font-size: 1.02rem !important;
+                margin-bottom: 8px;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.82rem !important;
+                line-height: 1.65;
+            }
+
+            & .invite__reasons-dots {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 8px;
+                padding: 0 20px;
+
+                & .invite__reasons-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: var(--border-strong);
+                    border: none;
+                    padding: 0;
+                    cursor: pointer;
+                    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+                    &.is-active {
+                        width: 26px;
+                        border-radius: 4px;
+                        background: var(--gold);
+                    }
+                }
+            }
+        }
+
+        /* ─── TOPICS: NUMBERED LIST STYLE ─── */
+        & .invite__topics {
+            & .invite__topics-bg {
+                display: none;
+            }
+
+            & .invite__topics-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: 520px;
+                background: rgba(255, 255, 255, 0.6);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+                counter-reset: invite-topic-counter;
+            }
+
+            & .invite__topics-card {
+                display: grid;
+                grid-template-columns: 56px 1fr;
+                column-gap: 18px;
+                row-gap: 6px;
+                align-items: start;
+                padding: 22px 20px 22px 20px;
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                border: none;
+                border-bottom: 1px solid var(--border);
+                border-radius: 0;
+                box-shadow: none;
+                text-align: left;
+                counter-increment: invite-topic-counter;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &::before {
+                    content: counter(invite-topic-counter, decimal-leading-zero);
+                    position: static;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 56px;
+                    height: 56px;
+                    grid-column: 1;
+                    grid-row: 1 / span 2;
+                    background: var(--gold-dim);
+                    color: var(--gold);
+                    border: 1px solid rgba(184, 146, 106, 0.3);
+                    border-radius: 50%;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                    font-style: italic;
+                    font-size: 1.05rem !important;
+                    letter-spacing: 0;
+                    transform: none;
+                    opacity: 1;
+                }
+
+                &:hover {
+                    background: rgba(184, 146, 106, 0.05);
+                    border-color: var(--border);
+                    transform: none;
+                    box-shadow: none;
+
+                    &::before {
+                        background: var(--gold);
+                        color: #fff;
+                        transform: none;
+                    }
+                }
+            }
+
+            & .invite__topics-icon {
+                display: none;
+            }
+
+            & .invite__topics-title {
+                grid-column: 2;
+                grid-row: 1;
+                align-self: end;
+                font-size: 1.02rem !important;
+                margin: 0;
+                text-align: left;
+            }
+
+            & .invite__topics-desc {
+                grid-column: 2;
+                grid-row: 2;
+                align-self: start;
+                font-size: 0.82rem !important;
+                line-height: 1.6;
+                text-align: left;
+                margin: 0;
+            }
+        }
+
+        /* ─── FORM: SWAP ORDER — FORM FIRST ─── */
+        & .invite__form {
+            & .invite__form-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                max-width: 640px;
+            }
+
+            & .invite__form-wrapper {
+                order: 1;
+                padding: 28px 20px 24px;
+            }
+
+            & .invite__form-info {
+                order: 2;
+                padding-top: 0;
+                text-align: center;
+
+                & .invite__form-desc {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & .invite__form-details {
+                    max-width: 420px;
+                    margin: 0 auto;
+                    text-align: left;
+                }
+            }
+        }
+
+        & .invite__cta {
+            & .invite__cta-content {
+                & .invite__cta-icon {
+                    font-size: 2.4rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 540PX ─── */
+    @media (max-width: 540px) {
+        & .invite__hero {
+            padding: 80px 0 88px;
+
+            & .invite__hero-grid {
+                gap: 30px;
+            }
+
+            & .invite__hero-content {
+                & .invite__hero-eyebrow {
+                    font-size: 0.55rem !important;
+                    letter-spacing: 0.2em;
+                    margin-bottom: 16px;
+
+                    & .invite__hero-eyebrow-line {
+                        width: 22px;
+                    }
+                }
+                & .invite__hero-title {
+                    font-size: clamp(1.4rem, 6vw, 1.85rem) !important;
+                    margin-bottom: 16px;
+                }
+                & .invite__hero-text {
+                    font-size: 0.9rem !important;
+                    margin-bottom: 24px;
+                }
+                & .invite__hero-actions {
+                    gap: 10px;
+                    justify-content: center;
+
+                    & .btn {
+                        min-height: 46px;
+                        padding: 12px 22px;
+                        font-size: 0.82rem !important;
+                        width: fit-content;
+                    }
+
+                    /* ─── KEEP THE DEMOTED LINK LOOK ─── */
+                    & .btn.btn--outline,
+                    & .btn:not(.btn--primary):not(.invite__hero-call) {
+                        font-size: 0.74rem !important;
+                        padding: 4px 10px !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 46px;
+                    padding: 12px 20px;
+                    font-size: 0.74rem !important;
+                }
+                & .invite__hero-feature {
+                    font-size: 0.72rem !important;
+                    justify-content: center;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 280px;
+            }
+
+            & .invite__hero-float {
+                padding: 7px 12px;
+                font-size: 0.6rem !important;
+
+                & i {
+                    font-size: 0.7rem !important;
+                }
+
+                &.invite__hero-float--1 {
+                    top: 5%;
+                    left: 2%;
+                }
+                &.invite__hero-float--2 {
+                    top: 49%;
+                    right: 2%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 5%;
+                    left: 4%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form,
+        & .invite__cta {
+            padding: 60px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item {
+                flex: 0 0 86%;
+                padding: 20px 18px 20px 22px;
+            }
+            & .invite__reasons-item-title {
+                font-size: 0.96rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.78rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-card {
+                grid-template-columns: 48px 1fr;
+                column-gap: 14px;
+                padding: 18px 16px;
+
+                &::before {
+                    width: 48px;
+                    height: 48px;
+                    font-size: 0.95rem !important;
+                }
+            }
+            & .invite__topics-title {
+                font-size: 0.96rem !important;
+            }
+            & .invite__topics-desc {
+                font-size: 0.78rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-wrapper {
+                padding: 24px 18px 20px;
+                border-radius: var(--radius);
+            }
+            & .invite__form-header {
+                margin-bottom: 22px;
+
+                & .invite__form-header-title {
+                    font-size: 1.15rem !important;
+                }
+                & .invite__form-header-subtitle {
+                    font-size: 0.78rem !important;
+                }
+            }
+            & .invite__form-info {
+                & .invite__form-eyebrow {
+                    font-size: 0.62rem !important;
+                }
+                & .invite__form-title {
+                    font-size: 1.4rem !important;
+                    margin-bottom: 18px;
+                }
+                & .invite__form-desc {
+                    font-size: 0.88rem !important;
+                    margin-bottom: 28px;
+                }
+                & .invite__form-detail {
+                    padding: 12px 16px;
+                    gap: 12px;
+                }
+                & .invite__form-detail-icon {
+                    width: 38px;
+                    height: 38px;
+                    font-size: 0.9rem !important;
+                }
+                & .invite__form-detail-value {
+                    font-size: 0.88rem !important;
+                }
+            }
+            & .invite__form-row {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            & .invite__form-group {
+                & label {
+                    font-size: 0.68rem !important;
+                }
+                & input,
+                & textarea {
+                    font-size: 0.9rem !important;
+                    padding: 12px 14px;
+                    min-height: 46px;
+                }
+                & textarea {
+                    min-height: 100px;
+                }
+            }
+            & .invite__form-disclaimer {
+                font-size: 0.72rem !important;
+                padding: 12px 14px;
+            }
+        }
+
+        & .invite__cta {
+            & .invite__cta-content {
+                & .invite__cta-icon {
+                    font-size: 2.2rem !important;
+                }
+                & .invite__cta-title {
+                    font-size: clamp(1.4rem, 6vw, 1.8rem) !important;
+                }
+                & .invite__cta-desc {
+                    font-size: 0.92rem !important;
+                    margin-bottom: 28px;
+                }
+                & .btn {
+                    min-height: 48px;
+                    padding: 12px 26px;
+                    font-size: 0.85rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 480PX ─── */
+    @media (max-width: 480px) {
+        & .invite__hero {
+            padding: 72px 0 76px;
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: 1.35rem !important;
+                }
+                & .invite__hero-text {
+                    font-size: 0.86rem !important;
+                }
+                & .invite__hero-actions {
+                    & .btn {
+                        min-height: 44px;
+                        padding: 11px 20px;
+                        font-size: 0.78rem !important;
+                    }
+
+                    & .btn.btn--outline,
+                    & .btn:not(.btn--primary):not(.invite__hero-call) {
+                        font-size: 0.72rem !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 44px;
+                    padding: 11px 18px;
+                    font-size: 0.7rem !important;
+                }
+                & .invite__hero-features {
+                    padding-top: 16px;
+                }
+                & .invite__hero-feature {
+                    font-size: 0.68rem !important;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 260px;
+            }
+
+            /* ─── FLOATS KEPT — TIGHT INSETS ─── */
+            & .invite__hero-float {
+                padding: 6px 10px;
+                font-size: 0.55rem !important;
+
+                & i {
+                    font-size: 0.65rem !important;
+                }
+
+                &.invite__hero-float--1 {
+                    top: 4%;
+                    left: 2%;
+                }
+                &.invite__hero-float--2 {
+                    top: 50%;
+                    right: 2%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 4%;
+                    left: 4%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form {
+            padding: 52px 0;
+        }
+
+        /* ─── CTA BANNER: HIDDEN — HERO + FORM ALREADY DO THE JOB ─── */
+        & .invite__cta {
+            display: none;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item {
+                flex: 0 0 88%;
+                padding: 18px 16px 18px 20px;
+                border-radius: var(--radius-sm);
+            }
+            & .invite__reasons-item-title {
+                font-size: 0.9rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.74rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-card {
+                grid-template-columns: 44px 1fr;
+                column-gap: 12px;
+                padding: 16px 14px;
+
+                &::before {
+                    width: 44px;
+                    height: 44px;
+                    font-size: 0.88rem !important;
+                }
+            }
+            & .invite__topics-title {
+                font-size: 0.9rem !important;
+            }
+            & .invite__topics-desc {
+                font-size: 0.74rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-wrapper {
+                padding: 22px 16px 20px;
+            }
+            & .invite__form-info {
+                & .invite__form-title {
+                    font-size: 1.28rem !important;
+                }
+                & .invite__form-desc {
+                    font-size: 0.84rem !important;
+                }
+                & .invite__form-detail {
+                    padding: 10px 14px;
+                }
+                & .invite__form-detail-icon {
+                    width: 34px;
+                    height: 34px;
+                    font-size: 0.85rem !important;
+                }
+                & .invite__form-detail-value {
+                    font-size: 0.84rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 420PX ─── */
+    @media (max-width: 420px) {
+        & .invite__hero {
+            padding: 64px 0 68px;
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: 1.22rem !important;
+                }
+                & .invite__hero-text {
+                    font-size: 0.82rem !important;
+                }
+                & .invite__hero-actions {
+                    & .btn {
+                        min-height: 42px;
+                        padding: 10px 18px;
+                        font-size: 0.76rem !important;
+                    }
+
+                    & .btn.btn--outline,
+                    & .btn:not(.btn--primary):not(.invite__hero-call) {
+                        font-size: 0.7rem !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 42px;
+                    padding: 10px 16px;
+                    font-size: 0.68rem !important;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 240px;
+            }
+
+            & .invite__hero-float {
+                &.invite__hero-float--1 {
+                    top: 3%;
+                    left: 2%;
+                }
+                &.invite__hero-float--2 {
+                    top: 50%;
+                    right: 2%;
+                }
+                &.invite__hero-float--3 {
+                    bottom: 3%;
+                    left: 4%;
+                }
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form {
+            padding: 46px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item-title {
+                font-size: 0.86rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.72rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-info {
+                & .invite__form-title {
+                    font-size: 1.2rem !important;
+                }
+            }
+            & .invite__form-group {
+                & input,
+                & textarea {
+                    font-size: 0.86rem !important;
+                    padding: 11px 12px;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 350PX — STACK PRIMARY PAIR ─── */
+    @media (max-width: 350px) {
+        & .invite__hero {
+            padding: 56px 0 60px;
+
+            & .invite__hero-content {
+                & .invite__hero-eyebrow {
+                    font-size: 0.5rem !important;
+                    letter-spacing: 0.16em;
+
+                    & .invite__hero-eyebrow-line {
+                        width: 16px;
+                    }
+                }
+                & .invite__hero-title {
+                    font-size: 1.12rem !important;
+                }
+                & .invite__hero-text {
+                    font-size: 0.78rem !important;
+                }
+                & .invite__hero-actions {
+                    /* ─── NOW STACK PRIMARY PAIR TOO ─── */
+                    flex-direction: column;
+                    align-items: stretch;
+
+                    & .btn {
+                        min-height: 40px;
+                        padding: 10px 16px;
+                        font-size: 0.74rem !important;
+                        width: 100%;
+                    }
+
+                    & .btn.btn--outline,
+                    & .btn:not(.btn--primary):not(.invite__hero-call) {
+                        width: auto;
+                        align-self: center;
+                        min-height: auto !important;
+                        font-size: 0.68rem !important;
+                        padding: 4px 8px !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 40px;
+                    padding: 10px 14px;
+                    font-size: 0.64rem !important;
+                    width: 100%;
+                }
+                & .invite__hero-feature {
+                    font-size: 0.64rem !important;
+
+                    & i {
+                        font-size: 0.6rem !important;
+                    }
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 220px;
+            }
+
+            /* ─── HIDE FLOATS AT ≤350 — TOO TIGHT ─── */
+            & .invite__hero-float {
+                display: none;
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form {
+            padding: 40px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item {
+                padding: 16px 14px 16px 18px;
+            }
+            & .invite__reasons-item-title {
+                font-size: 0.8rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.68rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-card {
+                grid-template-columns: 38px 1fr;
+                column-gap: 10px;
+                padding: 14px 12px;
+
+                &::before {
+                    width: 38px;
+                    height: 38px;
+                    font-size: 0.8rem !important;
+                }
+            }
+            & .invite__topics-title {
+                font-size: 0.84rem !important;
+            }
+            & .invite__topics-desc {
+                font-size: 0.68rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-wrapper {
+                padding: 18px 12px 16px;
+            }
+            & .invite__form-header {
+                & .invite__form-header-title {
+                    font-size: 1rem !important;
+                }
+                & .invite__form-header-subtitle {
+                    font-size: 0.7rem !important;
+                }
+            }
+            & .invite__form-info {
+                & .invite__form-title {
+                    font-size: 1.08rem !important;
+                }
+                & .invite__form-desc {
+                    font-size: 0.76rem !important;
+                }
+                & .invite__form-detail {
+                    padding: 9px 12px;
+                    gap: 10px;
+                }
+                & .invite__form-detail-icon {
+                    width: 30px;
+                    height: 30px;
+                    font-size: 0.78rem !important;
+                }
+                & .invite__form-detail-label {
+                    font-size: 0.54rem !important;
+                }
+                & .invite__form-detail-value {
+                    font-size: 0.78rem !important;
+                }
+            }
+            & .invite__form-group {
+                & label {
+                    font-size: 0.62rem !important;
+                }
+                & input,
+                & textarea {
+                    font-size: 0.82rem !important;
+                    padding: 10px 11px;
+                    min-height: 42px;
+                }
+            }
+            & .invite__form-disclaimer {
+                font-size: 0.66rem !important;
+                padding: 10px 12px;
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 300PX ─── */
+    @media (max-width: 300px) {
+        & .invite__hero {
+            padding: 50px 0 52px;
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: 1rem !important;
+                }
+                & .invite__hero-text {
+                    font-size: 0.72rem !important;
+                }
+                & .invite__hero-actions {
+                    & .btn {
+                        min-height: 36px;
+                        padding: 9px 14px;
+                        font-size: 0.68rem !important;
+                    }
+                }
+                & .invite__hero-call {
+                    min-height: 36px;
+                    padding: 9px 12px;
+                    font-size: 0.6rem !important;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 200px;
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form {
+            padding: 36px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item-title {
+                font-size: 0.76rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.64rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-title {
+                font-size: 0.78rem !important;
+            }
+            & .invite__topics-desc {
+                font-size: 0.62rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-info {
+                & .invite__form-title {
+                    font-size: 0.98rem !important;
+                }
+                & .invite__form-detail-value {
+                    font-size: 0.72rem !important;
+                }
+            }
+        }
+    }
+
+    /* ─── RESPONSIVE: 250PX ─── */
+    @media (max-width: 250px) {
+        & .invite__hero {
+            padding: 42px 0 44px;
+
+            & .invite__hero-content {
+                & .invite__hero-title {
+                    font-size: 0.92rem !important;
+                }
+                & .invite__hero-text {
+                    font-size: 0.66rem !important;
+                }
+                & .invite__hero-actions {
+                    & .btn {
+                        font-size: 0.6rem !important;
+                        padding: 8px 12px;
+                        min-height: 32px;
+                    }
+                }
+                & .invite__hero-call {
+                    font-size: 0.54rem !important;
+                    padding: 8px 10px;
+                    min-height: 32px;
+                }
+            }
+
+            & .invite__hero-visual {
+                max-width: 180px;
+            }
+        }
+
+        & .invite__reasons,
+        & .invite__topics,
+        & .invite__form {
+            padding: 30px 0;
+        }
+
+        & .invite__reasons {
+            & .invite__reasons-item {
+                padding: 14px 12px 14px 16px;
+            }
+            & .invite__reasons-item-title {
+                font-size: 0.7rem !important;
+            }
+            & .invite__reasons-item-desc {
+                font-size: 0.58rem !important;
+            }
+        }
+
+        & .invite__topics {
+            & .invite__topics-card {
+                grid-template-columns: 34px 1fr;
+                column-gap: 8px;
+                padding: 12px 10px;
+
+                &::before {
+                    width: 34px;
+                    height: 34px;
+                    font-size: 0.72rem !important;
+                }
+            }
+            & .invite__topics-title {
+                font-size: 0.72rem !important;
+            }
+            & .invite__topics-desc {
+                font-size: 0.56rem !important;
+            }
+        }
+
+        & .invite__form {
+            & .invite__form-wrapper {
+                padding: 14px 10px 12px;
+            }
+            & .invite__form-info {
+                & .invite__form-title {
+                    font-size: 0.88rem !important;
+                }
+                & .invite__form-desc {
+                    font-size: 0.66rem !important;
+                }
+            }
+            & .invite__form-group {
+                & input,
+                & textarea {
+                    font-size: 0.74rem !important;
+                    padding: 8px 10px;
+                }
             }
         }
     }
