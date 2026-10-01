@@ -31,6 +31,13 @@ class OrderController extends Controller
             $query->where('payment_status', $request->status);
         }
 
+        if ($request->delivery === 'hardcopy') {
+            $query->where('delivery_type', 'hardcopy');
+        }
+        if ($request->fulfillment) {
+            $query->where('fulfillment_status', $request->fulfillment);
+        }
+
         /* ─── SORT BY LATEST ─── */
         $query->orderBy('created_at', 'desc');
 
@@ -118,5 +125,62 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.index')
             ->with('success', 'Order deleted successfully!');
+    }
+
+    /* ─── MARK AS SHIPPED ─── */
+    public function markShipped(Request $request, Order $order)
+    {
+        $request->validate([
+            'tracking_number' => 'nullable|string|max:120',
+        ]);
+
+        if (!$order->isHardcopy()) {
+            return back()->with('error', 'This order is not a hard copy order.');
+        }
+
+        if ($order->payment_status !== 'paid') {
+            return back()->with('error', 'Cannot ship an unpaid order.');
+        }
+
+        $order->update([
+            'fulfillment_status' => 'shipped',
+            'tracking_number'    => $request->tracking_number,
+            'shipped_at'         => now(),
+        ]);
+
+        Log::info('Order marked as shipped', [
+            'order_number'    => $order->order_number,
+            'tracking_number' => $request->tracking_number,
+            'admin_id'        => session('admin_id'),
+            'admin_name'      => session('admin_name'),
+            'ip'              => $request->ip(),
+        ]);
+
+        // email the buyer here:
+        Mail::to($order->buyer_email)->send(new OrderShipped($order));
+
+        return back()->with('success', 'Order marked as shipped.');
+    }
+
+    /* ─── MARK AS DELIVERED ─── */
+    public function markDelivered(Request $request, Order $order)
+    {
+        if ($order->fulfillment_status !== 'shipped') {
+            return back()->with('error', 'Order has not been marked as shipped yet.');
+        }
+
+        $order->update([
+            'fulfillment_status' => 'delivered',
+            'delivered_at'       => now(),
+        ]);
+
+        Log::info('Order marked as delivered', [
+            'order_number' => $order->order_number,
+            'admin_id'     => session('admin_id'),
+            'admin_name'   => session('admin_name'),
+            'ip'           => $request->ip(),
+        ]);
+
+        return back()->with('success', 'Order marked as delivered.');
     }
 }

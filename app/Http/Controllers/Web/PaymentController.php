@@ -28,92 +28,143 @@ class PaymentController extends Controller
     /* ─── INITIATE PAYMENT ─── */
     public function initiate(Request $request)
     {
+        // ─── BASE VALIDATION ───
         $validator = Validator::make($request->all(), [
             'book_id' => 'required|exists:books,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:50',
             'gateway' => 'nullable|string|in:payfast,yoco',
+            'delivery_type' => 'nullable|in:digital,hardcopy',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'errors' => $validator->errors(),
+                'errors'  => $validator->errors(),
             ], 422);
         }
 
         $book = Book::findOrFail($request->book_id);
+        $deliveryType = $request->input('delivery_type', 'digital');
 
         // ─── VALIDATE BOOK IS PURCHASABLE ───
         if ($book->is_free) {
-            return response()->json([
-                'success' => false,
-                'message' => 'This book is free. Please download directly.',
-            ], 400);
+            return response()->json(['success' => false, 'message' => 'This book is free. Please download directly.'], 400);
+        }
+
+        if ($book->is_free && $deliveryType !== 'hardcopy') {
+            return response()->json(['success' => false, 'message' => 'This resource is free. Please download directly.'], 400);
+        }
+
+        // Free resources with hardcopy skip the digital download requirement
+        if (!$book->is_free && !$book->book_file) {
+            return response()->json(['success' => false, 'message' => 'This book is not available for purchase yet.'], 400);
         }
 
         if (!$book->book_file) {
-            return response()->json([
-                'success' => false,
-                'message' => 'This book is not available for purchase yet.',
-            ], 400);
+            return response()->json(['success' => false, 'message' => 'This book is not available for purchase yet.'], 400);
         }
 
         if ($book->price <= 0) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid book price.',
-            ], 400);
+            return response()->json(['success' => false, 'message' => 'Invalid book price.'], 400);
         }
 
-        // ─── VALIDATE PHONE NUMBER ───
-        $phone = $request->phone;
-        $validatedPhone = $this->phoneService->validatePhone($phone);
+        // ─── HARDCOPY VALIDATION ───
+        $shippingFee = 0.00;
+        $hardcopyPrice = null;
+        $addressData = [];
 
+        if ($deliveryType === 'hardcopy') {
+            if (!$book->has_hardcopy_option) {
+                return response()->json(['success' => false, 'message' => 'Hard copy is not available for this book.'], 400);
+            }
+
+            $region = $request->input('delivery_region');
+            $regions = config('shop.shipping', []);
+
+            if (!$region || !isset($regions[$region])) {
+                return response()->json(['success' => false, 'message' => 'Please select a valid delivery region.', 'field' => 'delivery_region'], 422);
+            }
+
+            // ─── REQUIRED ADDRESS FIELDS ───
+            $hardcopyValidator = Validator::make($request->all(), [
+                'delivery_address_1' => 'required|string|max:255',
+                'delivery_city' => 'required|string|max:120',
+                'delivery_province' => 'required|string|max:120',
+                'delivery_postal_code' => 'required|string|max:20',
+                'delivery_country' => 'required|string|max:80',
+                'delivery_name' => 'nullable|string|max:255',
+                'delivery_phone' => 'nullable|string|max:50',
+            ]);
+
+            if ($hardcopyValidator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please complete the delivery address.',
+                    'errors'  => $hardcopyValidator->errors(),
+                    'field'   => 'delivery',
+                ], 422);
+            }
+
+            $shippingFee   = (float) $regions[$region]['fee'];
+            $hardcopyPrice = (float) $book->hardcopy_price_raw;
+
+            $addressData = [
+                'delivery_region' => $region,
+                'delivery_name' => $request->input('delivery_name', $request->name),
+                'delivery_phone' => $request->input('delivery_phone', $request->phone),
+                'delivery_email' => $request->email,
+                'delivery_address_1' => $request->delivery_address_1,
+                'delivery_address_2' => $request->delivery_address_2,
+                'delivery_suburb' => $request->delivery_suburb,
+                'delivery_city' => $request->delivery_city,
+                'delivery_province' => $request->delivery_province,
+                'delivery_postal_code' => $request->delivery_postal_code,
+                'delivery_country' => $request->delivery_country,
+                'delivery_notes' => $request->delivery_notes,
+            ];
+        }
+
+        // ─── PHONE / EMAIL VALIDATION (as before) ───
+        $validatedPhone = $this->phoneService->validatePhone($request->phone);
         if (!$validatedPhone['valid']) {
-            return response()->json([
-                'success' => false,
-                'message' => $validatedPhone['message'],
-                'field' => 'phone',
-            ], 422);
+            return response()->json(['success' => false, 'message' => $validatedPhone['message'], 'field' => 'phone'], 422);
         }
 
-        // ─── VALIDATE EMAIL ───
-        $email = $request->email;
-        $validatedEmail = $this->validateEmail($email);
-
+        $validatedEmail = $this->validateEmail($request->email);
         if (!$validatedEmail['valid']) {
-            return response()->json([
-                'success' => false,
-                'message' => $validatedEmail['message'],
-                'field' => 'email',
-            ], 422);
+            return response()->json(['success' => false, 'message' => $validatedEmail['message'], 'field' => 'email'], 422);
         }
 
-        // ─── FORMAT PHONE FOR PAYFAST ───
-        $formattedPhone = $validatedPhone['formatted'];
+        // ─── CALCULATE TOTAL ───
+        $basePrice = $deliveryType === 'hardcopy' ? $hardcopyPrice : (float) $book->price;
+        $totalAmount = $basePrice + $shippingFee;
 
         $result = $this->paymentService->initiatePayment($book, [
             'name' => $request->name,
             'email' => $validatedEmail['email'],
-            'phone' => $formattedPhone,
+            'phone' => $validatedPhone['formatted'],
+            'amount' => $totalAmount,
+            'delivery_type' => $deliveryType,
+            'shipping_fee' => $shippingFee,
+            'hardcopy_price' => $hardcopyPrice,
+            'address' => $addressData,
         ], $request->gateway);
 
         if (!$result['success']) {
-            return response()->json([
-                'success' => false,
-                'message' => $result['message'] ?? 'Payment initiation failed.',
-            ], 400);
+            return response()->json(['success' => false, 'message' => $result['message'] ?? 'Payment initiation failed.'], 400);
         }
 
         // ─── STORE ORDER NUMBER IN SESSION (FALLBACK) ───
         session()->put('payment_order_number', $result['order_number']);
         session()->put('payment_status', 'pending');
 
-        Log::info('Payment initiated - session stored', [
+        Log::info('Payment initiated', [
             'order_number' => $result['order_number'],
-            'session_data' => session()->all(),
+            'delivery_type' => $deliveryType,
+            'amount' => $totalAmount,
+            'shipping_fee' => $shippingFee,
         ]);
 
         return response()->json($result);
