@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Mail\OrderShipped;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -148,6 +149,16 @@ class OrderController extends Controller
             'tracking_number'    => $request->tracking_number,
             'shipped_at'         => now(),
         ]);
+
+        // ─── EMAIL THE BUYER (non-blocking) ───
+        try {
+            Mail::to($order->buyer_email)->send(new OrderShipped($order));
+        } catch (\Throwable $e) {
+            \Log::error('Failed to send OrderShipped email', [
+                'order_number' => $order->order_number,
+                'error'        => $e->getMessage(),
+            ]);
+        }
 
         Log::info('Order marked as shipped', [
             'order_number'    => $order->order_number,
