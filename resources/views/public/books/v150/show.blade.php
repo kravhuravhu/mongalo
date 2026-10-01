@@ -82,7 +82,7 @@
                     <div class="book-detail__actions">
                         <button class="btn btn--primary btn--lg" id="showBuyForm">
                             <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                            <span>Buy Now</span>
+                            <span>Continue Shopping</span>
                         </button>
 
                         @if($book->has_hardcopy_option)

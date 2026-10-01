@@ -57,7 +57,7 @@
                         <div class="books__featured-cover-book">
                             @if($featuredBook->cover_image)
                                 <img 
-                                    src="{{ asset('storage/books/covers/' . $featuredBook->cover_image) }}" 
+                                    src="{{ secure_asset('storage/books/covers/' . $featuredBook->cover_image) }}" 
                                     alt="{{ $featuredBook->title }}"
                                     class="books__featured-cover-img"
                                 >
@@ -153,7 +153,7 @@
                         <div class="books__secondary-cover">
                             @if($secondaryBook->cover_image)
                                 <img 
-                                    src="{{ asset('storage/books/covers/' . $secondaryBook->cover_image) }}" 
+                                    src="{{ secure_asset('storage/books/covers/' . $secondaryBook->cover_image) }}" 
                                     alt="{{ $secondaryBook->title }}"
                                     class="books__secondary-cover-img"
                                 >

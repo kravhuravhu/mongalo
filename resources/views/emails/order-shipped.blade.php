@@ -34,7 +34,7 @@
                             </div>
 
                             <h1 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 24px; line-height: 1.2; color: #0A1F33; margin: 0 0 16px; letter-spacing: -0.02em;">
-                                Your book is on its way
+                                Your book has been received!
                             </h1>
 
                             <p style="font-size: 15px; line-height: 1.7; color: #6A6A7A; margin: 0 0 16px;">
@@ -42,7 +42,7 @@
                             </p>
 
                             <p style="font-size: 15px; line-height: 1.7; color: #6A6A7A; margin: 0 0 24px;">
-                                Good news — your copy of <strong style="color: #0A1F33;">{{ $order->book->title ?? 'your book' }}</strong> has been shipped and is on its way to you.
+                                Good news, your copy of <strong style="color: #0A1F33;">{{ $order->book->title ?? 'your book' }}</strong> has been shipped and is on its way to you.
                             </p>
 
                             {{-- ─── ORDER DETAILS ─── --}}
