@@ -120,6 +120,29 @@
                 </div>
             </div>
 
+            {{-- ─── HARD COPY OPTION (paid books only) ─── --}}
+            <div class="books-form__hardcopy" id="hardcopySection">
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="offers_hardcopy" value="1" id="offersHardcopy" {{ old('offers_hardcopy') ? 'checked' : '' }}>
+                        Offer a hard copy of this book
+                    </label>
+                    <span class="form-help">Users can choose to receive a printed copy in the post — shipping is calculated separately at checkout</span>
+                </div>
+
+                <div class="form-group books-form__hardcopy-price {{ old('offers_hardcopy') ? 'books-form__hardcopy-price--visible' : '' }}" id="hardcopyPriceGroup">
+                    <label for="hardcopy_price">Hard copy price (ZAR) <span class="required">*</span></label>
+                    <input type="number" name="hardcopy_price" id="hardcopy_price" placeholder="250.00" step="0.01" min="0" value="{{ old('hardcopy_price') }}">
+                    @error('hardcopy_price')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                    <span class="form-help">
+                        Total cost of manufacturing and printing one copy — shipping is added on top at checkout.
+                        Must be higher than the digital price.
+                    </span>
+                </div>
+            </div>
+
             {{-- ─── CATEGORY (shown when Free Resource is checked) ─── --}}
             <div class="form-group books-form__category-group {{ old('is_free') ? 'books-form__category-group--visible' : '' }}" id="categoryGroup">
                 <label for="category">Resource Category</label>
@@ -208,6 +231,16 @@
                 } else {
                     categoryGroup.classList.remove('books-form__category-group--visible');
                 }
+            });
+        }
+
+        /* ─── HARDCOPY TOGGLE ─── */
+        const offersHardcopy = document.getElementById('offersHardcopy');
+        const hardcopyPriceGroup = document.getElementById('hardcopyPriceGroup');
+
+        if (offersHardcopy && hardcopyPriceGroup) {
+            offersHardcopy.addEventListener('change', function () {
+                hardcopyPriceGroup.classList.toggle('books-form__hardcopy-price--visible', this.checked);
             });
         }
     });

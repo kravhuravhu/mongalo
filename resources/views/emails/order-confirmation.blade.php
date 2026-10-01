@@ -76,6 +76,17 @@
                     </tr>
                 </table>
 
+                @if($order->isHardcopy())
+                    <div style="margin-top: 24px; padding: 20px; background: #F7F4EE; border-radius: 12px; border-left: 3px solid #B8926A;">
+                        <h3 style="margin: 0 0 12px; font-size: 15px; color: #0A1F33;">Delivery Address</h3>
+                        <p style="margin: 0; white-space: pre-line; font-size: 14px; line-height: 1.6; color: #6A6A7A;">{{ $order->formatted_shipping_address }}</p>
+                        <p style="margin: 8px 0 0; font-size: 13px; color: #96714A;">
+                            <strong>Region:</strong> {{ $order->shipping_region_label }} · 
+                            <strong>Shipping:</strong> R{{ number_format((float) $order->shipping_fee, 2) }}
+                        </p>
+                    </div>
+                @endif
+
                 {{-- ─── DOWNLOAD SECTION ─── --}}
                 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: rgba(184, 146, 106, 0.06); border-radius: 12px; padding: 26px; border: 2px solid rgba(184, 146, 106, 0.1); text-align: center; margin-bottom: 18px;">
                     <tr>

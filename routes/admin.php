@@ -16,8 +16,7 @@ use App\Http\Controllers\Admin\ExportController;
 $adminRoutes = function () {
     // ─── AUTHENTICATION (Rate Limited) ───
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login'])
-        ->middleware('rate.limit:login');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('rate.limit:login');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
     // ─── PROTECTED ROUTES ───
@@ -65,6 +64,10 @@ $adminRoutes = function () {
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
         Route::put('/orders/{order}', [OrderController::class, 'update'])->name('admin.orders.update');
         Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+        
+        // ─── ORDER FULFILLMENT ───
+        Route::put('/orders/{order}/mark-shipped', [OrderController::class, 'markShipped'])->name('admin.orders.mark-shipped');
+        Route::put('/orders/{order}/mark-delivered', [OrderController::class, 'markDelivered'])->name('admin.orders.mark-delivered');
 
         // ─── CACHE MANAGEMENT ───
         Route::get('/cache', [CacheController::class, 'index'])->name('admin.cache.index');

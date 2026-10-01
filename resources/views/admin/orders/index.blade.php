@@ -82,6 +82,14 @@
            class="orders-index__filter {{ request('status') === 'refunded' ? 'orders-index__filter--active' : '' }}">
             Refunded
         </a>
+        <a href="{{ route('admin.orders.index', ['delivery' => 'hardcopy']) }}"
+           class="orders-index__filter {{ request('delivery') === 'hardcopy' ? 'orders-index__filter--active' : '' }}">
+            Hard copy
+        </a>
+        <a href="{{ route('admin.orders.index', ['fulfillment' => 'awaiting_shipment']) }}"
+           class="orders-index__filter {{ request('fulfillment') === 'awaiting_shipment' ? 'orders-index__filter--active' : '' }}">
+            Awaiting shipment
+        </a>
 
         @if(request('status') || request('search'))
             <a href="{{ route('admin.orders.index') }}" class="orders-index__filter orders-index__filter--clear">
@@ -98,6 +106,7 @@
                     <th style="width: 40px;">#</th>
                     <th>Order Number</th>
                     <th>Book</th>
+                    <th>Delivery Type</th>
                     <th>Buyer</th>
                     <th>Amount</th>
                     <th>Status</th>

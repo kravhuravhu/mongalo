@@ -68,6 +68,78 @@
                         </span>
                     </div>
                 @endif
+
+                @if($order->isHardcopy())
+                    <div class="order-show__section order-show__section--delivery">
+                        <h3 class="order-show__section-title">
+                            <i class="fas fa-truck"></i> Delivery
+                        </h3>
+
+                        <div class="order-show__delivery-badge">
+                            <i class="fas fa-box"></i>
+                            <span>{{ $order->shipping_region_label }}</span>
+                            <span class="order-show__delivery-badge-fee">R{{ number_format((float) $order->shipping_fee, 2) }}</span>
+                        </div>
+
+                        <div class="order-show__delivery-address">
+                            <strong>{{ $order->delivery_name }}</strong>
+                            @if($order->delivery_phone)
+                                <span>{{ $order->delivery_phone }}</span>
+                            @endif
+                            <span>{{ $order->delivery_address_1 }}</span>
+                            @if($order->delivery_address_2)<span>{{ $order->delivery_address_2 }}</span>@endif
+                            @if($order->delivery_suburb)<span>{{ $order->delivery_suburb }}</span>@endif
+                            <span>{{ $order->delivery_city }}, {{ $order->delivery_province }} {{ $order->delivery_postal_code }}</span>
+                            <span>{{ $order->delivery_country }}</span>
+                        </div>
+
+                        @if($order->delivery_notes)
+                            <div class="order-show__delivery-notes">
+                                <i class="fas fa-sticky-note"></i>
+                                {{ $order->delivery_notes }}
+                            </div>
+                        @endif
+
+                        <div class="order-show__fulfillment">
+                            <span class="order-show__fulfillment-label">Fulfillment status:</span>
+                            <span class="order-show__fulfillment-value">{{ str_replace('_', ' ', ucfirst($order->fulfillment_status)) }}</span>
+                        </div>
+
+                        @if($order->tracking_number)
+                            <div class="order-show__tracking">
+                                <span class="order-show__tracking-label">Tracking:</span>
+                                <span class="order-show__tracking-value">{{ $order->tracking_number }}</span>
+                            </div>
+                        @endif
+
+                        {{-- ─── MARK AS SHIPPED ─── --}}
+                        @if($order->payment_status === 'paid' && in_array($order->fulfillment_status, ['awaiting_shipment', 'awaiting_address']))
+                            <form method="POST" action="{{ route('admin.orders.mark-shipped', $order) }}" class="order-show__ship-form">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="form-group">
+                                    <label for="tracking_number">Tracking Number (optional)</label>
+                                    <input type="text" name="tracking_number" id="tracking_number" placeholder="e.g. SAPO tracking number">
+                                </div>
+
+                                <button type="submit" class="btn btn--primary">
+                                    <i class="fas fa-shipping-fast"></i> Mark as Shipped
+                                </button>
+                            </form>
+                        @endif
+
+                        @if($order->fulfillment_status === 'shipped' && !$order->delivered_at)
+                            <form method="POST" action="{{ route('admin.orders.mark-delivered', $order) }}" class="order-show__ship-form">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn--success">
+                                    <i class="fas fa-check"></i> Mark as Delivered
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                @endif
             </div>
 
             {{-- ─── BOOK DETAILS ─── --}}

@@ -85,17 +85,17 @@
                             <span>Buy Now</span>
                         </button>
 
+                        @if($book->has_hardcopy_option)
+                            <span class="book-detail__hardcopy-badge">
+                                <i class="fas fa-truck" aria-hidden="true"></i>
+                                Hard copy available from {{ $book->formatted_hardcopy_price }}
+                            </span>
+                        @endif
+
                         <a class="btn btn--outline btn--lg disabled" aria-disabled="true">
                             <i class="fas fa-book-open" aria-hidden="true"></i>
                             <span>No Preview Available</span>
                         </a>
-
-                        {{---@if($book->book_file)
-                            <a href="{{ route('books.preview', $book->slug) }}" target="_blank" class="btn btn--outline btn--lg">
-                                <i class="fas fa-book-open" aria-hidden="true"></i>
-                                <span>Preview</span>
-                            </a>
-                        @endif --- }}
                     </div>
 
                     {{-- ─── BUY FORM (HIDDEN BY DEFAULT) ─── --}}
@@ -108,6 +108,42 @@
                                 <input type="hidden" name="book_id" value="{{ $book->id }}">
                                 <input type="hidden" name="gateway" value="payfast">
 
+                                {{-- ─── DELIVERY TYPE ─── --}}
+                                @if($book->has_hardcopy_option)
+                                    <div class="book-detail__delivery-choice">
+                                        <label class="book-detail__delivery-option book-detail__delivery-option--active">
+                                            <input type="radio" name="delivery_type" value="digital" checked>
+                                            <span class="book-detail__delivery-option-body">
+                                                <span class="book-detail__delivery-option-icon">
+                                                    <i class="fas fa-download" aria-hidden="true"></i>
+                                                </span>
+                                                <span class="book-detail__delivery-option-text">
+                                                    <span class="book-detail__delivery-option-label">Digital copy</span>
+                                                    <span class="book-detail__delivery-option-desc">Instant download after payment</span>
+                                                </span>
+                                                <span class="book-detail__delivery-option-price">{{ $book->formatted_price }}</span>
+                                            </span>
+                                        </label>
+
+                                        <label class="book-detail__delivery-option">
+                                            <input type="radio" name="delivery_type" value="hardcopy">
+                                            <span class="book-detail__delivery-option-body">
+                                                <span class="book-detail__delivery-option-icon">
+                                                    <i class="fas fa-truck" aria-hidden="true"></i>
+                                                </span>
+                                                <span class="book-detail__delivery-option-text">
+                                                    <span class="book-detail__delivery-option-label">Hard copy <span class="book-detail__delivery-option-bonus">+ digital free</span></span>
+                                                    <span class="book-detail__delivery-option-desc">Printed and posted to you</span>
+                                                </span>
+                                                <span class="book-detail__delivery-option-price">{{ $book->formatted_hardcopy_price }}</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                @else
+                                    <input type="hidden" name="delivery_type" value="digital">
+                                @endif
+
+                                {{-- ─── BUYER DETAILS ─── --}}
                                 <div class="book-detail__form-group">
                                     <label for="buyer_name">Full Name</label>
                                     <input type="text" name="name" id="buyer_name" placeholder="Your full name" required>
@@ -122,6 +158,92 @@
                                     <label for="buyer_phone">Phone Number</label>
                                     <input type="tel" name="phone" id="buyer_phone" placeholder="+27 71 000 0000">
                                 </div>
+
+                                {{-- ─── HARD COPY ADDRESS BLOCK ─── --}}
+                                @if($book->has_hardcopy_option)
+                                    <div id="hardcopyFields" class="book-detail__hardcopy-fields" style="display: none;">
+                                        <div class="book-detail__hardcopy-title">
+                                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                            Delivery Address
+                                        </div>
+
+                                        <div class="book-detail__form-group">
+                                            <label for="delivery_region">Delivery Region</label>
+                                            <select name="delivery_region" id="delivery_region">
+                                                @foreach(config('shop.shipping', []) as $key => $region)
+                                                    <option value="{{ $key }}" data-fee="{{ $region['fee'] }}" data-days="{{ $region['days'] }}">
+                                                        {{ $region['label'] }} — R{{ number_format($region['fee'], 2) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="book-detail__form-row">
+                                            <div class="book-detail__form-group">
+                                                <label for="delivery_address_1">Street Address</label>
+                                                <input type="text" name="delivery_address_1" id="delivery_address_1" placeholder="123 Main Road">
+                                            </div>
+                                            <div class="book-detail__form-group">
+                                                <label for="delivery_address_2">Unit / Complex (optional)</label>
+                                                <input type="text" name="delivery_address_2" id="delivery_address_2" placeholder="Unit 4">
+                                            </div>
+                                        </div>
+
+                                        <div class="book-detail__form-row">
+                                            <div class="book-detail__form-group">
+                                                <label for="delivery_suburb">Suburb</label>
+                                                <input type="text" name="delivery_suburb" id="delivery_suburb" placeholder="Suburb">
+                                            </div>
+                                            <div class="book-detail__form-group">
+                                                <label for="delivery_city">City</label>
+                                                <input type="text" name="delivery_city" id="delivery_city" placeholder="City">
+                                            </div>
+                                        </div>
+
+                                        <div class="book-detail__form-row">
+                                            <div class="book-detail__form-group">
+                                                <label for="delivery_province">Province / Region</label>
+                                                <input type="text" name="delivery_province" id="delivery_province" placeholder="Province">
+                                            </div>
+                                            <div class="book-detail__form-group">
+                                                <label for="delivery_postal_code">Postal Code</label>
+                                                <input type="text" name="delivery_postal_code" id="delivery_postal_code" placeholder="0000">
+                                            </div>
+                                        </div>
+
+                                        <div class="book-detail__form-group">
+                                            <label for="delivery_country">Country</label>
+                                            <input type="text" name="delivery_country" id="delivery_country" value="South Africa">
+                                        </div>
+
+                                        <div class="book-detail__form-group">
+                                            <label for="delivery_notes">Delivery Notes (optional)</label>
+                                            <input type="text" name="delivery_notes" id="delivery_notes" placeholder="Gate code, best time to deliver, etc.">
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- ─── ORDER SUMMARY ─── --}}
+                                @if($book->has_hardcopy_option)
+                                    <div class="book-detail__summary" id="orderSummary">
+                                        <div class="book-detail__summary-row">
+                                            <span>Book</span>
+                                            <span id="summaryBookPrice">{{ $book->formatted_price }}</span>
+                                        </div>
+                                        <div class="book-detail__summary-row" id="summaryShippingRow" style="display: none;">
+                                            <span>Shipping</span>
+                                            <span id="summaryShipping">—</span>
+                                        </div>
+                                        <div class="book-detail__summary-row book-detail__summary-row--total">
+                                            <span>Total</span>
+                                            <span id="summaryTotal">{{ $book->formatted_price }}</span>
+                                        </div>
+                                        <div class="book-detail__summary-note" id="summaryDeliveryNote" style="display: none;">
+                                            <i class="fas fa-clock" aria-hidden="true"></i>
+                                            <span id="summaryDeliveryDays">—</span>
+                                        </div>
+                                    </div>
+                                @endif
 
                                 <div class="book-detail__form-actions">
                                     <button type="submit" class="btn btn--primary btn--lg" id="buyNowBtn">
@@ -330,6 +452,89 @@
                         if (btnLoader) btnLoader.style.display = 'none';
                     });
                 });
+            }
+
+            /* ─── DELIVERY TYPE TOGGLE + PRICE SUMMARY ─── */
+            const digitalPrice = {{ (float) $book->getRawPriceAttribute() }};
+            const hardcopyPrice = {{ (float) $book->hardcopy_price_raw }};
+            const hasHardcopy = {{ $book->has_hardcopy_option ? 'true' : 'false' }};
+
+            if (hasHardcopy) {
+                const deliveryRadios = document.querySelectorAll('input[name="delivery_type"]');
+                const hardcopyFields = document.getElementById('hardcopyFields');
+                const summaryBookPrice = document.getElementById('summaryBookPrice');
+                const summaryShippingRow = document.getElementById('summaryShippingRow');
+                const summaryShipping = document.getElementById('summaryShipping');
+                const summaryTotal = document.getElementById('summaryTotal');
+                const summaryDeliveryNote = document.getElementById('summaryDeliveryNote');
+                const summaryDeliveryDays = document.getElementById('summaryDeliveryDays');
+                const buyBtnText = document.getElementById('buyBtnText');
+                const regionSelect = document.getElementById('delivery_region');
+
+                function fmt(n) {
+                    return 'R ' + n.toFixed(2);
+                }
+
+                function getShippingFee() {
+                    if (!regionSelect) return 0;
+                    const opt = regionSelect.options[regionSelect.selectedIndex];
+                    return parseFloat(opt.getAttribute('data-fee') || '0');
+                }
+
+                function getShippingDays() {
+                    if (!regionSelect) return '';
+                    const opt = regionSelect.options[regionSelect.selectedIndex];
+                    return opt.getAttribute('data-days') || '';
+                }
+
+                function updateSummary() {
+                    const selected = document.querySelector('input[name="delivery_type"]:checked');
+                    const isHard = selected && selected.value === 'hardcopy';
+
+                    // Update label active state
+                    document.querySelectorAll('.book-detail__delivery-option').forEach(function (label) {
+                        const input = label.querySelector('input');
+                        label.classList.toggle('book-detail__delivery-option--active', input.checked);
+                    });
+
+                    // Toggle address fields
+                    if (hardcopyFields) {
+                        hardcopyFields.style.display = isHard ? 'block' : 'none';
+                        hardcopyFields.querySelectorAll('input, select').forEach(function (el) {
+                            el.required = isHard && el.dataset.required !== 'false';
+                        });
+                    }
+
+                    if (isHard) {
+                        const shipping = getShippingFee();
+                        const bookPrice = hardcopyPrice;
+                        const total = bookPrice + shipping;
+
+                        summaryBookPrice.textContent = fmt(bookPrice);
+                        summaryShippingRow.style.display = 'flex';
+                        summaryShipping.textContent = fmt(shipping);
+                        summaryTotal.textContent = fmt(total);
+                        summaryDeliveryNote.style.display = 'flex';
+                        summaryDeliveryDays.textContent = getShippingDays();
+                        buyBtnText.innerHTML = '<i class="fas fa-lock"></i> Pay ' + fmt(total);
+                    } else {
+                        summaryBookPrice.textContent = fmt(digitalPrice);
+                        summaryShippingRow.style.display = 'none';
+                        summaryTotal.textContent = fmt(digitalPrice);
+                        summaryDeliveryNote.style.display = 'none';
+                        buyBtnText.innerHTML = '<i class="fas fa-lock"></i> Pay ' + fmt(digitalPrice);
+                    }
+                }
+
+                deliveryRadios.forEach(function (radio) {
+                    radio.addEventListener('change', updateSummary);
+                });
+
+                if (regionSelect) {
+                    regionSelect.addEventListener('change', updateSummary);
+                }
+
+                updateSummary();
             }
         });
     </script>

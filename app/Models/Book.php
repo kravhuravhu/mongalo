@@ -18,6 +18,8 @@ class Book extends Model
         'price',
         'is_free',
         'is_featured',
+        'offers_hardcopy',
+        'hardcopy_price',
         'cover_color',
         'cover_image',
         'book_file',
@@ -29,10 +31,12 @@ class Book extends Model
     ];
 
     protected $casts = [
-        'is_free' => 'boolean',
-        'is_featured' => 'boolean',
-        'price' => 'decimal:2',
-        'download_count' => 'integer',
+        'is_free'          => 'boolean',
+        'is_featured'      => 'boolean',
+        'offers_hardcopy'  => 'boolean',
+        'hardcopy_price'   => 'decimal:2',
+        'price'            => 'decimal:2',
+        'download_count'   => 'integer',
     ];
 
     protected $table = 'books';
@@ -145,5 +149,46 @@ class Book extends Model
             'other' => 'Resource',
             default => 'Resource',
         };
+    }
+
+    /* ─── HARD COPY ACCESSORS ─── */
+    /**
+     * Does this book actually offer a hard-copy option right now?
+     */
+    public function getHasHardcopyOptionAttribute(): bool
+    {
+        return (bool) $this->offers_hardcopy;
+    }
+
+    /**
+     * Raw hard-copy price — the total the admin entered.
+     * Includes printing + manufacturing. Shipping is separate.
+     */
+    public function getHardcopyPriceRawAttribute(): float
+    {
+        return (float) ($this->attributes['hardcopy_price'] ?? 0);
+    }
+
+    /**
+     * Hard copy price formatted (e.g. R 250.00)
+     */
+    public function getFormattedHardcopyPriceAttribute(): string
+    {
+        if ($this->hardcopy_price_raw <= 0) {
+            return '—';
+        }
+        return 'R ' . number_format($this->hardcopy_price_raw, 2);
+    }
+
+    /**
+     * Always cheaper than the digital price — hard copies should never be a downgrade.
+     * Returns true if the admin accidentally set hardcopy_price lower than price.
+     */
+    public function getHardcopyPriceIsValidAttribute(): bool
+    {
+        if (!$this->has_hardcopy_option) {
+            return true;
+        }
+        return $this->hardcopy_price_raw > 0;
     }
 }

@@ -10,6 +10,17 @@
             <strong style="color: var(--ink);">{{ $order->book->title ?? 'N/A' }}</strong>
         </td>
         <td>
+            @if($order->isHardcopy())
+                <span class="badge badge-featured">
+                    <i class="fas fa-truck"></i> Hard copy
+                </span>
+            @else
+                <span class="badge badge-read">
+                    <i class="fas fa-download"></i> Digital
+                </span>
+            @endif
+        </td>
+        <td>
             <div class="orders-index__buyer">
                 <strong>{{ $order->buyer_name }}</strong>
                 <a href="mailto:{{ $order->buyer_email }}" style="color: var(--muted); text-decoration: none; font-size: 0.8rem; display: block;">
