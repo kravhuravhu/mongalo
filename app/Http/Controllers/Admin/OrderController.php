@@ -52,6 +52,10 @@ class OrderController extends Controller
         $refundedCount = Order::where('payment_status', 'refunded')->count();
         $totalOrders = Order::count();
         $totalRevenue = Order::where('payment_status', 'paid')->sum('amount');
+        $awaitingShipmentCount = Order::whereIn('fulfillment_status', [
+            'awaiting_shipment',
+            'awaiting_address',
+        ])->count();
 
         /* ─── AJAX REQUEST ─── */
         if ($request->ajax()) {
@@ -68,7 +72,8 @@ class OrderController extends Controller
             'failedCount',
             'refundedCount',
             'totalOrders',
-            'totalRevenue'
+            'totalRevenue',
+            'awaitingShipmentCount'
         ));
     }
 
