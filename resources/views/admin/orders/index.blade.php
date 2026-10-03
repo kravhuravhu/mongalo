@@ -55,6 +55,14 @@
             <span class="orders-index__stat-number">{{ $failedCount }}</span>
             <span class="orders-index__stat-label">Failed</span>
         </div>
+        <div class="orders-index__stat orders-index__stat--refunded">
+            <span class="orders-index__stat-number">{{ $refundedCount }}</span>
+            <span class="orders-index__stat-label">Refunded</span>
+        </div>
+        <div class="orders-index__stat orders-index__stat--awaiting-shipment">
+            <span class="orders-index__stat-number">{{ $awaitingShipmentCount }}</span>
+            <span class="orders-index__stat-label">Awaiting Shipment</span>
+        </div>
     </div>
 
     {{-- ─── FILTERS ─── --}}
@@ -66,9 +74,6 @@
         <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}"
            class="orders-index__filter {{ request('status') === 'pending' ? 'orders-index__filter--active' : '' }}">
             Pending
-            @if($pendingCount > 0)
-                <span class="orders-index__badge">{{ $pendingCount }}</span>
-            @endif
         </a>
         <a href="{{ route('admin.orders.index', ['status' => 'paid']) }}"
            class="orders-index__filter {{ request('status') === 'paid' ? 'orders-index__filter--active' : '' }}">
