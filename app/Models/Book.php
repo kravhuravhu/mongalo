@@ -89,7 +89,7 @@ class Book extends Model
         if ($this->is_free) {
             return 'Free';
         }
-        return $this->price > 0 ? 'R ' . number_format($this->price, 2) : 'Free';
+        return $this->price > 0 ? money($this->price) : 'Free';
     }
 
     public function getRawPriceAttribute()
@@ -142,12 +142,12 @@ class Book extends Model
     public function getCategoryLabelAttribute()
     {
         return match ($this->category) {
-            'booklet' => 'Booklet',
-            'pamphlet' => 'Pamphlet',
-            'bible' => 'Bible',
+            'booklet'     => 'Booklet',
+            'pamphlet'    => 'Pamphlet',
+            'bible'       => 'Bible',
             'study_guide' => 'Study Guide',
-            'other' => 'Resource',
-            default => 'Resource',
+            'other'       => 'Resource',
+            default       => 'Resource',
         };
     }
 
@@ -157,6 +157,11 @@ class Book extends Model
      */
     public function getHasHardcopyOptionAttribute(): bool
     {
+        // ─── RESPECT THE GLOBAL SWITCH ───
+        if (!settings('books.hardcopy_global_on', true)) {
+            return false;
+        }
+
         return (bool) $this->offers_hardcopy;
     }
 
@@ -170,19 +175,18 @@ class Book extends Model
     }
 
     /**
-     * Hard copy price formatted (e.g. R 250.00)
+     * Returns the hard-copy price formatted according to the currency setting.
      */
     public function getFormattedHardcopyPriceAttribute(): string
     {
         if ($this->hardcopy_price_raw <= 0) {
             return '—';
         }
-        return 'R ' . number_format($this->hardcopy_price_raw, 2);
+        return money($this->hardcopy_price_raw);
     }
 
     /**
-     * Always cheaper than the digital price — hard copies should never be a downgrade.
-     * Returns true if the admin accidentally set hardcopy_price lower than price.
+     * Checks if the hard-copy price is valid.
      */
     public function getHardcopyPriceIsValidAttribute(): bool
     {

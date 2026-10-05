@@ -4,6 +4,12 @@
 
 @section('content')
 
+@php
+    // ─── PULL LIVE SHIPPING REGIONS FROM SETTINGS ───
+    $regions = shipping_regions();
+    $currency = currency_symbol();
+@endphp
+
 <div class="book-detail">
 
     {{-- ─── HERO — SPLIT LAYOUT ─── --}}
@@ -170,9 +176,9 @@
                                         <div class="book-detail__form-group">
                                             <label for="delivery_region">Delivery Region</label>
                                             <select name="delivery_region" id="delivery_region">
-                                                @foreach(config('shop.shipping', []) as $key => $region)
+                                                @foreach($regions as $key => $region)
                                                     <option value="{{ $key }}" data-fee="{{ $region['fee'] }}" data-days="{{ $region['days'] }}">
-                                                        {{ $region['label'] }} — R{{ number_format($region['fee'], 2) }}
+                                                        {{ $region['label'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -351,6 +357,9 @@
     <script src="{{ secure_asset('js/v150/books.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ─── CURRENCY SYMBOL (READ FROM SETTINGS) ───
+            const currency = @json($currency);
+
             // ─── SHOW/HIDE BUY FORM ───
             const showBtn = document.getElementById('showBuyForm');
             const buyForm = document.getElementById('buyBookForm');
@@ -454,7 +463,7 @@
                 });
             }
 
-            /* ─── DELIVERY TYPE TOGGLE + PRICE SUMMARY ─── */
+            // ─── DELIVERY TYPE TOGGLE + PRICE SUMMARY ───
             const digitalPrice = {{ (float) $book->getRawPriceAttribute() }};
             const hardcopyPrice = {{ (float) $book->hardcopy_price_raw }};
             const hasHardcopy = {{ $book->has_hardcopy_option ? 'true' : 'false' }};
@@ -471,8 +480,9 @@
                 const buyBtnText = document.getElementById('buyBtnText');
                 const regionSelect = document.getElementById('delivery_region');
 
+                // ─── FORMAT MONEY WITH CURRENT SYMBOL ───
                 function fmt(n) {
-                    return 'R ' + n.toFixed(2);
+                    return currency + ' ' + n.toFixed(2);
                 }
 
                 function getShippingFee() {
