@@ -84,6 +84,16 @@
             <span>Cache</span>
         </a>
 
+        {{-- ─── SYSTEM ─── --}}
+        <span class="nav-label">System</span>
+
+        <a href="{{ route('admin.settings.index') }}"
+           class="nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+
+
         {{-- ─── EXPORTS (Collapsible) ─── --}}
         <div class="nav-item nav-item--toggle" id="exportsToggle">
             <i class="fas fa-file-export"></i>

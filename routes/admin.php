@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\InviteRequestController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CacheController;
 use App\Http\Controllers\Admin\ExportController;
+use App\Http\Controllers\Admin\SettingController;
 
 // Admin routes | dev & prod
 $adminRoutes = function () {
@@ -81,7 +82,11 @@ $adminRoutes = function () {
         Route::get('/export/registrations', [ExportController::class, 'registrations'])->name('admin.export.registrations');
         Route::get('/export/baptisms', [ExportController::class, 'baptisms'])->name('admin.export.baptisms');
         Route::get('/export/messages', [ExportController::class, 'messages'])->name('admin.export.messages');
-
+        
+        // ─── SETTINGS ───
+        Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings.index');
+        Route::put('/settings', [SettingController::class, 'update'])->name('admin.settings.update');
+        
         // ─── ADMIN PASSWORD CHANGE ───
         Route::post('/change-password', [AuthController::class, 'changePassword'])->name('admin.change-password');
     });

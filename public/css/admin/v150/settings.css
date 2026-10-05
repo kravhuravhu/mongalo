@@ -1,0 +1,191 @@
+/* ─── ADMIN SETTINGS ─── */
+.settings-form {
+    max-width: 860px;
+    padding-bottom: 40px;
+
+    & .settings-form__header {
+        margin-bottom: 28px;
+    }
+
+    & .settings-form__intro {
+        font-family: var(--font-italic);
+        font-style: italic;
+        font-size: 0.95rem;
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0;
+        max-width: 60ch;
+    }
+
+    /* ─── CARD ─── */
+    & .settings-form__card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px 24px 24px;
+        margin-bottom: 24px;
+        box-shadow: var(--shadow);
+        transition: all var(--transition);
+
+        &:hover {
+            border-color: var(--gold-dim-strong);
+        }
+    }
+
+    & .settings-form__card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding-bottom: 18px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    & .settings-form__card-icon {
+        flex-shrink: 0;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--gold-dim);
+        border: 1px solid var(--gold-dim-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        color: var(--gold);
+    }
+
+    & .settings-form__card-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--ink);
+        margin: 0 0 4px;
+        letter-spacing: -0.01em;
+    }
+
+    & .settings-form__card-desc {
+        font-family: var(--font-italic);
+        font-style: italic;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0;
+    }
+
+    /* ─── SHIPPING REGION ROW ─── */
+    & .settings-form__region {
+        padding: 18px 0;
+        border-bottom: 1px dashed var(--border);
+
+        &:last-of-type {
+            border-bottom: none;
+            padding-bottom: 4px;
+        }
+
+        &:first-of-type {
+            padding-top: 0;
+        }
+    }
+
+    & .settings-form__region-label {
+        display: inline-block;
+        font-family: var(--font-sans);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold-dark);
+        background: var(--gold-dim);
+        padding: 3px 12px;
+        border-radius: 50px;
+        margin-bottom: 14px;
+    }
+
+    /* ─── CHECKBOX GROUP ─── */
+    & .settings-form__checkboxes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 20px;
+
+        & .form-group {
+            margin-bottom: 0;
+        }
+
+        & label {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0;
+            text-transform: none;
+            color: var(--ink);
+            line-height: 1.5;
+            cursor: pointer;
+
+            & input[type="checkbox"] {
+                margin-top: 3px;
+                flex-shrink: 0;
+            }
+        }
+
+        & .form-help {
+            display: block;
+            margin-top: 6px;
+            margin-left: 26px;
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+    }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+    .settings-form {
+        & .settings-form__card {
+            padding: 24px 20px 20px;
+        }
+    }
+}
+
+@media (max-width: 720px) {
+    .settings-form {
+        & .settings-form__checkboxes {
+            grid-template-columns: 1fr;
+        }
+
+        & .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+@media (max-width: 540px) {
+    .settings-form {
+        & .settings-form__card {
+            padding: 20px 16px 16px;
+        }
+
+        & .settings-form__card-header {
+            gap: 12px;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+
+        & .settings-form__card-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 0.9rem;
+        }
+
+        & .settings-form__card-title {
+            font-size: 1rem;
+        }
+
+        & .settings-form__card-desc {
+            font-size: 0.75rem;
+        }
+    }
+}
