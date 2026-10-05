@@ -53,15 +53,6 @@ class PaymentController extends Controller
             return response()->json(['success' => false, 'message' => 'This book is free. Please download directly.'], 400);
         }
 
-        if ($book->is_free && $deliveryType !== 'hardcopy') {
-            return response()->json(['success' => false, 'message' => 'This resource is free. Please download directly.'], 400);
-        }
-
-        // Free resources with hardcopy skip the digital download requirement
-        if (!$book->is_free && !$book->book_file) {
-            return response()->json(['success' => false, 'message' => 'This book is not available for purchase yet.'], 400);
-        }
-
         if (!$book->book_file) {
             return response()->json(['success' => false, 'message' => 'This book is not available for purchase yet.'], 400);
         }
@@ -81,7 +72,9 @@ class PaymentController extends Controller
             }
 
             $region = $request->input('delivery_region');
-            $regions = config('shop.shipping', []);
+
+            // ─── READ REGIONS FROM SETTINGS, NOT CONFIG ───
+            $regions = shipping_regions();
 
             if (!$region || !isset($regions[$region])) {
                 return response()->json(['success' => false, 'message' => 'Please select a valid delivery region.', 'field' => 'delivery_region'], 422);
@@ -126,12 +119,13 @@ class PaymentController extends Controller
             ];
         }
 
-        // ─── PHONE / EMAIL VALIDATION (as before) ───
+        // ─── PHONE VALIDATION ───
         $validatedPhone = $this->phoneService->validatePhone($request->phone);
         if (!$validatedPhone['valid']) {
             return response()->json(['success' => false, 'message' => $validatedPhone['message'], 'field' => 'phone'], 422);
         }
 
+        // ─── EMAIL VALIDATION ───
         $validatedEmail = $this->validateEmail($request->email);
         if (!$validatedEmail['valid']) {
             return response()->json(['success' => false, 'message' => $validatedEmail['message'], 'field' => 'email'], 422);

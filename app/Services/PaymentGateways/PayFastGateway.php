@@ -171,8 +171,7 @@ class PayFastGateway extends BasePaymentGateway
             // ─── ORDER DETAILS ───
             'm_payment_id' => $order->order_number,
             'amount' => number_format($order->amount, 2, '.', ''),
-            'item_name' => ($order->book->title ?? 'Book Purchase') . ($order->isHardcopy() ? ' — Hard copy' : ''),
-
+            'item_name' => ($order->book->title ?? 'Book Purchase') . ($order->isHardcopy() ? ' | Hard copy' : ''),
             // ─── BUYER DETAILS ───
             'name_first' => explode(' ', $order->buyer_name)[0] ?? $order->buyer_name,
             'name_last' => explode(' ', $order->buyer_name)[1] ?? '',
