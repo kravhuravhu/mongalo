@@ -2450,6 +2450,960 @@
         }
     }
 
+    /* ─── BUY MODAL ─── */
+    & .book-detail__modal {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+
+        &.book-detail__modal--open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+
+    & .book-detail__modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 31, 51, 0.55);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        cursor: pointer;
+    }
+
+    & .book-detail__modal-content {
+        position: relative;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 40px 100px rgba(10, 31, 51, 0.35);
+        transform: scale(0.92) translateY(20px);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 1;
+
+        .book-detail__modal--open & {
+            transform: scale(1) translateY(0);
+        }
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 6px;
+        }
+    }
+
+    & .book-detail__modal-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 3;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all var(--transition-smooth);
+
+        &:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #fff;
+            transform: rotate(90deg) scale(1.05);
+        }
+    }
+
+    & .book-detail__modal-header {
+        padding: 28px 28px 20px;
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+    }
+
+    & .book-detail__modal-eyebrow {
+        display: inline-block;
+        font-family: var(--font-sans);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+    }
+
+    & .book-detail__modal-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: var(--navy);
+        letter-spacing: -0.02em;
+        margin: 0 0 6px;
+        line-height: 1.2;
+    }
+
+    & .book-detail__modal-subtitle {
+        font-family: var(--font-italic);
+        font-style: italic;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin: 0;
+    }
+
+    & .book-detail__modal-body {
+        padding: 24px 28px 28px;
+
+        & .book-detail__delivery-choice {
+            margin-bottom: 20px;
+        }
+
+        & .book-detail__form-group {
+            margin-bottom: 16px;
+        }
+
+        & .book-detail__summary {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        & .book-detail__form-actions {
+            margin-top: 20px;
+        }
+    }
+
+    /* ─── BODY SCROLL LOCK WHEN MODAL OPEN ─── */
+    body.book-detail__modal-open {
+        overflow: hidden;
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 1700PX ─── */
+    @media (max-width: 1700px) {
+        & .book-detail__modal {
+            padding: 22px;
+        }
+
+        & .book-detail__modal-content {
+            max-width: 540px;
+        }
+
+        & .book-detail__modal-header {
+            padding: 26px 26px 18px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 1.35rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 22px 26px 26px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 14px 16px;
+            gap: 14px;
+        }
+
+        & .book-detail__form-group input {
+            min-height: 46px;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 52px;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 1500PX ─── */
+    @media (max-width: 1500px) {
+        & .book-detail__modal {
+            padding: 20px;
+        }
+
+        & .book-detail__modal-content {
+            max-width: 520px;
+        }
+
+        & .book-detail__modal-header {
+            padding: 24px 24px 16px;
+        }
+
+        & .book-detail__modal-eyebrow {
+            font-size: 0.58rem;
+            letter-spacing: 0.26em;
+            margin-bottom: 8px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 1.3rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.85rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 20px 24px 24px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 13px 15px;
+            gap: 12px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 30px;
+            height: 30px;
+            font-size: 0.75rem;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.85rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.7rem;
+        }
+
+        & .book-detail__delivery-option-price {
+            font-size: 0.9rem;
+        }
+
+        & .book-detail__form-group {
+            margin-bottom: 14px;
+        }
+
+        & .book-detail__form-group label {
+            font-size: 0.7rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            min-height: 44px;
+        }
+
+        & .book-detail__summary {
+            padding: 14px 16px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.85rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 1rem;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 50px;
+            font-size: 0.9rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 1200PX ─── */
+    @media (max-width: 1200px) {
+        & .book-detail__modal {
+            padding: 18px;
+        }
+
+        & .book-detail__modal-content {
+            max-width: 500px;
+        }
+
+        & .book-detail__modal-header {
+            padding: 22px 22px 16px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 1.2rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 18px 22px 22px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 12px 14px;
+            gap: 12px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 28px;
+            height: 28px;
+            font-size: 0.72rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 11px 14px;
+            font-size: 0.88rem;
+            min-height: 42px;
+        }
+
+        & .book-detail__form-actions {
+            gap: 8px;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 48px;
+            font-size: 0.85rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 1024PX ─── */
+    @media (max-width: 1024px) {
+        & .book-detail__modal {
+            padding: 16px;
+        }
+
+        & .book-detail__modal-content {
+            max-width: 480px;
+            max-height: 92vh;
+            border-radius: var(--radius);
+        }
+
+        & .book-detail__modal-close {
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            font-size: 0.78rem;
+        }
+
+        & .book-detail__modal-header {
+            padding: 20px 20px 14px;
+        }
+
+        & .book-detail__modal-eyebrow {
+            font-size: 0.55rem;
+            margin-bottom: 6px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 1.1rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.8rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 16px 20px 20px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 11px 13px;
+            gap: 10px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 26px;
+            height: 26px;
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.82rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__delivery-option-price {
+            font-size: 0.85rem;
+        }
+
+        & .book-detail__form-row {
+            gap: 10px;
+        }
+
+        & .book-detail__form-group {
+            margin-bottom: 12px;
+        }
+
+        & .book-detail__form-group label {
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            min-height: 40px;
+        }
+
+        & .book-detail__summary {
+            padding: 12px 14px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.82rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 0.95rem;
+        }
+
+        & .book-detail__form-actions {
+            gap: 8px;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 46px;
+            font-size: 0.82rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 820PX ─── */
+    @media (max-width: 820px) {
+        & .book-detail__modal {
+            padding: 14px;
+        }
+
+        & .book-detail__modal-content {
+            max-width: 440px;
+            max-height: 94vh;
+            border-radius: var(--radius);
+        }
+
+        & .book-detail__modal-close {
+            width: 30px;
+            height: 30px;
+            font-size: 0.75rem;
+        }
+
+        & .book-detail__modal-header {
+            padding: 18px 18px 12px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 1rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.76rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 14px 18px 18px;
+        }
+
+        & .book-detail__delivery-choice {
+            gap: 8px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 10px 12px;
+            gap: 10px;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.78rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.66rem;
+        }
+
+        & .book-detail__form-group input {
+            font-size: 0.85rem;
+            min-height: 40px;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 44px;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 720PX ─── */
+    @media (max-width: 720px) {
+        & .book-detail__modal {
+            padding: 12px;
+        }
+
+        & .book-detail__modal-content {
+            max-width: 100%;
+            max-height: 95vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 16px 16px 12px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.95rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.72rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 12px 16px 16px;
+        }
+
+        & .book-detail__form-group input {
+            padding: 9px 12px;
+            font-size: 0.85rem;
+            min-height: 38px;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 42px;
+            font-size: 0.78rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 540PX ─── */
+    @media (max-width: 540px) {
+        & .book-detail__modal {
+            padding: 10px;
+        }
+
+        & .book-detail__modal-content {
+            border-radius: var(--radius);
+        }
+
+        & .book-detail__modal-close {
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            font-size: 0.7rem;
+        }
+
+        & .book-detail__modal-header {
+            padding: 14px 14px 10px;
+        }
+
+        & .book-detail__modal-eyebrow {
+            font-size: 0.5rem;
+            letter-spacing: 0.22em;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.9rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 10px 14px 14px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 9px 10px;
+            gap: 8px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 24px;
+            height: 24px;
+            font-size: 0.6rem;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.72rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.62rem;
+        }
+
+        & .book-detail__delivery-option-price {
+            font-size: 0.78rem;
+        }
+
+        & .book-detail__form-group {
+            margin-bottom: 10px;
+        }
+
+        & .book-detail__form-group label {
+            font-size: 0.62rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            min-height: 36px;
+        }
+
+        & .book-detail__summary {
+            padding: 10px 12px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.78rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 0.9rem;
+        }
+
+        & .book-detail__form-actions {
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        & .book-detail__form-actions .btn {
+            width: 100%;
+            min-height: 40px;
+            font-size: 0.75rem;
+            justify-content: center;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 480PX ─── */
+    @media (max-width: 480px) {
+        & .book-detail__modal {
+            padding: 8px;
+        }
+
+        & .book-detail__modal-content {
+            max-height: 96vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 12px 12px 8px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.85rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 10px 12px 12px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 8px 9px;
+            gap: 7px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 22px;
+            height: 22px;
+            font-size: 0.55rem;
+        }
+
+        & .book-detail__form-group input {
+            font-size: 0.78rem;
+            min-height: 34px;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 38px;
+            font-size: 0.72rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 420PX ─── */
+    @media (max-width: 420px) {
+        & .book-detail__modal {
+            padding: 6px;
+        }
+
+        & .book-detail__modal-close {
+            top: 8px;
+            right: 8px;
+            width: 26px;
+            height: 26px;
+            font-size: 0.65rem;
+        }
+
+        & .book-detail__modal-header {
+            padding: 10px 10px 8px;
+        }
+
+        & .book-detail__modal-eyebrow {
+            font-size: 0.46rem;
+            letter-spacing: 0.18em;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.8rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.62rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 8px 10px 10px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 7px 8px;
+            gap: 6px;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.56rem;
+        }
+
+        & .book-detail__form-group {
+            margin-bottom: 8px;
+        }
+
+        & .book-detail__form-group label {
+            font-size: 0.56rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 7px 9px;
+            font-size: 0.76rem;
+            min-height: 32px;
+        }
+
+        & .book-detail__summary {
+            padding: 8px 10px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.72rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 0.82rem;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 36px;
+            font-size: 0.68rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 350PX ─── */
+    @media (max-width: 350px) {
+        & .book-detail__modal {
+            padding: 4px;
+        }
+
+        & .book-detail__modal-header {
+            padding: 9px 8px 6px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.75rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.58rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 6px 8px 8px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 6px 7px;
+            gap: 5px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 0.5rem;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.62rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.52rem;
+        }
+
+        & .book-detail__delivery-option-price {
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 6px 8px;
+            font-size: 0.72rem;
+            min-height: 30px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.66rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 0.76rem;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 34px;
+            font-size: 0.62rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 300PX ─── */
+    @media (max-width: 300px) {
+        & .book-detail__modal {
+            padding: 3px;
+        }
+
+        & .book-detail__modal-close {
+            width: 22px;
+            height: 22px;
+            font-size: 0.58rem;
+        }
+
+        & .book-detail__modal-header {
+            padding: 7px 6px 5px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.68rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.52rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 5px 6px 6px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 5px 6px;
+            gap: 4px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 18px;
+            height: 18px;
+            font-size: 0.45rem;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.56rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.48rem;
+        }
+
+        & .book-detail__form-group label {
+            font-size: 0.5rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 5px 7px;
+            font-size: 0.66rem;
+            min-height: 28px;
+        }
+
+        & .book-detail__summary {
+            padding: 6px 8px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.6rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 0.7rem;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 30px;
+            font-size: 0.56rem;
+        }
+    }
+
+    /* ─── BUY MODAL — RESPONSIVE: 250PX ─── */
+    @media (max-width: 250px) {
+        & .book-detail__modal {
+            padding: 2px;
+        }
+
+        & .book-detail__modal-header {
+            padding: 6px 5px 4px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.62rem;
+        }
+
+        & .book-detail__modal-subtitle {
+            font-size: 0.48rem;
+        }
+
+        & .book-detail__modal-body {
+            padding: 4px 5px 5px;
+        }
+
+        & .book-detail__delivery-option-body {
+            padding: 4px 5px;
+            gap: 4px;
+        }
+
+        & .book-detail__delivery-option-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 0.42rem;
+        }
+
+        & .book-detail__delivery-option-label {
+            font-size: 0.52rem;
+        }
+
+        & .book-detail__delivery-option-desc {
+            font-size: 0.44rem;
+        }
+
+        & .book-detail__form-group label {
+            font-size: 0.46rem;
+        }
+
+        & .book-detail__form-group input {
+            padding: 4px 6px;
+            font-size: 0.6rem;
+            min-height: 26px;
+        }
+
+        & .book-detail__summary-row {
+            font-size: 0.55rem;
+        }
+
+        & .book-detail__summary-row--total {
+            font-size: 0.64rem;
+        }
+
+        & .book-detail__form-actions .btn {
+            min-height: 28px;
+            font-size: 0.5rem;
+        }
+    }
+
     /* ─── DETAIL RESPONSIVE: 1700PX ─── */
     @media (max-width: 1700px) {
         & .book-detail__hero,
