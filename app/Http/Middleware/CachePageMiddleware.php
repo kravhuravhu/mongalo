@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 class CachePageMiddleware
 {
     protected array $excludedRoutes = [
+        'admin',
         'admin/*',
         'payment/*',
         'checkout/*',
@@ -39,6 +40,11 @@ class CachePageMiddleware
     {
         // ─── CHECK IF PAGE CACHE ENABLED ───
         if (!env('PAGE_CACHE_ENABLED', true)) {
+            return $next($request);
+        }
+
+        // ─── NEVER CACHE ADMIN PAGES ───
+        if ($request->is('admin') || $request->is('admin/*') || session()->has('admin_id')) {
             return $next($request);
         }
 
