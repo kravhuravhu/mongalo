@@ -3404,6 +3404,194 @@
         }
     }
 
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 720PX ─── */
+    @media (max-width: 720px) {
+        & .book-detail__modal-content {
+            width: calc(100% - 24px);
+            max-width: calc(100% - 24px);
+            max-height: 82vh;
+            border-radius: var(--radius);
+        }
+
+        & .book-detail__modal-close {
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            font-size: 0.78rem;
+        }
+    }
+
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 540PX ─── */
+    @media (max-width: 540px) {
+        & .book-detail__modal-content {
+            width: calc(100% - 20px);
+            max-width: calc(100% - 20px);
+            max-height: 80vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 22px 16px 14px;
+        }
+
+        & .book-detail__modal-close {
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 480PX ─── */
+    @media (max-width: 480px) {
+        & .book-detail__modal-content {
+            width: calc(100% - 16px);
+            max-width: calc(100% - 16px);
+            max-height: 78vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 20px 14px 12px;
+        }
+
+        & .book-detail__modal-title {
+            padding-right: 36px;
+        }
+
+        & .book-detail__modal-close {
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            font-size: 0.72rem;
+        }
+    }
+
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 420PX ─── */
+    @media (max-width: 420px) {
+        & .book-detail__modal {
+            padding: 10px;
+        }
+
+        & .book-detail__modal-content {
+            width: calc(100% - 12px);
+            max-width: calc(100% - 12px);
+            max-height: 76vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 18px 12px 12px;
+        }
+
+        & .book-detail__modal-eyebrow {
+            font-size: 0.5rem;
+            letter-spacing: 0.2em;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.9rem;
+            padding-right: 34px;
+        }
+
+        & .book-detail__modal-close {
+            top: 8px;
+            right: 8px;
+            width: 26px;
+            height: 26px;
+            font-size: 0.68rem;
+        }
+    }
+
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 350PX ─── */
+    @media (max-width: 350px) {
+        & .book-detail__modal {
+            padding: 8px;
+        }
+
+        & .book-detail__modal-content {
+            width: calc(100% - 10px);
+            max-width: calc(100% - 10px);
+            max-height: 74vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 16px 10px 10px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.82rem;
+            padding-right: 32px;
+        }
+
+        & .book-detail__modal-close {
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            font-size: 0.62rem;
+        }
+    }
+
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 300PX ─── */
+    @media (max-width: 300px) {
+        & .book-detail__modal {
+            padding: 6px;
+        }
+
+        & .book-detail__modal-content {
+            width: calc(100% - 8px);
+            max-width: calc(100% - 8px);
+            max-height: 72vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 14px 8px 8px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.74rem;
+            padding-right: 28px;
+        }
+
+        & .book-detail__modal-close {
+            top: 6px;
+            right: 6px;
+            width: 22px;
+            height: 22px;
+            font-size: 0.56rem;
+        }
+    }
+
+    /* ─── BUY MODAL — MOBILE OVERRIDE: 250PX ─── */
+    @media (max-width: 250px) {
+        & .book-detail__modal {
+            padding: 4px;
+        }
+
+        & .book-detail__modal-content {
+            width: calc(100% - 6px);
+            max-width: calc(100% - 6px);
+            max-height: 70vh;
+        }
+
+        & .book-detail__modal-header {
+            padding: 12px 6px 6px;
+        }
+
+        & .book-detail__modal-title {
+            font-size: 0.68rem;
+            padding-right: 24px;
+        }
+
+        & .book-detail__modal-close {
+            top: 4px;
+            right: 4px;
+            width: 20px;
+            height: 20px;
+            font-size: 0.5rem;
+        }
+    }
+
     /* ─── DETAIL RESPONSIVE: 1700PX ─── */
     @media (max-width: 1700px) {
         & .book-detail__hero,
