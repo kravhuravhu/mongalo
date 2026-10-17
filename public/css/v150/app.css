@@ -136,7 +136,7 @@ img {
         }
 
         & .global-navbar__brand-slogan {
-            color: var(--muted);
+            color: var(--muted)!important;
         }
 
         & .global-navbar__toggle-bar {
@@ -235,6 +235,16 @@ img {
             transform: scale(1.05);
         }
 
+        /* ─── IMAGE LOGO ─── */
+        & .global-navbar__brand-img {
+            height: 64px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            display: block;
+            transition: height 0.3s ease;
+        }
+
         & .global-navbar__brand-text {
             font-family: var(--font-display);
             font-weight: 800;
@@ -267,6 +277,14 @@ img {
 
         &:hover .global-navbar__brand-slogan {
             color: var(--gold);
+        }
+    }
+
+    /* ─── SHRINK LOGO WHEN NAVBAR IS SCROLLED ─── */
+    &.global-navbar--scrolled {
+        & .global-navbar__brand-img {
+            height: 48px;
+            max-width: 140px;
         }
     }
 
@@ -1000,6 +1018,16 @@ img {
     }
 
     & .footer__brand-section {
+        /* ─── IMAGE LOGO ─── */
+        & .footer__brand-img {
+            height: 72px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+            margin-bottom: 10px;
+        }
+
         & .footer__brand {
             font-family: var(--font-display);
             font-weight: 800;
@@ -1460,6 +1488,12 @@ img {
         }
 
         & .global-navbar__brand {
+            /* ─── LOGO SHRINKS FOR TABLET ─── */
+            & .global-navbar__brand-img {
+                height: 56px;
+                max-width: 160px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.75rem !important;
             }
@@ -1467,6 +1501,13 @@ img {
             & .global-navbar__brand-slogan {
                 font-size: 0.5rem !important;
                 letter-spacing: 0.25em;
+            }
+        }
+
+        &.global-navbar--scrolled {
+            & .global-navbar__brand-img {
+                height: 42px;
+                max-width: 120px;
             }
         }
     }
@@ -1642,6 +1683,12 @@ img {
                 transform: translate(-50%, -50%) scale(1.03);
             }
 
+            /* ─── LOGO FITS TABLET / MOBILE NAVBAR ─── */
+            & .global-navbar__brand-img {
+                height: 52px;
+                max-width: 150px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.5rem !important;
             }
@@ -1663,6 +1710,11 @@ img {
 
             &:hover {
                 transform: translateX(-50%) scale(1.03);
+            }
+
+            & .global-navbar__brand-img {
+                height: 48px;
+                max-width: 140px;
             }
 
             & .global-navbar__brand-text {
@@ -1807,6 +1859,12 @@ img {
             grid-column: 1 / -1;
             text-align: center;
 
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 64px;
+                max-width: 180px;
+            }
+
             & .footer__brand-desc {
                 max-width: 560px;
                 margin: 0 auto;
@@ -1942,6 +2000,12 @@ img {
         }
 
         & .global-navbar__brand {
+            /* ─── LOGO SHRINKS FOR SMALLER TABLET ─── */
+            & .global-navbar__brand-img {
+                height: 46px;
+                max-width: 130px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.35rem !important;
             }
@@ -1969,6 +2033,11 @@ img {
         &.global-navbar--drawer-open .global-navbar__brand {
             top: 30px;
 
+            & .global-navbar__brand-img {
+                height: 44px;
+                max-width: 125px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.3rem !important;
             }
@@ -1991,6 +2060,12 @@ img {
 
         & .footer__brand-section {
             text-align: center;
+
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 56px;
+                max-width: 160px;
+            }
 
             & .footer__brand {
                 font-size: 1.6rem !important;
@@ -2170,6 +2245,11 @@ img {
         }
 
         & .global-navbar__brand {
+            & .global-navbar__brand-img {
+                height: 42px;
+                max-width: 120px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.25rem !important;
             }
@@ -2187,6 +2267,11 @@ img {
 
         &.global-navbar--drawer-open .global-navbar__brand {
             top: 28px;
+
+            & .global-navbar__brand-img {
+                height: 40px;
+                max-width: 115px;
+            }
 
             & .global-navbar__brand-text {
                 font-size: 1.2rem !important;
@@ -2217,6 +2302,12 @@ img {
         }
 
         & .footer__brand-section {
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 52px;
+                max-width: 150px;
+            }
+
             & .footer__brand {
                 font-size: 1.5rem !important;
             }
@@ -2389,6 +2480,11 @@ img {
         }
 
         & .global-navbar__brand {
+            & .global-navbar__brand-img {
+                height: 38px;
+                max-width: 110px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.15rem !important;
             }
@@ -2417,6 +2513,11 @@ img {
         &.global-navbar--drawer-open .global-navbar__brand {
             top: 26px;
 
+            & .global-navbar__brand-img {
+                height: 36px;
+                max-width: 105px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.1rem !important;
             }
@@ -2443,6 +2544,12 @@ img {
 
         & .footer__brand-section {
             text-align: center;
+
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 46px;
+                max-width: 130px;
+            }
 
             & .footer__brand {
                 font-size: 1.4rem !important;
@@ -2679,6 +2786,11 @@ img {
 
     .global-navbar {
         & .global-navbar__brand {
+            & .global-navbar__brand-img {
+                height: 34px;
+                max-width: 100px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1.05rem !important;
             }
@@ -2701,6 +2813,11 @@ img {
         &.global-navbar--drawer-open .global-navbar__brand {
             top: 24px;
 
+            & .global-navbar__brand-img {
+                height: 32px;
+                max-width: 95px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 1rem !important;
             }
@@ -2720,6 +2837,12 @@ img {
         }
 
         & .footer__brand-section {
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 42px;
+                max-width: 120px;
+            }
+
             & .footer__brand {
                 font-size: 1.35rem !important;
             }
@@ -2843,6 +2966,11 @@ img {
         }
 
         & .global-navbar__brand {
+            & .global-navbar__brand-img {
+                height: 32px;
+                max-width: 92px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 0.98rem !important;
             }
@@ -2871,6 +2999,11 @@ img {
         &.global-navbar--drawer-open .global-navbar__brand {
             top: 22px;
 
+            & .global-navbar__brand-img {
+                height: 30px;
+                max-width: 88px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 0.95rem !important;
             }
@@ -2896,6 +3029,12 @@ img {
         }
 
         & .footer__brand-section {
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 40px;
+                max-width: 112px;
+            }
+
             & .footer__brand {
                 font-size: 1.25rem !important;
             }
@@ -3091,6 +3230,11 @@ img {
         }
 
         & .global-navbar__brand {
+            & .global-navbar__brand-img {
+                height: 30px;
+                max-width: 84px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 0.9rem !important;
             }
@@ -3120,6 +3264,11 @@ img {
         &.global-navbar--drawer-open .global-navbar__brand {
             top: 20px;
 
+            & .global-navbar__brand-img {
+                height: 28px;
+                max-width: 80px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 0.88rem !important;
             }
@@ -3141,6 +3290,12 @@ img {
         }
 
         & .footer__brand-section {
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 36px;
+                max-width: 100px;
+            }
+
             & .footer__brand {
                 font-size: 1.15rem !important;
             }
@@ -3306,6 +3461,11 @@ img {
 
     .global-navbar {
         & .global-navbar__brand {
+            & .global-navbar__brand-img {
+                height: 26px;
+                max-width: 76px;
+            }
+
             & .global-navbar__brand-text {
                 font-size: 0.82rem !important;
             }
@@ -3325,6 +3485,12 @@ img {
         }
 
         & .footer__brand-section {
+            & .footer__brand-img {
+                margin: 0 auto 10px;
+                height: 32px;
+                max-width: 88px;
+            }
+
             & .footer__brand {
                 font-size: 1.05rem !important;
             }

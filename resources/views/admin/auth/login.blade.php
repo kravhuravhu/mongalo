@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Login · {{ env('PROJECT_NAME', 'IN.iN') }}</title>
+    <title>Admin Login · {{ env('PROJECT_NAME', 'Blood Water Spirit') }}</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
 
 <div class="login-container" id="loginContainer" style="display: none;">
     <div class="login-logo">
-        <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
+        <img src="{{ secure_asset('images/blood_water_spirit_Logo-Photoroom.png') }}" alt="Blood Water Spirit Logo" class="login-logo-img">
         <span class="login-logo-admin">Admin</span>
     </div>
 
@@ -77,7 +77,7 @@
     </form>
 
     <div class="login-footer">
-        {{ env('PROJECT_NAME', 'IN.iN') }} · <span>Admin Panel</span>
+        {{ env('PROJECT_NAME', 'Blood Water Spirit') }} · <span>Admin Panel</span>
     </div>
 </div>
 

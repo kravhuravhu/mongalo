@@ -64,6 +64,17 @@
         letter-spacing: -0.03em;
         color: var(--ink);
 
+        /* ─── IMAGE LOGO ─── */
+        & .login-logo-img {
+            display: block;
+            height: 80px;
+            width: auto;
+            max-width: 220px;
+            object-fit: contain;
+            margin: 0 auto 4px;
+            transition: height 0.3s ease;
+        }
+
         & .brand-gold {
             color: var(--gold);
         }
@@ -426,6 +437,11 @@
         font-size: 1.8rem;
     }
 
+    .auth-login .login-logo .login-logo-img {
+        height: 64px;
+        max-width: 180px;
+    }
+
     .auth-login .login-subtitle {
         font-size: 0.85rem;
         margin-bottom: 24px;
@@ -471,6 +487,11 @@
 
     .auth-login .login-logo {
         font-size: 1.5rem;
+    }
+
+    .auth-login .login-logo .login-logo-img {
+        height: 52px;
+        max-width: 150px;
     }
 
     .auth-login .login-subtitle {

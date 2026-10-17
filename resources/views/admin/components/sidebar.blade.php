@@ -7,7 +7,7 @@
 
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
-        <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
+        <img src="{{ secure_asset('images/blood_water_spirit_Logo-Photoroom.png') }}" alt="IN.iN Logo" class="logo-img">
         <span class="logo-admin">Admin Panel</span>
     </a>
 

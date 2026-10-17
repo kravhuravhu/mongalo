@@ -159,6 +159,17 @@ img {
         line-height: 1;
         letter-spacing: -0.03em;
 
+        /* ─── IMAGE LOGO ─── */
+        & .logo-img {
+            display: block;
+            height: 48px;
+            width: auto;
+            max-width: 160px;
+            object-fit: contain;
+            margin-bottom: 4px;
+            transition: height 0.3s ease;
+        }
+
         & .brand-gold {
             color: var(--gold);
         }
@@ -1372,6 +1383,11 @@ img {
         font-size: 1.4rem;
     }
 
+    .admin-sidebar .logo .logo-img {
+        height: 44px;
+        max-width: 145px;
+    }
+
     .admin-topbar .admin-topbar-left h1 {
         font-size: 1.5rem;
     }
@@ -1395,6 +1411,11 @@ img {
 
     .admin-sidebar .logo {
         font-size: 1.3rem;
+    }
+
+    .admin-sidebar .logo .logo-img {
+        height: 40px;
+        max-width: 130px;
     }
 
     .admin-sidebar .admin-nav .nav-item {
@@ -1437,6 +1458,11 @@ img {
     .admin-sidebar .logo {
         font-size: 1.15rem;
         margin-bottom: 2px;
+    }
+
+    .admin-sidebar .logo .logo-img {
+        height: 36px;
+        max-width: 115px;
     }
 
     .admin-sidebar .logo .logo-admin {
@@ -1691,6 +1717,11 @@ img {
         font-size: 1.05rem;
     }
 
+    .admin-sidebar .logo .logo-img {
+        height: 32px;
+        max-width: 105px;
+    }
+
     .admin-sidebar .admin-nav {
         margin-top: 20px;
     }
@@ -1771,6 +1802,11 @@ img {
 
     .admin-sidebar .logo {
         font-size: 1rem;
+    }
+
+    .admin-sidebar .logo .logo-img {
+        height: 30px;
+        max-width: 95px;
     }
 
     .admin-sidebar .admin-nav .nav-item {
@@ -1905,6 +1941,11 @@ img {
 
     .admin-sidebar .logo {
         font-size: 0.95rem;
+    }
+
+    .admin-sidebar .logo .logo-img {
+        height: 28px;
+        max-width: 88px;
     }
 
     .admin-sidebar .logo .logo-admin {
@@ -2060,6 +2101,11 @@ img {
         font-size: 0.85rem;
     }
 
+    .admin-sidebar .logo .logo-img {
+        height: 26px;
+        max-width: 80px;
+    }
+
     .admin-sidebar .admin-nav .nav-item {
         font-size: 0.6rem;
         padding: 4px 6px;
@@ -2174,6 +2220,11 @@ img {
         font-size: 0.78rem;
     }
 
+    .admin-sidebar .logo .logo-img {
+        height: 24px;
+        max-width: 72px;
+    }
+
     .admin-sidebar .admin-nav .nav-item {
         font-size: 0.55rem;
         padding: 3px 5px;
@@ -2279,6 +2330,11 @@ img {
         font-size: 0.7rem;
     }
 
+    .admin-sidebar .logo .logo-img {
+        height: 22px;
+        max-width: 66px;
+    }
+
     .admin-sidebar .admin-nav .nav-item {
         font-size: 0.5rem;
         padding: 2px 4px;
@@ -2345,6 +2401,11 @@ img {
 
     .admin-sidebar .logo {
         font-size: 0.65rem;
+    }
+
+    .admin-sidebar .logo .logo-img {
+        height: 20px;
+        max-width: 60px;
     }
 
     .admin-sidebar .admin-nav .nav-item {
