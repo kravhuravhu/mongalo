@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', env('PROJECT_NAME', 'IN.iN') . ' · I am IN Him // He is IN me')</title>
+    <title>@yield('title', env('PROJECT_NAME', 'Blood Water Spirit') . ' · I am IN Him // He is IN me')</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +28,7 @@
             <div class="app-loader__ring app-loader__ring--1"></div>
             <div class="app-loader__ring app-loader__ring--2"></div>
             <div class="app-loader__ring app-loader__ring--3"></div>
-            <span class="app-loader__text">IN.iN</span>
+            <span class="app-loader__text">Loading...</span>
         </div>
     </div>
 

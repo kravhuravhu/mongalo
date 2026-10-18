@@ -26,10 +26,8 @@
 
             {{-- ─── CENTER BRAND ─── --}}
             <a href="{{ route('home') }}" class="global-navbar__brand" aria-label="Home">
-                <span class="global-navbar__brand-text">
-                    <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
-                </span>
-                <span class="global-navbar__brand-slogan">In Him · In You · In Us</span>
+                <img src="{{ secure_asset('images/blood_water_spirit_Logo-Photoroom.png') }}" alt="Blood Water Spirit Logo" class="global-navbar__brand-img">
+                <span class="global-navbar__brand-slogan">{{ env('PROJECT_NAME') }}</span>
             </a>
 
             {{-- ─── RIGHT NAV LINKS ─── --}}
