@@ -424,6 +424,9 @@
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="baptism__form-group">
+                            <x-turnstile />
+                        </div>
 
                         <button type="submit" class="btn btn--primary btn--block">
                             <i class="fas fa-water" aria-hidden="true"></i>

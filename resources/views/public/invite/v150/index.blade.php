@@ -334,6 +334,13 @@
                             Sending an invitation does not confirm Arthur's availability. It starts the conversation.
                         </p>
 
+                        <div class="invite__form-group">
+                            <x-turnstile />
+                            @error('cf-turnstile-response')
+                                <span class="invite__form-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <button type="submit" class="btn btn--primary btn--block">
                             <i class="fas fa-paper-plane" aria-hidden="true"></i>
                             <span>Send Invitation</span>

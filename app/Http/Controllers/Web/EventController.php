@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationConfirmation;
 use Illuminate\Support\Facades\Log;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class EventController extends Controller
 {
@@ -52,6 +53,9 @@ class EventController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|max:50',
+            'cf-turnstile-response' => ['required', new Turnstile],
+        ], [], [
+            'cf-turnstile-response' => 'human verification',
         ]);
 
         $event = Event::findOrFail($request->event_id);

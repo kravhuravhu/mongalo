@@ -348,6 +348,10 @@
                         </div>
                     @endif
 
+                    <div class="book-detail__form-group">
+                        <x-turnstile />
+                    </div>
+
                     <div class="book-detail__form-actions">
                         <button type="submit" class="btn btn--primary btn--lg" id="buyNowBtn">
                             <span id="buyBtnText">
