@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Free Resources')
+@section('title', 'Free Christian Resources · Booklets, Pamphlets & Bibles | ' . config('seo.site_name'))
+
+@section('meta_description', 'Free Christian literature: booklets, pamphlets, small Bibles and study guides. Free forever, instant download, share freely. All costs covered by Arthur.')
 
 @section('content')
 

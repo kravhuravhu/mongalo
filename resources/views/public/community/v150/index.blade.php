@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Community')
+@section('title', 'Join the Community | ' . config('seo.site_name'))
+
+@section('meta_description', 'Join a Christian community on WhatsApp around faith, water baptism, Spirit baptism and equipping believers to serve. Daily encouragement, book updates and prayer support.')
 
 @section('content')
 

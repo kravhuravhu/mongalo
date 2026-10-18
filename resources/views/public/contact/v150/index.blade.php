@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Contact')
+@section('title', 'Contact Us | ' . config('seo.site_name'))
+
+@section('meta_description', 'Contact ' . config('seo.site_name') . '. Questions, prayer requests, book orders, baptism enquiries or invitations. Call ' . config('seo.phone') . ' or send a message online.')
 
 @section('content')
 
@@ -40,7 +42,7 @@
                             </div>
                             <div class="contact__hero-item-text">
                                 <span class="contact__hero-item-label">Phone</span>
-                                <span class="contact__hero-item-value">+27 71 461 1401</span>
+                                <span class="contact__hero-item-value">{{ config('seo.phone') }}</span>
                             </div>
                         </a>
 
@@ -50,7 +52,7 @@
                             </div>
                             <div class="contact__hero-item-text">
                                 <span class="contact__hero-item-label">Email</span>
-                                <span class="contact__hero-item-value">hello@thecollective.co.za</span>
+                                <span class="contact__hero-item-value">{{ config('seo.email') }}</span>
                             </div>
                         </a>
 

@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Books Library')
+@section('title', ' Books Library | ' . config('seo.site_name'))
+
+@section('meta_description', 'Browse the books library: Divine Identity, My Salvation Companion and more. Digital and hardcopy editions available. Deep-dive teaching on baptism, identity in Christ and the New Covenant.')
+
+@section('meta_type', 'website')
 
 @section('content')
 
@@ -266,6 +270,56 @@
 
 @push('scripts')
     <script src="{{ secure_asset('js/v150/books.js') }}"></script>
+@endpush
+
+@push('schema')
+    @php
+        $bookListSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            '@id' => url('/books') . '#webpage',
+            'url' => url('/books'),
+            'name' => 'Books Library · ' . config('seo.site_name'),
+            'description' => 'Christian books by Arthur Mongalo — Divine Identity, My Salvation Companion and more.',
+            'isPartOf' => ['@id' => config('seo.site_url') . '/#website'],
+            'inLanguage' => 'en-ZA',
+            'breadcrumb' => [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 1,
+                        'name' => 'Home',
+                        'item' => url('/'),
+                    ],
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 2,
+                        'name' => 'Books',
+                        'item' => url('/books'),
+                    ],
+                ],
+            ],
+        ];
+
+        $itemList = [];
+        $position = 1;
+        foreach ($paidBooks as $paidBook) {
+            $itemList[] = [
+                '@type' => 'ListItem',
+                'position' => $position++,
+                'url' => url('/books/' . $paidBook->slug),
+                'name' => $paidBook->title,
+            ];
+        }
+        if (! empty($itemList)) {
+            $bookListSchema['mainEntity'] = [
+                '@type' => 'ItemList',
+                'itemListElement' => $itemList,
+            ];
+        }
+    @endphp
+    <script type="application/ld+json">{!! json_encode($bookListSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush
 
 @push('styles')

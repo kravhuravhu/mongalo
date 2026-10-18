@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Invite Arthur')
+@section('title', 'Invite Arthur Mongalo to Speak at Your Event')
+
+@section('meta_description', 'Invite Arthur Mongalo to teach at your church, conference, baptism service or community gathering. Speaking topics include Baptisms, Divine Identity, New Covenant and Jesus Revealed.')
+
+@section('meta_image', secure_asset('images/Arthur-mongalo_invite.jpg'))
 
 @section('content')
 

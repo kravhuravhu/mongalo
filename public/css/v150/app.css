@@ -121,8 +121,8 @@ img {
             color: var(--muted);
 
             &:hover {
-                color: var(--navy);
-                background: rgba(184, 146, 106, 0.08);
+                color: var(--navy)!important;
+                background: rgba(184, 146, 106, 0.4)!important;
             }
 
             &.global-navbar__link--active {
@@ -132,7 +132,7 @@ img {
         }
 
         & .global-navbar__brand-text {
-            color: var(--navy);
+            color: var(--navy)!important;
         }
 
         & .global-navbar__brand-slogan {

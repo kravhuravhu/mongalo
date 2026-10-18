@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · My Story')
+@section('title', "Arthur Mongalo Story | " . config('seo.site_name'))
+
+@section('meta_description', "Arthur Mongalo's story: responding to the call to accept Christ over and over, seeking assurance, leading a church in Limpopo for nine years, and building a ministry of baptisms in Gauteng.")
+
+@section('meta_image', secure_asset('images/arthur-mongalo-landscape.jpg'))
 
 @section('content')
 
@@ -8,12 +12,12 @@
     // ─── TIMELINE DATA 
     $timeline = [
         [
-            'year' => '',
+            'year' => '2006',
             'title' => 'Leading in Ministry',
-            'text' => 'Led a cell group at Emmanuel Christian Church under Apostle Vincent Loate for several years, before relocating for work.'
+            'text' => 'Until 2011, I Led a cell group at Emmanuel Christian Church under Apostle Vincent Loate for several years, before relocating for work.'
         ],
         [
-            'year' => '',
+            'year' => '2012',
             'title' => 'A New City, A New Fellowship',
             'text' => 'Relocated to Polokwane, Limpopo. Fellowshipped at God\'s Tabernacle under Dr David Molutsi.'
         ],
@@ -209,11 +213,11 @@
             <div class="about__timeline-list">
                 @foreach($timeline as $index => $item)
                     <div class="about__timeline-item">
-                        
+                        @if(!empty($item['year']))
                             <div class="about__timeline-year">
                                 <span>{{ $item['year'] }}</span>
                             </div>
-                        
+                        @endif
 
                         <div class="about__timeline-dot">
                             <span></span>

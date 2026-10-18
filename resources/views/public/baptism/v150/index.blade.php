@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Baptism')
+@section('title', 'Water Baptism & Spirit Baptism | Register Your Interest | ' . config('seo.site_name'))
+
+@section('meta_description', 'Learn what water baptism and Spirit baptism mean, read the scriptures, and register your interest for the upcoming three-day baptism camp in Gauteng. Free to inquire.')
+
+@section('meta_image', secure_asset('images/arthur-mongalo-baptism-portait.jpg'))
 
 @section('content')
 
