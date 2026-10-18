@@ -7,6 +7,7 @@ use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
 use App\Services\AdminNotificationService;
 use App\Services\PhoneService;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class ContactController extends Controller
 {
@@ -44,7 +45,10 @@ class ContactController extends Controller
             'subject' => $validated['subject'],
             'message' => $validated['message'],
             'status' => 'unread',
-        ]);
+            'cf-turnstile-response' => ['required', new Turnstile],
+                ], [], [
+                    'cf-turnstile-response' => 'human verification',
+            ]);
 
         $this->notificationService->notifyNewContact($contactMessage);
 

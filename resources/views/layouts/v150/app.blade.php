@@ -83,6 +83,9 @@
     <!-- Page Specific CSS -->
     @stack('styles')
 
+    {{-- ─── CLOUDFLARE TURNSTILE SCRIPTS ─── --}}
+    <x-turnstile.scripts />
+
     {{-- ─── SITE-WIDE JSON-LD ─── --}}
     @include('components.v150.seo-schema')
 

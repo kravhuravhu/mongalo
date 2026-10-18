@@ -6,6 +6,14 @@
 
 @section('content')
 
+@php
+    $eventDateTime = \Carbon\Carbon::parse(
+        $event->date->format('Y-m-d') . ' ' . $event->time
+    );
+
+    $eventHasPassed = $eventDateTime->isPast();
+@endphp
+
 <div class="event-detail">
 
     {{-- ─── SECTION 1: HERO WITH REGISTRATION ─── --}}
@@ -103,61 +111,109 @@
                         </div>
                     </div>
 
-                    {{-- ─── REGISTRATION FORM WRAP ─── --}}
-                    <div class="event-detail__form-wrap" id="registrationFormCard">
+                    {{-- ─── REGISTRATION FORM OR EVENT ENDED MESSAGE ─── --}}
+                    @if(!$eventHasPassed)
 
-                        {{-- ─── FORM HEADER ─── --}}
-                        <div class="event-detail__form-header">
-                            <h3 class="event-detail__form-title">Register Now</h3>
-                            <p class="event-detail__form-subtitle">
-                                @if($event->is_free)
-                                    Free — takes 30 seconds
-                                @else
-                                    R{{ number_format($event->price, 2) }} per person
-                                @endif
+                        <div class="event-detail__form-wrap" id="registrationFormCard">
+
+                            <div class="event-detail__form-header">
+                                <h3 class="event-detail__form-title">Register Now</h3>
+                                <p class="event-detail__form-subtitle">
+                                    @if($event->is_free)
+                                        Free | takes 30 seconds
+                                    @else
+                                        R{{ number_format($event->price, 2) }} per person
+                                    @endif
+                                </p>
+                            </div>
+
+                            <div id="registrationMessage"></div>
+
+                            <form id="eventRegistrationForm"
+                                method="POST"
+                                action="{{ route('events.register') }}">
+                                @csrf
+
+                                <input type="hidden" name="event_id" value="{{ $event->id }}">
+
+                                <div class="event-detail__form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" name="name" id="name"
+                                        placeholder="Your full name" required>
+                                </div>
+
+                                <div class="event-detail__form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" name="email" id="email"
+                                        placeholder="your@email.com" required>
+                                </div>
+
+                                <div class="event-detail__form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" name="phone" id="phone"
+                                        placeholder="+27 71 000 0000" required>
+                                </div>
+
+                                <div class="event-detail__form-group">
+                                    <x-turnstile />
+                                    @error('cf-turnstile-response')
+                                        <span class="contact__form-error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit"
+                                        class="btn btn--primary btn--block"
+                                        id="registerBtn">
+                                    <span id="registerBtnText">
+                                        <i class="fas fa-ticket-alt" aria-hidden="true"></i>
+                                        Register Now
+                                    </span>
+
+                                    <span id="registerBtnLoader" style="display: none;">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Registering...
+                                    </span>
+                                </button>
+                            </form>
+
+                            <p class="event-detail__form-note">
+                                <i class="fas fa-lock"></i>
+                                Your information is safe with us.
                             </p>
                         </div>
 
-                        {{-- ─── MESSAGE CONTAINER ─── --}}
-                        <div id="registrationMessage"></div>
+                    @else
 
-                        {{-- ─── FORM ─── --}}
-                        <form id="eventRegistrationForm" method="POST" action="{{ route('events.register') }}">
-                            @csrf
-                            <input type="hidden" name="event_id" value="{{ $event->id }}">
+                        {{-- ─── EVENT ENDED MESSAGE ─── --}}
+                        <div class="event-detail__form-wrap event-detail__ended"
+                            id="eventEndedCard">
 
-                            <div class="event-detail__form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" name="name" id="name" placeholder="Your full name" required>
+                            <div class="event-detail__ended-icon">
+                                <i class="fas fa-calendar-times"></i>
                             </div>
 
-                            <div class="event-detail__form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" name="email" id="email" placeholder="your@email.com" required>
+                            <div class="event-detail__form-header">
+                                <h3 class="event-detail__form-title">This Event Has Ended</h3>
+                                <p class="event-detail__form-subtitle">
+                                    Registration is now closed.
+                                </p>
                             </div>
 
-                            <div class="event-detail__form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" name="phone" id="phone" placeholder="+27 71 000 0000" required>
-                            </div>
+                            <p class="event-detail__ended-message">
+                                Thank you for your interest in
+                                <strong>{{ $event->title }}</strong>.
+                                This event took place on
+                                {{ $event->date->format('F j, Y') }}.
+                            </p>
 
-                            <button type="submit" class="btn btn--primary btn--block" id="registerBtn">
-                                <span id="registerBtnText">
-                                    <i class="fas fa-ticket-alt" aria-hidden="true"></i>
-                                    Register Now
-                                </span>
-                                <span id="registerBtnLoader" style="display: none;">
-                                    <i class="fas fa-spinner fa-spin"></i>
-                                    Registering...
-                                </span>
-                            </button>
-                        </form>
+                            <a href="{{ route('events.index') }}"
+                            class="btn btn--primary btn--block">
+                                <i class="fas fa-calendar-alt"></i>
+                                Explore Upcoming Events
+                            </a>
+                        </div>
 
-                        <p class="event-detail__form-note">
-                            <i class="fas fa-lock"></i>
-                            Your information is safe with us.
-                        </p>
-                    </div>
+                    @endif
 
                     {{-- ─── PENDING REGISTRATION (HIDDEN BY DEFAULT) ─── --}}
                     <div class="event-detail__pending" id="pendingRegistrationContainer" style="display: none;">
@@ -593,6 +649,21 @@
             clearForm.addEventListener('submit', function() {
                 localStorage.removeItem(STORAGE_KEY);
             });
+        }
+
+        const eventHasPassed = {{ $eventHasPassed ? 'true' : 'false' }};
+        if (eventHasPassed) {
+            localStorage.removeItem(STORAGE_KEY);
+
+            if (pendingContainer) {
+                pendingContainer.style.display = 'none';
+            }
+
+            if (formCard) {
+                formCard.style.display = 'none';
+            }
+
+            return;
         }
     });
     </script>

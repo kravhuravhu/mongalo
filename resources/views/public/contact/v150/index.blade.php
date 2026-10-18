@@ -141,6 +141,13 @@
                             @enderror
                         </div>
 
+                        <div class="contact__form-group">
+                            <x-turnstile />
+                            @error('cf-turnstile-response')
+                                <span class="contact__form-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <button type="submit" class="btn btn--primary btn--block">
                             <i class="fas fa-paper-plane" aria-hidden="true"></i>
                             <span>Send Message</span>

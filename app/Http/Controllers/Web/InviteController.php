@@ -7,6 +7,7 @@ use App\Http\Requests\InviteRequest;
 use App\Models\InviteRequest as InviteRequestModel;
 use App\Services\AdminNotificationService;
 use App\Services\PhoneService;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class InviteController extends Controller
 {
@@ -43,8 +44,10 @@ class InviteController extends Controller
             'expected_attendance' => $validated['expected_attendance'] ?? null,
             'message' => $validated['message'] ?? null,
             'status' => 'pending',
-        ]);
-
+            'cf-turnstile-response' => ['required', new Turnstile],
+            ], [], [
+                'cf-turnstile-response' => 'human verification',
+            ]);
         // ─── SEND ADMIN NOTIFICATION ───
         $this->notificationService->notifyNewInvite($invite);
 
