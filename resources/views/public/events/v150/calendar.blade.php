@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', 'Event Calendar · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', 'Event Calendar | ' . config('seo.site_name'))
+
+@section('meta_description', 'Browse every upcoming event, gathering and baptism service on the calendar. Never miss an event.')
 
 @section('content')
 

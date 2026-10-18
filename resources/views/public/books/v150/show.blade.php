@@ -1,6 +1,12 @@
 @extends('layouts.v150.app')
 
-@section('title', $book->title . ' · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', $book->title . ' · Buy Online | ' . config('seo.site_name'))
+
+@section('meta_description', Str::limit(strip_tags($book->description), 155) ?: 'Buy ' . $book->title . ' by Arthur Mongalo.')
+
+@section('meta_type', 'product')
+
+@section('meta_image', $book->cover_image ? asset('storage/books/covers/' . $book->cover_image) : config('seo.default_image'))
 
 @section('content')
 
@@ -366,6 +372,37 @@
     </div>
 
 </div>
+
+@push('schema')
+    @php
+        $productSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            '@id' => url('/books/' . $book->slug) . '#product',
+            'name' => $book->title,
+            'url' => url('/books/' . $book->slug),
+            'image' => $book->cover_image
+                ? asset('storage/books/covers/' . $book->cover_image)
+                : config('seo.default_image'),
+            'brand' => ['@type' => 'Brand', 'name' => config('seo.site_name')],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => (string) $book->price,
+                'priceCurrency' => 'ZAR',
+                'availability' => 'https://schema.org/InStock',
+                'url' => url('/books/' . $book->slug),
+                'seller' => ['@id' => config('seo.site_url') . '/#organization'],
+            ],
+        ];
+
+        if (! empty($book->subtitle)) {
+            $productSchema['description'] = $book->subtitle . ' — ' . strip_tags($book->description ?? '');
+        } elseif (! empty($book->description)) {
+            $productSchema['description'] = strip_tags($book->description);
+        }
+    @endphp
+    <script type="application/ld+json">{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
 
 @push('scripts')
     <script src="{{ secure_asset('js/v150/books.js') }}"></script>

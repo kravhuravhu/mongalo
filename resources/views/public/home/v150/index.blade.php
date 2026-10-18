@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · I am IN Him // He is IN me')
+@section('title', config('seo.site_name') . ' | Baptism Ministry in South Africa | Water and Spirit Baptism')
+
+@section('meta_description', 'A ministry of baptisms and equipping believers. Led by Arthur Mongalo, ordained pastor in Gauteng. Water baptism, Spirit baptism, free Christian literature and community. Register your interest today.')
+
+@section('meta_image', config('seo.default_image'))
 
 @section('content')
 
@@ -27,7 +31,7 @@
                 <div class="home__hero-content">
                     <span class="home__hero-badge">
                         <i class="fas fa-cross" aria-hidden="true"></i>
-                        I am IN Him, He is IN me
+                        In Him · In Us
                     </span>
                     <h1 class="home__hero-title">
                         A <span class="home__hero-title-em">ministry</span> of baptisms,<span class="home__hero-title-divider">&</span>equipping <span class="home__hero-title-em">believers</span>.
@@ -339,6 +343,27 @@
     </section>
 
 </div>
+
+@push('schema')
+    @php
+        $homeSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            '@id' => url('/') . '/#webpage',
+            'url' => url('/'),
+            'name' => config('seo.site_name') . ' · Baptism Ministry in South Africa',
+            'description' => 'A ministry of baptisms and equipping believers, led by Arthur Mongalo.',
+            'isPartOf' => ['@id' => config('seo.site_url') . '/#website'],
+            'about' => ['@id' => config('seo.site_url') . '/#organization'],
+            'inLanguage' => 'en-ZA',
+            'primaryImageOfPage' => [
+                '@type' => 'ImageObject',
+                'url' => config('seo.default_image'),
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($homeSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
 
 @push('scripts')
     <script src="{{ secure_asset('js/v150/home.js') }}"></script>

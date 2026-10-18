@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', $resource->title . ' · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', $resource->title . ' | Free Download | ' . config('seo.site_name'))
+
+@section('meta_description', Str::limit(strip_tags($resource->description), 155) ?: 'Download ' . $resource->title . ' free from ' . config('seo.site_name') . '.')
 
 @section('content')
 

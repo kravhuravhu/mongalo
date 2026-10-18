@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', $event->title . ' · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', $event->title . ' | ' . $event->date->format('M j, Y') . ' | ' . config('seo.site_name'))
+
+@section('meta_description', Str::limit(strip_tags($event->description ?? ''), 155) ?: ('Register for ' . $event->title . ' on ' . $event->date->format('F j, Y') . ' at ' . $event->location . '.'))
 
 @section('content')
 

@@ -226,6 +226,8 @@
             justify-content: center;
             gap: 14px;
             flex-wrap: wrap;
+            width: fit-content;
+            justify-self: center;
 
             & .btn {
                 min-height: 56px;
@@ -1504,6 +1506,10 @@
             & .events__hero-title {
                 font-size: clamp(1.55rem, 5.6vw, 2rem) !important;
                 margin-bottom: 26px;
+            }
+            
+            & .events__hero-scroll {
+                display: none;
             }
         }
 

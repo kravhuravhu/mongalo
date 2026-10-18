@@ -4,11 +4,74 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', env('PROJECT_NAME', 'Blood Water Spirit') . ' · I am IN Him // He is IN me')</title>
 
-    <!-- Google Fonts -->
+    {{-- ─── CORE SEO ─── --}}
+    @php
+        $siteName = config('seo.site_name');
+        $siteTagline = config('seo.site_tagline');
+        $defaultDesc = config('seo.default_description');
+        $defaultImage = config('seo.default_image');
+        $defaultKw = config('seo.default_keywords');
+        $twitterHandle = config('seo.twitter_handle');
+
+        $currentUrl = url()->current();
+        $canonical = $canonical ?? $currentUrl;
+
+        $pageTitle = trim($__env->yieldContent('title')) ?: $siteName . ' · ' . $siteTagline;
+        $pageDescription = trim($__env->yieldContent('meta_description')) ?: $defaultDesc;
+        $pageImage = trim($__env->yieldContent('meta_image')) ?: $defaultImage;
+        $pageType = trim($__env->yieldContent('meta_type')) ?: 'website';
+        $pageRobots = trim($__env->yieldContent('meta_robots')) ?: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+        $pageKeywords = trim($__env->yieldContent('meta_keywords')) ?: $defaultKw;
+    @endphp
+
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <meta name="keywords" content="{{ $pageKeywords }}">
+    <meta name="robots" content="{{ $pageRobots }}">
+    <meta name="author" content="Arthur Mongalo">
+    <meta name="theme-color" content="#0A1F33">
+    <link rel="canonical" href="{{ $canonical }}">
+
+    {{-- ─── HREFLANG ─── --}}
+    <link rel="alternate" hreflang="en-za" href="{{ $canonical }}">
+    <link rel="alternate" hreflang="en" href="{{ $canonical }}">
+    <link rel="alternate" hreflang="x-default" href="{{ $canonical }}">
+
+    {{-- ─── OPEN GRAPH ─── --}}
+    <meta property="og:type" content="{{ $pageType }}">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:url" content="{{ $canonical }}">
+    <meta property="og:image" content="{{ $pageImage }}">
+    <meta property="og:image:alt" content="{{ $siteName }} — {{ $siteTagline }}">
+    <meta property="og:locale" content="en_ZA">
+
+    {{-- ─── TWITTER / X ─── --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+    <meta name="twitter:image" content="{{ $pageImage }}">
+    <meta name="twitter:image:alt" content="{{ $siteName }} — {{ $siteTagline }}">
+    @if($twitterHandle)
+        <meta name="twitter:site" content="{{ $twitterHandle }}">
+        <meta name="twitter:creator" content="{{ $twitterHandle }}">
+    @endif
+
+    {{-- ─── FAVICON & MANIFEST ─── --}}
+    <link rel="icon" type="image/png" href="{{ config('seo.logo') }}">
+    <link rel="apple-touch-icon" href="{{ config('seo.logo') }}">
+    <link rel="manifest" href="{{ secure_asset('manifest.webmanifest') }}">
+
+    {{-- ─── PERFORMANCE HINTS ─── --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital@0;1&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome -->
@@ -19,6 +82,23 @@
 
     <!-- Page Specific CSS -->
     @stack('styles')
+
+    {{-- ─── SITE-WIDE JSON-LD ─── --}}
+    @include('components.v150.seo-schema')
+
+    {{-- ─── PER-PAGE JSON-LD ─── --}}
+    @stack('schema')
+
+    {{-- ─── GOOGLE ANALYTICS 4 ─── --}}
+    @if(config('seo.ga_id'))
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('seo.ga_id') }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '{{ config('seo.ga_id') }}', { anonymize_ip: true });
+        </script>
+    @endif
 </head>
 <body class="@yield('page-class', 'page-default')">
 

@@ -1,2 +1,27 @@
+# robots.txt — Blood Water Spirit
+# https://bloodwaterspirit.com
+
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+Disallow: /login
+Disallow: /checkout/
+Disallow: /payment/
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+Disallow: /*?ref=
+
+# Sitemap
+Sitemap: https://bloodwaterspirit.com/sitemap.xml
+
+# Rate limits for aggressive crawlers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
