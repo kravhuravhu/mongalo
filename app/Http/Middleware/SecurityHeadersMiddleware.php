@@ -20,23 +20,24 @@ class SecurityHeadersMiddleware
         // ─── PREVENT CLICKJACKING ───
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 
-        // ─── XSS PROTECTION ───
+        // ─── XSS PROTECTION (legacy, still useful for older browsers) ───
         $response->headers->set('X-XSS-Protection', '1; mode=block');
 
         // ─── REFERRER POLICY ───
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-        // ─── CONTENT SECURITY POLICY ───
-        $response->headers->set('Content-Security-Policy', 
-            "default-src 'self'; " .
-            "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.google.com https://cdn.jsdelivr.net; " .
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; " .
-            "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " .
-            "img-src 'self' data: https:; " .
-            "connect-src 'self'; " .
-            "frame-src 'self' https://www.google.com; " .
-            "object-src 'none'; " .
-            "base-uri 'self';"
+        // ─── STRICT TRANSPORT SECURITY (only over HTTPS) ───
+        if ($request->secure()) {
+            $response->headers->set(
+                'Strict-Transport-Security',
+                'max-age=31536000; includeSubDomains; preload'
+            );
+        }
+
+        // ─── PERMISSIONS POLICY ───
+        $response->headers->set(
+            'Permissions-Policy',
+            'geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()'
         );
 
         // ─── PREVENT CACHING OF SENSITIVE PAGES ───
@@ -46,9 +47,113 @@ class SecurityHeadersMiddleware
             $response->headers->set('Expires', 'Thu, 01 Jan 1970 00:00:00 GMT');
         }
 
-        // ─── PERMISSIONS POLICY ───
-        $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), payment=()');
+        // ─── CONTENT SECURITY POLICY (single source of truth) ───
+        $response->headers->set('Content-Security-Policy', $this->buildCsp());
 
         return $response;
+    }
+
+    /**
+     * Build the Content-Security-Policy string.
+     *
+     * Allow-listed third parties:
+     *  - Cloudflare Turnstile  (challenges.cloudflare.com)
+     *  - Google Analytics 4     (googletagmanager.com, google-analytics.com,
+     *                            analytics.google.com, region1.google-analytics.com)
+     *  - Google Fonts           (fonts.googleapis.com, fonts.gstatic.com)
+     *  - Font Awesome / CDN     (cdnjs.cloudflare.com, cdn.jsdelivr.net)
+     *  - Unsplash images        (images.unsplash.com)
+     *  - Cloudflare Insights    (static.cloudflareinsights.com)
+     */
+    private function buildCsp(): string
+    {
+        $directives = [
+            "default-src"     => "'self'",
+
+            "script-src"      => implode(' ', [
+                "'self'",
+                "'unsafe-inline'",
+                "'unsafe-eval'",
+                "https://challenges.cloudflare.com",
+                "https://www.googletagmanager.com",
+                "https://www.google-analytics.com",
+                "https://cdnjs.cloudflare.com",
+                "https://cdn.jsdelivr.net",
+                "https://www.google.com",
+                "https://static.cloudflareinsights.com",
+                "https://bloodwaterspirit.com",
+            ]),
+
+            "style-src"       => implode(' ', [
+                "'self'",
+                "'unsafe-inline'",
+                "https://fonts.googleapis.com",
+                "https://cdnjs.cloudflare.com",
+                "https://bloodwaterspirit.com",
+            ]),
+
+            "font-src"        => implode(' ', [
+                "'self'",
+                "data:",
+                "https://fonts.gstatic.com",
+                "https://cdnjs.cloudflare.com",
+            ]),
+
+            "img-src"         => implode(' ', [
+                "'self'",
+                "data:",
+                "blob:",
+                "https:",
+                "https://images.unsplash.com",
+                "https://www.google-analytics.com",
+                "https://www.googletagmanager.com",
+                "https://challenges.cloudflare.com",
+            ]),
+
+            // ─── `data:` here silences Turnstile's `data:,` probe ───
+            // ─── It only permits fetch() to inline data URIs, not code execution ───
+            "connect-src"     => implode(' ', [
+                "'self'",
+                "data:",
+                "blob:",
+                "https://www.google-analytics.com",
+                "https://analytics.google.com",
+                "https://region1.google-analytics.com",
+                "https://www.googletagmanager.com",
+                "https://challenges.cloudflare.com",
+                "https://static.cloudflareinsights.com",
+                "https://cdn.jsdelivr.net",
+            ]),
+
+            "frame-src"       => implode(' ', [
+                "'self'",
+                "https://challenges.cloudflare.com",
+                "https://www.googletagmanager.com",
+                "https://www.google.com",
+            ]),
+
+            "frame-ancestors" => "'self'",
+            "base-uri"        => "'self'",
+            "form-action"     => implode(' ', [
+                "'self'",
+                // PayFast — live (production)
+                "https://www.payfast.co.za",
+                "https://payfast.co.za",
+                // PayFast — sandbox (local / staging)
+                "https://sandbox.payfast.co.za",
+            ]),
+            "object-src"      => "'none'",
+            "worker-src"      => "'self' blob:",
+            "manifest-src"    => "'self'",
+            "media-src"       => "'self'",
+        ];
+
+        // Build "directive value; directive value;" string
+        $parts = [];
+        foreach ($directives as $name => $value) {
+            $parts[] = $name . ' ' . $value;
+        }
+
+        return implode('; ', $parts);
     }
 }

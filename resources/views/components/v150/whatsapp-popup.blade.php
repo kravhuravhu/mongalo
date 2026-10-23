@@ -38,7 +38,7 @@
         <div class="whatsapp-popup__icon">
             <i class="fab fa-whatsapp"></i>
         </div>
-        <h3 class="whatsapp-popup__title">Join IN.iN Community</h3>
+        <h3 class="whatsapp-popup__title">Join Our Community</h3>
         <p class="whatsapp-popup__desc">Connect with believers on WhatsApp. Daily encouragement, book updates, and be part of the journey.</p>
         
         <div class="whatsapp-popup__stats">

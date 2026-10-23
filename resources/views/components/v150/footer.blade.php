@@ -3,10 +3,8 @@
         <div class="footer__inner">
             {{-- ─── BRAND ─── --}}
             <div class="footer__brand-section">
-                <span class="footer__brand">
-                    <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
-                </span>
-                <span class="footer__brand-tagline">I am IN Him // He is IN me</span>
+                <img src="{{ secure_asset('images/blood_water_spirit_Logo-Photoroom.png') }}" alt="Blood Water Spirit Logo" class="footer__brand-img">
+                <span class="footer__brand-tagline">{{ env('PROJECT_NAME') }}</span>
                 <p class="footer__brand-desc">
                     A movement of faith built on immersion and indwelling. 
                     Baptising, praying and equipping believers for a deeper walk 
@@ -32,7 +30,7 @@
                     <li><a href="{{ route('events.index') }}">Events</a></li>
                     <li><a href="{{ route('baptism') }}">Baptism</a></li>
                     <li><a href="{{ route('community') }}">Community</a></li>
-                    <li><a href="{{ route('invite') }}">Invite Arthur</a></li>
+                    <li><a href="{{ route('invite') }}">Invite a Speaker</a></li>
                 </ul>
             </div>
 
@@ -42,12 +40,12 @@
 
                 <div class="footer__contact-item">
                     <i class="fas fa-envelope"></i>
-                    <a href="mailto:hello@in-in.co.za">hello@in-in.co.za</a>
+                    <a href="mailto:{{ env('ADMIN_EMAIL') }}">{{ env('ADMIN_EMAIL') }}</a>
                 </div>
 
                 <div class="footer__contact-item">
                     <i class="fas fa-phone"></i>
-                    <a href="tel:+27714611401">+27 71 461 1401</a>
+                    <a href="tel:{{ env('CONTACT_PHONE') }}">{{ env('CONTACT_PHONE') }}</a>
                 </div>
 
                 <div class="footer__contact-item">
@@ -56,21 +54,21 @@
                 </div>
 
                 <div class="footer__social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href=" {{ env('FACEBOOK_INVITE_URL') }}" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ env('INSTAGRAM_INVITE_URL') }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href=" {{ env('YOUTUBE_INVITE_URL') }} " aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="{{ env('WHATSAPP_INVITE_URL') }}" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
 
         {{-- ─── BOTTOM BAR ─── --}}
         <div class="footer__bottom">
-            <span>&copy; {{ date('Y') }} {{ env('PROJECT_NAME', 'IN.iN') }}. All rights reserved.</span>
+            <span>&copy; {{ date('Y') }} {{ env('PROJECT_NAME', 'Blood Water Spirit') }}. All rights reserved.</span>
             <span>
-                <a href="#">Privacy Policy</a>
+                <a href="{{ route('privacy') }}">Privacy Policy</a>
                 <span class="footer__bottom-divider">·</span>
-                <a href="#">Terms of Service</a>
+                <a href="{{ route('terms') }}">Terms of Service</a>
             </span>
         </div>
     </div>

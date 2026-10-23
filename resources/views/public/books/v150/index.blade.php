@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Books Library')
+@section('title', ' Books Library | ' . config('seo.site_name'))
+
+@section('meta_description', 'Browse the books library: Divine Identity, My Salvation Companion and more. Digital and hardcopy editions available. Deep-dive teaching on baptism, identity in Christ and the New Covenant.')
+
+@section('meta_type', 'website')
 
 @section('content')
 
@@ -57,13 +61,13 @@
                         <div class="books__featured-cover-book">
                             @if($featuredBook->cover_image)
                                 <img 
-                                    src="{{ asset('storage/books/covers/' . $featuredBook->cover_image) }}" 
+                                    src="{{ secure_asset('storage/books/covers/' . $featuredBook->cover_image) }}" 
                                     alt="{{ $featuredBook->title }}"
                                     class="books__featured-cover-img"
                                 >
                             @else
                                 <div class="books__featured-cover-placeholder" style="background: #00ff00;">
-                                    <span>[PLACEHOLDER — BOOK COVER]</span>
+                                    <span>[BOOK COVER LOADING..]</span>
                                 </div>
                             @endif
 
@@ -123,9 +127,9 @@
                                 <span>Buy Now</span>
                             </a>
 
-                            <a href="{{ route('books.show', $featuredBook->slug) }}#preview" class="btn btn--outline btn--lg">
+                            <a class="btn btn--outline btn--lg disabled" aria-disabled="true">
                                 <i class="fas fa-book-open" aria-hidden="true"></i>
-                                <span>Preview</span>
+                                <span>No Preview Available</span>
                             </a>
                         </div>
                     </div>
@@ -153,13 +157,13 @@
                         <div class="books__secondary-cover">
                             @if($secondaryBook->cover_image)
                                 <img 
-                                    src="{{ asset('storage/books/covers/' . $secondaryBook->cover_image) }}" 
+                                    src="{{ secure_asset('storage/books/covers/' . $secondaryBook->cover_image) }}" 
                                     alt="{{ $secondaryBook->title }}"
                                     class="books__secondary-cover-img"
                                 >
                             @else
                                 <div class="books__secondary-cover-placeholder" style="background: #00ff00;">
-                                    <span>[PLACEHOLDER]</span>
+                                    <span>[COVER COMING UP]</span>
                                 </div>
                             @endif
 
@@ -191,9 +195,9 @@
                                     <span>Buy Now</span>
                                 </a>
 
-                                <a href="{{ route('books.show', $secondaryBook->slug) }}#preview" class="btn btn--outline">
+                                <a class="btn btn--outline disabled" aria-disabled="true">
                                     <i class="fas fa-book-open" aria-hidden="true"></i>
-                                    <span>Preview</span>
+                                    <span>No Preview Available</span>
                                 </a>
                             </div>
                         </div>
@@ -266,6 +270,56 @@
 
 @push('scripts')
     <script src="{{ secure_asset('js/v150/books.js') }}"></script>
+@endpush
+
+@push('schema')
+    @php
+        $bookListSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            '@id' => url('/books') . '#webpage',
+            'url' => url('/books'),
+            'name' => 'Books Library · ' . config('seo.site_name'),
+            'description' => 'Christian books by Arthur Mongalo — Divine Identity, My Salvation Companion and more.',
+            'isPartOf' => ['@id' => config('seo.site_url') . '/#website'],
+            'inLanguage' => 'en-ZA',
+            'breadcrumb' => [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 1,
+                        'name' => 'Home',
+                        'item' => url('/'),
+                    ],
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 2,
+                        'name' => 'Books',
+                        'item' => url('/books'),
+                    ],
+                ],
+            ],
+        ];
+
+        $itemList = [];
+        $position = 1;
+        foreach ($paidBooks as $paidBook) {
+            $itemList[] = [
+                '@type' => 'ListItem',
+                'position' => $position++,
+                'url' => url('/books/' . $paidBook->slug),
+                'name' => $paidBook->title,
+            ];
+        }
+        if (! empty($itemList)) {
+            $bookListSchema['mainEntity'] = [
+                '@type' => 'ItemList',
+                'itemListElement' => $itemList,
+            ];
+        }
+    @endphp
+    <script type="application/ld+json">{!! json_encode($bookListSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush
 
 @push('styles')

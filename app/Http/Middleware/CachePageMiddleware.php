@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 class CachePageMiddleware
 {
     protected array $excludedRoutes = [
+        'admin',
         'admin/*',
         'payment/*',
         'checkout/*',
@@ -42,13 +43,32 @@ class CachePageMiddleware
             return $next($request);
         }
 
-        // ─── EXCLUDE POST, PUT, DELETE REQUESTS ───
-        if (in_array($request->method(), $this->excludedMethods)) {
+        // ─── NEVER CACHE ADMIN SUBDOMAIN ───
+        // On production the admin panel lives at admin.<domain>, so path checks
+        // alone are not enough — the whole host must be bypassed.
+        $adminDomain = config('app.admin_domain');
+        if (!empty($adminDomain) && $request->getHost() === $adminDomain) {
+            return $next($request);
+        }
+
+        // ─── NEVER CACHE ADMIN PATHS (dev / path-based routing) ───
+        if ($request->is('admin') || $request->is('admin/*')) {
+            return $next($request);
+        }
+
+        // ─── NEVER CACHE LOGGED-IN ADMIN SESSIONS ───
+        // hasSession() guards against this middleware running before StartSession
+        // (e.g. if it is still in the global stack).
+        if ($request->hasSession() && $request->session()->has('admin_id')) {
+            return $next($request);
+        }
+
+        // ─── EXCLUDE WRITE METHODS ───
+        if (in_array($request->method(), $this->excludedMethods, true)) {
             return $next($request);
         }
 
         // ─── EXCLUDE ROUTES WITH FLASH MESSAGES ───
-        // Check if any flash messages exist in session
         if ($this->hasFlashMessages()) {
             // ─── CLEAR CACHE FOR THIS URL ───
             $cacheKey = $this->generateCacheKey($request);

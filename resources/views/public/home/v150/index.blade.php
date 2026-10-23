@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · I am IN Him // He is IN me')
+@section('title', config('seo.site_name') . ' | Baptism Ministry in South Africa | Water and Spirit Baptism')
+
+@section('meta_description', 'A ministry of baptisms and equipping believers. Led by Arthur Mongalo, ordained pastor in Gauteng. Water baptism, Spirit baptism, free Christian literature and community. Register your interest today.')
+
+@section('meta_image', config('seo.default_image'))
 
 @section('content')
 
@@ -27,20 +31,18 @@
                 <div class="home__hero-content">
                     <span class="home__hero-badge">
                         <i class="fas fa-cross" aria-hidden="true"></i>
-                        I am IN Him, He is IN me
+                        In Him · In Us
                     </span>
-                        <h1 class="home__hero-title">
-                                    A <span class="home__hero-title-em">ministry</span> of baptisms,
-                                            <span class="home__hero-title-divider">&</span>
-                                                equipping <span class="home__hero-title-em">believers</span>.
-                        </h1>
+                    <h1 class="home__hero-title">
+                        A <span class="home__hero-title-em">ministry</span> of baptisms,<span class="home__hero-title-divider">&</span>equipping <span class="home__hero-title-em">believers</span>.
+                    </h1>
 
                     <p class="home__hero-subtitle">
                         For believers seeking assurance or baptism, people who want to serve but do not know where to begin, and anyone exploring Christianity or outside a church community.
                     </p>
 
                     <p class="home__hero-subtext">
-                        Led by Arthur Mongalo, an ordained pastor based in Gauteng, South Africa.
+                        Led by an ordained pastor based in Gauteng, South Africa.
                     </p>
 
                     <div class="home__hero-actions">
@@ -50,6 +52,7 @@
                         </a>
                         <a href="{{ route('about') }}" class="btn btn--outline btn--lg">
                             <span>Read My Story</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
@@ -75,12 +78,39 @@
                 <blockquote class="home__vision-quote">
                     <i class="fas fa-quote-left" aria-hidden="true"></i>
                     <p>
-                        "I have a vision to baptise at least a million people in water,<br>
+                        I have a vision to baptise at least a million people in water,<br>
                         pray for at least a million people,<br>
                         and equip every believer for spiritual growth."
                     </p>
-                    - Arthur Mongalo
+                    <cite>Arthur Mongalo</cite>
                 </blockquote>
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 5: ARTHUR CTA ─── --}}
+    <section class="home__arthur">
+        <div class="home__arthur-bg">
+            <div class="home__arthur-shape home__arthur-shape--1"></div>
+            <div class="home__arthur-shape home__arthur-shape--2"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="home__arthur-content">
+                <span class="home__arthur-eyebrow">Meet The Leader & Founder</span>
+                <h2 class="home__arthur-title">
+                    Why starting this <span>ministry</span>?
+                </h2>
+                <p class="home__arthur-subtitle">
+                    Arthur kept responding to the call to accept Christ, and kept seeking baptism, until he found the assurance so many still search for. That search shapes everything this ministry offers.
+                </p>
+
+                <div class="home__arthur-actions">
+                    <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <span>Read His Story</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -137,7 +167,7 @@
     </section>
 
     {{-- ─── SECTION 4: FOUR PILLARS ─── --}}
-    <section class="home__pillars">
+    <section class="home__pillars" id="fourPillarsSection">
         <div class="home__pillars-bg">
             <div class="home__pillars-shape home__pillars-shape--1"></div>
             <div class="home__pillars-shape home__pillars-shape--2"></div>
@@ -152,7 +182,66 @@
                 </p>
             </div>
 
-            {{-- ─── ROMAN NUMERAL STRIP ─── --}}
+            @php
+                $pillars = [
+                    [
+                        'icon' => 'fa-cross',
+                        'numeral' => 'I',
+                        'title' => 'Believing',
+                        'description' => 'Encountering Jesus and choosing to believe. Faith is the foundation upon which all else is built.'
+                    ],
+                    [
+                        'icon' => 'fa-hand-holding-heart',
+                        'numeral' => 'II',
+                        'title' => 'Converting',
+                        'description' => 'Surrendering the old ways. Repentance prepares the heart for what comes next.'
+                    ],
+                    [
+                        'icon' => 'fa-water',
+                        'numeral' => 'III',
+                        'title' => 'Baptisms',
+                        'description' => 'Water and Spirit together. A clean heart, a forgiven past, a new creature.'
+                    ],
+                    [
+                        'icon' => 'fa-seedling',
+                        'numeral' => 'IV',
+                        'title' => 'Commission',
+                        'description' => 'Guided, supported and sent. Every believer is equipped to begin their own personal mission.'
+                    ]
+                ];
+            @endphp
+
+            {{-- ─── VERTICAL ACCORDION (mobile only) ─── --}}
+            <div class="home__pillars-accordion" id="pillarsAccordion">
+                @foreach($pillars as $index => $pillar)
+                    <div class="home__pillars-accordion-item{{ $index === 0 ? ' is-open' : '' }}" data-pillar-item="{{ $index }}">
+                        <button
+                            type="button"
+                            class="home__pillars-accordion-trigger"
+                            data-pillar="{{ $index }}"
+                            aria-expanded="{{ $index === 0 ? 'true' : 'false' }}"
+                            aria-controls="pillarPanel{{ $index }}"
+                        >
+                            <span class="home__pillars-accordion-num">{{ $pillar['numeral'] }}</span>
+                            <span class="home__pillars-accordion-label">{{ $pillar['title'] }}</span>
+                            <span class="home__pillars-accordion-chevron" aria-hidden="true">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="home__pillars-accordion-panel" id="pillarPanel{{ $index }}" role="region">
+                            <div class="home__pillars-accordion-panel-inner">
+                                <div class="home__pillars-accordion-panel-icon">
+                                    <i class="fas {{ $pillar['icon'] }}"></i>
+                                </div>
+                                <p class="home__pillars-accordion-panel-desc">{{ $pillar['description'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- ─── DESKTOP STRIP (hidden on mobile) ─── --}}
             <div class="home__pillars-strip">
                 <div class="home__pillars-strip-item">
                     <span class="home__pillars-strip-num">I</span>
@@ -172,32 +261,7 @@
                 </div>
             </div>
 
-            {{-- ─── CARDS GRID ─── --}}
-            @php
-                $pillars = [
-                    [
-                        'icon' => 'fa-cross',
-                        'title' => 'Believing',
-                        'description' => 'Encountering Jesus and choosing to believe. Faith is the foundation upon which all else is built.'
-                    ],
-                    [
-                        'icon' => 'fa-hand-holding-heart',
-                        'title' => 'Converting',
-                        'description' => 'Surrendering the old ways. Repentance prepares the heart for what comes next.'
-                    ],
-                    [
-                        'icon' => 'fa-water',
-                        'title' => 'Baptisms',
-                        'description' => 'Water and Spirit together. A clean heart, a forgiven past, a new creature.'
-                    ],
-                    [
-                        'icon' => 'fa-seedling',
-                        'title' => 'Commission',
-                        'description' => 'Guided, supported and sent. Every believer is equipped to begin their own personal mission.'
-                    ]
-                ];
-            @endphp
-
+            {{-- ─── DESKTOP CARDS GRID (hidden on mobile) ─── --}}
             <div class="home__pillars-grid">
                 @foreach($pillars as $pillar)
                     <div class="home__pillars-card">
@@ -208,33 +272,6 @@
                         <p class="home__pillars-card-desc">{{ $pillar['description'] }}</p>
                     </div>
                 @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- ─── SECTION 5: ARTHUR CTA ─── --}}
-    <section class="home__arthur">
-        <div class="home__arthur-bg">
-            <div class="home__arthur-shape home__arthur-shape--1"></div>
-            <div class="home__arthur-shape home__arthur-shape--2"></div>
-        </div>
-
-        <div class="wrap">
-            <div class="home__arthur-content">
-                <span class="home__arthur-eyebrow">Meet Arthur Mongalo</span>
-                <h2 class="home__arthur-title">
-                    Why Arthur is starting this <span>ministry</span>
-                </h2>
-                <p class="home__arthur-subtitle">
-                    Arthur kept responding to the call to accept Christ, and kept seeking baptism, until he found the assurance so many still search for. That search shapes everything this ministry offers.
-                </p>
-
-                <div class="home__arthur-actions">
-                    <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
-                        <i class="fas fa-user" aria-hidden="true"></i>
-                        <span>Read Arthur's Story</span>
-                    </a>
-                </div>
             </div>
         </div>
     </section>
@@ -255,13 +292,12 @@
                 </p>
             </div>
 
-            {{-- ─── CARDS GRID ─── --}}
             @php
                 $involve = [
                     [
                         'icon' => 'fa-handshake',
-                        'title' => 'Invite Arthur',
-                        'description' => 'Invite Arthur to personally teach on Baptisms, Divine Identity, the New Covenant, Jesus Revealed and more, depending on your setting.',
+                        'title' => 'Invite a Speaker',
+                        'description' => 'Invite him to teach on Baptisms, Divine Identity, the New Covenant, Jesus Revealed and more, depending on your setting.',
                         'route' => route('invite'),
                         'label' => 'Send an Invite'
                     ],
@@ -307,6 +343,27 @@
     </section>
 
 </div>
+
+@push('schema')
+    @php
+        $homeSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            '@id' => url('/') . '/#webpage',
+            'url' => url('/'),
+            'name' => config('seo.site_name') . ' · Baptism Ministry in South Africa',
+            'description' => 'A ministry of baptisms and equipping believers, led by Arthur Mongalo.',
+            'isPartOf' => ['@id' => config('seo.site_url') . '/#website'],
+            'about' => ['@id' => config('seo.site_url') . '/#organization'],
+            'inLanguage' => 'en-ZA',
+            'primaryImageOfPage' => [
+                '@type' => 'ImageObject',
+                'url' => config('seo.default_image'),
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($homeSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
 
 @push('scripts')
     <script src="{{ secure_asset('js/v150/home.js') }}"></script>

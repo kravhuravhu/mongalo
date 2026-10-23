@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · My Story')
+@section('title', "Arthur Mongalo Story | " . config('seo.site_name'))
+
+@section('meta_description', "Arthur Mongalo's story: responding to the call to accept Christ over and over, seeking assurance, leading a church in Limpopo for nine years, and building a ministry of baptisms in Gauteng.")
+
+@section('meta_image', secure_asset('images/arthur-mongalo-landscape.jpg'))
 
 @section('content')
 
@@ -8,12 +12,12 @@
     // ─── TIMELINE DATA 
     $timeline = [
         [
-            'year' => '',
+            'year' => '2006',
             'title' => 'Leading in Ministry',
-            'text' => 'Led a cell group at Emmanuel Christian Church under Apostle Vincent Loate for several years, before relocating for work.'
+            'text' => 'Until 2011, I Led a cell group at Emmanuel Christian Church under Apostle Vincent Loate for several years, before relocating for work.'
         ],
         [
-            'year' => '',
+            'year' => '2012',
             'title' => 'A New City, A New Fellowship',
             'text' => 'Relocated to Polokwane, Limpopo. Fellowshipped at God\'s Tabernacle under Dr David Molutsi.'
         ],
@@ -76,7 +80,7 @@
         [
             'icon' => 'fa-pray',
             'title' => 'Faith',
-            'description' => 'Assurance does not always come easily. This ministry exists for believers still seeking that certainty, the same search that shaped Arthur\'s own journey.'
+            'description' => 'Assurance does not always come easily. This ministry exists for believers still seeking that certainty, the same search that shaped my own journey.'
         ]
     ];
 @endphp
@@ -159,8 +163,8 @@
                 {{-- ─── IMAGE LEFT ─── --}}
                 <div class="about__story-visual">
                     <div class="about__story-image">
-                        <div class="about__story-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — IMAGE]</span>
+                        <div class="about__story-image-placeholder">
+                            <img src=" {{ secure_asset('images/arthur-mongalo-landscape.jpg') }} " alt="Arthur Mongalo" />
                         </div>
                     </div>
                 </div>
@@ -181,11 +185,11 @@
                         In 1997 or 1998, I stood up again, this time at Bethesda Christian Church, visiting under Pastor Clement Ibe. I was born again, again. Both times, I felt that same need to be born again, and both times it oddly felt like God was calling me into His service too. I never doubted it was beyond just getting saved.
                     </p>
 
-                    <blockquote class="about__story-quote">
+                    <!-- <blockquote class="about__story-quote">
                         <i class="fas fa-quote-left" aria-hidden="true"></i>
                         <p>"I deliberately highlighted a somewhat chaotic footing in my formative stages, getting born again over and over, getting baptised over and over again. Something I wish to help solve for others."</p>
-                        - Arthur Mongalo
-                    </blockquote>
+                        <cite>Arthur Mongalo</cite>
+                    </blockquote> -->
                 </div>
             </div>
         </div>
@@ -209,11 +213,11 @@
             <div class="about__timeline-list">
                 @foreach($timeline as $index => $item)
                     <div class="about__timeline-item">
-                        
+                        @if(!empty($item['year']))
                             <div class="about__timeline-year">
                                 <span>{{ $item['year'] }}</span>
                             </div>
-                        
+                        @endif
 
                         <div class="about__timeline-dot">
                             <span></span>
@@ -245,8 +249,8 @@
                 {{-- ─── MISSION ─── --}}
                 <div class="about__mv-card">
                     <div class="about__mv-card-image">
-                        <div class="about__mv-card-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — IMAGE]</span>
+                        <div class="about__mv-card-image-placeholder">
+                            <img src=" {{ secure_asset('images/Arthur-mongalo_invite-mic.jpg') }} " alt="Arthur Mongalo Teaching" />
                         </div>
                         <div class="about__mv-card-icon">
                             <i class="fas fa-bullseye"></i>
@@ -263,8 +267,8 @@
                 {{-- ─── VISION ─── --}}
                 <div class="about__mv-card">
                     <div class="about__mv-card-image">
-                        <div class="about__mv-card-image-placeholder" style="background: #00ff00;">
-                            <span>[PLACEHOLDER — IMAGE]</span>
+                        <div class="about__mv-card-image-placeholder">
+                            <img src=" {{ secure_asset('images/arthur-mongalo-baptism.jpg') }} " alt="Arthur Mongalo Teaching" />
                         </div>
                         <div class="about__mv-card-icon">
                             <i class="fas fa-eye"></i>
@@ -323,7 +327,7 @@
 
             <div class="about__values-grid">
                 @foreach($values as $value)
-                    <div class="about__values-card">
+                    <div class="about__values-card" data-about-value>
                         <div class="about__values-card-icon">
                             <i class="fas {{ $value['icon'] }}"></i>
                         </div>
@@ -346,17 +350,17 @@
             <div class="about__cta-content">
                 <span class="about__cta-eyebrow">Work Together</span>
                 <h2 class="about__cta-title">
-                    Invite Arthur<br>
+                    Invite Me<br>
                     to <span>Speak</span>
                 </h2>
                 <p class="about__cta-subtitle">
-                    Arthur speaks on Baptisms, Divine Identity, the New Covenant and Jesus Revealed, depending on your church or event's setting.
+                    I speak on Baptisms, Divine Identity, the New Covenant and Jesus Revealed, depending on your church or event's setting.
                 </p>
 
                 <div class="about__cta-actions">
                     <a href="{{ route('invite') }}" class="btn btn--primary btn--lg">
                         <i class="fas fa-handshake" aria-hidden="true"></i>
-                        <span>Invite Arthur</span>
+                        <span>Send an Enquiry</span>
                     </a>
                 </div>
             </div>

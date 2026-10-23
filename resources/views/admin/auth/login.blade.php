@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Login · {{ env('PROJECT_NAME', 'IN.iN') }}</title>
+    <title>Admin Login | {{ env('PROJECT_NAME', 'Blood Water Spirit') }}</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,12 +17,24 @@
     <!-- Admin CSS v1.5.0 -->
     <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/auth.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ config('seo.logo') }}" />
 </head>
 <body class="auth-login">
 
+<div class="admin-overlay" id="adminLoader">
+    <div class="admin-overlay__spinner">
+        <div class="admin-overlay__ring admin-overlay__ring--1"></div>
+        <div class="admin-overlay__ring admin-overlay__ring--2"></div>
+        <div class="admin-overlay__ring admin-overlay__ring--3"></div>
+        <span class="admin-overlay__text">Loading...</span>
+    </div>
+</div>
+
 <div class="login-container" id="loginContainer" style="display: none;">
     <div class="login-logo">
-        <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
+        <img src="{{ secure_asset('images/blood_water_spirit_Logo-Photoroom.png') }}" alt="Blood Water Spirit Logo" class="login-logo-img">
         <span class="login-logo-admin">Admin</span>
     </div>
 
@@ -68,7 +80,7 @@
     </form>
 
     <div class="login-footer">
-        {{ env('PROJECT_NAME', 'IN.iN') }} · <span>Admin Panel</span>
+        {{ env('PROJECT_NAME', 'Blood Water Spirit') }} · <span>Admin Panel</span>
     </div>
 </div>
 
@@ -114,19 +126,26 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ─── HIDE LOADER ───
         const loader = document.getElementById('adminLoader');
         const container = document.getElementById('loginContainer');
 
-        if (loader && container) {
-            container.style.display = 'block';
+        if (container) container.style.display = 'block';
 
-            setTimeout(function() {
-                loader.classList.add('admin-loader--hidden');
+        if (loader) {
+            // Show on initial paint
+            loader.classList.add('admin-overlay--visible');
+
+            // Fade out after load — do NOT set inline display:none
+            window.addEventListener('load', function() {
                 setTimeout(function() {
-                    loader.style.display = 'none';
-                }, 400);
-            }, 300);
+                    loader.classList.remove('admin-overlay--visible');
+                }, 200);
+            });
+
+            // Safety net
+            setTimeout(function() {
+                loader.classList.remove('admin-overlay--visible');
+            }, 3000);
         }
 
         // ─── FORM LOADING STATE ───
@@ -136,6 +155,10 @@
                 if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                }
+
+                if (loader) {
+                    loader.classList.add('admin-overlay--visible');
                 }
             });
         });

@@ -50,4 +50,124 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(el);
         });
     }
+
+    // ─── MOBILE PILLARS ACCORDION ───
+    // Vertical accordion, active only on mobile (≤ 564px).
+    // On desktop, the accordion is hidden via CSS and the strip + grid show instead.
+    const MOBILE_BREAKPOINT = 564;
+
+    const accordionItems = document.querySelectorAll('.home__pillars-accordion-item');
+
+    let activeIndex = null;
+
+    function isMobile() {
+        return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+
+    function setPanelHeight(item, open) {
+        const panel = item.querySelector('.home__pillars-accordion-panel');
+        if (!panel) return;
+
+        if (open) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+        } else {
+            panel.style.maxHeight = '0px';
+        }
+    }
+
+    function openItem(index) {
+        accordionItems.forEach(function(item, i) {
+            const trigger = item.querySelector('.home__pillars-accordion-trigger');
+            if (i === index) {
+                item.classList.add('is-open');
+                if (trigger) trigger.setAttribute('aria-expanded', 'true');
+                setPanelHeight(item, true);
+            } else {
+                item.classList.remove('is-open');
+                if (trigger) trigger.setAttribute('aria-expanded', 'false');
+                setPanelHeight(item, false);
+            }
+        });
+        activeIndex = index;
+    }
+
+    function closeAll() {
+        accordionItems.forEach(function(item) {
+            const trigger = item.querySelector('.home__pillars-accordion-trigger');
+            item.classList.remove('is-open');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            setPanelHeight(item, false);
+        });
+        activeIndex = null;
+    }
+
+    function toggleItem(index) {
+        if (activeIndex === index) {
+            // Tapping the open item closes it
+            closeAll();
+        } else {
+            openItem(index);
+        }
+    }
+
+    // Wire up triggers
+    accordionItems.forEach(function(item, i) {
+        const trigger = item.querySelector('.home__pillars-accordion-trigger');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function() {
+            if (!isMobile()) return;
+            toggleItem(i);
+        });
+    });
+
+    // Set initial state: open the first one on mobile, closed otherwise
+    function syncInitialState() {
+        if (isMobile()) {
+            openItem(0);
+        } else {
+            closeAll();
+        }
+    }
+
+    syncInitialState();
+
+    // Recalculate heights on resize + reset on breakpoint cross
+    window.addEventListener('resize', function() {
+        if (isMobile()) {
+            if (activeIndex !== null) {
+                const active = accordionItems[activeIndex];
+                if (active && active.classList.contains('is-open')) {
+                    setPanelHeight(active, true);
+                }
+            }
+        } else {
+            // Leaving mobile — reset everything so desktop is clean
+            closeAll();
+        }
+    });
+
+    // Keyboard navigation between triggers
+    const triggers = Array.from(document.querySelectorAll('.home__pillars-accordion-trigger'));
+    triggers.forEach(function(trigger, i) {
+        trigger.addEventListener('keydown', function(e) {
+            if (!isMobile()) return;
+
+            let targetIndex = null;
+            if (e.key === 'ArrowDown') {
+                targetIndex = (i + 1) % triggers.length;
+            } else if (e.key === 'ArrowUp') {
+                targetIndex = (i - 1 + triggers.length) % triggers.length;
+            } else if (e.key === 'Home') {
+                targetIndex = 0;
+            } else if (e.key === 'End') {
+                targetIndex = triggers.length - 1;
+            }
+
+            if (targetIndex !== null) {
+                e.preventDefault();
+                triggers[targetIndex].focus();
+            }
+        });
+    });
 });

@@ -51,4 +51,54 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(el);
         });
     }
+
+    // ─── MOBILE BREAKPOINT HELPER ───
+    const mobileQuery = window.matchMedia('(max-width: 820px)');
+
+    // ─── VALUES STAGGER REVEAL (MOBILE ONLY) ───
+    const valueCards = document.querySelectorAll('.about__values-card[data-about-value]');
+
+    if (valueCards.length > 0 && 'IntersectionObserver' in window) {
+        const valueObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const index = Array.prototype.indexOf.call(valueCards, el);
+                    const delay = (index % 6) * 70;
+
+                    setTimeout(function() {
+                        el.classList.add('about__values-card--visible');
+                    }, delay);
+
+                    valueObserver.unobserve(el);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        // ─── Only reveal on mobile; on desktop the cards keep their hover behaviour ───
+        const attachValueObserver = function() {
+            if (mobileQuery.matches) {
+                valueCards.forEach(function(el) {
+                    valueObserver.observe(el);
+                });
+            } else {
+                valueCards.forEach(function(el) {
+                    el.classList.add('about__values-card--visible');
+                    valueObserver.unobserve(el);
+                });
+            }
+        };
+
+        attachValueObserver();
+
+        mobileQuery.addEventListener('change', function() {
+            valueCards.forEach(function(el) {
+                el.classList.remove('about__values-card--visible');
+            });
+            attachValueObserver();
+        });
+    }
 });

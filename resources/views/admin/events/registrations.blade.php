@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Registrations · ' . $event->title . ' · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Registrations | ' . $event->title . ' · ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Registrations ' . $event->title)
 @section('breadcrumb', 'Events / Registrations')
 

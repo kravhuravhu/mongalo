@@ -7,6 +7,7 @@ use App\Http\Requests\BaptismRequest;
 use App\Models\BaptismRequest as BaptismRequestModel;
 use App\Services\AdminNotificationService;
 use App\Services\PhoneService;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class BaptismController extends Controller
 {
@@ -41,7 +42,10 @@ class BaptismController extends Controller
             'preferred_date' => $validated['preferred_date'] ?? null,
             'message' => $validated['message'] ?? null,
             'status' => 'pending',
-        ]);
+            'cf-turnstile-response' => ['required', new Turnstile],
+                ], [], [
+                    'cf-turnstile-response' => 'human verification',
+            ]);
 
         // ─── SEND ADMIN NOTIFICATION ───
         $this->notificationService->notifyNewBaptism($baptism);

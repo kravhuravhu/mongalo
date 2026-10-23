@@ -86,16 +86,40 @@ class PaymentService
             ];
         }
 
+        // ─── EXTRACT DELIVERY FIELDS FROM BUYER DATA ───
+        $deliveryType    = $buyerData['delivery_type']  ?? 'digital';
+        $shippingFee     = (float) ($buyerData['shipping_fee']   ?? 0);
+        $hardcopyPrice   = isset($buyerData['hardcopy_price']) ? (float) $buyerData['hardcopy_price'] : null;
+        $totalAmount     = (float) ($buyerData['amount'] ?? $book->price);
+        $address         = $buyerData['address'] ?? [];
+
+        // ─── DETERMINE FULFILLMENT STATUS ───
+        // Hard copy orders start as "awaiting_shipment" once paid.
+        // Digital orders have no fulfillment step.
+        $fulfillmentStatus = $deliveryType === 'hardcopy' ? 'awaiting_shipment' : 'none';
+
+        // ─── BUILD ORDER PAYLOAD ───
+        $orderData = [
+            'book_id'            => $book->id,
+            'buyer_name'         => $buyerData['name'],
+            'buyer_email'        => $buyerData['email'],
+            'buyer_phone'        => $buyerData['phone'] ?? null,
+            'amount'             => $totalAmount,
+            'shipping_fee'       => $shippingFee,
+            'hardcopy_price'     => $hardcopyPrice,
+            'payment_status'     => 'pending',
+            'payment_method'     => $gateway->getName(),
+            'delivery_type'      => $deliveryType,
+            'fulfillment_status' => $fulfillmentStatus,
+        ];
+
+        // ─── MERGE ADDRESS FIELDS (only set when hardcopy) ───
+        if ($deliveryType === 'hardcopy' && !empty($address)) {
+            $orderData = array_merge($orderData, $address);
+        }
+
         // ─── CREATE ORDER ───
-        $order = Order::create([
-            'book_id' => $book->id,
-            'buyer_name' => $buyerData['name'],
-            'buyer_email' => $buyerData['email'],
-            'buyer_phone' => $buyerData['phone'] ?? null,
-            'amount' => $book->price,
-            'payment_status' => 'pending',
-            'payment_method' => $gateway->getName(),
-        ]);
+        $order = Order::create($orderData);
 
         // ─── INITIATE PAYMENT ───
         try {
@@ -108,27 +132,30 @@ class PaymentService
                 ]);
 
                 Log::info('Payment initiated', [
-                    'order_number' => $order->order_number,
-                    'gateway' => $gateway->getName(),
-                    'amount' => $order->amount,
+                    'order_number'      => $order->order_number,
+                    'gateway'           => $gateway->getName(),
+                    'amount'            => $order->amount,
+                    'delivery_type'     => $deliveryType,
+                    'shipping_fee'      => $shippingFee,
+                    'fulfillment'       => $fulfillmentStatus,
                 ]);
             }
 
             return array_merge($result, [
-                'order' => $order,
+                'order'        => $order,
                 'order_number' => $order->order_number,
             ]);
         } catch (Throwable $e) {
             Log::error('Payment initiation failed', [
-                'error' => $e->getMessage(),
-                'book_id' => $book->id,
-                'gateway' => $gateway->getName(),
+                'error'    => $e->getMessage(),
+                'book_id'  => $book->id,
+                'gateway'  => $gateway->getName(),
             ]);
 
             return [
                 'success' => false,
                 'message' => 'Payment initiation failed. Please try again.',
-                'error' => $e->getMessage(),
+                'error'   => $e->getMessage(),
             ];
         }
     }

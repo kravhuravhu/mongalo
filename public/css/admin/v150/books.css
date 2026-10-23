@@ -266,6 +266,24 @@
         }
     }
 
+    /* ─── HARDCOPY PRICE GROUP ─── */
+    .books-form__hardcopy {
+        margin-bottom: 24px;
+        padding: 20px;
+        background: rgba(184, 146, 106, 0.04);
+        border: 1px dashed rgba(184, 146, 106, 0.3);
+        border-radius: 12px;
+    }
+
+    .books-form__hardcopy-price {
+        display: none;
+        margin-top: 8px;
+
+        &.books-form__hardcopy-price--visible {
+            display: block;
+        }
+    }
+
     /* ─── CHECKBOX ROW ─── */
     & .books-form__checkboxes {
         display: grid;

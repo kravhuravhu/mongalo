@@ -65,6 +65,8 @@ class BookController extends Controller
             'price' => 'required|numeric|min:0',
             'is_free' => 'boolean',
             'is_featured' => 'boolean',
+            'offers_hardcopy' => 'boolean',
+            'hardcopy_price' => 'nullable|numeric|min:0|required_if:offers_hardcopy,1',
             'cover_color' => 'nullable|max:50',
             'cover_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
             'book_file' => 'required_if:is_free,false|nullable|file|mimes:pdf,epub,mobi,docx|max:51200',
@@ -76,7 +78,20 @@ class BookController extends Controller
             'book_file.mimes' => 'The book file must be a PDF, EPUB, MOBI, or DOCX file.',
             'cover_image.max' => 'The cover image must not be greater than 2MB.',
             'cover_image.mimes' => 'The cover image must be a JPEG, PNG, or WEBP file.',
+            'hardcopy_price.required_if' => 'Please enter a hard copy price.',
         ]);
+
+        /* ─── Free resources cannot offer hard copies through paid flow ─── */
+        $offersHardcopy = !$request->is_free && $request->has('offers_hardcopy') && $request->offers_hardcopy;
+
+        /* ─── Hard copy price must exceed digital price ─── */
+        if ($offersHardcopy && (float) $request->hardcopy_price <= (float) $request->price) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'hardcopy_price' => 'The hard copy price must be higher than the digital price (manufacturing + printing costs).',
+                ]);
+        }
 
         /* ─── Category only applies to free resources ─── */
         $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
@@ -88,8 +103,10 @@ class BookController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
-            'category' => $category,
             'is_featured' => $request->is_featured ?? false,
+            'offers_hardcopy' => $offersHardcopy,
+            'hardcopy_price' => $offersHardcopy ? $request->hardcopy_price : null,
+            'category' => $category,
             'cover_color' => $request->cover_color ?? '#B8926A',
             'sort_order' => Book::count() + 1,
         ];
@@ -140,13 +157,27 @@ class BookController extends Controller
             'price' => 'required|numeric|min:0',
             'is_free' => 'boolean',
             'is_featured' => 'boolean',
+            'offers_hardcopy' => 'boolean',
+            'hardcopy_price' => 'nullable|numeric|min:0|required_if:offers_hardcopy,1',
             'cover_color' => 'nullable|max:50',
             'cover_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
             'book_file' => 'nullable|file|mimes:pdf,epub,mobi,docx|max:51200',
             'file_type' => 'nullable|in:pdf,epub,mobi,docx',
             'category' => 'nullable|in:booklet,pamphlet,bible,study_guide,other',
             'sort_order' => 'nullable|integer|min:1',
+        ], [
+            'hardcopy_price.required_if' => 'Please enter a hard copy price.',
         ]);
+
+        $offersHardcopy = !$request->is_free && $request->has('offers_hardcopy') && $request->offers_hardcopy;
+
+        if ($offersHardcopy && (float) $request->hardcopy_price <= (float) $request->price) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'hardcopy_price' => 'The hard copy price must be higher than the digital price (manufacturing + printing costs).',
+                ]);
+        }
 
         /* ─── Category only applies to free resources ─── */
         $category = ($request->has('is_free') && $request->is_free) ? $request->category : null;
@@ -159,6 +190,8 @@ class BookController extends Controller
             'price' => $request->price,
             'is_free' => $request->is_free ?? false,
             'is_featured' => $request->is_featured ?? false,
+            'offers_hardcopy' => $offersHardcopy,
+            'hardcopy_price' => $offersHardcopy ? $request->hardcopy_price : null,
             'cover_color' => $request->cover_color ?? '#B8926A',
             'category' => $category,
             'sort_order' => $request->sort_order ?? $book->sort_order,

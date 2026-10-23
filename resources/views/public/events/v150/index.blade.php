@@ -1,6 +1,8 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Events')
+@section('title', 'Upcoming Events and Gatherings | ' . config('seo.site_name'))
+
+@section('meta_description', 'Upcoming Christian events, gatherings, baptism services and conferences with Arthur Mongalo. Register online for the next event.')
 
 @section('content')
 
@@ -279,7 +281,7 @@
 
                 <div class="events__invite-text">
                     <h3 class="events__invite-title">
-                        Bring Arthur to <span>your event</span>
+                        Invite a speaker to <span>your event</span>
                     </h3>
                     <p class="events__invite-desc">
                         Speaking engagements, baptism services, conferences and community gatherings.

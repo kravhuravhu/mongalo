@@ -7,7 +7,7 @@
 
 <aside class="admin-sidebar">
     <a href="{{ route('admin.dashboard') }}" class="logo">
-        <span class="brand-gold">I</span>N<span class="brand-dot">.</span><span class="brand-gold">i</span>N
+        <img src="{{ secure_asset('images/blood_water_spirit_Logo-Photoroom.png') }}" alt="IN.iN Logo" class="logo-img">
         <span class="logo-admin">Admin Panel</span>
     </a>
 
@@ -84,6 +84,16 @@
             <span>Cache</span>
         </a>
 
+        {{-- ─── SYSTEM ─── --}}
+        <span class="nav-label">System</span>
+
+        <a href="{{ route('admin.settings.index') }}"
+           class="nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+
+
         {{-- ─── EXPORTS (Collapsible) ─── --}}
         <div class="nav-item nav-item--toggle" id="exportsToggle">
             <i class="fas fa-file-export"></i>
@@ -113,7 +123,7 @@
         {{-- ─── ACTIONS ─── --}}
         <span class="nav-label">Actions</span>
 
-        <a href="{{ route('home') }}" target="_blank" class="nav-item nav-item--view-site">
+        <a href="{{ config('app.public_url') }}" target="_blank" rel="noopener" class="nav-item nav-item--view-site">
             <i class="fas fa-external-link-alt"></i>
             <span>View Site</span>
         </a>

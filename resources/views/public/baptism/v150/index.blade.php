@@ -1,6 +1,10 @@
 @extends('layouts.v150.app')
 
-@section('title', env('PROJECT_NAME', 'IN.iN') . ' · Baptism')
+@section('title', 'Water Baptism & Spirit Baptism | Register Your Interest | ' . config('seo.site_name'))
+
+@section('meta_description', 'Learn what water baptism and Spirit baptism mean, read the scriptures, and register your interest for the upcoming three-day baptism camp in Gauteng. Free to inquire.')
+
+@section('meta_image', secure_asset('images/arthur-mongalo-baptism-portait.jpg'))
 
 @section('content')
 
@@ -20,7 +24,7 @@
         [
             'icon' => 'fa-fire',
             'title' => 'Empowered for Service',
-            'text' => 'Spirit baptism fills and empowers you for service, equipping every believer to walk in what Arthur calls a life of supernatural power, wisdom and boldness.'
+            'text' => 'Spirit baptism fills and empowers you for service, equipping every believer to walk in what this ministry calls a life of supernatural power, wisdom and boldness.'
         ],
         [
             'icon' => 'fa-seedling',
@@ -33,19 +37,19 @@
     $scriptures = [
         [
             'reference' => 'Acts 2:38-39',
-            'text' => '"Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit."'
+            'text' => 'Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins; and you shall receive the gift of the Holy Spirit.'
         ],
         [
             'reference' => 'Acts 19:1-6',
-            'text' => '"And when Paul had laid hands on them, the Holy Spirit came upon them, and they spoke with tongues and prophesied."'
+            'text' => 'And when Paul had laid hands on them, the Holy Spirit came upon them, and they spoke with tongues and prophesied.'
         ],
         [
             'reference' => 'Matthew 3:13-17',
-            'text' => '"Permit it to be so now, for thus it is fitting for us to fulfill all righteousness."'
+            'text' => 'Permit it to be so now, for thus it is fitting for us to fulfill all righteousness.'
         ],
         [
             'reference' => 'Acts 8:36-39',
-            'text' => '"Both Philip and the eunuch went down into the water, and he baptized him."'
+            'text' => 'Both Philip and the eunuch went down into the water, and he baptized him.'
         ]
     ];
 
@@ -91,12 +95,12 @@
             <div class="baptism__hero-content">
                 <span class="baptism__hero-eyebrow">
                     <span class="baptism__hero-eyebrow-line"></span>
-                    Arthur's Baptism
+                    Story Of My Baptism
                 </span>
 
                 <h1 class="baptism__hero-title">
                     I <span>walked</span> it looking for assurance.<br>
-                    You don't <span>have to walk it alone.</span>
+                    You don't <span>have to walk it alone</span>.
                 </h1>
 
                 <div class="baptism__hero-story">
@@ -191,7 +195,7 @@
                         <h3 class="baptism__two-card-title">Spirit Baptism</h3>
 
                         <p class="baptism__two-card-desc">
-                            The Holy Spirit fills and empowers you for service, equipping every believer to walk in what Arthur calls a life of supernatural power, wisdom and boldness.
+                            The Holy Spirit fills and empowers you for service, equipping every believer to walk in what this ministry calls a life of supernatural power, wisdom and boldness.
                         </p>
 
                         <blockquote class="baptism__two-card-quote">
@@ -226,31 +230,6 @@
                         </div>
                         <h4 class="baptism__meaning-title">{{ $item['title'] }}</h4>
                         <p class="baptism__meaning-text">{{ $item['text'] }}</p>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- ─── SECTION 4: SCRIPTURES ─── --}}
-    <section class="baptism__scriptures">
-        <div class="baptism__scriptures-bg">
-            <div class="baptism__scriptures-shape baptism__scriptures-shape--1"></div>
-        </div>
-
-        <div class="wrap">
-            <div class="section-header">
-                <span class="section-header__eyebrow">What the Word Says</span>
-                <h2 class="section-header__title">Scripture on <span>Baptism</span></h2>
-            </div>
-
-            <div class="baptism__scriptures-grid">
-                @foreach($scriptures as $scripture)
-                    <div class="baptism__scriptures-card">
-                        <span class="baptism__scriptures-ref">{{ $scripture['reference'] }}</span>
-                        <blockquote class="baptism__scriptures-text">
-                            {{ $scripture['text'] }}
-                        </blockquote>
                     </div>
                 @endforeach
             </div>
@@ -309,6 +288,31 @@
                     </p>
                     <div class="baptism__steps-line"></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ─── SECTION 4: SCRIPTURES ─── --}}
+    <section class="baptism__scriptures">
+        <div class="baptism__scriptures-bg">
+            <div class="baptism__scriptures-shape baptism__scriptures-shape--1"></div>
+        </div>
+
+        <div class="wrap">
+            <div class="section-header">
+                <span class="section-header__eyebrow">What the Word Says</span>
+                <h2 class="section-header__title">Scripture on <span>Baptism</span></h2>
+            </div>
+
+            <div class="baptism__scriptures-grid">
+                @foreach($scriptures as $scripture)
+                    <div class="baptism__scriptures-card">
+                        <span class="baptism__scriptures-ref">{{ $scripture['reference'] }}</span>
+                        <blockquote class="baptism__scriptures-text">
+                            {{ $scripture['text'] }}
+                        </blockquote>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -419,6 +423,9 @@
                             @error('message')
                                 <span class="baptism__form-error">{{ $message }}</span>
                             @enderror
+                        </div>
+                        <div class="baptism__form-group">
+                            <x-turnstile />
                         </div>
 
                         <button type="submit" class="btn btn--primary btn--block">

@@ -1,8 +1,20 @@
 @extends('layouts.v150.app')
 
-@section('title', $book->title . ' · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', $book->title . ' · Buy Online | ' . config('seo.site_name'))
+
+@section('meta_description', Str::limit(strip_tags($book->description), 155) ?: 'Buy ' . $book->title . ' by Arthur Mongalo.')
+
+@section('meta_type', 'product')
+
+@section('meta_image', $book->cover_image ? asset('storage/books/covers/' . $book->cover_image) : config('seo.default_image'))
 
 @section('content')
+
+@php
+    // ─── PULL LIVE SHIPPING REGIONS FROM SETTINGS ───
+    $regions = shipping_regions();
+    $currency = currency_symbol();
+@endphp
 
 <div class="book-detail">
 
@@ -41,7 +53,7 @@
                         <div class="book-detail__cover-shine"></div>
                     </div>
 
-                                        @if($book->is_featured)
+                    @if($book->is_featured)
                         <span class="book-detail__badge">
                             <i class="fas fa-star" aria-hidden="true"></i>
                             Featured
@@ -80,64 +92,22 @@
                     </div>
 
                     <div class="book-detail__actions">
-                        <button class="btn btn--primary btn--lg" id="showBuyForm">
+                        <button type="button" class="btn btn--primary btn--lg" data-modal-open="buyModal">
                             <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                            <span>Buy Now</span>
+                            <span>Continue Shopping</span>
                         </button>
 
-                        @if($book->book_file)
-                            <a href="{{ route('books.preview', $book->slug) }}" target="_blank" class="btn btn--outline btn--lg">
-                                <i class="fas fa-book-open" aria-hidden="true"></i>
-                                <span>Preview</span>
-                            </a>
+                        @if($book->has_hardcopy_option)
+                            <span class="book-detail__hardcopy-badge">
+                                <i class="fas fa-truck" aria-hidden="true"></i>
+                                Hard copy available from {{ $book->formatted_hardcopy_price }}
+                            </span>
                         @endif
-                    </div>
 
-                    {{-- ─── BUY FORM (HIDDEN BY DEFAULT) ─── --}}
-                    <div id="buyBookForm" style="display: none; margin-top: 32px;">
-                        <div class="book-detail__buy-form">
-                            <h4 class="book-detail__buy-form-title">Complete Your Purchase</h4>
-
-                            <form id="paymentForm" method="POST" action="{{ route('payment.initiate') }}">
-                                @csrf
-                                <input type="hidden" name="book_id" value="{{ $book->id }}">
-                                <input type="hidden" name="gateway" value="payfast">
-
-                                <div class="book-detail__form-group">
-                                    <label for="buyer_name">Full Name</label>
-                                    <input type="text" name="name" id="buyer_name" placeholder="Your full name" required>
-                                </div>
-
-                                <div class="book-detail__form-group">
-                                    <label for="buyer_email">Email Address</label>
-                                    <input type="email" name="email" id="buyer_email" placeholder="your@email.com" required>
-                                </div>
-
-                                <div class="book-detail__form-group">
-                                    <label for="buyer_phone">Phone Number</label>
-                                    <input type="tel" name="phone" id="buyer_phone" placeholder="+27 71 000 0000">
-                                </div>
-
-                                <div class="book-detail__form-actions">
-                                    <button type="submit" class="btn btn--primary btn--lg" id="buyNowBtn">
-                                        <span id="buyBtnText">
-                                            <i class="fas fa-lock" aria-hidden="true"></i>
-                                            Pay {{ $book->formatted_price }}
-                                        </span>
-                                        <span id="buyBtnLoader" style="display: none;">
-                                            <i class="fas fa-spinner fa-spin"></i>
-                                            Processing...
-                                        </span>
-                                    </button>
-
-                                    <button type="button" class="btn btn--outline" id="cancelBuyForm">
-                                        Cancel
-                                    </button>
-                                </div>
-
-                                <div id="paymentMessage" style="margin-top: 16px;"></div>
-                            </form>
-                        </div>
+                        <a class="btn btn--outline btn--lg disabled" aria-disabled="true">
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                            <span>No Preview Available</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -218,31 +188,232 @@
         </div>
     </section>
 
+    {{-- ─── BUY MODAL ─── --}}
+    <div class="book-detail__modal" id="buyModal" aria-hidden="true">
+        <div class="book-detail__modal-overlay" data-modal-close></div>
+
+        <div class="book-detail__modal-content" role="dialog" aria-modal="true" aria-labelledby="buyModalTitle">
+            <button type="button" class="book-detail__modal-close" data-modal-close aria-label="Close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+
+            <div class="book-detail__modal-header">
+                <span class="book-detail__modal-eyebrow">Complete Your Purchase</span>
+                <h3 class="book-detail__modal-title" id="buyModalTitle">{{ $book->title }}</h3>
+                @if($book->subtitle)
+                    <p class="book-detail__modal-subtitle">{{ $book->subtitle }}</p>
+                @endif
+            </div>
+
+            <div class="book-detail__modal-body">
+                <form id="paymentForm" method="POST" action="{{ route('payment.initiate') }}">
+                    @csrf
+                    <input type="hidden" name="book_id" value="{{ $book->id }}">
+                    <input type="hidden" name="gateway" value="payfast">
+
+                    {{-- ─── DELIVERY TYPE ─── --}}
+                    @if($book->has_hardcopy_option)
+                        <div class="book-detail__delivery-choice">
+                            <label class="book-detail__delivery-option book-detail__delivery-option--active">
+                                <input type="radio" name="delivery_type" value="digital" checked>
+                                <span class="book-detail__delivery-option-body">
+                                    <span class="book-detail__delivery-option-icon">
+                                        <i class="fas fa-download" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="book-detail__delivery-option-text">
+                                        <span class="book-detail__delivery-option-label">Digital copy</span>
+                                        <span class="book-detail__delivery-option-desc">Instant download after payment</span>
+                                    </span>
+                                    <span class="book-detail__delivery-option-price">{{ $book->formatted_price }}</span>
+                                </span>
+                            </label>
+
+                            <label class="book-detail__delivery-option">
+                                <input type="radio" name="delivery_type" value="hardcopy">
+                                <span class="book-detail__delivery-option-body">
+                                    <span class="book-detail__delivery-option-icon">
+                                        <i class="fas fa-truck" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="book-detail__delivery-option-text">
+                                        <span class="book-detail__delivery-option-label">Hard copy <span class="book-detail__delivery-option-bonus">+ digital free</span></span>
+                                        <span class="book-detail__delivery-option-desc">Printed and posted to you</span>
+                                    </span>
+                                    <span class="book-detail__delivery-option-price">{{ $book->formatted_hardcopy_price }}</span>
+                                </span>
+                            </label>
+                        </div>
+                    @else
+                        <input type="hidden" name="delivery_type" value="digital">
+                    @endif
+
+                    {{-- ─── BUYER DETAILS ─── --}}
+                    <div class="book-detail__form-group">
+                        <label for="buyer_name">Full Name</label>
+                        <input type="text" name="name" id="buyer_name" placeholder="Your full name" required>
+                    </div>
+
+                    <div class="book-detail__form-group">
+                        <label for="buyer_email">Email Address</label>
+                        <input type="email" name="email" id="buyer_email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="book-detail__form-group">
+                        <label for="buyer_phone">Phone Number</label>
+                        <input type="tel" name="phone" id="buyer_phone" placeholder="+27 71 000 0000">
+                    </div>
+
+                    {{-- ─── HARD COPY ADDRESS BLOCK ─── --}}
+                    @if($book->has_hardcopy_option)
+                        <div id="hardcopyFields" class="book-detail__hardcopy-fields" style="display: none;">
+                            <div class="book-detail__hardcopy-title">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                Delivery Address
+                            </div>
+
+                            <div class="book-detail__form-group">
+                                <label for="delivery_region">Delivery Region</label>
+                                <select name="delivery_region" id="delivery_region">
+                                    @foreach($regions as $key => $region)
+                                        <option value="{{ $key }}" data-fee="{{ $region['fee'] }}" data-days="{{ $region['days'] }}">
+                                            {{ $region['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="book-detail__form-row">
+                                <div class="book-detail__form-group">
+                                    <label for="delivery_address_1">Street Address</label>
+                                    <input type="text" name="delivery_address_1" id="delivery_address_1" placeholder="123 Main Road">
+                                </div>
+                                <div class="book-detail__form-group">
+                                    <label for="delivery_address_2">Unit / Complex (optional)</label>
+                                    <input type="text" name="delivery_address_2" id="delivery_address_2" placeholder="Unit 4">
+                                </div>
+                            </div>
+
+                            <div class="book-detail__form-row">
+                                <div class="book-detail__form-group">
+                                    <label for="delivery_suburb">Suburb</label>
+                                    <input type="text" name="delivery_suburb" id="delivery_suburb" placeholder="Suburb">
+                                </div>
+                                <div class="book-detail__form-group">
+                                    <label for="delivery_city">City</label>
+                                    <input type="text" name="delivery_city" id="delivery_city" placeholder="City">
+                                </div>
+                            </div>
+
+                            <div class="book-detail__form-row">
+                                <div class="book-detail__form-group">
+                                    <label for="delivery_province">Province / Region</label>
+                                    <input type="text" name="delivery_province" id="delivery_province" placeholder="Province">
+                                </div>
+                                <div class="book-detail__form-group">
+                                    <label for="delivery_postal_code">Postal Code</label>
+                                    <input type="text" name="delivery_postal_code" id="delivery_postal_code" placeholder="0000">
+                                </div>
+                            </div>
+
+                            <div class="book-detail__form-group">
+                                <label for="delivery_country">Country</label>
+                                <input type="text" name="delivery_country" id="delivery_country" value="South Africa">
+                            </div>
+
+                            <div class="book-detail__form-group">
+                                <label for="delivery_notes">Delivery Notes (optional)</label>
+                                <input type="text" name="delivery_notes" id="delivery_notes" placeholder="Gate code, best time to deliver, etc.">
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- ─── ORDER SUMMARY ─── --}}
+                    @if($book->has_hardcopy_option)
+                        <div class="book-detail__summary" id="orderSummary">
+                            <div class="book-detail__summary-row">
+                                <span>Book</span>
+                                <span id="summaryBookPrice">{{ $book->formatted_price }}</span>
+                            </div>
+                            <div class="book-detail__summary-row" id="summaryShippingRow" style="display: none;">
+                                <span>Shipping</span>
+                                <span id="summaryShipping">—</span>
+                            </div>
+                            <div class="book-detail__summary-row book-detail__summary-row--total">
+                                <span>Total</span>
+                                <span id="summaryTotal">{{ $book->formatted_price }}</span>
+                            </div>
+                            <div class="book-detail__summary-note" id="summaryDeliveryNote" style="display: none;">
+                                <i class="fas fa-clock" aria-hidden="true"></i>
+                                <span id="summaryDeliveryDays">—</span>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="book-detail__form-group">
+                        <x-turnstile />
+                    </div>
+
+                    <div class="book-detail__form-actions">
+                        <button type="submit" class="btn btn--primary btn--lg" id="buyNowBtn">
+                            <span id="buyBtnText">
+                                <i class="fas fa-lock" aria-hidden="true"></i>
+                                Pay {{ $book->formatted_price }}
+                            </span>
+                            <span id="buyBtnLoader" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Processing...
+                            </span>
+                        </button>
+
+                        <button type="button" class="btn btn--outline" data-modal-close>
+                            Cancel
+                        </button>
+                    </div>
+
+                    <div id="paymentMessage" style="margin-top: 16px;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@push('schema')
+    @php
+        $productSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            '@id' => url('/books/' . $book->slug) . '#product',
+            'name' => $book->title,
+            'url' => url('/books/' . $book->slug),
+            'image' => $book->cover_image
+                ? asset('storage/books/covers/' . $book->cover_image)
+                : config('seo.default_image'),
+            'brand' => ['@type' => 'Brand', 'name' => config('seo.site_name')],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => (string) $book->price,
+                'priceCurrency' => 'ZAR',
+                'availability' => 'https://schema.org/InStock',
+                'url' => url('/books/' . $book->slug),
+                'seller' => ['@id' => config('seo.site_url') . '/#organization'],
+            ],
+        ];
+
+        if (! empty($book->subtitle)) {
+            $productSchema['description'] = $book->subtitle . ' — ' . strip_tags($book->description ?? '');
+        } elseif (! empty($book->description)) {
+            $productSchema['description'] = strip_tags($book->description);
+        }
+    @endphp
+    <script type="application/ld+json">{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
 
 @push('scripts')
     <script src="{{ secure_asset('js/v150/books.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ─── SHOW/HIDE BUY FORM ───
-            const showBtn = document.getElementById('showBuyForm');
-            const buyForm = document.getElementById('buyBookForm');
-            const cancelBtn = document.getElementById('cancelBuyForm');
-
-            if (showBtn && buyForm) {
-                showBtn.addEventListener('click', function() {
-                    buyForm.style.display = 'block';
-                    showBtn.style.display = 'none';
-                    buyForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            }
-
-            if (cancelBtn && buyForm) {
-                cancelBtn.addEventListener('click', function() {
-                    buyForm.style.display = 'none';
-                    if (showBtn) showBtn.style.display = 'inline-flex';
-                });
-            }
+            // ─── CURRENCY SYMBOL (READ FROM SETTINGS) ───
+            const currency = @json($currency);
 
             // ─── PAYMENT FORM SUBMIT ───
             const paymentForm = document.getElementById('paymentForm');
@@ -254,6 +425,11 @@
             if (paymentForm) {
                 paymentForm.addEventListener('submit', function(e) {
                     e.preventDefault();
+
+                    // ─── SHOW CUSTOM PAGE SPINNER (app.js overlay) ───
+                    if (typeof window.showAppOverlay === 'function') {
+                        window.showAppOverlay();
+                    }
 
                     submitBtn.disabled = true;
                     if (btnText) btnText.style.display = 'none';
@@ -275,43 +451,55 @@
                     .then(data => {
                         if (data.success) {
                             window.location.href = data.redirect_url;
-                        } else {
-                            let errorMessage = data.message || 'Something went wrong. Please try again.';
-
-                            if (data.field === 'phone') {
-                                const phoneInput = document.getElementById('buyer_phone');
-                                if (phoneInput) {
-                                    phoneInput.style.borderColor = '#dc3545';
-                                    phoneInput.focus();
-                                    phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                }
-                            }
-
-                            if (data.field === 'email') {
-                                const emailInput = document.getElementById('buyer_email');
-                                if (emailInput) {
-                                    emailInput.style.borderColor = '#dc3545';
-                                    emailInput.focus();
-                                    emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                }
-                            }
-
-                            if (messageDiv) {
-                                messageDiv.innerHTML = `
-                                    <div style="background: #f8d7da; color: #721c24; padding: 12px 16px; border-radius: 10px; border-left: 4px solid #dc3545;">
-                                        <i class="fas fa-exclamation-circle"></i> 
-                                        ${errorMessage}
-                                    </div>
-                                `;
-                            }
-
-                            submitBtn.disabled = false;
-                            if (btnText) btnText.style.display = 'inline';
-                            if (btnLoader) btnLoader.style.display = 'none';
+                            return;
                         }
+
+                        // ─── HIDE CUSTOM PAGE SPINNER ON ERROR ───
+                        if (typeof window.hideAppOverlay === 'function') {
+                            window.hideAppOverlay();
+                        }
+
+                        let errorMessage = data.message || 'Something went wrong. Please try again.';
+
+                        if (data.field === 'phone') {
+                            const phoneInput = document.getElementById('buyer_phone');
+                            if (phoneInput) {
+                                phoneInput.style.borderColor = '#dc3545';
+                                phoneInput.focus();
+                                phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }
+
+                        if (data.field === 'email') {
+                            const emailInput = document.getElementById('buyer_email');
+                            if (emailInput) {
+                                emailInput.style.borderColor = '#dc3545';
+                                emailInput.focus();
+                                emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }
+
+                        if (messageDiv) {
+                            messageDiv.innerHTML = `
+                                <div style="background: #f8d7da; color: #721c24; padding: 12px 16px; border-radius: 10px; border-left: 4px solid #dc3545;">
+                                    <i class="fas fa-exclamation-circle"></i> 
+                                    ${errorMessage}
+                                </div>
+                            `;
+                        }
+
+                        submitBtn.disabled = false;
+                        if (btnText) btnText.style.display = 'inline';
+                        if (btnLoader) btnLoader.style.display = 'none';
                     })
                     .catch(error => {
                         console.error('Error:', error);
+
+                        // ─── HIDE CUSTOM PAGE SPINNER ON ERROR ───
+                        if (typeof window.hideAppOverlay === 'function') {
+                            window.hideAppOverlay();
+                        }
+
                         if (messageDiv) {
                             messageDiv.innerHTML = `
                                 <div style="background: #f8d7da; color: #721c24; padding: 12px 16px; border-radius: 10px; border-left: 4px solid #dc3545;">
@@ -325,6 +513,89 @@
                         if (btnLoader) btnLoader.style.display = 'none';
                     });
                 });
+            }
+
+            // ─── DELIVERY TYPE TOGGLE + PRICE SUMMARY ───
+            const digitalPrice = {{ (float) $book->getRawPriceAttribute() }};
+            const hardcopyPrice = {{ (float) $book->hardcopy_price_raw }};
+            const hasHardcopy = {{ $book->has_hardcopy_option ? 'true' : 'false' }};
+
+            if (hasHardcopy) {
+                const deliveryRadios = document.querySelectorAll('input[name="delivery_type"]');
+                const hardcopyFields = document.getElementById('hardcopyFields');
+                const summaryBookPrice = document.getElementById('summaryBookPrice');
+                const summaryShippingRow = document.getElementById('summaryShippingRow');
+                const summaryShipping = document.getElementById('summaryShipping');
+                const summaryTotal = document.getElementById('summaryTotal');
+                const summaryDeliveryNote = document.getElementById('summaryDeliveryNote');
+                const summaryDeliveryDays = document.getElementById('summaryDeliveryDays');
+                const buyBtnText = document.getElementById('buyBtnText');
+                const regionSelect = document.getElementById('delivery_region');
+
+                function fmt(n) {
+                    return currency + ' ' + n.toFixed(2);
+                }
+
+                function getShippingFee() {
+                    if (!regionSelect) return 0;
+                    const opt = regionSelect.options[regionSelect.selectedIndex];
+                    return parseFloat(opt.getAttribute('data-fee') || '0');
+                }
+
+                function getShippingDays() {
+                    if (!regionSelect) return '';
+                    const opt = regionSelect.options[regionSelect.selectedIndex];
+                    return opt.getAttribute('data-days') || '';
+                }
+
+                function updateSummary() {
+                    const selected = document.querySelector('input[name="delivery_type"]:checked');
+                    const isHard = selected && selected.value === 'hardcopy';
+
+                    // Update label active state
+                    document.querySelectorAll('.book-detail__delivery-option').forEach(function (label) {
+                        const input = label.querySelector('input');
+                        label.classList.toggle('book-detail__delivery-option--active', input.checked);
+                    });
+
+                    // Toggle address fields
+                    if (hardcopyFields) {
+                        hardcopyFields.style.display = isHard ? 'block' : 'none';
+                        hardcopyFields.querySelectorAll('input, select').forEach(function (el) {
+                            el.required = isHard && el.dataset.required !== 'false';
+                        });
+                    }
+
+                    if (isHard) {
+                        const shipping = getShippingFee();
+                        const bookPrice = hardcopyPrice;
+                        const total = bookPrice + shipping;
+
+                        summaryBookPrice.textContent = fmt(bookPrice);
+                        summaryShippingRow.style.display = 'flex';
+                        summaryShipping.textContent = fmt(shipping);
+                        summaryTotal.textContent = fmt(total);
+                        summaryDeliveryNote.style.display = 'flex';
+                        summaryDeliveryDays.textContent = getShippingDays();
+                        buyBtnText.innerHTML = '<i class="fas fa-lock"></i> Pay ' + fmt(total);
+                    } else {
+                        summaryBookPrice.textContent = fmt(digitalPrice);
+                        summaryShippingRow.style.display = 'none';
+                        summaryTotal.textContent = fmt(digitalPrice);
+                        summaryDeliveryNote.style.display = 'none';
+                        buyBtnText.innerHTML = '<i class="fas fa-lock"></i> Pay ' + fmt(digitalPrice);
+                    }
+                }
+
+                deliveryRadios.forEach(function (radio) {
+                    radio.addEventListener('change', updateSummary);
+                });
+
+                if (regionSelect) {
+                    regionSelect.addEventListener('change', updateSummary);
+                }
+
+                updateSummary();
             }
         });
     </script>

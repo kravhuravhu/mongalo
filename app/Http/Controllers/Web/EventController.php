@@ -11,14 +11,21 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationConfirmation;
 use Illuminate\Support\Facades\Log;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
+use App\Mail\AdminEventRegistration;
+use App\Services\AdminNotificationService;
 
 class EventController extends Controller
 {
     protected CacheService $cacheService;
+    protected AdminNotificationService $notificationService;
 
-    public function __construct(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
+    public function __construct(
+        CacheService $cacheService,
+        AdminNotificationService $notificationService,
+    ) {
+        $this->cacheService        = $cacheService;
+        $this->notificationService = $notificationService;
     }
 
     public function index()
@@ -52,6 +59,9 @@ class EventController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|max:50',
+            'cf-turnstile-response' => ['required', new Turnstile],
+        ], [], [
+            'cf-turnstile-response' => 'human verification',
         ]);
 
         $event = Event::findOrFail($request->event_id);
@@ -112,6 +122,9 @@ class EventController extends Controller
             Log::error('Failed to send registration email: ' . $e->getMessage());
         }
 
+        // ─── SEND ADMIN NOTIFICATION ───
+        $this->notificationService->notifyNewEventRegistration($registration, $event);
+
         // ─── BUILD RESPONSE WITH REGISTRATION DATA ───
         $response = [
             'success' => true,
@@ -160,6 +173,25 @@ class EventController extends Controller
         ]);
 
         return response()->json($response);
+    }
+
+    /**
+     * Notify admin of a new event registration.
+     */
+    public function notifyNewEventRegistration(
+        EventRegistration $registration,
+        Event $event
+    ): void {
+        try {
+            Mail::to($this->adminEmail, $this->adminName)
+                ->send(new AdminEventRegistration($registration, $event));
+        } catch (\Throwable $e) {
+            Log::error('Failed to send admin event-registration notification', [
+                'registration_id' => $registration->registration_id,
+                'event_id'        => $event->id,
+                'error'           => $e->getMessage(),
+            ]);
+        }
     }
 
     public function clearRegistration(Request $request)

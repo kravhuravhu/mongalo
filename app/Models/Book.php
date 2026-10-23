@@ -18,6 +18,8 @@ class Book extends Model
         'price',
         'is_free',
         'is_featured',
+        'offers_hardcopy',
+        'hardcopy_price',
         'cover_color',
         'cover_image',
         'book_file',
@@ -29,10 +31,12 @@ class Book extends Model
     ];
 
     protected $casts = [
-        'is_free' => 'boolean',
-        'is_featured' => 'boolean',
-        'price' => 'decimal:2',
-        'download_count' => 'integer',
+        'is_free'          => 'boolean',
+        'is_featured'      => 'boolean',
+        'offers_hardcopy'  => 'boolean',
+        'hardcopy_price'   => 'decimal:2',
+        'price'            => 'decimal:2',
+        'download_count'   => 'integer',
     ];
 
     protected $table = 'books';
@@ -85,7 +89,7 @@ class Book extends Model
         if ($this->is_free) {
             return 'Free';
         }
-        return $this->price > 0 ? 'R ' . number_format($this->price, 2) : 'Free';
+        return $this->price > 0 ? money($this->price) : 'Free';
     }
 
     public function getRawPriceAttribute()
@@ -108,42 +112,107 @@ class Book extends Model
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('book', ['featured' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::where('is_featured', true)->first();
+
+        $id = $instance->cachedQuery($key, function () {
+            return self::where('is_featured', true)->value('id');
         });
+
+        return $id ? self::find($id) : null;
     }
 
     public static function getCachedPaidBooks()
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('book', ['paid' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::where('is_free', false)->orderBy('sort_order')->get();
+
+        $ids = $instance->cachedQuery($key, function () {
+            return self::where('is_free', false)
+                ->orderBy('sort_order')
+                ->pluck('id')
+                ->all();
         });
+
+        if (empty($ids)) {
+            return self::where('is_free', false)->orderBy('sort_order')->get();
+        }
+
+        return self::whereIn('id', $ids)->orderBy('sort_order')->get();
     }
 
     public static function getCachedFreeBooks()
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('book', ['free' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::where('is_free', true)->orderBy('sort_order')->get();
+
+        $ids = $instance->cachedQuery($key, function () {
+            return self::where('is_free', true)
+                ->orderBy('sort_order')
+                ->pluck('id')
+                ->all();
         });
+
+        if (empty($ids)) {
+            return self::where('is_free', true)->orderBy('sort_order')->get();
+        }
+
+        return self::whereIn('id', $ids)->orderBy('sort_order')->get();
     }
 
     /* ─── CATEGORY LABEL ─── */
     public function getCategoryLabelAttribute()
     {
         return match ($this->category) {
-            'booklet' => 'Booklet',
-            'pamphlet' => 'Pamphlet',
-            'bible' => 'Bible',
+            'booklet'     => 'Booklet',
+            'pamphlet'    => 'Pamphlet',
+            'bible'       => 'Bible',
             'study_guide' => 'Study Guide',
-            'other' => 'Resource',
-            default => 'Resource',
+            'other'       => 'Resource',
+            default       => 'Resource',
         };
+    }
+
+    /* ─── HARD COPY ACCESSORS ─── */
+    /**
+     * Does this book actually offer a hard-copy option right now?
+     */
+    public function getHasHardcopyOptionAttribute(): bool
+    {
+        // ─── RESPECT THE GLOBAL SWITCH ───
+        if (!settings('books.hardcopy_global_on', true)) {
+            return false;
+        }
+
+        return (bool) $this->offers_hardcopy;
+    }
+
+    /**
+     * Raw hard-copy price — the total the admin entered.
+     * Includes printing + manufacturing. Shipping is separate.
+     */
+    public function getHardcopyPriceRawAttribute(): float
+    {
+        return (float) ($this->attributes['hardcopy_price'] ?? 0);
+    }
+
+    /**
+     * Returns the hard-copy price formatted according to the currency setting.
+     */
+    public function getFormattedHardcopyPriceAttribute(): string
+    {
+        if ($this->hardcopy_price_raw <= 0) {
+            return '—';
+        }
+        return money($this->hardcopy_price_raw);
+    }
+
+    /**
+     * Checks if the hard-copy price is valid.
+     */
+    public function getHardcopyPriceIsValidAttribute(): bool
+    {
+        if (!$this->has_hardcopy_option) {
+            return true;
+        }
+        return $this->hardcopy_price_raw > 0;
     }
 }

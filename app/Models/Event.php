@@ -103,38 +103,57 @@ class Event extends Model
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('event', ['upcoming' => true]);
-        
-        return $instance->cachedQuery($key, function () {
+
+        $ids = $instance->cachedQuery($key, function () {
+            return self::where('is_past', false)
+                ->where('date', '>=', Carbon::today())
+                ->orderBy('date')
+                ->pluck('id')
+                ->all();
+        });
+
+        if (empty($ids)) {
             return self::where('is_past', false)
                 ->where('date', '>=', Carbon::today())
                 ->orderBy('date')
                 ->get();
-        });
+        }
+
+        return self::whereIn('id', $ids)->orderBy('date')->get();
     }
 
     public static function getCachedEventsWithRegistrations()
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('event', ['with_registrations' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::with('registrations')
-                ->where('is_past', false)
+
+        $ids = $instance->cachedQuery($key, function () {
+            return self::where('is_past', false)
                 ->where('date', '>=', Carbon::today())
                 ->orderBy('date')
                 ->limit(6)
-                ->get()
-                ->map(function($event) {
-                    $registered = $event->registrations()->count();
-                    $capacity = $event->capacity ?? 0;
-                    return [
-                        'event' => $event,
-                        'registered' => $registered,
-                        'capacity' => $capacity,
-                        'percentage' => $capacity > 0 ? round(($registered / $capacity) * 100, 1) : 0,
-                        'status' => $capacity > 0 && $registered >= $capacity ? 'full' : 'open',
-                    ];
-                });
+                ->pluck('id')
+                ->all();
         });
+
+        if (empty($ids)) {
+            return collect();
+        }
+
+        return self::with('registrations')
+            ->whereIn('id', $ids)
+            ->orderBy('date')
+            ->get()
+            ->map(function ($event) {
+                $registered = $event->registrations()->count();
+                $capacity   = $event->capacity ?? 0;
+                return [
+                    'event' => $event,
+                    'registered' => $registered,
+                    'capacity' => $capacity,
+                    'percentage' => $capacity > 0 ? round(($registered / $capacity) * 100, 1) : 0,
+                    'status' => $capacity > 0 && $registered >= $capacity ? 'full' : 'open',
+                ];
+            });
     }
 }
