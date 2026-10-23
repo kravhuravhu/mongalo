@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Login · {{ env('PROJECT_NAME', 'Blood Water Spirit') }}</title>
+    <title>Admin Login | {{ env('PROJECT_NAME', 'Blood Water Spirit') }}</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,9 @@
     <!-- Admin CSS v1.5.0 -->
     <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/admin/v150/auth.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ config('seo.logo') }}" />
 </head>
 <body class="auth-login">
 

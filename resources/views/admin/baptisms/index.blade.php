@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Baptism Requests · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Baptism Requests | ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Baptism Requests')
 @section('breadcrumb', 'Baptisms')
 

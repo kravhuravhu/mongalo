@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Message from ' . $message->name . ' · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Message from ' . $message->name . ' | ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Message Details')
 @section('breadcrumb', 'Messages / View')
 

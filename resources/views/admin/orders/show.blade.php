@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Order ' . $order->order_number . ' · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Order ' . $order->order_number . ' | ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Order Details')
 @section('breadcrumb', 'Orders / View')
 

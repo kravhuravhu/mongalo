@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Dashboard · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', 'Dashboard | ' . env('PROJECT_NAME', 'IN.iN'))
 @section('page-title', 'Dashboard')
 @section('breadcrumb', 'Overview')
 

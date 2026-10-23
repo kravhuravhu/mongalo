@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Cache Status · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Cache Status | ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Cache Status')
 @section('breadcrumb', 'System / Cache / Status')
 
