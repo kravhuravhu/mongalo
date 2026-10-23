@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Events · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Events | ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Events')
 @section('breadcrumb', 'Manage Events')
 

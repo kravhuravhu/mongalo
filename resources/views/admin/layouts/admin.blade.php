@@ -11,9 +11,9 @@
     <link rel="shortcut icon" href="{{ config('seo.logo') }}">
     <link rel="mask-icon" href="{{ config('seo.logo') }}" color="#0A1F33">
     <link rel="apple-touch-icon" href="{{ config('seo.logo') }}">
-    
+
     <!-- Title -->
-    <title>@yield('title', 'Admin · ' . env('PROJECT_NAME', 'IN.iN'))</title>
+    <title>@yield('title', 'Admin | ' . env('PROJECT_NAME', 'IN.iN'))</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit Book · ' . env('PROJECT_NAME', 'IN.iN'))
+@section('title', 'Edit Book | ' . env('PROJECT_NAME', 'IN.iN'))
 @section('page-title', 'Edit Book')
 @section('breadcrumb', 'Books / Edit')
 

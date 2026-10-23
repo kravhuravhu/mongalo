@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Contact Messages · ' . env('PROJECT_NAME', 'The Collective'))
+@section('title', 'Contact Messages | ' . env('PROJECT_NAME', 'The Collective'))
 @section('page-title', 'Contact Messages')
 @section('breadcrumb', 'Messages')
 

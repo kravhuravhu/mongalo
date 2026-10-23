@@ -134,7 +134,14 @@ class SecurityHeadersMiddleware
 
             "frame-ancestors" => "'self'",
             "base-uri"        => "'self'",
-            "form-action"     => "'self'",
+            "form-action"     => implode(' ', [
+                "'self'",
+                // PayFast — live (production)
+                "https://www.payfast.co.za",
+                "https://payfast.co.za",
+                // PayFast — sandbox (local / staging)
+                "https://sandbox.payfast.co.za",
+            ]),
             "object-src"      => "'none'",
             "worker-src"      => "'self' blob:",
             "manifest-src"    => "'self'",
