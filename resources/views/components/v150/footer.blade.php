@@ -30,7 +30,7 @@
                     <li><a href="{{ route('events.index') }}">Events</a></li>
                     <li><a href="{{ route('baptism') }}">Baptism</a></li>
                     <li><a href="{{ route('community') }}">Community</a></li>
-                    <li><a href="{{ route('invite') }}">Invite Arthur</a></li>
+                    <li><a href="{{ route('invite') }}">Invite a Speaker</a></li>
                 </ul>
             </div>
 

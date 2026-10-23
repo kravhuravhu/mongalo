@@ -7,6 +7,24 @@ use Illuminate\Http\Request;
 
 class BotBlockerMiddleware
 {
+
+    /**
+     * Paths that bypass all bot checks entirely.
+     * These are server-to-server endpoints and health checks —
+     * never browser traffic, so UA heuristics don't apply.
+     */
+    protected array $excludedPaths = [
+        // Laravel health check (bootstrap/app.php: health: '/up')
+        'up',                  
+        'health',
+        // gateway → server callbacks (Payfast/Ozow/Yoco etc.)
+        'payment/webhook/*',  
+        // some gateways POST back server-side, not via browser
+        'payment/return/*',    
+        'payment/cancel/*',
+        'api/webhook/*',
+    ];
+
     /**
      * List of legitimate bots that should be allowed
      * These are search engines and legitimate crawlers
@@ -107,6 +125,19 @@ class BotBlockerMiddleware
         'SEOkicks-SEO-Product',
         'SEOkicks-SEO-Solution',
         'SEOkicks-SEO-Application',
+        'AdsBot-Google',
+        'Mediapartners-Google',
+        'FeedFetcher-Google',
+        'APIs-Google',
+        'Storebot-Google',
+        'PetalBot',
+        'Amazonbot',
+        'Applebot-Extended',
+        'Python-urllib',
+        'Python-requests',
+        'Go-http-client',
+        'curl',
+        'Wget',
     ];
 
     /**
@@ -117,11 +148,6 @@ class BotBlockerMiddleware
         'Bytespider',
         'Cliqzbot',
         'Scrapy',
-        'Python-urllib',
-        'Python-requests',
-        'Go-http-client',
-        'curl',
-        'Wget',
         'libwww-perl',
         'lwp-trivial',
         'lwp-request',
@@ -253,79 +279,83 @@ class BotBlockerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // ─── CHECK IF BOT BLOCKING IS ENABLED ───
+        // ─── EXCLUDED PATHS BYPASS ALL BOT CHECKS ───
+        // Webhooks and health checks must never be subject to UA heuristics.
+        foreach ($this->excludedPaths as $path) {
+            if ($request->is($path)) {
+                return $next($request);
+            }
+        }
+
+        // ─── GLOBAL TOGGLE ───
         if (!config('app.bot_blocking_enabled', true)) {
             return $next($request);
         }
 
         $userAgent = $request->userAgent();
-        
-        // ─── IF NO USER AGENT, BLOCK (likely a bot) ───
+
+        // ─── EMPTY USER-AGENT ───
+        // Default: allow + log. Cron, uptime monitors and some CLIs send no UA.
+        // Set BOT_BLOCK_EMPTY_UA=true in .env if you want the old strict behaviour.
         if (empty($userAgent)) {
-            abort(403, 'Access Denied');
+            if (config('app.bot_block_empty_ua', false)) {
+                Log::warning('Bot blocked: empty User-Agent', [
+                    'ip'  => $request->ip(),
+                    'url' => $request->fullUrl(),
+                ]);
+                abort(403, 'Access Denied');
+            }
+
+            Log::notice('Empty User-Agent allowed through', [
+                'ip'  => $request->ip(),
+                'url' => $request->fullUrl(),
+            ]);
+
+            return $next($request);
         }
 
-        // ─── CHECK IF ALLOWED BOT ───
+        // ─── ALLOWED BOTS (checked first — wins over everything below) ───
         foreach ($this->allowedBots as $bot) {
             if (stripos($userAgent, $bot) !== false) {
                 return $next($request);
             }
         }
 
-        // ─── CHECK IF BLOCKED BOT ───
+        // ─── BLOCKED BOTS ───
         foreach ($this->blockedBots as $bot) {
             if (stripos($userAgent, $bot) !== false) {
-                // ─── LOG BLOCKED BOT ───
-                \Log::warning('Bot blocked', [
+                Log::warning('Bot blocked', [
                     'user_agent' => $userAgent,
-                    'ip' => $request->ip(),
-                    'url' => $request->fullUrl(),
+                    'ip'         => $request->ip(),
+                    'url'        => $request->fullUrl(),
                 ]);
-                
+
                 abort(403, 'Access Denied');
             }
         }
 
-        // ─── CHECK FOR SUSPICIOUS PATTERNS ───
+        // ─── SUSPICIOUS PATTERNS ───
+        // Word-boundaries (\b) prevent false positives like "CUBOT X30" phones
+        // and "AdsBot-Google" — neither matches \bbot\b.
         $suspiciousPatterns = [
-            '/scrape/i',
-            '/scraping/i',
-            '/harvest/i',
-            '/harvesting/i',
-            '/extract/i',
-            '/extracting/i',
-            '/collect/i',
-            '/collecting/i',
-            '/mining/i',
-            '/parser/i',
-            '/parsing/i',
-            '/grabber/i',
-            '/spider/i',
-            '/crawler/i',
-            '/bot/i',
+            '/\bscrap(e|er|ers|ing)\b/i',
+            '/\bharvest(er|ers|ing)?\b/i',
+            '/\bextract(or|ors|ing)?\b/i',
+            '/\bmin(er|ers|ing)\b/i',
+            '/\bgrabber\b/i',
+            '/\b(bot|crawler|spider)\b/i',
         ];
 
         foreach ($suspiciousPatterns as $pattern) {
             if (preg_match($pattern, $userAgent)) {
-                // ─── CHECK IF IT'S A LEGITIMATE BOT WITH "bot" IN NAME ───
-                $isLegitimate = false;
-                foreach ($this->allowedBots as $allowed) {
-                    if (stripos($userAgent, $allowed) !== false) {
-                        $isLegitimate = true;
-                        break;
-                    }
-                }
-                
-                if (!$isLegitimate) {
-                    \Log::warning('Suspicious bot pattern detected', [
-                        'user_agent' => $userAgent,
-                        'ip' => $request->ip(),
-                        'url' => $request->fullUrl(),
-                        'pattern' => $pattern,
-                    ]);
-                    
-                    abort(403, 'Access Denied');
-                }
+                Log::warning('Suspicious bot pattern detected', [
+                    'user_agent' => $userAgent,
+                    'ip'         => $request->ip(),
+                    'url'        => $request->fullUrl(),
+                    'pattern'    => $pattern,
+                ]);
+
+                abort(403, 'Access Denied');
             }
         }
 

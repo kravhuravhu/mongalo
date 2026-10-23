@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'public_url' => env('PUBLIC_URL', env('APP_URL', 'http://localhost')),
 
     /*
     |--------------------------------------------------------------------------
@@ -180,6 +181,7 @@ return [
     |
     */
     'bot_blocking_enabled' => env('BOT_BLOCKING_ENABLED', true),
+    'bot_block_empty_ua' => (bool) env('BOT_BLOCK_EMPTY_UA', false),
 
     /*
     |--------------------------------------------------------------------------

@@ -61,8 +61,11 @@
 
     {{-- ─── FAVICON & MANIFEST ─── --}}
     <link rel="icon" type="image/png" href="{{ config('seo.logo') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ config('seo.logo') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ config('seo.logo') }}">
+    <link rel="shortcut icon" href="{{ config('seo.logo') }}">
+    <link rel="mask-icon" href="{{ config('seo.logo') }}" color="#0A1F33">
     <link rel="apple-touch-icon" href="{{ config('seo.logo') }}">
-    <link rel="manifest" href="{{ secure_asset('manifest.webmanifest') }}">
 
     {{-- ─── PERFORMANCE HINTS ─── --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -42,7 +42,7 @@
                     </p>
 
                     <p class="home__hero-subtext">
-                        Led by Arthur Mongalo, an ordained pastor based in Gauteng, South Africa.
+                        Led by an ordained pastor based in Gauteng, South Africa.
                     </p>
 
                     <div class="home__hero-actions">
@@ -78,7 +78,7 @@
                 <blockquote class="home__vision-quote">
                     <i class="fas fa-quote-left" aria-hidden="true"></i>
                     <p>
-                        "I have a vision to baptise at least a million people in water,<br>
+                        I have a vision to baptise at least a million people in water,<br>
                         pray for at least a million people,<br>
                         and equip every believer for spiritual growth."
                     </p>
@@ -97,9 +97,9 @@
 
         <div class="wrap">
             <div class="home__arthur-content">
-                <span class="home__arthur-eyebrow">Meet Arthur Mongalo</span>
+                <span class="home__arthur-eyebrow">Meet The Leader & Founder</span>
                 <h2 class="home__arthur-title">
-                    Why Arthur is starting this <span>ministry</span>
+                    Why starting this <span>ministry</span>?
                 </h2>
                 <p class="home__arthur-subtitle">
                     Arthur kept responding to the call to accept Christ, and kept seeking baptism, until he found the assurance so many still search for. That search shapes everything this ministry offers.
@@ -108,7 +108,7 @@
                 <div class="home__arthur-actions">
                     <a href="{{ route('about') }}" class="btn btn--primary btn--lg">
                         <i class="fas fa-user" aria-hidden="true"></i>
-                        <span>Read Arthur's Story</span>
+                        <span>Read His Story</span>
                     </a>
                 </div>
             </div>
@@ -296,8 +296,8 @@
                 $involve = [
                     [
                         'icon' => 'fa-handshake',
-                        'title' => 'Invite Arthur',
-                        'description' => 'Invite Arthur to personally teach on Baptisms, Divine Identity, the New Covenant, Jesus Revealed and more, depending on your setting.',
+                        'title' => 'Invite a Speaker',
+                        'description' => 'Invite him to teach on Baptisms, Divine Identity, the New Covenant, Jesus Revealed and more, depending on your setting.',
                         'route' => route('invite'),
                         'label' => 'Send an Invite'
                     ],

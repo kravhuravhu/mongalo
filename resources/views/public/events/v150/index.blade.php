@@ -281,7 +281,7 @@
 
                 <div class="events__invite-text">
                     <h3 class="events__invite-title">
-                        Bring Arthur to <span>your event</span>
+                        Invite a speaker to <span>your event</span>
                     </h3>
                     <p class="events__invite-desc">
                         Speaking engagements, baptism services, conferences and community gatherings.

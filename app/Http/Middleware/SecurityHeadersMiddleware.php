@@ -81,6 +81,7 @@ class SecurityHeadersMiddleware
                 "https://cdn.jsdelivr.net",
                 "https://www.google.com",
                 "https://static.cloudflareinsights.com",
+                "https://bloodwaterspirit.com",
             ]),
 
             "style-src"       => implode(' ', [
@@ -88,6 +89,7 @@ class SecurityHeadersMiddleware
                 "'unsafe-inline'",
                 "https://fonts.googleapis.com",
                 "https://cdnjs.cloudflare.com",
+                "https://bloodwaterspirit.com",
             ]),
 
             "font-src"        => implode(' ', [
@@ -120,6 +122,7 @@ class SecurityHeadersMiddleware
                 "https://www.googletagmanager.com",
                 "https://challenges.cloudflare.com",
                 "https://static.cloudflareinsights.com",
+                "https://cdn.jsdelivr.net",
             ]),
 
             "frame-src"       => implode(' ', [

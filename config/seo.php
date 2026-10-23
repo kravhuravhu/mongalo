@@ -10,7 +10,7 @@ return [
     'site_name' => env('PROJECT_NAME', 'Blood Water Spirit'),
     'site_tagline' => 'I am IN Him // He is IN me',
     'site_url' => rtrim(env('APP_URL', 'http://localhost'), '/'),
-    'logo' => env('APP_URL', '') . '/images/blood_water_spirit_Logo-Photoroom.png',
+    'logo' => env('ASSET_URL', '') . '/images/blood_water_spirit_Logo-Photoroom.png',
 
     /*
     |--------------------------------------------------------------------------

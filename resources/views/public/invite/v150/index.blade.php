@@ -13,19 +13,19 @@
     $reasons = [
         [
             'title' => 'Nine Years of Church Leadership',
-            'desc' => 'Arthur is an ordained pastor who led a church in Limpopo for nine years, bringing pastoral experience to every session.'
+            	'desc' => 'An ordained pastor who led a church in Limpopo for nine years, bringing pastoral experience to every session.'
         ],
         [
             'title' => 'Author of Divine Identity and My Salvation Companion',
-            'desc' => 'Arthur\'s books are already reaching people, with over 1,000 copies of My Salvation Companion distributed so far.'
+            'desc' => 'His books are already reaching people, with over 1,000 copies of My Salvation Companion distributed so far.'
         ],
         [
             'title' => 'A Focus on Baptism',
-            'desc' => 'Water and Spirit baptism sit at the centre of Arthur\'s ministry, a topic he returns to and teaches in depth.'
+            'desc' => 'Water and Spirit baptism sit at the centre of his ministry, a topic he returns to and teaches in depth.'
         ],
         [
             'title' => 'Teaching From His Own Journey',
-            'desc' => 'Arthur\'s concern for people still searching for assurance comes from his own search for it.'
+            'desc' => 'His concern for people still searching for assurance comes from his own search for it.'
         ]
     ];
 
@@ -39,7 +39,7 @@
         [
             'icon' => 'fa-book-open',
             'title' => 'Divine Identity',
-            'desc' => 'Practical teaching from Arthur\'s book Divine Identity, understanding who you are in Christ.'
+            'desc' => 'Practical teaching from his book Divine Identity, understanding who you are in Christ.'
         ],
         [
             'icon' => 'fa-scroll',
@@ -70,7 +70,7 @@
                 <div class="invite__hero-content">
                     <span class="invite__hero-eyebrow">
                         <span class="invite__hero-eyebrow-line"></span>
-                        Invite Arthur
+                        Send Invitation
                     </span>
 
                     <h1 class="invite__hero-title">
@@ -79,17 +79,17 @@
                     </h1>
 
                     <p class="invite__hero-text">
-                        Arthur is an ordained pastor and author based in Gauteng, South Africa. Tell us about your gathering and what you'd like him to address.
+                        Tell us about your gathering and what you'd like him to address.
                     </p>
 
                     <div class="invite__hero-actions">
                         <a href="#invite-form" class="btn btn--primary btn--lg">
                             <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                            <span>Invite Arthur</span>
+                            <span>Send Invitation</span>
                         </a>
                         <a href="{{ route('about') }}" class="invite__hero-call">
                             <i class="fas fa-user" aria-hidden="true"></i>
-                            <span>Read Arthur's Story</span>
+                            <span>Read His Story</span>
                         </a>
                         <a href="tel:+27714611401" class="invite__hero-call">
                             <i class="fas fa-phone" aria-hidden="true"></i>
@@ -148,8 +148,8 @@
     <section class="invite__reasons">
         <div class="wrap">
             <div class="section-header">
-                <span class="section-header__eyebrow">Why Arthur</span>
-                <h2 class="section-header__title">Why Invite <span>Arthur</span></h2>
+                <span class="section-header__eyebrow">Background</span>
+                <h2 class="section-header__title">Why Invite <span>Him</span></h2>
                 <p class="section-header__subtitle">
                     The experience and personal journey behind his teaching.
                 </p>
@@ -175,7 +175,7 @@
 
         <div class="wrap">
             <div class="section-header">
-                <span class="section-header__eyebrow">What Arthur Speaks On</span>
+                <span class="section-header__eyebrow">What He Speaks On</span>
                 <h2 class="section-header__title">Speaking <span>Topics</span></h2>
                 <p class="section-header__subtitle">
                     His speaking style depends on the setting. Have another topic in mind? Include it in your enquiry.
@@ -214,7 +214,7 @@
                         <span>your event.</span>
                     </h2>
                     <p class="invite__form-desc">
-                        Fill in the form with a few details about your event. We'll review it and be in touch to discuss how Arthur can serve you.
+                        Fill in the form with a few details about your event. We'll review it and be in touch to discuss how he can serve you.
                     </p>
 
                     <div class="invite__form-details">
@@ -253,7 +253,7 @@
                 {{-- ─── RIGHT: FORM ─── --}}
                 <div class="invite__form-wrapper">
                     <div class="invite__form-header">
-                        <h3 class="invite__form-header-title">Invite Arthur</h3>
+                        <h3 class="invite__form-header-title">Tell Us About Your Event</h3>
                         <p class="invite__form-header-subtitle">Fill in your details below</p>
                     </div>
 
@@ -324,14 +324,14 @@
 
                         <div class="invite__form-group">
                             <label for="message">Message (Optional)</label>
-                            <textarea name="message" id="message" rows="4" placeholder="Tell us about your audience, which topic you'd like Arthur to address, and what you're hoping the session will bring.">{{ old('message') }}</textarea>
+                            <textarea name="message" id="message" rows="4" placeholder="Tell us about your audience, which topic you'd like addressed, and what you're hoping the session will bring.">{{ old('message') }}</textarea>
                             @error('message')
                                 <span class="invite__form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <p class="invite__form-disclaimer">
-                            Sending an invitation does not confirm Arthur's availability. It starts the conversation.
+                            Sending an invitation does not confirm his availability. It starts the conversation.
                         </p>
 
                         <div class="invite__form-group">

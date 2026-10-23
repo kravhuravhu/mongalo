@@ -13,6 +13,9 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
+use App\Mail\AdminEventRegistration;
+use App\Models\Event;
+use App\Models\EventRegistration;
 
 class AdminNotificationService
 {
@@ -97,6 +100,30 @@ class AdminNotificationService
         } catch (Throwable $e) {
             Log::error('Failed to send admin invite notification', [
                 'invite_id' => $invite->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /* ─── EVENT REGISTRATION NOTIFICATION ─── */
+    public function notifyNewEventRegistration(
+        EventRegistration $registration,
+        Event $event
+    ): void {
+        try {
+            Mail::to($this->adminEmail)->send(
+                new AdminEventRegistration($registration, $event)
+            );
+
+            Log::info('Admin notified of new event registration', [
+                'registration_id' => $registration->registration_id,
+                'event_id' => $event->id,
+                'admin_email' => $this->adminEmail,
+            ]);
+        } catch (Throwable $e) {
+            Log::error('Failed to send admin event registration notification', [
+                'registration_id' => $registration->registration_id,
+                'event_id' => $event->id,
                 'error' => $e->getMessage(),
             ]);
         }

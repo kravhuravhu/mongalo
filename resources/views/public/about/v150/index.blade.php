@@ -80,7 +80,7 @@
         [
             'icon' => 'fa-pray',
             'title' => 'Faith',
-            'description' => 'Assurance does not always come easily. This ministry exists for believers still seeking that certainty, the same search that shaped Arthur\'s own journey.'
+            'description' => 'Assurance does not always come easily. This ministry exists for believers still seeking that certainty, the same search that shaped my own journey.'
         ]
     ];
 @endphp
@@ -185,11 +185,11 @@
                         In 1997 or 1998, I stood up again, this time at Bethesda Christian Church, visiting under Pastor Clement Ibe. I was born again, again. Both times, I felt that same need to be born again, and both times it oddly felt like God was calling me into His service too. I never doubted it was beyond just getting saved.
                     </p>
 
-                    <blockquote class="about__story-quote">
+                    <!-- <blockquote class="about__story-quote">
                         <i class="fas fa-quote-left" aria-hidden="true"></i>
                         <p>"I deliberately highlighted a somewhat chaotic footing in my formative stages, getting born again over and over, getting baptised over and over again. Something I wish to help solve for others."</p>
                         <cite>Arthur Mongalo</cite>
-                    </blockquote>
+                    </blockquote> -->
                 </div>
             </div>
         </div>
@@ -350,17 +350,17 @@
             <div class="about__cta-content">
                 <span class="about__cta-eyebrow">Work Together</span>
                 <h2 class="about__cta-title">
-                    Invite Arthur<br>
+                    Invite Me<br>
                     to <span>Speak</span>
                 </h2>
                 <p class="about__cta-subtitle">
-                    Arthur speaks on Baptisms, Divine Identity, the New Covenant and Jesus Revealed, depending on your church or event's setting.
+                    I speak on Baptisms, Divine Identity, the New Covenant and Jesus Revealed, depending on your church or event's setting.
                 </p>
 
                 <div class="about__cta-actions">
                     <a href="{{ route('invite') }}" class="btn btn--primary btn--lg">
                         <i class="fas fa-handshake" aria-hidden="true"></i>
-                        <span>Invite Arthur</span>
+                        <span>Send an Enquiry</span>
                     </a>
                 </div>
             </div>
