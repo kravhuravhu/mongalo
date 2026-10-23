@@ -10,7 +10,7 @@
     <div class="error-page__code">503</div>
     <h1 class="error-page__title">Service Unavailable</h1>
     <p class="error-page__text">
-        We're currently performing maintenance or experiencing high traffic. Please check back soon.
+        We're currently performing Maintenance. Please check back soon.
     </p>
 
     <div class="error-page__actions">

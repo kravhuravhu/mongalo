@@ -24,7 +24,7 @@
         [
             'icon' => 'fa-fire',
             'title' => 'Empowered for Service',
-            'text' => 'Spirit baptism fills and empowers you for service, equipping every believer to walk in what Arthur calls a life of supernatural power, wisdom and boldness.'
+            'text' => 'Spirit baptism fills and empowers you for service, equipping every believer to walk in what this ministry calls a life of supernatural power, wisdom and boldness.'
         ],
         [
             'icon' => 'fa-seedling',
@@ -95,7 +95,7 @@
             <div class="baptism__hero-content">
                 <span class="baptism__hero-eyebrow">
                     <span class="baptism__hero-eyebrow-line"></span>
-                    Arthur's Baptism
+                    Story Of My Baptism
                 </span>
 
                 <h1 class="baptism__hero-title">
@@ -195,7 +195,7 @@
                         <h3 class="baptism__two-card-title">Spirit Baptism</h3>
 
                         <p class="baptism__two-card-desc">
-                            The Holy Spirit fills and empowers you for service, equipping every believer to walk in what Arthur calls a life of supernatural power, wisdom and boldness.
+                            The Holy Spirit fills and empowers you for service, equipping every believer to walk in what this ministry calls a life of supernatural power, wisdom and boldness.
                         </p>
 
                         <blockquote class="baptism__two-card-quote">

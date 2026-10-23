@@ -123,7 +123,7 @@
         {{-- ─── ACTIONS ─── --}}
         <span class="nav-label">Actions</span>
 
-        <a href="{{ route('home') }}" target="_blank" class="nav-item nav-item--view-site">
+        <a href="{{ config('app.public_url') }}" target="_blank" rel="noopener" class="nav-item nav-item--view-site">
             <i class="fas fa-external-link-alt"></i>
             <span>View Site</span>
         </a>

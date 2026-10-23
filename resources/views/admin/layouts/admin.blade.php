@@ -4,6 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Icon -->
+    <link rel="icon" type="image/png" href="{{ config('seo.logo') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ config('seo.logo') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ config('seo.logo') }}">
+    <link rel="shortcut icon" href="{{ config('seo.logo') }}">
+    <link rel="mask-icon" href="{{ config('seo.logo') }}" color="#0A1F33">
+    <link rel="apple-touch-icon" href="{{ config('seo.logo') }}">
+    
+    <!-- Title -->
     <title>@yield('title', 'Admin · ' . env('PROJECT_NAME', 'IN.iN'))</title>
 
     <!-- Google Fonts -->
