@@ -18,7 +18,64 @@ trait QueryCacheable
 
         $ttl = $ttl ?? (int) env('QUERY_CACHE_TTL', 3600);
 
-        return Cache::remember($key, $ttl, $query);
+        if (Cache::has($key)) {
+            try {
+                $cached = Cache::get($key);
+
+                // ─── REJECT POISONED / INCOMPLETE OBJECTS ───
+                if ($cached instanceof \__PHP_Incomplete_Class) {
+                    Cache::forget($key);
+                    Log::warning('QueryCacheable: poisoned cache entry cleared', [
+                        'key' => $key,
+                    ]);
+                } elseif ($cached !== null) {
+                    return $cached;
+                }
+            } catch (\Throwable $e) {
+                Cache::forget($key);
+                Log::warning('QueryCacheable: failed to read cache, cleared', [
+                    'key'   => $key,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        $result = $query();
+
+        // ─── ONLY CACHE SCALARS AND ARRAYS OF SCALARS ───
+        // Eloquent models/collections are never cached here — they are
+        // cached as plain ID arrays by the model methods instead.
+        if ($this->isCacheSafe($result)) {
+            Cache::put($key, $result, $ttl);
+        } else {
+            Log::warning('QueryCacheable: result not cache-safe, skipped', [
+                'key'  => $key,
+                'type' => get_debug_type($result),
+            ]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Only scalars, null, and arrays of scalars are considered cache-safe.
+     */
+    protected function isCacheSafe(mixed $value): bool
+    {
+        if ($value === null || is_scalar($value)) {
+            return true;
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                if (!$this->isCacheSafe($item)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
     }
 
     /**
