@@ -112,30 +112,50 @@ class Book extends Model
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('book', ['featured' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::where('is_featured', true)->first();
+
+        $id = $instance->cachedQuery($key, function () {
+            return self::where('is_featured', true)->value('id');
         });
+
+        return $id ? self::find($id) : null;
     }
 
     public static function getCachedPaidBooks()
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('book', ['paid' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::where('is_free', false)->orderBy('sort_order')->get();
+
+        $ids = $instance->cachedQuery($key, function () {
+            return self::where('is_free', false)
+                ->orderBy('sort_order')
+                ->pluck('id')
+                ->all();
         });
+
+        if (empty($ids)) {
+            return self::where('is_free', false)->orderBy('sort_order')->get();
+        }
+
+        return self::whereIn('id', $ids)->orderBy('sort_order')->get();
     }
 
     public static function getCachedFreeBooks()
     {
         $instance = new static();
         $key = $instance->versionedQueryKey('book', ['free' => true]);
-        
-        return $instance->cachedQuery($key, function () {
-            return self::where('is_free', true)->orderBy('sort_order')->get();
+
+        $ids = $instance->cachedQuery($key, function () {
+            return self::where('is_free', true)
+                ->orderBy('sort_order')
+                ->pluck('id')
+                ->all();
         });
+
+        if (empty($ids)) {
+            return self::where('is_free', true)->orderBy('sort_order')->get();
+        }
+
+        return self::whereIn('id', $ids)->orderBy('sort_order')->get();
     }
 
     /* ─── CATEGORY LABEL ─── */
