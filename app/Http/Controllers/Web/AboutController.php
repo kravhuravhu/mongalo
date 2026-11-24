@@ -9,6 +9,6 @@ class AboutController extends Controller
 {
     public function index()
     {
-        return view('public.about.v150.index');
+        return view('public.about.v160.index');
     }
 }
