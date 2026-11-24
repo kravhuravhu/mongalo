@@ -8,11 +8,16 @@ class EventRegistration extends Model
 {
     protected $fillable = [
         'event_id',
+        'occurrence_date',
         'name',
         'email',
         'phone',
         'registration_id',
         'payment_status',
+    ];
+
+    protected $casts = [
+        'occurrence_date' => 'date',
     ];
 
     protected $table = 'event_registrations';
@@ -25,6 +30,6 @@ class EventRegistration extends Model
 
     public static function generateRegistrationId()
     {
-        return 'REG-' . date('Y') . '-' . strtoupper(uniqid());
+        return 'RE' . date('Y') . '-' . strtoupper(uniqid());
     }
 }

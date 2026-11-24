@@ -11,15 +11,17 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationConfirmation;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
     public function index(Request $request)
     {
         $query = Event::query();
-
+        
         // ─── SEARCH ───
         if ($request->search) {
+            
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('title', 'like', '%' . $search . '%')
@@ -27,7 +29,7 @@ class EventController extends Controller
                   ->orWhere('location', 'like', '%' . $search . '%');
             });
         }
-
+        
         // ─── FILTER ───
         if ($request->filter === 'upcoming') {
             $query->where('is_past', false)->where('date', '>=', Carbon::today());
@@ -36,16 +38,14 @@ class EventController extends Controller
                 $q->where('is_past', true)->orWhere('date', '<', Carbon::today());
             });
         }
-
         // ─── SORT BY LATEST ───
         $query->orderBy('date', 'desc');
-
         $events = $query->paginate(20);
-
+        
         // ─── GET COUNTS FOR DISPLAY ───
         $upcomingCount = Event::where('is_past', false)->where('date', '>=', Carbon::today())->count();
         $pastCount = Event::where('is_past', true)->orWhere('date', '<', Carbon::today())->count();
-
+        
         // ─── AJAX REQUEST ───
         if ($request->ajax()) {
             return response()->json([
@@ -55,7 +55,6 @@ class EventController extends Controller
                 'pastCount' => $pastCount,
             ]);
         }
-
         return view('admin.events.index', compact('events', 'upcomingCount', 'pastCount'));
     }
 
@@ -75,9 +74,10 @@ class EventController extends Controller
             'capacity' => 'nullable|integer|min:1',
             'is_free' => 'boolean',
             'price' => 'nullable|numeric|min:0',
+            ...$this->inRules(),
         ]);
 
-        $isPast = $request->is_past ?? Carbon::parse($request->date)->isPast();
+        $isPast = $this->resolveIsPast($request);
 
         $event = Event::create([
             'title' => $request->title,
@@ -91,6 +91,7 @@ class EventController extends Controller
             'is_free' => $request->has('is_free'),
             'price' => $request->has('is_free') ? 0 : ($request->price ?? 0),
             'sort_order' => Event::count() + 1,
+            ...$this->inFields($request),
         ]);
 
         Log::info('Event created by admin', [
@@ -103,12 +104,12 @@ class EventController extends Controller
 
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
-    
+
     public function edit(Event $event)
     {
         return view('admin.events.edit', compact('event'));
     }
-
+    
     public function update(Request $request, Event $event)
     {
         $request->validate([
@@ -120,9 +121,10 @@ class EventController extends Controller
             'capacity' => 'nullable|integer|min:1',
             'is_free' => 'boolean',
             'price' => 'nullable|numeric|min:0',
+            ...$this->inRules(),
         ]);
-
-        $isPast = $request->is_past ?? Carbon::parse($request->date)->isPast();
+        
+        $isPast = $this->resolveIsPast($request);
 
         $event->update([
             'title' => $request->title,
@@ -135,6 +137,7 @@ class EventController extends Controller
             'is_past' => $isPast,
             'is_free' => $request->has('is_free'),
             'price' => $request->has('is_free') ? 0 : ($request->price ?? 0),
+            ...$this->inFields($request, $event),
         ]);
 
         Log::info('Event updated by admin', [
@@ -144,7 +147,6 @@ class EventController extends Controller
             'admin_name' => session('admin_name'),
             'ip' => $request->ip(),
         ]);
-
         return redirect()->route('admin.events.index')->with('success', 'Event updated successfully!');
     }
 
@@ -153,13 +155,13 @@ class EventController extends Controller
         if (!$event) {
             return redirect()->route('admin.events.index')->with('error', 'Event not found.');
         }
-        
+
         // ─── LOAD REGISTRATIONS WITH EAGER LOADING ───
         $registrations = $event->registrations()
             ->with('event')  // ─── FIX: Eager load to prevent N+1 ───
             ->orderBy('created_at', 'desc')
             ->get();
-        
+
         // ─── FALLBACK ───
         if ($registrations->count() === 0) {
             $registrations = EventRegistration::where('event_id', $event->id)
@@ -167,10 +169,9 @@ class EventController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
-        
         return view('admin.events.registrations', compact('event', 'registrations'));
     }
-
+    
     public function updateRegistration(Request $request, EventRegistration $registration)
     {
         // ─── Determine new status ───
@@ -180,7 +181,7 @@ class EventController extends Controller
         if ($registration->event->is_free) {
             $status = 'free';
         }
-        
+
         $oldStatus = $registration->payment_status;
         $registration->update([
             'payment_status' => $status,
@@ -202,6 +203,7 @@ class EventController extends Controller
             // Update session with new status instead of clearing
             $sessionData = session($sessionKey);
             $sessionData['payment_status'] = $status;
+            
             session()->put($sessionKey, $sessionData);
             
             Log::info('Session updated for registration', [
@@ -218,17 +220,15 @@ class EventController extends Controller
     public function resendConfirmation(EventRegistration $registration, Request $request)
     {
         $event = $registration->event;
-        
+
         try {
             Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
-            
             Log::info('Confirmation email resent by admin', [
                 'registration_id' => $registration->registration_id,
                 'email' => $registration->email,
                 'admin_id' => session('admin_id'),
                 'ip' => $request->ip(),
             ]);
-            
             return redirect()->route('admin.events.registrations', $event->id)
                 ->with('success', 'Confirmation email resent successfully!');
         } catch (\Exception $e) {
@@ -237,7 +237,6 @@ class EventController extends Controller
                 'error' => $e->getMessage(),
                 'ip' => $request->ip(),
             ]);
-            
             return redirect()->route('admin.events.registrations', $event->id)
                 ->with('error', 'Failed to send email. Please try again.');
         }
@@ -254,6 +253,57 @@ class EventController extends Controller
         ]);
 
         $event->delete();
+
         return redirect()->route('admin.events.index')->with('success', 'Event deleted successfully!');
+    }
+
+    /* ─── iN EVENT FIELD RULES ─── */
+    protected function inRules(): array
+    {
+        return [
+            'category' => 'required|in:' . implode(',', array_keys(config('in.brands.community.event_categories'))),
+            'poster_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:6144',
+            'recurrence' => 'required|in:none,daily,weekly,monthly,yearly',
+            'recurrence_interval' => 'nullable|integer|min:1|max:52',
+            'recurrence_weekdays' => 'nullable|array',
+            'recurrence_weekdays.*' => 'integer|between:0,6',
+            'recurrence_ends_on' => 'nullable|date|after_or_equal:date',
+        ];
+    }
+
+    /* ─── RECURRING EVENTS STAY LIVE UNTIL THEIR END DATE ─── */
+    protected function resolveIsPast(Request $request)
+    {
+        if ($request->recurrence && $request->recurrence !== 'none') {
+            return $request->recurrence_ends_on ? Carbon::parse($request->recurrence_ends_on)->isPast() : false;
+        }
+        return $request->is_past ?? Carbon::parse($request->date)->isPast();
+    }
+
+    /* ─── iN EVENT FIELDS + POSTER UPLOAD ─── */
+    protected function inFields(Request $request, ?Event $event = null): array
+    {
+        $recurring = $request->recurrence && $request->recurrence !== 'none';
+        
+        $fields = [
+            'category' => $request->category,
+            'recurrence' => $request->recurrence,
+            'recurrence_interval' => $recurring ? max(1, (int) $request->recurrence_interval) : 1,
+            'recurrence_weekdays' => ($recurring && $request->recurrence === 'weekly' && $request->recurrence_weekdays)
+                ? array_values(array_map('intval', $request->recurrence_weekdays))
+                : null,
+            'recurrence_ends_on' => $recurring ? $request->recurrence_ends_on : null,
+        ];
+        
+        if ($request->hasFile('poster_image')) {
+            if ($event && $event->poster_image) {
+                Storage::disk('public')->delete('events/posters/' . $event->poster_image);
+            }
+            $fields['poster_image'] = basename($request->file('poster_image')->store('events/posters', 'public'));
+        } elseif ($event && $request->boolean('remove_poster') && $event->poster_image) {
+            Storage::disk('public')->delete('events/posters/' . $event->poster_image);
+            $fields['poster_image'] = null;
+        }
+        return $fields;
     }
 }

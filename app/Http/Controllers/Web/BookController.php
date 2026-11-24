@@ -4,44 +4,17 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
-use App\Services\CacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
-    protected CacheService $cacheService;
-
-    public function __construct(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
-    }
-
-    public function index()
-    {
-        $cacheKey = $this->cacheService->key('books', ['list' => 'paid']);
-        
-        $data = $this->cacheService->rememberClosure($cacheKey, function () {
-            return [
-                'paidBooks' => Book::where('is_free', false)->orderBy('sort_order')->get(),
-            ];
-        });
-
-        return view('public.books.v150.index', $data);
-    }
-
     public function show($slug)
     {
-        // ─── GET BOOK DIRECTLY (NO CACHE TO AVOID INCOMPLETE OBJECT ISSUE) ───
         $book = Book::where('slug', $slug)->firstOrFail();
-
-        // ─── GET RELATED BOOKS DIRECTLY ───
-        $relatedBooks = Book::where('id', '!=', $book->id)
-            ->where('is_free', $book->is_free)
-            ->limit(3)
-            ->get();
-
-        return view('public.books.v150.show', compact('book', 'relatedBooks'));
+        // ─── OPEN IT IN THE LIBRARY MODAL ───
+        $route = $book->is_free ? 'resources' : 'books.index';
+        return redirect()->route($route, ['open' => $book->slug], 301);
     }
 
     /* ─── FREE BOOK DOWNLOAD WITH VALIDATION ─── */
@@ -54,14 +27,14 @@ class BookController extends Controller
         // ─── VALIDATE DOWNLOAD TOKEN ───
         $token = $request->get('token');
         $sessionKey = 'free_download_' . $book->id;
-        
+
         // Generate token if not exists
         if (!$token) {
             $newToken = Str::random(64);
             session([$sessionKey => $newToken]);
             return redirect()->route('books.download', ['book' => $book->id, 'token' => $newToken]);
         }
-        
+
         // Validate token matches session
         if (session($sessionKey) !== $token) {
             abort(403, 'Invalid download token.');
@@ -70,20 +43,21 @@ class BookController extends Controller
         // ─── LIMIT DOWNLOADS PER SESSION ───
         $downloadCountKey = 'free_download_count_' . $book->id;
         $downloadCount = session($downloadCountKey, 0);
-        
+
         if ($downloadCount >= 3) {
             abort(429, 'Download limit reached. Please contact us for access.');
         }
-        
+
         session([$downloadCountKey => $downloadCount + 1]);
 
         $filePath = storage_path('app/public/books/files/' . $book->book_file);
-
+        
         if (!file_exists($filePath)) {
             abort(404, 'Book file not found.');
         }
 
         // ─── INCREMENT DOWNLOAD COUNT ───
+
         $book->increment('download_count');
 
         $fileName = $book->slug . '.' . $book->file_type;
@@ -97,20 +71,20 @@ class BookController extends Controller
     public function preview($slug)
     {
         $book = Book::where('slug', $slug)->firstOrFail();
-        
+
         // Only allow preview if book has content
         if (!$book->book_file) {
             abort(404, 'Preview not available.');
         }
-        
+
         $filePath = storage_path('app/public/books/files/' . $book->book_file);
         if (!file_exists($filePath)) {
             abort(404, 'File not found.');
         }
-        
+
         // For PDF - render inline
         $fileName = $book->slug . '.' . $book->file_type;
-        
+
         return response()->file($filePath, [
             'Content-Type' => $this->getMimeType($book->file_type),
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',

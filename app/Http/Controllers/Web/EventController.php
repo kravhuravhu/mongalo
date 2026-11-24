@@ -30,26 +30,13 @@ class EventController extends Controller
 
     public function index()
     {
-        $today = Carbon::today();
-
-        $upcomingEvents = Event::where('date', '>=', $today)
-            ->orderBy('date')
-            ->orderBy('time')
-            ->get();
-            
-        $pastEvents = Event::where('date', '<', $today)
-            ->orderBy('date', 'desc')
-            ->limit(5)
-            ->get();
-
-        return view('public.events.v150.index', compact('upcomingEvents', 'pastEvents'));
+        return redirect()->route('community', [], 301);
     }
 
     public function show($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
-        
-        return view('public.events.v150.show', compact('event'));
+        return redirect()->route('community', ['open' => $event->slug], 301);
     }
 
     public function register(Request $request)
@@ -59,29 +46,38 @@ class EventController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|max:50',
+            'occurrence_date' => 'nullable|date_format:Y-m-d',
             'cf-turnstile-response' => ['required', new Turnstile],
         ], [], [
             'cf-turnstile-response' => 'human verification',
         ]);
-
         $event = Event::findOrFail($request->event_id);
-
+        // ─── RESOLVE OCCURRENCE (RECURRING EVENTS) ───
+        $occurrence = null;
+        if ($event->is_recurring) {
+            $occurrence = $request->occurrence_date ?: optional($event->nextOccurrence())->format('Y-m-d');
+            if (!$occurrence || !$event->isOccurrence($occurrence)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please choose a valid date for this event.',
+                ], 422);
+            }
+        }
         // ─── CHECK FOR DUPLICATE REGISTRATION ───
         $existing = EventRegistration::where('event_id', $request->event_id)
             ->where('email', $request->email)
+            ->where('occurrence_date', $occurrence)
             ->where(function($q) {
                 $q->whereNull('expires_at')
                   ->orWhere('expires_at', '>', now());
             })
             ->first();
-        
         if ($existing) {
             Log::info('Duplicate registration attempt', [
                 'event_id' => $request->event_id,
                 'email' => $request->email,
                 'existing_registration_id' => $existing->registration_id,
             ]);
-            
             return response()->json([
                 'success' => false,
                 'message' => 'You are already registered for this event. Check your email for confirmation.',
@@ -98,10 +94,8 @@ class EventController extends Controller
                 ],
             ], 409);
         }
-
         $isFree = $event->is_free ?? true;
         $amount = $event->price ?? 0;
-
         // ─── CREATE REGISTRATION ───
         $registration = EventRegistration::create([
             'event_id' => $event->id,
@@ -110,21 +104,25 @@ class EventController extends Controller
             'phone' => $request->phone,
             'registration_id' => EventRegistration::generateRegistrationId(),
             'payment_status' => $isFree ? 'free' : 'pending',
+            'occurrence_date' => $occurrence,
         ]);
-
+        // ─── EVENT COPY CARRYING THE CHOSEN OCCURRENCE DATE ───
+        $mailEvent = $event;
+        if ($occurrence) {
+            $mailEvent = $event->replicate();
+            $mailEvent->id = $event->id;
+            $mailEvent->date = Carbon::parse($occurrence);
+        }
         // ─── CLEAR EVENT CACHE ───
         $event->clearModelCache('event');
-
         // ─── SEND CONFIRMATION EMAIL ───
         try {
-            Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $event));
+            Mail::to($registration->email)->send(new EventRegistrationConfirmation($registration, $mailEvent));
         } catch (\Exception $e) {
             Log::error('Failed to send registration email: ' . $e->getMessage());
         }
-
         // ─── SEND ADMIN NOTIFICATION ───
-        $this->notificationService->notifyNewEventRegistration($registration, $event);
-
+        $this->notificationService->notifyNewEventRegistration($registration, $mailEvent);
         // ─── BUILD RESPONSE WITH REGISTRATION DATA ───
         $response = [
             'success' => true,
@@ -133,7 +131,8 @@ class EventController extends Controller
             'event_title' => $event->title,
             'event_description' => $event->description,
             'event_location' => $event->location,
-            'event_date' => $event->date->format('Y-m-d'),
+            'event_date' => $occurrence ?: $event->date->format('Y-m-d'),
+            'occurrence_date' => $occurrence,
             'event_time' => $event->time,
             'is_free' => $isFree,
             'message' => $isFree 
@@ -149,11 +148,11 @@ class EventController extends Controller
                 'payment_status' => $registration->payment_status,
                 'is_free' => $isFree,
                 'event_id' => $event->id,
+                'occurrence_date' => $occurrence,
                 'event_slug' => $event->slug,
                 'expires_at' => now()->addHours(48)->toIso8601String(),
             ],
         ];
-
         if (!$isFree) {
             $response['amount'] = $amount;
             $response['banking_details'] = [
@@ -165,13 +164,11 @@ class EventController extends Controller
             ];
             $response['registration_data']['banking_details'] = $response['banking_details'];
         }
-
         Log::info('Event registration created', [
             'event_id' => $event->id,
             'registration_id' => $registration->registration_id,
             'email' => $request->email,
         ]);
-
         return response()->json($response);
     }
 
