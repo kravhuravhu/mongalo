@@ -6,7 +6,6 @@ use App\Http\Controllers\Web\AboutController;
 use App\Http\Controllers\Web\BookController;
 use App\Http\Controllers\Web\LibraryController;
 use App\Http\Controllers\Web\EventController;
-use App\Http\Controllers\Web\EventCalendarController;
 use App\Http\Controllers\Web\CommunityController;
 use App\Http\Controllers\Web\ResourceController;
 use App\Http\Controllers\Web\ContactController;
@@ -28,10 +27,9 @@ Route::get('/books/download/{book}', [BookController::class, 'download'])->name(
 Route::get('/books/preview/{slug}', [BookController::class, 'preview'])->name('books.preview');
 
 // ─── EVENTS ───
+// ─── EVENTS LIVE ON THE COMMUNITY PAGE (CALENDAR RETIRED) ───
+Route::get('/events/calendar', fn () => redirect()->route('community', [], 301));
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/calendar', [EventCalendarController::class, 'index'])->name('events.calendar');
-Route::get('/events/calendar/data', [EventCalendarController::class, 'monthData'])->name('events.calendar.data');
-Route::get('/events/calendar/events', [EventCalendarController::class, 'getEventsByDate'])->name('events.calendar.events');
 Route::post('/events/clear-registration', [EventController::class, 'clearRegistration'])->name('events.clear.registration');
 Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
 
@@ -49,7 +47,7 @@ Route::post('/invite', [InviteController::class, 'send'])
     ->middleware('rate.limit:invite');
 
 // ─── BAPTISM (NOW AN EVENT CATEGORY IN iN COMMUNITY) ───
-Route::redirect('/baptism', '/community?cat=baptism', 301);
+Route::redirect('/baptism', '/community?cat=baptism', 301)->name('baptism');
 
 // ─── COMMUNITY ───
 Route::get('/community', [CommunityController::class, 'index'])->name('community');

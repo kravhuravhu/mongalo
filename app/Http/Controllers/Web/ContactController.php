@@ -12,7 +12,6 @@ use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 class ContactController extends Controller
 {
     protected PhoneService $phoneService;
-
     protected AdminNotificationService $notificationService;
 
     public function __construct(
@@ -25,13 +24,12 @@ class ContactController extends Controller
 
     public function index()
     {
-        return view('public.contact.v150.index');
+        return view('public.contact.v160.index');
     }
 
     public function send(ContactRequest $request)
     {
         $validated = $request->validated();
-
         if (!empty($validated['phone'])) {
             $validated['phone'] = $this->phoneService->formatE164(
                 $validated['phone']
@@ -51,7 +49,7 @@ class ContactController extends Controller
             ]);
 
         $this->notificationService->notifyNewContact($contactMessage);
-
+        
         return redirect()
             ->route('contact')
             ->with(

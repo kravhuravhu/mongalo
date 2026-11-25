@@ -9,6 +9,6 @@ class TermsController extends Controller
 {
     public function index()
     {
-        return view('public.terms.v150.index');
+        return view('public.terms.v160.index');
     }
 }
