@@ -24,7 +24,7 @@ class InviteController extends Controller
 
     public function index()
     {
-        return view('public.invite.v150.index');
+        return view('public.invite.v160.index');
     }
 
     public function send(InviteRequest $request)
@@ -48,6 +48,7 @@ class InviteController extends Controller
             ], [], [
                 'cf-turnstile-response' => 'human verification',
             ]);
+
         // ─── SEND ADMIN NOTIFICATION ───
         $this->notificationService->notifyNewInvite($invite);
 

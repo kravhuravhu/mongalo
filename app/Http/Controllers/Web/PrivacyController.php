@@ -9,6 +9,6 @@ class PrivacyController extends Controller
 {
     public function index()
     {
-        return view('public.privacy.v150.index');
+        return view('public.privacy.v160.index');
     }
 }

@@ -46,6 +46,7 @@ class PaymentController extends Controller
         }
 
         $book = Book::findOrFail($request->book_id);
+
         $deliveryType = $request->input('delivery_type', 'digital');
 
         // ─── VALIDATE BOOK IS PURCHASABLE ───
@@ -65,7 +66,6 @@ class PaymentController extends Controller
         $shippingFee = 0.00;
         $hardcopyPrice = null;
         $addressData = [];
-
         if ($deliveryType === 'hardcopy') {
             if (!$book->has_hardcopy_option) {
                 return response()->json(['success' => false, 'message' => 'Hard copy is not available for this book.'], 400);
@@ -75,7 +75,6 @@ class PaymentController extends Controller
 
             // ─── READ REGIONS FROM SETTINGS, NOT CONFIG ───
             $regions = shipping_regions();
-
             if (!$region || !isset($regions[$region])) {
                 return response()->json(['success' => false, 'message' => 'Please select a valid delivery region.', 'field' => 'delivery_region'], 422);
             }
@@ -134,7 +133,7 @@ class PaymentController extends Controller
         // ─── CALCULATE TOTAL ───
         $basePrice = $deliveryType === 'hardcopy' ? $hardcopyPrice : (float) $book->price;
         $totalAmount = $basePrice + $shippingFee;
-
+  
         $result = $this->paymentService->initiatePayment($book, [
             'name' => $request->name,
             'email' => $validatedEmail['email'],
@@ -174,7 +173,6 @@ class PaymentController extends Controller
         }
 
         $gatewayInstance = $this->paymentService->getGateway($gateway);
-
         if (!$gatewayInstance) {
             abort(404, 'Payment gateway not found.');
         }
@@ -185,7 +183,7 @@ class PaymentController extends Controller
             'phone' => $order->buyer_phone,
         ]);
 
-        return view('public.payment.checkout', [
+        return view('public.payment.v160.checkout', [
             'order' => $order,
             'gateway' => $gateway,
             'paymentData' => $paymentData,
@@ -197,7 +195,7 @@ class PaymentController extends Controller
     {
         // ─── GET DATA FROM REQUEST ───
         $data = $request->all();
-        
+
         // ─── IF GET HAS NO DATA, CHECK POST BODY ───
         if (empty($data)) {
             $rawInput = file_get_contents('php://input');
@@ -208,7 +206,7 @@ class PaymentController extends Controller
                 }
             }
         }
-        
+
         Log::info('Payment return - redirect from gateway', [
             'gateway' => $gateway,
             'data' => $data,
@@ -268,23 +266,23 @@ class PaymentController extends Controller
                             'error' => $e->getMessage(),
                         ]);
                     }
-                    
+
                     session()->forget(['payment_order_number', 'payment_status']);
+                    
                     return redirect()->route('payment.success', ['order' => $orderNumber])
                         ->with('success', 'Payment successful! Your book is now available for download.');
                 }
             }
-            
+
             // ─── STILL PENDING - SHOW SUCCESS WITH PENDING MESSAGE ───
             return redirect()->route('payment.success', ['order' => $orderNumber])
                 ->with('info', 'Your payment is being processed. You will receive an email confirmation shortly.');
         }
-
         // ─── IF NO DATA, REDIRECT TO FAILURE ───
         return redirect()->route('payment.failure')
             ->with('error', 'We could not confirm your payment. Please check your email for confirmation.');
     }
-
+    
     /* ─── PAYMENT CANCEL ─── */
     public function cancel(Request $request, string $gateway)
     {
@@ -314,7 +312,7 @@ class PaymentController extends Controller
     {
         // ─── GET DATA FROM REQUEST ───
         $data = $request->all();
-        
+
         // ─── IF NO DATA, CHECK POST BODY ───
         if (empty($data)) {
             $rawInput = file_get_contents('php://input');
@@ -323,7 +321,7 @@ class PaymentController extends Controller
                 $data = $parsedData;
             }
         }
-        
+
         Log::info('Payment webhook (ITN) received', [
             'gateway' => $gateway,
             'data' => $data,
@@ -338,7 +336,7 @@ class PaymentController extends Controller
 
         // ─── PROCESS THE PAYMENT ───
         $result = $this->paymentService->processPaymentResponse($data, $gateway);
-
+        
         // ─── IF PAYMENT SUCCESSFUL ───
         if ($result['success']) {
             $orderNumber = $result['order_number'] ?? null;
@@ -352,7 +350,7 @@ class PaymentController extends Controller
                     'order_number' => $orderNumber,
                 ]);
             }
-            
+
             // ─── RESPOND TO PAYFAST ───
             return response('OK', 200);
         }
@@ -361,7 +359,7 @@ class PaymentController extends Controller
             'result' => $result,
             'data' => $data,
         ]);
-        
+
         return response('ERROR', 400);
     }
 
@@ -370,7 +368,7 @@ class PaymentController extends Controller
     {
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
         $book = $order->book;
-
+        
         // ─── IF STILL PENDING, TRY TO VERIFY ───
         if ($order->payment_status === 'pending' && $order->transaction_id) {
             $result = $this->paymentService->verifyPayment($order->transaction_id, $order->payment_method);
@@ -380,7 +378,7 @@ class PaymentController extends Controller
             }
         }
 
-        return view('public.payment.success', [
+        return view('public.payment.v160.success', [
             'order' => $order,
             'book' => $book,
         ]);
@@ -393,11 +391,11 @@ class PaymentController extends Controller
         if ($orderNumber) {
             $order = Order::where('order_number', $orderNumber)->first();
         }
-
+        
         // ─── CLEAR SESSION ───
         session()->forget(['payment_order_number', 'payment_status']);
-
-        return view('public.payment.failure', [
+        
+        return view('public.payment.v160.failure', [
             'order' => $order,
             'message' => session('error') ?? session('warning') ?? 'Payment was not completed.',
         ]);
@@ -412,15 +410,15 @@ class PaymentController extends Controller
                 $q->whereNull('expires_at')->orWhere('expires_at', '>', now());
             })
             ->firstOrFail();
-
+        
         $book = $order->book;
-
+        
         if (!$book->book_file) {
             abort(404, 'Book file not found.');
         }
 
         $filePath = storage_path('app/public/books/files/' . $book->book_file);
-
+        
         if (!file_exists($filePath)) {
             Log::error('Book file not found', [
                 'book_id' => $book->id,
@@ -432,7 +430,7 @@ class PaymentController extends Controller
         // ─── INCREMENT DOWNLOADS ───
         $order->increment('download_count');
         $book->increment('download_count');
-
+        
         Log::info('Book downloaded', [
             'order_number' => $order->order_number,
             'book_title' => $book->title,
@@ -440,7 +438,7 @@ class PaymentController extends Controller
         ]);
 
         $fileName = $book->slug . '.' . $book->file_type;
-
+        
         return response()->download($filePath, $fileName, [
             'Content-Type' => $this->getMimeType($book->file_type),
         ]);
@@ -510,7 +508,7 @@ class PaymentController extends Controller
                 ];
             }
         }
-
+        
         return [
             'valid' => true,
             'message' => 'Email is valid.',
